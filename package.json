@@ -14,5 +14,13 @@
     "css"
   ],
   "author": "fsl",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justfn/fedom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/justfn/fedom/issues"
+  },
+  "homepage": "https://github.com/justfn/fedom#readme"
 }
