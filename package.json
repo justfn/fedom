@@ -1,0 +1,18 @@
+{
+  "name": "fedom",
+  "version": "0.0.1",
+  "description": "fe dom solution ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fe",
+    "dom",
+    "js",
+    "html",
+    "css"
+  ],
+  "author": "fsl",
+  "license": "ISC"
+}
