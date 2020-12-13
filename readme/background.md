@@ -7,7 +7,7 @@
   数据驱动 
   css命名空间 
   组件化&单文件 HTML&JS&CSS 
-  虚拟dom（差异） 
+  非虚拟dom，直接操作dom 
   
 jQuery时代 
   手动获取dom，进行操作 
