@@ -1,0 +1,73 @@
+<template>
+  <div class={className} 
+    style={style}
+    onClick={handleClick} > 
+    { text }
+  </div>
+  <div class=""> 
+    { html }
+  </div>
+  <div class=""> 
+    { expr }
+  </div>
+  <div class=""> 
+    { fn() }
+  </div>
+  <div class=""> 
+    { component }
+  </div>
+  <input type="text" value={inputVal} onInput={inputHanle} />
+</template>
+
+<script type="module">
+import Header from "./home.htm";
+import {
+  Page,
+  watch,
+  listen,
+} from "fedom";
+class Pg extends Page {
+  constructor(...args){
+    super(...args)
+  }
+  xx01: '1',
+  xx02: {
+  },
+  // 创建 
+  onCreate(){ },
+  init(){
+    console.log(this.xx01);
+    console.log(this.xx02);
+
+    return {
+      className,
+      style,
+      handleClick,
+      text,
+      html,
+      component,
+      inputVal,
+      inputHanle,
+    };
+  },
+  onCreated(){ },
+  // 装载 
+  onMount(){},
+  onMounted(){},
+  // 更新  
+  onUpdate(){},
+  onUpdated(){},
+  //   
+  onCache(){},
+  onCached(){},
+  onDelete(){},
+  onDeleted(){},
+}
+</script>
+
+<style scoped>
+
+</style>
+<style >   
+</style>
+

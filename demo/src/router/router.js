@@ -4,6 +4,7 @@
 
 export default {
   '/home': {
-    page: ()=>import('../views/pages/home/home.fd'),
+    page: ()=>import('../views/pages/home/home.htm'),
   },
 }
+

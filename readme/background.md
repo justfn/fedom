@@ -1,6 +1,6 @@
 
 
-不满意当前 vue 和 React 对前端dom的解决方案，而造就的一个解决方案 
+异于当前 vue 和 React 对前端dom的解决方案，而造就的一个解决方案 
 
 核心要点： 
   概念简洁 
@@ -12,7 +12,8 @@
 jQuery时代 
   手动获取dom，进行操作 
 mvc、mv时代 
-  vue 概念繁多复杂 react jsx丑陋，渲染频繁  
+  vue 概念繁多复杂，黑魔法 
+  react jsx语法，渲染频繁 
 简洁自由:  
   <template></template>
   <script></script>
