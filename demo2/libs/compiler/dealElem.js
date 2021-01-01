@@ -20,13 +20,11 @@ export function dealAttrs(attrs, el){
           let it = itm; 
           if (isVary(itm)) { 
             it = itm.value;
-            itm._fns.push((fn)=>{
-              let _pre_v = itm.get();
-              let _v = fn(_pre_v);
-              el.classList.remove(_pre_v)
-              el.classList.add(_v);
-              return _v;
-            });
+            // 收集更新 
+            itm.$add_update((p_v, n_v)=>{
+              el.classList.remove(p_v)
+              el.classList.add(n_v);
+            }, el.classList)
           }
           return  retV + ' ' + it
         },'')
@@ -61,14 +59,12 @@ export function dealAttrs(attrs, el){
 export function dealChildren(children, el){
   if (isVary(children)) {
     let _els = children.get();
-    children._fns.push((fn)=>{
-      let _v = fn(children.get());
-      // console.log('# 05', el);
-      el.innerHTML = '';
-      dealChildren(_v, el)
-      return _v;
-    });
     dealChildren(_els, el)
+    // 收集更新 
+    children.$add_update((p_v,n_v)=>{
+      el.innerHTML = '';
+      dealChildren(n_v, el)
+    }, el.parentNode)
     return ;
   }
   children.forEach((itm,idx)=>{
@@ -82,11 +78,9 @@ export function dealChildren(children, el){
         it = it || '';
         let txtNode = document.createTextNode(it);
         el.appendChild(txtNode);
-        itm._fns.push((fn)=>{
-          let _v = fn(itm.get());
-          txtNode.textContent = _v;
-          return _v;
-        })
+        itm.$add_update((p_v, n_v)=>{
+          txtNode.textContent = n_v;
+        }, txtNode)
         return ;
       }
       

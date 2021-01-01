@@ -17,18 +17,37 @@
 export default class Vary {
   constructor(val) {
     this._value = val; 
-    this._fns = []
+    this._updates = []
   }
   
-  get value(){ return this._value; }
+  /* 对外接口 */
   get = ()=>{ return this._value; }
-  set = (fn)=>{
-    let _v = null;
-    this._fns.forEach(item=>{
-      _v = item(fn);
-    });
-    this._value = _v;
+  set = (changeHandle, isLazy=true)=>{
+    let nxt_v = null;
+    if (isLazy) { 
+      nxt_v = changeHandle(this.get()); 
+      this._updates.forEach(update=>{ update(isLazy, nxt_v); });
+    }
+    else {
+      this._updates.forEach(update=>{ nxt_v = update(isLazy, changeHandle); });
+    }
+    this._value = nxt_v;
   }
+  get value(){ return this._value; }
+  set value(val){ this.set(v=>val, true) }
+  
+  /* 工具方法 */
+  // 收集更新 
+  $add_update = (updateFn, ...moreInfo)=>{
+    this._updates.push((isLazy, arg)=>{
+      let pre_v = this.get();
+      let nxt_v = arg; 
+      if (!isLazy) { nxt_v = arg(pre_v, ...moreInfo); }
+      updateFn(pre_v,nxt_v);
+      return nxt_v;
+    })
+  }
+  
 }
 
 /* 是否为可变量对象 
