@@ -1,6 +1,6 @@
 {
   "name": "fedom",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "fe dom solution ",
   "main": "index.js",
   "scripts": {
