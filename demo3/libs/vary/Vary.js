@@ -16,13 +16,17 @@
 */
 export default class Vary {
   constructor(val, nId) {
-    this._value = val; 
     this._num_id = nId ?? NaN;
-    this._updates = []
+    this._value = val; 
+    this._mounteds = [];
+    this._updates = [];
   }
   
   /* 对外接口 */
+  // 取值 
   get = ()=>{ return this._value; }
+  get value(){ return this._value; }
+  // 设值  
   set = (setHandle, thenHandle, isLazy=true)=>{
     thenHandle = thenHandle ?? (a=>null);
     let nxt_v = null;
@@ -36,8 +40,12 @@ export default class Vary {
     this._value = nxt_v;
     thenHandle(nxt_v);
   }
-  get value(){ return this._value; }
   set value(val){ this.set(v=>val, null, true) }
+  // 收集渲染后执行的函数   
+  mounted = (fn)=>{
+    this._mounteds.push(fn);
+  }
+  
   
   /* 工具方法 */
   // 收集更新 
@@ -49,6 +57,12 @@ export default class Vary {
       updateRun(pre_v, nxt_v);
       return nxt_v;
     });
+  }
+  // 执行初始化 
+  $mounted_run = (...args)=>{
+    this._mounteds.forEach((mountedFn,idx)=>{
+      mountedFn(this.get(),...args);
+    })
   }
 }
 
@@ -66,3 +80,4 @@ export function useVary(val){
   const varyVal = new Vary(val, use_vary_num_id++);
   return varyVal;
 }
+

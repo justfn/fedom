@@ -1,10 +1,24 @@
 import { isVary, } from "../vary/Vary.js";
 
-export default function(elem, attrs){
+export default function(elem, attrs, isCpt){
+  // elem.setAttribute(`data-fdid${window._scope_id}`, `fd_${window._scope_id}`)
+  
+  let refKV = {};
   
   for(let key in attrs){
     const val = attrs[key];
-    if (val===undefined || val===null) { continue; }
+    
+    // 组件需将属性作为props传递，只处理 ref，不绑定到元素上 
+    if (isCpt) {
+      if (key==='ref') {
+        refKV[val] = elem;
+      }
+      continue;
+    }
+    
+    if (val===undefined || val===null) { 
+      val = '';
+    }
     
     /* brance: class */
     if (key==='class') {
@@ -24,6 +38,12 @@ export default function(elem, attrs){
       continue;
     }
     
+    /* brance: refs */
+    if (key==='ref') {
+      refKV[val] = elem;
+      continue; 
+    }
+    
     /* brance: other_key */
     try {
       elem.setAttribute(key,val);
@@ -31,8 +51,12 @@ export default function(elem, attrs){
     catch (e) {
       console.warn('# todo attrs other', elem, key, val);
     } 
+    
   };
   
+  return {
+    refKV: refKV,
+  };
 }
 
 
@@ -48,6 +72,7 @@ function deal_class(elem, value){
       let it = itm; 
       if (isVary(itm)) { 
         it = itm.value;
+        itm.$mounted_run(elem.classList);
         // 收集更新 
         itm.$add_update((p_v, n_v)=>{
           elem.classList.remove(p_v);
@@ -104,5 +129,6 @@ function deal_event(elem, evtName, listener){
   })
   
 } 
+
 
 

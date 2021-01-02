@@ -1,12 +1,18 @@
 import { isVary, } from "../vary/Vary.js";
-import compiler from "./compiler.js";
+// import compiler from "./compiler.js";
 
 
-export default function main(elem, child, varyWrap) {
+export default function main(elem, child, varyWrap, isCpt ) {
+  /* brance: vary */
+  if (isVary(child)) { 
+    main(elem, child.value, child, isCpt); 
+    return ;
+  }
+  
+  
   /* brance: undefind null */
   if (child === undefined || child === null) {
-    child = '';
-    deal_text(elem, child, varyWrap);
+    deal_text(elem, '', varyWrap);
     return;
   }
 
@@ -22,19 +28,16 @@ export default function main(elem, child, varyWrap) {
     deal_node(elem, child, varyWrap);
     return ;
   }
-
-  /* brance: vary */
-  if (isVary(child)) { 
-    main(elem, child.value, child); 
-    return ;
-  }
   
   /* brance: arr */
   if (child instanceof Array) { 
+    // Feature: 子节点为数组且为动态的时 
     if (varyWrap) {
-      child.forEach((itm,idx)=>{
-        elem.appendChild(itm);
+      child.forEach(cldItm=>{
+        // elem.appendChild(cldItm);
+        main(elem, cldItm, null, isCpt)
       })
+      varyWrap.$mounted_run(...child);
       varyWrap.$add_update((p_v, n_v)=>{
         let pNode = p_v[0].parentNode;
         pNode.innerHTML = '';
@@ -47,9 +50,10 @@ export default function main(elem, child, varyWrap) {
       return ;
     }
     
-    child.forEach((itm,idx)=>{
-      main(elem, itm);
+    child.forEach((cldItm,idx)=>{
+      main(elem, cldItm, null, isCpt);
     })
+    return ;
   }
   
   console.warn('# todo child', elem, child);
@@ -61,6 +65,7 @@ function deal_text(elem, text, varyWrap){
   elem.appendChild(txtNode);
   
   if (varyWrap) {
+    varyWrap.$mounted_run(text);
     varyWrap.$add_update((p_v, n_v)=>{
       txtNode.textContent = n_v;
       return n_v;
@@ -72,6 +77,7 @@ function deal_node(elem, node, varyWrap){
   elem.appendChild(node);
   
   if (varyWrap) {
+    varyWrap.$mounted_run(node);
     varyWrap.$add_update((p_v, n_v)=>{
       let pNode = p_v.parentNode;
       pNode.removeChild(p_v);

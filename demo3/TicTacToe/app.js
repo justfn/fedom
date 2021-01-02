@@ -1,37 +1,14 @@
 import { useVary, } from "../libs/index.js";
 
-function Square(props){
-  return (
-    <button class="square" onClick={props.onClick}>
-      { props.value }
-    </button>
-  );
-} 
-function Board(props){
-  function renderSquare(i){
-    return <Square value={props.squares[i]} onClick={()=>{ props.onClick(i)}} />;
-  } 
-  return (
-    <div>
-      <div class="board-row">
-        { renderSquare(0) }
-        { renderSquare(1) }
-        { renderSquare(2) }
-      </div>
-      <div class="board-row">
-        { renderSquare(3) }
-        { renderSquare(4) }
-        { renderSquare(5) }
-      </div>
-      <div class="board-row">
-        { renderSquare(6) }
-        { renderSquare(7) }
-        { renderSquare(8) }
-      </div>
-    </div>
-  )
-}
-export default function(props){
+import Board from "./Board.js";
+import Board0 from "./Board0.js";
+
+
+import trackMouse from "./trackMouse.js";
+const mousePosition = trackMouse(document.body);
+
+
+export default function(props, context, router){
   const list = Array(9).fill(null);
   const state = {
     square: list.map((itm,idx)=>{
@@ -58,10 +35,9 @@ export default function(props){
           })
         })
       }
+      // <li class="a006" key="move" > </li>
       return (
-        <li key="move" >
-          <button onClick={click}>{desc}</button>
-        </li>
+        <h3 class="d02" onClick={click}>{desc}</h3>
       );
     });
   } 
@@ -78,6 +54,37 @@ export default function(props){
     
     st.status.set(()=>{ return "Next player: " + (state.xIsNext ? "X" : "O") })
   } 
+  let VaryTag = useVary('section');
+  let VaryBoard = useVary(Board);
+  let varyTxt = useVary('hello');
+  let refs = {
+    root: null, 
+  }; 
+  
+  // setTimeout(()=>{
+  //   VaryTag.value = 'div'
+  // },1000)
+  
+  // setTimeout(()=>{
+  //   VaryBoard.value = Board0;
+  // },1000)
+  
+  setTimeout(()=>{
+    // VaryBoard.value = Board0;
+    varyTxt.value = 'world'; 
+  },1000)
+  moves.mounted((...args)=>{
+    // console.log(args);
+  })
+  context.mounted( ({ root, refs })=>{
+    root.style.background = 'blue'
+    // console.log( '#==== ref',  root, refs );
+  })
+  
+  setTimeout(()=>{
+    // console.log( refs.root );
+  },1000)
+  
   
   let click1 = (i)=>{
     statusUpadte(state);
@@ -100,17 +107,40 @@ export default function(props){
     // if (calculateWinner(state.square) || state.square[i].value ) { return; }
   }
   return (
-    <div class="game">
-      <div class="game-board">
-        <Board squares={state.square} onClick={click1} />        
+    <VaryTag class="a01 game" >
+      
+      { varyTxt  }
+      
+    
+      <div class="b02 game-board" ref="gameBoardRef">
         { /* 
-          */ } 
+        */ } 
+        <VaryBoard class="c001111111111" squares={state.square} onClick={click1} ref="BoardRef" />        
+          
+        { /* */ } 
       </div>
-      <div class="game-info">
-        <div > { state.status } </div>
-        <ol> { moves } </ol>
+      
+      <div class="b03 game-info" ref="gameInfoRef">
+      
+        <div class="c01"> { state.status } </div>
+        
+        <ol class="c02"> { moves } </ol>
+        
+        <div class="c03">
+          <span class="d01" >
+            eee1
+            <span class="e01" />
+            eee2
+          </span>
+          <div class="d09">123123</div>
+        </div>
       </div>
-    </div>
+      
+      <div class="b04">
+        <div class="c04">{ mousePosition.x }</div>
+        <div class="c05">{ mousePosition.y }</div>
+      </div>
+    </VaryTag>
   )
 }
 

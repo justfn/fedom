@@ -10,32 +10,50 @@ import deal_child from "./deal_child.js";
 
 
 /* 处理 jsx 
+  执行顺序 & 深度优先 
   tag       tagNameStr|componentFn|vary 
   attrs     null|{ key:str | key:obj | key:arr | key:vary  } 
   children  [ str|elem|arr|vary ] 
 */
+let refObj = {};
+window._scope_id = 1; // 组件编译scope标识 todo 
+console.log('##### compiler ');
 function compiler(tag, attrs, ...children){
-  console.log('# compiler', tag.toString().slice(0,9) );
   attrs = attrs ?? {};
   
-  const { elem, isCpt, } = deal_tag(tag, attrs);
+  const { 
+    elem, 
+    isCpt, 
+    mountedFns, 
+  } = deal_tag(tag, attrs, null);
   
-  if (!isCpt) {
-    deal_attrs(elem, attrs);
-  }
+  let {
+    refKV, 
+  } = deal_attrs(elem, attrs, isCpt );
+  Object.assign(refObj, refKV);
   
-  children.forEach((itm,idx)=>{
-    if (itm===undefined || itm===null) { return ; }
+  children.forEach(child=>{
+    if (child===undefined || child===null) { return ; }
     
     // 处理字符串子节点：去掉空格&忽略空字符串 
-    if (typeof itm === 'string' ) { 
-      itm = itm.trim(); 
-      if (itm.length===0) { return false; }
+    if (typeof child === 'string' ) { 
+      child = child.trim(); 
+      if (child.length===0) { return ; }
     }
-  
-    deal_child(elem, itm);
+    
+    deal_child(elem, child, null, isCpt);
   })
   
+  console.log('# compiler', tag, elem );
+  
+  mountedFns.forEach((mountedFn,idx)=>{
+    mountedFn({
+      root: elem, 
+      refs: {
+        ...refObj,
+      },
+    });
+  })
   return elem;
 }
 if (!window.$fd_compile) { window.$fd_compile = compiler; }
