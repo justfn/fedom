@@ -38,7 +38,7 @@ export default function main(elem, child, varyWrap, isCpt ) {
         main(elem, cldItm, null, isCpt)
       })
       varyWrap.$mounted_run(...child);
-      varyWrap.$add_update((p_v, n_v)=>{
+      varyWrap.$add_set((p_v, n_v)=>{
         let pNode = p_v[0].parentNode;
         pNode.innerHTML = '';
         // todo 待优化 
@@ -66,7 +66,7 @@ function deal_text(elem, text, varyWrap){
   
   if (varyWrap) {
     varyWrap.$mounted_run(text);
-    varyWrap.$add_update((p_v, n_v)=>{
+    varyWrap.$add_set((p_v, n_v)=>{
       txtNode.textContent = n_v;
       return [n_v];
     }, txtNode)
@@ -78,7 +78,7 @@ function deal_node(elem, node, varyWrap){
   
   if (varyWrap) {
     varyWrap.$mounted_run(node);
-    varyWrap.$add_update((p_v, n_v)=>{
+    varyWrap.$add_set((p_v, n_v)=>{
       let pNode = p_v.parentNode;
       pNode.removeChild(p_v);
       pNode.appendChild(n_v); 

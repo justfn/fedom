@@ -10,7 +10,7 @@ export default function (props, context){
   
   return (
     <div class="component_CptA">
-      aaa
+      bbbbb
     </div>
   )
 }

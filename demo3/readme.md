@@ -9,6 +9,7 @@ todo:
   css 模块化 
   路由实现 
     页面级组件 context 中添加 router 和 route 
+  
   DOM操作性能优化 
   编译模式优化考虑 
 Feature: 
@@ -25,6 +26,7 @@ Feature:
       文本内容 
     动态化嵌套 
     动态化内容初始化后的回调 
+    动态化监听 
   ref 回调函数形式 
 
 ```

@@ -22,22 +22,26 @@ export default function main(tag, attrs, varyWrap){
     let elem = document.createElement(tag);
     // Feature: 标签名动态化,注意 变量名需大写否则jsx不处理  
     if (varyWrap) {
-      varyWrap.$add_update((p_v, n_v, atrs)=>{
+      let pNode = elem.parentNode;
+      let pre_node = elem; 
+      let nxt_node = null;
+      varyWrap.$add_set((p_v, n_v, atrs)=>{
         // Feature_more: 设值为false的值，则直接删除该节点 
         if (!n_v) { 
-          elem.parentNode.removeChild(elem);
+          pre_node.parentNode.removeChild(pre_node);
           return [];
         }
         
-        // elem.tagName = n_v; 
-        // console.log('# todo optimize tag', tag, attrs, varyWrap);
-        let pNode = elem.parentNode;
-        let elemNew = document.createElement(n_v);
-        deal_attrs(elemNew, atrs, false)
-        // todo 属性转移 
-        elemNew.innerHTML = elem.innerHTML;
-        pNode.replaceChild(elemNew, elem);
-        return [n_v];
+        pNode = pNode ?? pre_node.parentNode;
+        console.log( pNode );
+        nxt_node = document.createElement(n_v);
+        deal_attrs(nxt_node, atrs, false)
+        Array.prototype.forEach.call( [...pre_node.childNodes], (itm)=>{
+          nxt_node.appendChild(itm);
+        })
+        pNode.replaceChild(nxt_node, pre_node);
+        pre_node = nxt_node;
+        return [n_v, pNode];
       }, attrs)
     }
     
@@ -83,18 +87,17 @@ export default function main(tag, attrs, varyWrap){
       let pNode = elem.parentNode;
       let pre_node = elem;
       let nxt_node = null;
-      varyWrap.$add_update((p_v, n_v, pNd)=>{
-        pNode = pNode ?? elem.parentNode;
-        pNd = pNd ?? pNode; 
+      varyWrap.$add_set((p_v, n_v)=>{
+        pNode = pNode ?? pre_node.parentNode;
         nxt_node = n_v(attrs, {
           mounted: (fn)=>{
           },
         })
-        pNd.replaceChild(nxt_node, pre_node);
+        pNode.replaceChild(nxt_node, pre_node);
         pre_node = nxt_node;
         // 替换掉组件 
-        return [n_v, pNd];
-      }, pNode)
+        return [n_v, pNode];
+      })
     }
     
     return {

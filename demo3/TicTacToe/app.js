@@ -79,27 +79,32 @@ export default function(props, context, router){
     if (calculateWinner(Vary_state.square)) { return ; }
     
     scope_state.xIsNext = !scope_state.xIsNext;
-    Vary_state.square[i].set(
-      (val)=>{
-        return scope_state.xIsNext ? "X" : "O";
-      }, 
-      ()=>{
-        scope_state.history.push(Vary_state.square.map((itm,idx)=>{
-          return itm.value
-        }))
-      }
-    ) 
+    Vary_state.square[i].set( (val)=>{
+      return scope_state.xIsNext ? "X" : "O";
+    }) 
+    .then((nexVal)=>{
+      scope_state.history.push(Vary_state.square.map((itm,idx)=>{
+        return itm.value
+      }))
+    })
     Vary_state.moves.set((list)=>{
       return getMoves();
     })
   }
   
+  let num = 0;
+  let tags = ['div', 'span', 'acticle']
+  let cpts = [ Board0, CptA, Board ]
   let changeTest = ()=>{
-    Vary_state.tag.value = 'div';
-    // Vary_state.cpt.value = Board0;
-    // Vary_state.cpt.value = CptA;
+    Vary_state.tag.value = tags[num];
+    Vary_state.cpt.value = cpts[num];
+    num++; 
+    
     Vary_state.varyTxt.value = 'world'; 
   }
+  Vary_state.varyTxt.watch( (  pV, nV )=>{
+    console.log( pV, nV);
+  })
   return (
     <Vary_state.tag class="component_Game" >
       

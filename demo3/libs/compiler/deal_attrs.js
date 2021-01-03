@@ -73,7 +73,7 @@ function deal_class(elem, value){
         it = itm.value;
         itm.$mounted_run(elem.classList);
         // 收集更新 
-        itm.$add_update((p_v, n_v)=>{
+        itm.$add_set((p_v, n_v)=>{
           elem.classList.remove(p_v);
           elem.classList.add(n_v);
           return [n_v];

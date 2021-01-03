@@ -16,10 +16,12 @@
 */
 export default class Vary {
   constructor(val, nId) {
+    this.isAlive = true; 
     this._num_id = nId ?? NaN;
     this._value = val; 
     this._mounteds = [];
-    this._updates = [];
+    this._sets = [];
+    this._watchs = [];
   }
   
   /* 对外接口 */
@@ -27,34 +29,59 @@ export default class Vary {
   get = ()=>{ return this._value; }
   get value(){ return this._value; }
   // 设值  
-  set = (setHandle, thenHandle, isLazy=true)=>{
-    thenHandle = thenHandle ?? (a=>null);
+  set = (setHandle, isLazy=true)=>{
+    if (!this.isAlive) { return Promise.reject('sleeping'); }
+    
+    let pre_v = this.get();
     let nxt_v = null;
     if (isLazy) { 
-      nxt_v = setHandle(this.get()); 
-      this._updates.forEach(update=>{ update(nxt_v, isLazy); });
+      nxt_v = setHandle(pre_v); 
+      this._sets.forEach(setFn=>{ setFn(nxt_v, isLazy); });
     }
     else {
-      this._updates.forEach(update=>{ nxt_v = update(setHandle, isLazy)[0]; });
+      this._sets.forEach(setFn=>{ 
+        nxt_v = setFn(setHandle, isLazy)[0]; 
+      });
     }
     this._value = nxt_v;
-    thenHandle(nxt_v);
+    this._watchs.forEach( watchFn=>{
+      watchFn(pre_v, nxt_v);
+    })
+    return Promise.resolve(nxt_v);
   }
-  set value(val){ this.set(v=>val, null, true) }
-  // 收集渲染后执行的函数   
-  mounted = (fn)=>{
-    this._mounteds.push(fn);
+  set value(val){ this.set(v=>val, true) }
+  // 收集渲染后执行的函数 
+  mounted = (mountedHandle)=>{
+    this._mounteds.push(mountedHandle);
   }
-  
+  // 收集更新时执行的函数 
+  watch = (watchHandle)=>{
+    this._watchs.push((p_v, n_v)=>{
+      watchHandle(p_v, n_v);
+    })
+  }
+  // 控制开关 
+  on = ()=>{ this.isAlive = true; }
+  off = (isDied=false)=>{ 
+    if (isDied) {
+      // todo 待优化 
+      for(let key in this){
+        this[key] = null; 
+      };
+    }
+    else {
+      this.isAlive = false; 
+    }
+  }  
   
   /* 工具方法 */
   // 收集更新 
-  $add_update = (updateRun, ...moreInfo)=>{
-    this._updates.push((setVal, isLazy)=>{
+  $add_set = (setRun, ...moreInfo)=>{
+    this._sets.push((setVal, isLazy)=>{
       let pre_v = this.get();
       let nxt_v = setVal; 
       if (!isLazy) { nxt_v = setVal(pre_v, ...moreInfo); }
-      let args = updateRun(pre_v, nxt_v, ...moreInfo);
+      let args = setRun(pre_v, nxt_v, ...moreInfo);
       return [nxt_v, ...args];
     });
   }
