@@ -20,7 +20,24 @@ module.exports = {
             ]
           },
         }, 
-      }
+      },
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              // modules: true, 
+            },
+          },
+          {
+            loader: 'less-loader',
+          },
+        ],
+      },
     ],
   },
   mode: 'development',

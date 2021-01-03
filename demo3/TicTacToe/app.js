@@ -2,6 +2,7 @@ import { useVary, } from "../libs/index.js";
 
 import Board from "./Board.js";
 import Board0 from "./Board0.js";
+import "./app.less";
 
 
 import trackMouse from "./trackMouse.js";
@@ -35,7 +36,6 @@ export default function(props, context, router){
           })
         })
       }
-      // <li class="a006" key="move" > </li>
       return (
         <h3 class="d02" onClick={click}>{desc}</h3>
       );
@@ -58,64 +58,56 @@ export default function(props, context, router){
   let VaryBoard = useVary(Board);
   let varyTxt = useVary('hello');
   let refs = {
-    root: null, 
+    gameBoardRef: null, 
+    boardCpt: null, 
   }; 
+  let gameBoardRef = null; 
   
-  // setTimeout(()=>{
-  //   VaryTag.value = 'div'
-  // },1000)
-  
-  // setTimeout(()=>{
-  //   VaryBoard.value = Board0;
-  // },1000)
-  
-  setTimeout(()=>{
-    // VaryBoard.value = Board0;
-    varyTxt.value = 'world'; 
-  },1000)
   moves.mounted((...args)=>{
     // console.log(args);
   })
-  context.mounted( ({ root, refs })=>{
-    root.style.background = 'blue'
-    // console.log( '#==== ref',  root, refs );
+  context.mounted( ({ root, })=>{
+    // root.style.background = 'blue';
+    console.log( '#==== ref',  root, refs );
+    console.log('ref', gameBoardRef );
   })
-  
   setTimeout(()=>{
-    // console.log( refs.root );
+    // VaryBoard.value = Board0;
+    // varyTxt.value = 'world'; 
+    // VaryTag.value = 'div'
   },1000)
   
   
-  let click1 = (i)=>{
+  let game_run_next = (i)=>{
     statusUpadte(state);
     if (calculateWinner(state.square)) { return ; }
     
     state.xIsNext = !state.xIsNext;
-    state.square[i].set((val)=>{
-      // console.log( val );
-      return state.xIsNext ? "X" : "O";
-    }, ()=>{
-      
-      state.history.push(state.square.map((itm,idx)=>{
-        return itm.value
-      }))
-    }) 
+    state.square[i].set(
+      (val)=>{
+        return state.xIsNext ? "X" : "O";
+      }, 
+      ()=>{
+        state.history.push(state.square.map((itm,idx)=>{
+          return itm.value
+        }))
+      }
+    ) 
     moves.set((list)=>{
-      // console.log(list );
       return getMoves();
     })
     // if (calculateWinner(state.square) || state.square[i].value ) { return; }
   }
   return (
-    <VaryTag class="a01 game" >
+    <VaryTag class="component_Game" >
       
       { varyTxt  }
       
     
-      <div class="b02 game-board" ref="gameBoardRef">
+      <div class="b02 game-board" ref={ el=>gameBoardRef=el }>
         { /* 
         */ } 
-        <VaryBoard class="c001111111111" squares={state.square} onClick={click1} ref="BoardRef" />        
+        <VaryBoard class="c001111111111" ref={ el=>refs.boardCpt=el } squares={state.square} onClick={game_run_next}  />        
           
         { /* */ } 
       </div>

@@ -12,7 +12,7 @@ export default function (props, context){
     return <Square value={props.squares[i]} onClick={()=>{ props.onClick(i)}} />;
   } 
   return (
-    <div class={props.class}>
+    <div class={['component_Board', props.class]}>
       <div class="board-row" ref="bdRowRef">
         { renderSquare(0) }
         { renderSquare(1) }

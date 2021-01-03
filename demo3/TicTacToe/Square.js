@@ -7,7 +7,7 @@ export default function (props, context ){
   
   
   return (
-    <button class="square" onClick={props.onClick} ref="squareRef">
+    <button class="component_Square" onClick={props.onClick} ref="squareRef">
       { props.value }
     </button>
   );

@@ -15,23 +15,31 @@ import deal_child from "./deal_child.js";
   attrs     null|{ key:str | key:obj | key:arr | key:vary  } 
   children  [ str|elem|arr|vary ] 
 */
-let refObj = {};
-window._scope_id = 1; // 组件编译scope标识 todo 
+// let refObj = {};
+let _order_num = 0; 
+
 console.log('##### compiler ');
 function compiler(tag, attrs, ...children){
   attrs = attrs ?? {};
+  // if (tag._scope_id) {
+  //   attrs.__scope = tag._scope_id;
+  // }
   
+  // console.log('# compiler', tag, _order_num );
   const { 
     elem, 
     isCpt, 
     mountedFns, 
   } = deal_tag(tag, attrs, null);
+  // console.log('# compiler', elem, isCpt, tag.toString().slice(0,11), _order_num++ );
   
-  let {
-    refKV, 
-  } = deal_attrs(elem, attrs, isCpt );
-  Object.assign(refObj, refKV);
+  // let {
+  //   refKV, 
+  // } = 
+  deal_attrs(elem, attrs, isCpt );
+  // Object.assign(refObj, refKV);
   
+  // if (isCpt) { console.log( children ); }
   children.forEach(child=>{
     if (child===undefined || child===null) { return ; }
     
@@ -44,14 +52,11 @@ function compiler(tag, attrs, ...children){
     deal_child(elem, child, null, isCpt);
   })
   
-  console.log('# compiler', tag, elem );
   
   mountedFns.forEach((mountedFn,idx)=>{
     mountedFn({
       root: elem, 
-      refs: {
-        ...refObj,
-      },
+      // refs: { },
     });
   })
   return elem;

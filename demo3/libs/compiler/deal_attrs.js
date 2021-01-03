@@ -1,24 +1,22 @@
 import { isVary, } from "../vary/Vary.js";
 
 export default function(elem, attrs, isCpt){
-  // elem.setAttribute(`data-fdid${window._scope_id}`, `fd_${window._scope_id}`)
+  // /* brance: __scopeId todo */
+  // if (key==='__scope') {
+  //   elem.setAttribute(`data-fd_scope_id`, `fd_${val}`);
+  //   continue; 
+  // }
   
-  let refKV = {};
+  if (isCpt) { 
+    deal_cpt(elem, attrs);
+    
+    return ;
+  }
   
   for(let key in attrs){
     const val = attrs[key];
     
-    // 组件需将属性作为props传递，只处理 ref，不绑定到元素上 
-    if (isCpt) {
-      if (key==='ref') {
-        refKV[val] = elem;
-      }
-      continue;
-    }
-    
-    if (val===undefined || val===null) { 
-      val = '';
-    }
+    if (val===undefined || val===null) { val = ''; }
     
     /* brance: class */
     if (key==='class') {
@@ -38,28 +36,29 @@ export default function(elem, attrs, isCpt){
       continue;
     }
     
-    /* brance: refs */
-    if (key==='ref') {
-      refKV[val] = elem;
+    // /* brance: ref_callback */
+    if (key==='ref' ) {
+      deal_ref_callback(elem, val);
       continue; 
     }
     
     /* brance: other_key */
     try {
-      elem.setAttribute(key,val);
+      elem.setAttribute(key, val);
     } 
     catch (e) {
       console.warn('# todo attrs other', elem, key, val);
     } 
     
   };
-  
-  return {
-    refKV: refKV,
-  };
 }
 
-
+function deal_cpt(elem, attrs){
+  // 组件需将属性作为props传递，只处理 ref，不绑定到元素上 
+  if (attrs.ref) {
+    deal_ref_callback(elem, attrs.ref);
+  }
+} 
 function deal_class(elem, value){
   
   if (typeof value === 'string') {
@@ -129,6 +128,10 @@ function deal_event(elem, evtName, listener){
   })
   
 } 
-
+function deal_ref_callback(elem, callback ){
+  if (typeof callback !== 'function') { return ; }
+  
+  callback(elem);
+} 
 
 
