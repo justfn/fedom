@@ -1,6 +1,8 @@
 import { useVary, } from "../../../../libs/index.js";
 
 import Header from "../../Parts/Header/Header.js";
+import CptA from "../tic_tac_toe/CptA.js";
+import "./home.less";
 
 let isActive = useVary(true);
 let val1 = useVary('fd 001');
@@ -51,12 +53,13 @@ export default function(props){
         <li>3</li>
       </ol>
       
-      <Header keya={val1} />
+      <Header class="aaa" keya={val1} > 
+        <div><CptA/></div>
+        { '@@@@@@@@@@@@@' }
+      </Header>
       
-      
-      <div id="bb"> { Hd } </div>
 
-      <Hd id="cc" />
+      <Hd class="bbbb" />
       
       <button onClick={fn2}>{ val1 }</button>
       

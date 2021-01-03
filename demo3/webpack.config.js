@@ -3,9 +3,11 @@ const path = require("path")
 
 module.exports = {
   entry: {
-    // main: './test/main.js', 
-    main: './TicTacToe/main.js', 
+    main: './test/main.js', 
   },
+  // output: {
+  //   publicPath: './',
+  // },
   module: {
     rules: [
       {

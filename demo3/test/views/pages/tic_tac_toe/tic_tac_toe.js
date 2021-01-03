@@ -1,12 +1,12 @@
-import { useVary, } from "../libs/index.js";
+import { useVary, } from "../../../../libs/index.js";
 
 import Board from "./Board.js";
 import Board0 from "./Board0.js";
 import CptA from "./CptA.js";
-import "./app.less";
+import "./tic_tac_toe.less";
 
 
-import trackMouse from "./trackMouse.js";
+import trackMouse from "../../../libs/trackMouse.js";
 const mousePosition = trackMouse(document.body);
 
 

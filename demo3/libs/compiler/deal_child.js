@@ -57,6 +57,7 @@ export default function main(elem, child, varyWrap, isCpt ) {
   }
   
   console.warn('# todo child', elem, child);
+  main(elem, child.toString(), null, isCpt);
 }
 
 function deal_text(elem, text, varyWrap){

@@ -1,6 +1,6 @@
 
 
-import { useVary, } from "../libs/index.js";
+import { useVary, } from "../../libs/index.js";
 
 export default function(elem){
   let x = useVary(0);

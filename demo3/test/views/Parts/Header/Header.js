@@ -3,9 +3,10 @@ import { useVary, } from "../../../../libs/index.js";
 
 let val1 = useVary('c');
 export default function(props){
-  
+  // console.log( props, props.children );
+  props = props ?? {}
   return (
-    <h1 className={['part_Header']}> 
+    <h1 class={['part_Header', props.class]}> 
       aaaa 
       <div>bbb</div> 
       <div>
@@ -13,6 +14,7 @@ export default function(props){
         <span>b</span>
         <span>{ val1 }</span>
       </div>
+      { props.children }
     </h1>
   );
 }

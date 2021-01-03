@@ -25,7 +25,7 @@ function compiler(tag, attrs, ...children){
   //   attrs.__scope = tag._scope_id;
   // }
   
-  // console.log('# compiler', tag, _order_num );
+  // console.log('# compiler', tag, attrs, children, _order_num );
   const { 
     elem, 
     isCpt, 
