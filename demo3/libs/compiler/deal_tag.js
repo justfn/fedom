@@ -1,5 +1,6 @@
 // import compiler from "./compiler.js";
 import { isVary, } from "../vary/Vary.js";
+import deal_attrs from "./deal_attrs.js";
 
 // // 组件编译scope标识 todo 
 // let _scope = {
@@ -21,22 +22,23 @@ export default function main(tag, attrs, varyWrap){
     let elem = document.createElement(tag);
     // Feature: 标签名动态化,注意 变量名需大写否则jsx不处理  
     if (varyWrap) {
-      varyWrap.$add_update((p_v, n_v)=>{
+      varyWrap.$add_update((p_v, n_v, atrs)=>{
         // Feature_more: 设值为false的值，则直接删除该节点 
         if (!n_v) { 
           elem.parentNode.removeChild(elem);
-          return ;
+          return [];
         }
         
         // elem.tagName = n_v; 
-        console.log('# todo optimize tag', tag, attrs, varyWrap);
+        // console.log('# todo optimize tag', tag, attrs, varyWrap);
         let pNode = elem.parentNode;
         let elemNew = document.createElement(n_v);
+        deal_attrs(elemNew, atrs, false)
         // todo 属性转移 
         elemNew.innerHTML = elem.innerHTML;
         pNode.replaceChild(elemNew, elem);
-        return n_v;
-      })
+        return [n_v];
+      }, attrs)
     }
     
     // if (_scope.preId) { 
@@ -78,16 +80,21 @@ export default function main(tag, attrs, varyWrap){
     })
     // Feature: 组件动态化 注意 变量名需大写否则jsx不处理  
     if (varyWrap) {
-      varyWrap.$add_update((p_v, n_v)=>{
-        let pNode = elem.parentNode; 
-        pNode.replaceChild(n_v(attrs, {
+      let pNode = elem.parentNode;
+      let pre_node = elem;
+      let nxt_node = null;
+      varyWrap.$add_update((p_v, n_v, pNd)=>{
+        pNode = pNode ?? elem.parentNode;
+        pNd = pNd ?? pNode; 
+        nxt_node = n_v(attrs, {
           mounted: (fn)=>{
-            
           },
-        }), elem)
+        })
+        pNd.replaceChild(nxt_node, pre_node);
+        pre_node = nxt_node;
         // 替换掉组件 
-        return n_v;
-      })
+        return [n_v, pNd];
+      }, pNode)
     }
     
     return {

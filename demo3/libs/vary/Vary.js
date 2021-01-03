@@ -35,7 +35,7 @@ export default class Vary {
       this._updates.forEach(update=>{ update(nxt_v, isLazy); });
     }
     else {
-      this._updates.forEach(update=>{ nxt_v = update(setHandle, isLazy); });
+      this._updates.forEach(update=>{ nxt_v = update(setHandle, isLazy)[0]; });
     }
     this._value = nxt_v;
     thenHandle(nxt_v);
@@ -54,8 +54,8 @@ export default class Vary {
       let pre_v = this.get();
       let nxt_v = setVal; 
       if (!isLazy) { nxt_v = setVal(pre_v, ...moreInfo); }
-      updateRun(pre_v, nxt_v);
-      return nxt_v;
+      let args = updateRun(pre_v, nxt_v, ...moreInfo);
+      return [nxt_v, ...args];
     });
   }
   // 执行初始化 

@@ -76,6 +76,7 @@ function deal_class(elem, value){
         itm.$add_update((p_v, n_v)=>{
           elem.classList.remove(p_v);
           elem.classList.add(n_v);
+          return [n_v];
         }, elem.classList)
       }
       return  retV + ' ' + it

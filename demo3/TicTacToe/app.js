@@ -2,6 +2,7 @@ import { useVary, } from "../libs/index.js";
 
 import Board from "./Board.js";
 import Board0 from "./Board0.js";
+import CptA from "./CptA.js";
 import "./app.less";
 
 
@@ -10,28 +11,32 @@ const mousePosition = trackMouse(document.body);
 
 
 export default function(props, context, router){
-  const list = Array(9).fill(null);
-  const state = {
-    square: list.map((itm,idx)=>{
-      return useVary(null);
-    }), 
+  const scope_state = {
     xIsNext: true,
-    
     stepNumber: 0,
     history: [ 
-      list,
+      Array(9).fill(null),
     ],
+  }
+  const Vary_state = {
+    square: scope_state.history[0].map((itm,idx)=>{
+      return useVary(null);
+    }), 
     status: useVary(''), 
+    moves: useVary(getMoves()),
+    varyTxt: useVary('hello'),
+    tag: useVary('section'),
+    cpt: useVary(Board),
   };
   function getMoves(){
-    return state.history.map((step, move) => {
+    return scope_state.history.map((step, move) => {
       const desc = move ? `Go to move # ${move}` : 'Go to game start';
       let click = (evt)=>{
-        state.stepNumber = move;
-        statusUpadte(state);
-    
-        state.history[move].forEach((itm,idx)=>{
-          state.square[idx].set(()=>{
+        scope_state.stepNumber = move;
+        statusUpadte(Vary_state);
+        
+        scope_state.history[move].forEach((itm,idx)=>{
+          Vary_state.square[idx].set(()=>{
             return itm;
           })
         })
@@ -41,7 +46,6 @@ export default function(props, context, router){
       );
     });
   } 
-  const moves = useVary(getMoves());
   function statusUpadte(st){
     const winner = calculateWinner(st.square);
     if (winner) { 
@@ -52,18 +56,15 @@ export default function(props, context, router){
       return ;
     } 
     
-    st.status.set(()=>{ return "Next player: " + (state.xIsNext ? "X" : "O") })
+    st.status.set(()=>{ return "Next player: " + (scope_state.xIsNext ? "X" : "O") })
   } 
-  let VaryTag = useVary('section');
-  let VaryBoard = useVary(Board);
-  let varyTxt = useVary('hello');
   let refs = {
     gameBoardRef: null, 
     boardCpt: null, 
   }; 
   let gameBoardRef = null; 
   
-  moves.mounted((...args)=>{
+  Vary_state.moves.mounted((...args)=>{
     // console.log(args);
   })
   context.mounted( ({ root, })=>{
@@ -71,52 +72,53 @@ export default function(props, context, router){
     console.log( '#==== ref',  root, refs );
     console.log('ref', gameBoardRef );
   })
-  setTimeout(()=>{
-    // VaryBoard.value = Board0;
-    // varyTxt.value = 'world'; 
-    // VaryTag.value = 'div'
-  },1000)
   
   
   let game_run_next = (i)=>{
-    statusUpadte(state);
-    if (calculateWinner(state.square)) { return ; }
+    statusUpadte(Vary_state);
+    if (calculateWinner(Vary_state.square)) { return ; }
     
-    state.xIsNext = !state.xIsNext;
-    state.square[i].set(
+    scope_state.xIsNext = !scope_state.xIsNext;
+    Vary_state.square[i].set(
       (val)=>{
-        return state.xIsNext ? "X" : "O";
+        return scope_state.xIsNext ? "X" : "O";
       }, 
       ()=>{
-        state.history.push(state.square.map((itm,idx)=>{
+        scope_state.history.push(Vary_state.square.map((itm,idx)=>{
           return itm.value
         }))
       }
     ) 
-    moves.set((list)=>{
+    Vary_state.moves.set((list)=>{
       return getMoves();
     })
-    // if (calculateWinner(state.square) || state.square[i].value ) { return; }
+  }
+  
+  let changeTest = ()=>{
+    Vary_state.tag.value = 'div';
+    // Vary_state.cpt.value = Board0;
+    // Vary_state.cpt.value = CptA;
+    Vary_state.varyTxt.value = 'world'; 
   }
   return (
-    <VaryTag class="component_Game" >
+    <Vary_state.tag class="component_Game" >
       
-      { varyTxt  }
+      { Vary_state.varyTxt  }
       
     
       <div class="b02 game-board" ref={ el=>gameBoardRef=el }>
         { /* 
         */ } 
-        <VaryBoard class="c001111111111" ref={ el=>refs.boardCpt=el } squares={state.square} onClick={game_run_next}  />        
+        <Vary_state.cpt class="c0011" ref={ el=>refs.boardCpt=el } squares={Vary_state.square} onClick={game_run_next}  />        
           
         { /* */ } 
       </div>
       
-      <div class="b03 game-info" ref="gameInfoRef">
+      <div class="b03 game-info" >
       
-        <div class="c01"> { state.status } </div>
+        <div class="c01"> { Vary_state.status } </div>
         
-        <ol class="c02"> { moves } </ol>
+        <ol class="c02"> { Vary_state.moves } </ol>
         
         <div class="c03">
           <span class="d01" >
@@ -132,7 +134,11 @@ export default function(props, context, router){
         <div class="c04">{ mousePosition.x }</div>
         <div class="c05">{ mousePosition.y }</div>
       </div>
-    </VaryTag>
+      
+      <div>
+          <button onClick={changeTest}> 测试 </button>
+      </div>
+    </Vary_state.tag>
   )
 }
 

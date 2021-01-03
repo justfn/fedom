@@ -4,7 +4,7 @@ import Square from "./Square.js";
 export default function (props, context){
   
   context.mounted(({ root, refs })=>{
-    console.log( '# Board', root, refs);
+    // console.log( '# Board', root, refs);
     
   })
   
@@ -12,8 +12,8 @@ export default function (props, context){
     return <Square value={props.squares[i]} onClick={()=>{ props.onClick(i)}} />;
   } 
   return (
-    <div>
-      aaa
+    <div class={['component_Board', props.class]}>
+      aaa 
       <div class="board-row" ref="bdRowRef">
         { renderSquare(0) }
         { renderSquare(1) }

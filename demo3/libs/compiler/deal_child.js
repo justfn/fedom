@@ -45,7 +45,7 @@ export default function main(elem, child, varyWrap, isCpt ) {
         n_v.forEach((i)=>{
           pNode.appendChild(i);
         })
-        return n_v;
+        return [n_v];
       })
       return ;
     }
@@ -68,7 +68,7 @@ function deal_text(elem, text, varyWrap){
     varyWrap.$mounted_run(text);
     varyWrap.$add_update((p_v, n_v)=>{
       txtNode.textContent = n_v;
-      return n_v;
+      return [n_v];
     }, txtNode)
   }
   
@@ -82,7 +82,7 @@ function deal_node(elem, node, varyWrap){
       let pNode = p_v.parentNode;
       pNode.removeChild(p_v);
       pNode.appendChild(n_v); 
-      return n_v;
+      return [n_v];
     }, elem)
   }
 } 
