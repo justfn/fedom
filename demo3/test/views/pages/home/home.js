@@ -15,7 +15,7 @@ let list = ['a','b','c'].map((itm,idx)=>{
 })
 
 
-export default function(props){
+export default function(props, context){
   let style = {
     'color': 'red',
     'font-size': '20px',
@@ -35,17 +35,28 @@ export default function(props){
       return 'active';
     })
   }
-
+  
+  let htmlDom = context.html(`
+    <div>htmlDom 111 </div>
+    <h1>htmlDom 222</h1>
+    <li>htmlDom 333</li>
+  `)
+  
   return (
     <section class={[ 'fe', isActive, 'dom',  ]} style={style} onClick={fn1}>
+      <button onClick={fn2}>{ val1 }</button>
+      <hr />
       
       { /* */ }
       
       hello fedom
 
+      <hr />
       { val2 }
+      <hr />
 
       <div id="aa">1{ val2 } 2 </div>
+      <hr />
       
       <ol>
         <li>1</li>
@@ -53,21 +64,29 @@ export default function(props){
         <li>3</li>
       </ol>
       
+      <hr />
       <Header class="aaa" keya={val1} > 
-        <div><CptA/></div>
+        <div><CptA name="111"/></div>
+        <div><CptA name="222"/></div>
         { '@@@@@@@@@@@@@' }
       </Header>
       
 
+      <hr />
       <Hd class="bbbb" />
       
-      <button onClick={fn2}>{ val1 }</button>
       
+      <hr />
       { elDom }
       
+      <hr />
       123123
       
+      <hr />
       { list } 
+      
+      <hr />
+      { htmlDom }
     </section>
   );
 }

@@ -29,7 +29,7 @@ function compiler(tag, attrs, ...children){
   const { 
     elem, 
     isCpt, 
-    mountedFns, 
+    mountedFns = [], 
   } = deal_tag(tag, attrs, null);
   // console.log('# compiler', elem, isCpt, tag.toString().slice(0,11), _order_num++ );
   

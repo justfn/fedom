@@ -1,14 +1,7 @@
-// import compiler from "./compiler.js";
 import { isVary, } from "../vary/Vary.js";
 import deal_attrs from "./deal_attrs.js";
 
-// // 组件编译scope标识 todo 
-// let _scope = {
-//   id: 1, 
-//   preId: null, // 前一个处理的id 
-//   // <id>: fn, 
-// }
-// window._scope = _scope; // test 
+
 
 export default function main(tag, attrs, varyWrap){
   /* Vary */
@@ -17,7 +10,35 @@ export default function main(tag, attrs, varyWrap){
     return main(tag.value, attrs, tag);
   }
   
-  /* brance: tagName 最终的出口 */
+  /* output 1: component */
+  if (typeof tag === 'function') {
+    // 注意：此处又将调用 compiler 
+    let { elem, ...rest } = add_cpt_apis(tag, attrs);
+    // Feature: 组件动态化 注意 变量名需大写否则jsx不处理  
+    if (varyWrap) {
+      let pNode = elem.parentNode;
+      let pre_node = elem;
+      let nxt_node = null;
+      varyWrap.$add_set((p_v, n_v)=>{
+        pNode = pNode ?? pre_node.parentNode;
+        nxt_node = n_v(attrs, {
+          mounted: (fn)=>{
+          },
+        })
+        pNode.replaceChild(nxt_node, pre_node);
+        pre_node = nxt_node;
+        // 替换掉组件 
+        return [n_v, pNode];
+      })
+    }
+    
+    return {
+      elem: elem,
+      isCpt: true, 
+      ...rest,
+    };
+  }
+  /* output 2: tagName 最终的出口 */
   if (typeof tag === 'string') {
     let elem = document.createElement(tag);
     // Feature: 标签名动态化,注意 变量名需大写否则jsx不处理  
@@ -45,69 +66,35 @@ export default function main(tag, attrs, varyWrap){
       }, attrs)
     }
     
-    // if (_scope.preId) { 
-    //   let _pre_id = elem.getAttribute(`data-fd_scope_id`);
-    //   _pre_id = _pre_id * 1; 
-    // }
-    // else {
-    //   _scope.preId = _scope.id;
-    //   // elem.setAttribute(`data-fd_scope_id`, `fd_${_scope.id}`);
-    // }
-    // console.log( elem , _scope.id  );
-    let _attrs = {
-      ...attrs,
-    }
     return {
       elem: elem,
       isCpt: false, 
-      mountedFns: [], 
-      _attrs,
     }
   }
-  /* brance: component */
-  if (typeof tag === 'function') {
-    // if (!_scope[tag._scope_id]) {
-    //   tag._scope_id = _scope.id;
-    //   _scope[tag._scope_id] = tag; 
-    //   attrs.__scope = _scope.id;
-    //   ++_scope.id;
-    // }
-    
-    
-    let mountedFns = [];
-    let _attrs = {...attrs, }; 
-    // 注意：此处又将调用 compiler 
-    let elem = tag( _attrs, {
-      mounted: (fn)=>{
-        mountedFns.push(fn)
-      },
-    })
-    // Feature: 组件动态化 注意 变量名需大写否则jsx不处理  
-    if (varyWrap) {
-      let pNode = elem.parentNode;
-      let pre_node = elem;
-      let nxt_node = null;
-      varyWrap.$add_set((p_v, n_v)=>{
-        pNode = pNode ?? pre_node.parentNode;
-        nxt_node = n_v(attrs, {
-          mounted: (fn)=>{
-          },
-        })
-        pNode.replaceChild(nxt_node, pre_node);
-        pre_node = nxt_node;
-        // 替换掉组件 
-        return [n_v, pNode];
-      })
-    }
-    
-    return {
-      elem: elem,
-      isCpt: true, 
-      mountedFns: mountedFns, 
-      _attrs: _attrs,
-    };
-  }
+
   
   console.warn('# todo tag', tag, attrs, varyWrap);
 }
+
+function add_cpt_apis(cpt,attrs){
+  let mountedFns = [];
+  let elem = cpt(attrs, {
+    // 搜集初始化执行操作 
+    mounted: (fn)=>{
+      mountedFns.push(fn)
+    },
+    // 提供插入富文本的能力 
+    html(htmlStr){
+      let div = document.createElement("div")
+      div.innerHTML = htmlStr;
+      return [...div.childNodes];
+    },
+  });
+  return {
+    elem,
+    mountedFns,
+  }
+}
+
+
 
