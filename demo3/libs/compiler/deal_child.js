@@ -8,27 +8,6 @@ export default function main(elem, child, varyWrap, isCpt ) {
     main(elem, child.value, child, isCpt); 
     return ;
   }
-  
-  
-  /* brance: undefind null */
-  if (child === undefined || child === null) {
-    deal_text(elem, '', varyWrap);
-    return;
-  }
-
-  /* brance: text */
-  if (typeof child === 'string' || typeof child === 'number' ) {
-    child += '';
-    deal_text(elem, child, varyWrap);
-    return ;
-  }
-  
-  /* brance: node */
-  if (child instanceof Node) { 
-    deal_node(elem, child, varyWrap);
-    return ;
-  }
-  
   /* brance: arr */
   if (child instanceof Array) { 
     // Feature: 子节点为数组且为动态的时 
@@ -56,6 +35,24 @@ export default function main(elem, child, varyWrap, isCpt ) {
     return ;
   }
   
+  
+  /* Result: undefind null */
+  if (child === undefined || child === null) {
+    deal_text(elem, '', varyWrap);
+    return;
+  }
+  /* Result: text */
+  if (typeof child === 'string' || typeof child === 'number' ) {
+    child += '';
+    deal_text(elem, child, varyWrap);
+    return ;
+  }
+  /* Result: node */
+  if (child instanceof Node) { 
+    deal_node(elem, child, varyWrap);
+    return ;
+  }
+  /* Result: other */
   console.warn('# todo child', elem, child);
   main(elem, child.toString(), null, isCpt);
 }

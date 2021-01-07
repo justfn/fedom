@@ -71,11 +71,9 @@ export default function main(tag, attrs, varyWrap){
       isCpt: false, 
     }
   }
-
-  
+  /* output 3: other todo */
   console.warn('# todo tag', tag, attrs, varyWrap);
 }
-
 function add_cpt_apis(cpt,attrs){
   let mountedFns = [];
   let elem = cpt(attrs, {
