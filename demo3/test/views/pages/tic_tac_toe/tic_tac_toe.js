@@ -1,5 +1,7 @@
 import { useVary, } from "../../../../libs/index.js";
 
+import PageA from "../PageA/PageA.js";
+
 import Board from "./Board.js";
 import Board0 from "./Board0.js";
 import CptA from "./CptA.js";
@@ -106,44 +108,46 @@ export default function(props, context, router){
     console.log( pV, nV);
   })
   return (
-    <Vary_state.tag class="component_Game" >
-      
-      { Vary_state.varyTxt  }
-      
-    
-      <div class="b02 game-board" ref={ el=>gameBoardRef=el }>
-        { /* 
-        */ } 
-        <Vary_state.cpt class="c0011" ref={ el=>refs.boardCpt=el } squares={Vary_state.square} onClick={game_run_next}  />        
-          
-        { /* */ } 
-      </div>
-      
-      <div class="b03 game-info" >
-      
-        <div class="c01"> { Vary_state.status } </div>
+    <PageA>
+      <Vary_state.tag class="component_Game" >
         
-        <ol class="c02"> { Vary_state.moves } </ol>
+        { Vary_state.varyTxt  }
         
-        <div class="c03">
-          <span class="d01" >
-            eee1
-            <span class="e01" />
-            eee2
-          </span>
-          <div class="d09">123123</div>
+      
+        <div class="b02 game-board" ref={ el=>gameBoardRef=el }>
+          { /* 
+          */ } 
+          <Vary_state.cpt class="c0011" ref={ el=>refs.boardCpt=el } squares={Vary_state.square} onClick={game_run_next}  />        
+            
+          { /* */ } 
         </div>
-      </div>
-      
-      <div class="b04">
-        <div class="c04">{ mousePosition.x }</div>
-        <div class="c05">{ mousePosition.y }</div>
-      </div>
-      
-      <div>
-          <button onClick={changeTest}> 测试 </button>
-      </div>
-    </Vary_state.tag>
+        
+        <div class="b03 game-info" >
+        
+          <div class="c01"> { Vary_state.status } </div>
+          
+          <ol class="c02"> { Vary_state.moves } </ol>
+          
+          <div class="c03">
+            <span class="d01" >
+              eee1
+              <span class="e01" />
+              eee2
+            </span>
+            <div class="d09">123123</div>
+          </div>
+        </div>
+        
+        <div class="b04">
+          <div class="c04">{ mousePosition.x }</div>
+          <div class="c05">{ mousePosition.y }</div>
+        </div>
+        
+        <div>
+            <button onClick={changeTest}> 测试 </button>
+        </div>
+      </Vary_state.tag>
+    </PageA>
   )
 }
 

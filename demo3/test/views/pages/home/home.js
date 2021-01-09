@@ -1,7 +1,10 @@
 import { useVary, } from "../../../../libs/index.js";
 
+import PageA from "../PageA/PageA.js";
+
 import Header from "../../Parts/Header/Header.js";
 import CptA from "../tic_tac_toe/CptA.js";
+import FloatCatalog from "../../Parts/FloatCatalog/FloatCatalog.js";
 import "./home.less";
 
 let VaryTag = useVary(Header);
@@ -55,7 +58,7 @@ export default function(props, context){
     // varyShowPart1.value = 'block'
   }
   return (
-    <section class={[ 'fe', isActive, 'dom',  ]} 
+    <PageA class={[ 'fe', isActive, 'dom',  ]} 
       style={style} 
       onClick={fn1}
       >
@@ -96,7 +99,6 @@ export default function(props, context){
       { htmlDom }
       
       
-      
       <hr />
       
       <input value={varyInputVal} />
@@ -105,7 +107,7 @@ export default function(props, context){
       <hr />
       <hr />
       <hr />
-    </section>
+    </PageA>
   );
 }
 
