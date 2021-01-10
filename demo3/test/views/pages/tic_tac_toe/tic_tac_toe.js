@@ -25,29 +25,28 @@ export default function(props, context, router){
       return useVary(null);
     }), 
     status: useVary(''), 
-    moves: useVary(getMoves()),
+    moves: useVary(scope_state.history, (list)=>{
+      return list.map((step, move) => {
+        const desc = move ? `Go to move # ${move}` : 'Go to game start';
+        let click = (evt)=>{
+          scope_state.stepNumber = move;
+          statusUpadte(Vary_state);
+          
+          list[move].forEach((itm,idx)=>{
+            Vary_state.square[idx].set(()=>{
+              return itm;
+            })
+          })
+        }
+        return (
+          <h3 class="d02" onClick={click}>{desc}</h3>
+        );
+      });;
+    }),
     varyTxt: useVary('hello'),
     tag: useVary('section'),
     cpt: useVary(Board),
   };
-  function getMoves(){
-    return scope_state.history.map((step, move) => {
-      const desc = move ? `Go to move # ${move}` : 'Go to game start';
-      let click = (evt)=>{
-        scope_state.stepNumber = move;
-        statusUpadte(Vary_state);
-        
-        scope_state.history[move].forEach((itm,idx)=>{
-          Vary_state.square[idx].set(()=>{
-            return itm;
-          })
-        })
-      }
-      return (
-        <h3 class="d02" onClick={click}>{desc}</h3>
-      );
-    });
-  } 
   function statusUpadte(st){
     const winner = calculateWinner(st.square);
     if (winner) { 
@@ -90,7 +89,7 @@ export default function(props, context, router){
       }))
     })
     Vary_state.moves.set((list)=>{
-      return getMoves();
+      return scope_state.history;
     })
   }
   

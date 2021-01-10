@@ -7,7 +7,7 @@ export default function main(tag, attrs, varyWrap){
   /* Vary */
   if (isVary(tag)) {
     // tag.$mounted_run();
-    return main(tag.value, attrs, tag);
+    return main(tag.get(false), attrs, tag);
   }
   
   /* output 1: component */
