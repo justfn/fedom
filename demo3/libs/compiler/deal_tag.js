@@ -54,7 +54,7 @@ export default function main(tag, attrs, varyWrap){
         }
         
         pNode = pNode ?? pre_node.parentNode;
-        console.log( pNode );
+        // console.log( pNode );
         nxt_node = document.createElement(n_v);
         deal_attrs(nxt_node, atrs, false)
         Array.prototype.forEach.call( [...pre_node.childNodes], (itm)=>{

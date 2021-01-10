@@ -1,18 +1,13 @@
 
+import router from "../../../router/router.js";
+
 import "./FloatCatalog.less";
 export default function (props, context){
   let {
     routes = [], 
   } = context;
   
-  routes = [
-    {
-      path: '/home',
-    },
-    {
-      path: '/tic_tac_toe',
-    },
-  ]
+  routes = router.$routes;
   let links = routes.map((itm,idx)=>{
     return (
       <div>
@@ -26,4 +21,5 @@ export default function (props, context){
       { links }
     </section>
   );
-} 
+}
+
