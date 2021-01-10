@@ -18,11 +18,13 @@ export default function main(elem, child, varyWrap, isCpt ) {
       })
       varyWrap.$mounted_run(...child);
       varyWrap.$add_set((p_v, n_v)=>{
-        let pNode = p_v[0].parentNode;
+        // let pNode = p_v[0].parentNode;
+        let pNode = elem;
         pNode.innerHTML = '';
         // todo 待优化 
         n_v.forEach((i)=>{
-          pNode.appendChild(i);
+          // pNode.appendChild(i);
+          main(elem, i, null, isCpt); 
         })
         return [n_v];
       })
