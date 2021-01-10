@@ -58,10 +58,14 @@ export default class Router {
     }
     
     let pathObj = this._getHashPathObj(evt.newURL);
-    let pathOption = this.$route_map[pathObj.path] ?? {};
+    if (!pathObj.path) {
+      window.location.hash = '/'
+      return ;
+    }
     
-    // 先读缓存 
+    let pathOption = this.$route_map[pathObj.path] ?? {};
     Promise.resolve( this._cached_routes[pathObj.path] )
+    // 先读缓存 
     .then((htmlNode)=>{
       if (htmlNode) { 
         this._root.innerHTML = '';

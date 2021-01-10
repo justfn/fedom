@@ -16,6 +16,12 @@ elDom.textContent = 'testaaa';
 let list = ['a','b','c'].map((itm,idx)=>{
   return <span>{itm}</span>
 })
+let headerTitle = useVary(0);
+setTimeout(function(){
+  headerTitle.set(function(val){
+    return ++val;
+  })
+},1000)
 
 
 export default function(props, context){
@@ -73,7 +79,7 @@ export default function(props, context){
           <li>3</li>
         </ol>
         { '@@@@@@@@@@@@@' }
-        <Header class="aaa" keya={varyText} > 
+        <Header class="aaa" keya={varyText} titleVary={headerTitle} > 
           <div><CptA name="111"/></div>
           <div><CptA name="222"/></div>
         </Header>
@@ -83,7 +89,7 @@ export default function(props, context){
       
       <hr />
       { /* Feature: 动态化-标签、组件 */ }
-      <VaryTag class="bbbb" />
+      <VaryTag class="bbbb"  />
       
       <hr />
       { /* Feature: 动态化-子节点-文本、数值 */ }
