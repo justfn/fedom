@@ -7,6 +7,7 @@ export default class Router {
     const {
       routes = {},
       root = document.body,
+      beforeEach = (v=>true),
     } = routeOptions;
     // 路由Map
     this._route_map = this._dealRoutes(routes);
@@ -14,6 +15,7 @@ export default class Router {
     this._cached_routes = {
       // <path>: <Page>
     };
+    this._beforeEach = beforeEach;
     
     this._hashchangeListener({
       newURL: window.location.href, 
@@ -52,6 +54,7 @@ export default class Router {
     // console.log(evt);
     // evt.oldURL: "http://0.0.0.0:9000/#/home"
     // evt.newURL: "http://0.0.0.0:9000/#/tic_tac_toe"
+    let oldPathObj = {};
     if (evt.oldURL) {
       let oldPathObj = this._getHashPathObj(evt.oldURL);
       let oldPathOption = this._route_map[oldPathObj.path] ?? {};
@@ -67,6 +70,13 @@ export default class Router {
     }
     
     let pathObj = this._getHashPathObj(evt.newURL);
+    
+    let isGo = this._beforeEach(pathObj, oldPathObj);
+    if (!isGo) { 
+      console.log('# 阻止路由访问', pathObj, oldPathObj);
+      return ; 
+    }
+    
     if (!pathObj.path) {
       window.location.hash = '/'
       return ;

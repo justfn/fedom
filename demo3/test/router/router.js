@@ -25,6 +25,12 @@ export default new Router({
     },
   },
   root: document.querySelector("#app"),
+  beforeEach(pathObj, prePathObj){
+    console.log( pathObj, prePathObj );
+    if (pathObj.path==='/aaa') { return false; }
+    
+    return true;
+  },
 })
 
 
