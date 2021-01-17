@@ -1,4 +1,4 @@
-import { useVary, } from "../../../../libs/index.js";
+import { useVary, } from "../../../../fd_lib/index.js";
 
 
 let val1 = useVary('c');

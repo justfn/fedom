@@ -1,6 +1,6 @@
 
 
-import render from "../libs/render.js";
+import render from "../fd_lib/render.js";
 
 
 import App from "./app.js";

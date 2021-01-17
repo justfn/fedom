@@ -1,4 +1,4 @@
-import { useVary, } from "../libs/vary/Vary.js";
+import { useVary, } from "../fd_lib/vary/Vary.js";
 
 
 
