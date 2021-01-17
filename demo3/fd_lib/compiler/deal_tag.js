@@ -1,5 +1,6 @@
 import { isVary, } from "../vary/Vary.js";
 import deal_attrs from "./deal_attrs.js";
+import { $push, $replace } from "../router/router.js";
 
 
 
@@ -47,7 +48,7 @@ export default function main(tag, attrs, varyWrap){
       let pre_node = elem; 
       let nxt_node = null;
       varyWrap.$add_set((p_v, n_v, atrs)=>{
-        // Feature_more: 设值为false的值，则直接删除该节点 
+        // Feature_more: 设值为false的值,则直接删除该节点 
         if (!n_v) { 
           pre_node.parentNode.removeChild(pre_node);
           return [];
@@ -87,6 +88,9 @@ function add_cpt_apis(cpt,attrs){
       div.innerHTML = htmlStr;
       return [...div.childNodes];
     },
+    // 路由跳转能力
+    $push,
+    $replace,
   };
   let elem = cpt(attrs, context);
   return {

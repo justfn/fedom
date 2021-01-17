@@ -11,7 +11,7 @@ export default function (props, context){
   let links = routes.map((itm,idx)=>{
     return (
       <div>
-        <a href={`/#${itm.path}`} > {itm.path} </a>
+        <div onClick={()=>context.$push(itm.path)}>{ itm.path }</div>
       </div>
     )
   })

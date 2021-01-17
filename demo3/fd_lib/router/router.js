@@ -7,7 +7,8 @@ export default class Router {
       routes = {},
       root = document.body,
     } = routeOptions;
-    this.$routes = [];
+    this.$routes = []; 
+    // 路由Map
     this.$route_map = this._dealRoutes(routes);
     this._root = root; 
     this._cached_routes = {
@@ -20,21 +21,24 @@ export default class Router {
     window.addEventListener("hashchange", this._hashchangeListener);
   }
   
-  $update_cache = (path, isCache)=>{
-    
-  }
+  $update_cache = (path, isCache)=>{ }
   
-  _dealRoutes = (routes, routeMap={}, prefix='' )=>{
+  // 处理路由，将路由Map化 
+  _dealRoutes = (routes, routeMap={}, prePath='' )=>{
     for(let pathKey in routes){
       let pathOption = routes[pathKey];
       if ( !/^\//.test(pathKey) ) {
-        pathKey = `${prefix}/${pathKey}`;
+        if (prePath!=='/') { prePath += '/' }
+        pathKey = `${prePath}${pathKey}`;
       }
       routeMap[pathKey] = pathOption;
       this.$routes.push({
         ...pathOption,
         path: pathKey,
       })
+      if (pathOption.alias) {
+        routeMap[pathOption.alias] = pathOption;
+      }
       let children = pathOption.children;
       if (children) {
         this._dealRoutes(children, routeMap, pathKey)
@@ -42,6 +46,7 @@ export default class Router {
     };
     return routeMap;
   }
+  // 路由变换监听  
   _hashchangeListener = (evt)=>{
     // console.log(location.hash);
     // console.log(evt);
@@ -67,6 +72,7 @@ export default class Router {
     Promise.resolve( this._cached_routes[pathObj.path] )
     // 先读缓存 
     .then((htmlNode)=>{
+      // 读缓存 
       if (htmlNode) { 
         this._root.innerHTML = '';
         // console.log('加载缓存', htmlNode);
@@ -74,8 +80,14 @@ export default class Router {
         return Promise.reject();
       }
       
+      // 
+      if (pathOption.redirect) {
+        $replace(pathOption.redirect,pathObj.query);
+        return Promise.reject();
+      }
       if (!pathOption.component) { return Promise.reject(); }
       
+      // 渲染组件  
       return pathOption.component(); 
     })
     // 再读缓存 
@@ -85,9 +97,10 @@ export default class Router {
       render( <Cpt />, this._root )
     })
     .catch((err)=>{
-      if (err) { console.log(err); }
+      if (err) { console.error(err); }
     })
   }
+  // 解析路由参数 
   _getHashPathObj = (fullUrl)=>{
     let result = {
       path: '',
@@ -112,10 +125,41 @@ export default class Router {
     
     return result;
   }
+  
 }
 
 
-
+// 拼接路由参数 
+function _jointHashPath(path,obj,isFull=true){
+  let url = '';
+  if (isFull) {
+    const { origin, pathname, search, } = window.location;
+    let basePath = origin+pathname+search;
+    url = basePath 
+  }
+  url += `#${path}`;
+  let qry = '';
+  let keyNum = 0; 
+  for(let key in obj){
+    keyNum++;
+    let val = obj[key];
+    qry += `&${key}=${val}`
+  };
+  if (keyNum>0) { 
+    qry = '?' + qry.slice(1) 
+  }
+  return url + qry;
+} 
+/* 对外接口 */
+export function $push(path,queryObj={}){
+  let url = _jointHashPath(path,queryObj);
+  // location.hash = _jointHashPath(path,queryObj,false);
+  location.assign(url)
+} 
+export function $replace(path,queryObj={}){
+  let url = _jointHashPath(path,queryObj);
+  location.replace(url);
+} 
 
 
 
