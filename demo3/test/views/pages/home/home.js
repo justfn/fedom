@@ -25,6 +25,7 @@ setTimeout(function(){
 
 
 export default function(props, context){
+  console.log( '# 001', list );
   let varyShowPart1 = useVary('block');
   let style = {
     'color': 'red',

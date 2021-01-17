@@ -1,15 +1,15 @@
 
 import { render, } from "../index.js";
 
+const _routes = [];
 export default class Router {
   constructor(routeOptions = {}){ 
     const {
       routes = {},
       root = document.body,
     } = routeOptions;
-    this.$routes = []; 
     // 路由Map
-    this.$route_map = this._dealRoutes(routes);
+    this._route_map = this._dealRoutes(routes);
     this._root = root; 
     this._cached_routes = {
       // <path>: <Page>
@@ -32,7 +32,7 @@ export default class Router {
         pathKey = `${prePath}${pathKey}`;
       }
       routeMap[pathKey] = pathOption;
-      this.$routes.push({
+      _routes.push({
         ...pathOption,
         path: pathKey,
       })
@@ -54,10 +54,14 @@ export default class Router {
     // evt.newURL: "http://0.0.0.0:9000/#/tic_tac_toe"
     if (evt.oldURL) {
       let oldPathObj = this._getHashPathObj(evt.oldURL);
-      let oldPathOption = this.$route_map[oldPathObj.path] ?? {};
+      let oldPathOption = this._route_map[oldPathObj.path] ?? {};
       
+      // 缓存DOM 
       if (oldPathOption.isCache) {
         this._cached_routes[oldPathObj.path] = this._root.lastElementChild;
+        if (oldPathOption.alias) {
+          this._cached_routes[oldPathOption.alias] = this._root.lastElementChild;
+        }
         // console.log( '缓存html', this._root.lastElementChild );
       }
     }
@@ -68,14 +72,22 @@ export default class Router {
       return ;
     }
     
-    let pathOption = this.$route_map[pathObj.path] ?? {};
+    let pathOption = this._route_map[pathObj.path] ?? {};
     Promise.resolve( this._cached_routes[pathObj.path] )
     // 先读缓存 
     .then((htmlNode)=>{
       // 读缓存 
       if (htmlNode) { 
+        let isExit = [ ...this._root.childNodes ].some((itm,idx)=>{
+          return itm === htmlNode;
+        })
+        if (isExit) { 
+          // console.log('# 不重复渲染相同DOM', htmlNode);
+          return Promise.reject(); 
+        }
+        
         this._root.innerHTML = '';
-        // console.log('加载缓存', htmlNode);
+        // console.log('# 加载缓存', htmlNode);
         render( htmlNode, this._root );
         return Promise.reject();
       }
@@ -90,7 +102,7 @@ export default class Router {
       // 渲染组件  
       return pathOption.component(); 
     })
-    // 再读缓存 
+    // 再解析渲染 
     .then((module)=>{
       let Cpt = module.default;
       this._root.innerHTML = '';
@@ -150,7 +162,7 @@ function _jointHashPath(path,obj,isFull=true){
   }
   return url + qry;
 } 
-/* 对外接口 */
+/* 对外接口 ===================================================================*/
 export function $push(path,queryObj={}){
   let url = _jointHashPath(path,queryObj);
   // location.hash = _jointHashPath(path,queryObj,false);
@@ -160,7 +172,12 @@ export function $replace(path,queryObj={}){
   let url = _jointHashPath(path,queryObj);
   location.replace(url);
 } 
-
+export function $getRoutes(isOrgin=false){
+  if (isOrgin) { return [..._routes];  }
+  
+  // todo 待优化 
+  return JSON.parse(JSON.stringify(_routes));
+}
 
 
 

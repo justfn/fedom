@@ -1,6 +1,6 @@
 import { isVary, } from "../vary/Vary.js";
 import deal_attrs from "./deal_attrs.js";
-import { $push, $replace } from "../router/router.js";
+import { $push, $replace, $getRoutes } from "../router/router.js";
 
 
 
@@ -91,6 +91,7 @@ function add_cpt_apis(cpt,attrs){
     // 路由跳转能力
     $push,
     $replace,
+    $routes: $getRoutes(true),
   };
   let elem = cpt(attrs, context);
   return {

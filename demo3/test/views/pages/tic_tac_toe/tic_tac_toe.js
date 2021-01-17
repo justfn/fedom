@@ -13,6 +13,7 @@ const mousePosition = trackMouse(document.body);
 
 
 export default function(props, context, router){
+  console.log('# welcome!!!');
   const scope_state = {
     xIsNext: true,
     stepNumber: 0,

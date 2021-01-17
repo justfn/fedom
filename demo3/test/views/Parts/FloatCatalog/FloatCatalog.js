@@ -1,13 +1,13 @@
 
-import router from "../../../router/router.js";
 
 import "./FloatCatalog.less";
 export default function (props, context){
-  let {
-    routes = [], 
-  } = context;
   
-  routes = router.$routes;
+  let routes = [...context.$routes];
+  console.log( routes );
+  routes.push({
+    path: '/'
+  })
   let links = routes.map((itm,idx)=>{
     return (
       <div>
