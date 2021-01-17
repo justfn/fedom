@@ -75,11 +75,11 @@ export default function main(tag, attrs, varyWrap){
   console.warn('# todo tag', tag, attrs, varyWrap);
 }
 function add_cpt_apis(cpt,attrs){
-  let mountedFns = [];
-  let elem = cpt(attrs, {
+  let context = {
+    _mountedFns: [],
     // 搜集初始化执行操作 
-    mounted: (fn)=>{
-      mountedFns.push(fn)
+    mounted(fn){
+      this._mountedFns.push(fn)
     },
     // 提供插入富文本的能力 
     html(htmlStr){
@@ -87,10 +87,11 @@ function add_cpt_apis(cpt,attrs){
       div.innerHTML = htmlStr;
       return [...div.childNodes];
     },
-  });
+  };
+  let elem = cpt(attrs, context);
   return {
     elem,
-    mountedFns,
+    context,
   }
 }
 

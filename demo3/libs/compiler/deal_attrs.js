@@ -1,6 +1,6 @@
 import { isVary, } from "../vary/Vary.js";
 
-export default function(elem, attrs, isCpt){
+export default function(elem, attrs, isCpt, context){
   // /* brance: __scopeId todo */
   // if (key==='__scope') {
   //   elem.setAttribute(`data-fd_scope_id`, `fd_${val}`);
@@ -8,7 +8,7 @@ export default function(elem, attrs, isCpt){
   // }
   
   if (isCpt) { 
-    deal_cpt(elem, attrs);
+    deal_cpt(elem, attrs, context);
     
     return ;
   }
@@ -55,10 +55,14 @@ export default function(elem, attrs, isCpt){
 }
 
 /* 处理组件 */
-function deal_cpt(elem, attrs){
+function deal_cpt(elem, attrs, context){
   // 组件需将属性作为props传递，只处理 ref，不绑定到元素上 
   if (attrs.ref) {
-    deal_ref_callback(elem, attrs.ref);
+    // deal_ref_callback(elem, attrs.ref);
+    attrs.ref({
+      ...context, 
+      $elem: elem,
+    })
   }
 } 
 

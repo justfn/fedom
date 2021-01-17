@@ -29,14 +29,16 @@ function compiler(tag, attrs, ...children){
   const { 
     elem, 
     isCpt, 
-    mountedFns = [], 
+    context = {
+      _mountedFns: [],
+    }, 
   } = deal_tag(tag, attrs, null);
   // console.log('# compiler', elem, isCpt, tag.toString().slice(0,11), _order_num++ );
   
   // let {
   //   refKV, 
   // } = 
-  deal_attrs(elem, attrs, isCpt );
+  deal_attrs(elem, attrs, isCpt, context );
   // Object.assign(refObj, refKV);
   
   // if (isCpt) { console.log( children ); }
@@ -53,10 +55,9 @@ function compiler(tag, attrs, ...children){
   })
   
   
-  mountedFns.forEach((mountedFn,idx)=>{
+  context._mountedFns.forEach((mountedFn,idx)=>{
     mountedFn({
       root: elem, 
-      // refs: { },
     });
   })
   return elem;
