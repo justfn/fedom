@@ -3,7 +3,7 @@ const path = require("path")
 
 module.exports = {
   entry: {
-    main: './test/main.js', 
+    main: './web/main.js', 
   },
   // output: {
   //   publicPath: './',
@@ -49,7 +49,7 @@ module.exports = {
   
   devServer: {
     contentBase: path.join(__dirname, "dist"),
-    host: '0.0.0.0',
+    host: '127.0.0.1',
     port: 9000,
     open: true, 
   },

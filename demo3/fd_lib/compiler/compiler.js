@@ -18,8 +18,9 @@ import deal_child from "./deal_child.js";
 // let refObj = {};
 let _order_num = 0; 
 
-console.log('##### compiler ');
+// console.log('##### compiler ');
 function compiler(tag, attrs, ...children){
+  // console.log( '# compiler', [...arguments] );
   attrs = attrs ?? {};
   // if (tag._scope_id) {
   //   attrs.__scope = tag._scope_id;
@@ -32,7 +33,7 @@ function compiler(tag, attrs, ...children){
     context = {
       _mountedFns: [],
     }, 
-  } = deal_tag(tag, attrs, null);
+  } = deal_tag(tag, attrs, children, null);
   // console.log('# compiler', elem, isCpt, tag.toString().slice(0,11), _order_num++ );
   
   // let {
@@ -50,7 +51,7 @@ function compiler(tag, attrs, ...children){
       child = child.trim(); 
       if (child.length===0) { return ; }
     }
-    
+    if (isCpt) { child = '' }
     deal_child(elem, child, null, isCpt);
   })
   

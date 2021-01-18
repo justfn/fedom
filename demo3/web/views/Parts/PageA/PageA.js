@@ -1,7 +1,9 @@
 
-import FloatCatalog from "../../Parts/FloatCatalog/FloatCatalog.js";
+import FloatCatalog from "../FloatCatalog/FloatCatalog.js";
 
-export default function(props, context){
+
+
+export default function PageA(props, context){
   
   
   

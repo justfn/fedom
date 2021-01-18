@@ -1,5 +1,7 @@
 
 
+import "./assets/styles/global.less";
+
 import router from "./router/router.js";
 
 

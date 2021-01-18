@@ -1,11 +1,11 @@
 import { useVary, } from "../../../../fd_lib/index.js";
 
-import PageA from "../PageA/PageA.js";
 
-import Header from "../../Parts/Header/Header.js";
-import CptA from "../tic_tac_toe/CptA.js";
-import FloatCatalog from "../../Parts/FloatCatalog/FloatCatalog.js";
 import "./home.less";
+import PageA from "../../Parts/PageA/PageA.js";
+import Header from "../../Parts/Header/Header.js";
+import CptA from "../apps/TicTacToe/CptA.js";
+import FloatCatalog from "../../Parts/FloatCatalog/FloatCatalog.js";
 
 let VaryTag = useVary(Header);
 let isActive = useVary(true);
@@ -13,9 +13,6 @@ let varyText = useVary('fd 001');
 let val2 = useVary(0);
 let elDom = document.createElement("div")
 elDom.textContent = 'testaaa';
-let list = ['a','b','c'].map((itm,idx)=>{
-  return <span>{itm}</span>
-})
 let headerTitle = useVary(0);
 setTimeout(function(){
   headerTitle.set(function(val){
@@ -23,9 +20,9 @@ setTimeout(function(){
   })
 },1000)
 
+// console.log('# page_home');
 
 export default function(props, context){
-  console.log( '# 001', list );
   let varyShowPart1 = useVary('block');
   let style = {
     'color': 'red',
@@ -73,18 +70,8 @@ export default function(props, context){
       <div style={{display:varyShowPart1,}} onClick={()=>{varyShowPart1.value='none';}}>
         <hr />
         { /* jsx能力 */ }
-        hello fedom
-        <ol>
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-        </ol>
-        { '@@@@@@@@@@@@@' }
-        <Header class="aaa" keya={varyText} titleVary={headerTitle} > 
-          <div><CptA name="111"/></div>
-          <div><CptA name="222"/></div>
-        </Header>
-        { list } 
+        
+        
       </div>
       
       

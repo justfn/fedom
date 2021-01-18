@@ -37,7 +37,6 @@ export default function main(elem, child, varyWrap, isCpt ) {
     return ;
   }
   
-  
   /* Result: undefind null */
   if (child === undefined || child === null) {
     deal_text(elem, '', varyWrap);

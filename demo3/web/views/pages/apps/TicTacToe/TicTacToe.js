@@ -1,16 +1,13 @@
-import { useVary, } from "../../../../fd_lib/index.js";
+import { useVary, } from "../../../../../fd_lib/index.js";
 
-import PageA from "../PageA/PageA.js";
-
+import "./TicTacToe.less";
+import PageA from "../../../Parts/PageA/PageA.js";
 import Board from "./Board.js";
 import Board0 from "./Board0.js";
 import CptA from "./CptA.js";
-import "./tic_tac_toe.less";
 
-
-import trackMouse from "../../../libs/trackMouse.js";
+import trackMouse from "../../../../libs/trackMouse.js";
 const mousePosition = trackMouse(document.body);
-
 
 export default function(props, context, router){
   console.log('# welcome!!!');
@@ -108,7 +105,7 @@ export default function(props, context, router){
     console.log( pV, nV);
   })
   return (
-    <PageA>
+    <PageA class="app_TicTacToe">
       <Vary_state.tag class="component_Game" >
         
         { Vary_state.varyTxt  }

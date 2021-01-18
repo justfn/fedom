@@ -4,7 +4,7 @@ import Square from "./Square.js";
 export default function (props, context){
   
   context.mounted(({ root, })=>{
-    console.log( '# cpta', root, props); 
+    // console.log( '# cpta', root, props); 
   })
   
   return (

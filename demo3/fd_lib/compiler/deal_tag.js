@@ -4,17 +4,17 @@ import { $push, $replace, $getRoutes } from "../router/router.js";
 
 
 
-export default function main(tag, attrs, varyWrap){
+export default function main(tag, attrs, children, varyWrap){
   /* Vary */
   if (isVary(tag)) {
     // tag.$mounted_run();
-    return main(tag.get(false), attrs, tag);
+    return main(tag.get(false), attrs, children, tag);
   }
   
   /* output 1: component */
   if (typeof tag === 'function') {
     // 注意：此处又将调用 compiler 
-    let { elem, ...rest } = add_cpt_apis(tag, attrs);
+    let { elem, ...rest } = add_cpt_apis(tag, attrs, children);
     // Feature: 组件动态化 注意 变量名需大写否则jsx不处理  
     if (varyWrap) {
       let pNode = elem.parentNode;
@@ -75,7 +75,7 @@ export default function main(tag, attrs, varyWrap){
   /* output 3: other todo */
   console.warn('# todo tag', tag, attrs, varyWrap);
 }
-function add_cpt_apis(cpt,attrs){
+function add_cpt_apis(cpt, attrs, children){
   let context = {
     _mountedFns: [],
     // 搜集初始化执行操作 
@@ -93,6 +93,7 @@ function add_cpt_apis(cpt,attrs){
     $replace,
     $routes: $getRoutes(true),
   };
+  attrs.children = [...children];
   let elem = cpt(attrs, context);
   return {
     elem,
