@@ -131,7 +131,7 @@ export function isVary(val){
 /* 使用可变量 
 */
 let use_vary_num_id = 0; 
-export function useVary(val, trimFn){
+export function VaryValue(val, trimFn){
   // console.log( use_vary_num_id );
   const varyVal = new Vary(val, trimFn, use_vary_num_id++);
   return varyVal;

@@ -1,10 +1,10 @@
 
 
-import { useVary, } from "../../fd_lib/index.js";
+import { VaryValue, } from "../../fd_lib/index.js";
 
 export default function(elem){
-  let x = useVary(0);
-  let y = useVary(0);
+  let x = VaryValue(0);
+  let y = VaryValue(0);
   
   elem.addEventListener("mousemove",function(evt){
     // console.log(evt);

@@ -1,7 +1,7 @@
-import { useVary, } from "../../../../fd_lib/index.js";
+import { VaryValue, } from "../../../../fd_lib/index.js";
 
 
-let val1 = useVary('c');
+let val1 = VaryValue('c');
 export default function(props){
   // console.log( props, props.children );
   props = props ?? {};

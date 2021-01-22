@@ -1,8 +1,8 @@
-import { useVary, } from "../../../../fd_lib/index.js";
+import { VaryValue, } from "../../../../fd_lib/index.js";
 
 import "./FloatCatalog.less";
 
-const isFold = useVary(true, (val)=>{
+const isFold = VaryValue(true, (val)=>{
   if (val) { return 'none'; }
   
   return '';

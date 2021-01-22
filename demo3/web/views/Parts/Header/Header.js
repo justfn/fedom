@@ -1,4 +1,4 @@
-import { useVary, } from "../../../../fd_lib/index.js";
+import { VaryValue, } from "../../../../fd_lib/index.js";
 
 import "./Header.less";
 

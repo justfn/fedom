@@ -63,8 +63,6 @@ function compiler(tag, attrs, ...children){
   })
   return elem;
 }
-if (!window.$fd_compile) { window.$fd_compile = compiler; }
-
 export default compiler;
 
 

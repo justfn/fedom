@@ -1,4 +1,4 @@
-import { useVary } from "../../../../../fd_lib/index.js";
+import { VaryValue } from "../../../../../fd_lib/index.js";
 
 import PageA from "../../../Parts/PageA/PageA.js";
 import Header from "../../../Parts/Header/Header.js";

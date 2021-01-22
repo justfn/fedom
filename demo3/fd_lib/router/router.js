@@ -13,7 +13,7 @@ export default class Router {
     this._route_map = this._dealRoutes(routes);
     this._root = root; 
     this._cached_routes = {
-      // <path>: <Page>
+      // <path>: <PageElem>
     };
     this._beforeEach = beforeEach;
     
@@ -23,7 +23,7 @@ export default class Router {
     window.addEventListener("hashchange", this._hashchangeListener);
   }
   
-  $update_cache = (path, isCache)=>{ }
+  // $update_cache = (path, isCache)=>{ }
   
   // 处理路由，将路由Map化 
   _dealRoutes = (routes, routeMap={}, prePath='' )=>{
@@ -33,14 +33,18 @@ export default class Router {
         if (prePath!=='/') { prePath += '/' }
         pathKey = `${prePath}${pathKey}`;
       }
+      if (pathOption.alias) {
+        let _opt = { ...pathOption }
+        routeMap[_opt.alias] = _opt;
+        _opt._alias = _opt.alias;
+        delete _opt.alias;
+        pathOption = _opt;
+      }
       routeMap[pathKey] = pathOption;
       _routes.push({
         ...pathOption,
         path: pathKey,
       })
-      if (pathOption.alias) {
-        routeMap[pathOption.alias] = pathOption;
-      }
       let children = pathOption.children;
       if (children) {
         this._dealRoutes(children, routeMap, pathKey)
@@ -60,7 +64,7 @@ export default class Router {
       let oldPathOption = this._route_map[oldPathObj.path] ?? {};
       
       // 缓存DOM 
-      if (oldPathOption.isCache) {
+      if (oldPathOption.isCache && oldPathOption.component) {
         this._cached_routes[oldPathObj.path] = this._root.lastElementChild;
         if (oldPathOption.alias) {
           this._cached_routes[oldPathOption.alias] = this._root.lastElementChild;
@@ -86,7 +90,13 @@ export default class Router {
     Promise.resolve( this._cached_routes[pathObj.path] )
     // 先读缓存 
     .then((htmlNode)=>{
-      // 读缓存 
+      // 重定向 
+      if (pathOption.redirect) {
+        $replace(pathOption.redirect, pathObj.query);
+        return Promise.reject();
+      }
+      
+      // 出口1：读缓存 
       if (htmlNode) { 
         let isExit = [ ...this._root.childNodes ].some((itm,idx)=>{
           return itm === htmlNode;
@@ -101,15 +111,11 @@ export default class Router {
         render( htmlNode, this._root );
         return Promise.reject();
       }
-      
-      // 
-      if (pathOption.redirect) {
-        $replace(pathOption.redirect,pathObj.query);
-        return Promise.reject();
+      // 出口2：报错 
+      if (!pathOption.component) { 
+        return Promise.reject(`${pathObj.path} 路由，无页面组件！`); 
       }
-      if (!pathOption.component) { return Promise.reject(); }
-      
-      // 渲染组件  
+      // 出口3：渲染组件 
       return pathOption.component(); 
     })
     // 再解析渲染 
@@ -175,8 +181,9 @@ function _jointHashPath(path,obj,isFull=true){
 /* 对外接口 ===================================================================*/
 export function $push(path,queryObj={}){
   let url = _jointHashPath(path,queryObj);
-  // location.hash = _jointHashPath(path,queryObj,false);
-  location.assign(url)
+  console.log(url);
+  location.hash = _jointHashPath(path, queryObj, false);
+  // location.assign(url)
 } 
 export function $replace(path,queryObj={}){
   let url = _jointHashPath(path,queryObj);

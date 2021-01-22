@@ -1,4 +1,4 @@
-import { useVary, } from "../../../../../fd_lib/index.js";
+import { VaryValue, } from "../../../../../fd_lib/index.js";
 
 import "./TicTacToe.less";
 import PageA from "../../../Parts/PageA/PageA.js";
@@ -20,10 +20,10 @@ export default function(props, context, router){
   }
   const Vary_state = {
     square: scope_state.history[0].map((itm,idx)=>{
-      return useVary(null);
+      return VaryValue(null);
     }), 
-    status: useVary(''), 
-    moves: useVary(scope_state.history, (list)=>{
+    status: VaryValue(''), 
+    moves: VaryValue(scope_state.history, (list)=>{
       return list.map((step, move) => {
         const desc = move ? `Go to move # ${move}` : 'Go to game start';
         let click = (evt)=>{
@@ -41,9 +41,9 @@ export default function(props, context, router){
         );
       });;
     }),
-    varyTxt: useVary('hello'),
-    tag: useVary('section'),
-    cpt: useVary(Board),
+    varyTxt: VaryValue('hello'),
+    tag: VaryValue('section'),
+    cpt: VaryValue(Board),
   };
   function statusUpadte(st){
     const winner = calculateWinner(st.square);
