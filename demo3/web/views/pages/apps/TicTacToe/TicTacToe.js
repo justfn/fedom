@@ -105,7 +105,7 @@ export default function(props, context, router){
     console.log( pV, nV);
   })
   return (
-    <PageA class="app_TicTacToe">
+    <PageA class={["app_TicTacToe"]}>
       <Vary_state.tag class="component_Game" >
         
         { Vary_state.varyTxt  }

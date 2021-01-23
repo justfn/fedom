@@ -5,11 +5,11 @@ import FloatCatalog from "../FloatCatalog/FloatCatalog.js";
 
 export default function PageA(props, context){
   
-  
+  let klass = props.class ?? [];
   
   
   return (
-    <section class="PageA">
+    <section class={['PageA', ...klass]}>
       { props.children }
       
       <FloatCatalog />

@@ -82,8 +82,8 @@ function deal_class(elem, value){
         itm.$mounted_run(elem.classList);
         // 收集更新 
         itm.$add_set((p_v, n_v)=>{
-          elem.classList.remove(p_v);
-          elem.classList.add(n_v);
+          if (p_v!=='') { elem.classList.remove(p_v); }
+          if (n_v!=='') { elem.classList.add(n_v); }
           return [n_v];
         }, elem.classList)
       }
@@ -95,7 +95,13 @@ function deal_class(elem, value){
   }
   
   if (isVary(value)) {
-    console.warn('todo');
+    let vl = value.get(false);
+    value.$mounted_run(elem.className);
+    // 收集更新 
+    value.$add_set((p_v, n_v)=>{
+      elem.className = n_v;
+      return [n_v];
+    }, elem.className);
     return ;
   }
 
