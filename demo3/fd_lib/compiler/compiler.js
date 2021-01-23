@@ -4,9 +4,9 @@
 import { 
   isVary, 
 } from "../vary/Vary.js";
-import deal_tag from "./deal_tag.js";
-import deal_attrs from "./deal_attrs.js";
-import deal_child from "./deal_child.js";
+import fd_elem from "./fdelem/fd_elem.js";
+import fd_attrs from "./attrs/fd_attrs.js";
+import fd_child from "./child/fd_child.js";
 
 
 /* 处理 jsx 
@@ -33,13 +33,13 @@ function compiler(tag, attrs, ...children){
     context = {
       _mountedFns: [],
     }, 
-  } = deal_tag(tag, attrs, children, null);
+  } = fd_elem(tag, attrs, children, null);
   // console.log('# compiler', elem, isCpt, tag.toString().slice(0,11), _order_num++ );
   
   // let {
   //   refKV, 
   // } = 
-  deal_attrs(elem, attrs, isCpt, context );
+  fd_attrs(elem, attrs, isCpt, context );
   // Object.assign(refObj, refKV);
   
   // if (isCpt) { console.log( children ); }
@@ -52,7 +52,7 @@ function compiler(tag, attrs, ...children){
       if (child.length===0) { return ; }
     }
     if (isCpt) { child = '' }
-    deal_child(elem, child, null, isCpt);
+    fd_child(elem, child, null, isCpt);
   })
   
   

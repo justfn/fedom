@@ -1,11 +1,11 @@
-import { isVary, } from "../vary/Vary.js";
-// import compiler from "./compiler.js";
+import { isVary, } from "../../vary/Vary.js";
+import { deal_node, } from "./node.js";
+import { deal_text, } from "./text.js";
 
-
-export default function main(elem, child, varyWrap, isCpt ) {
+function fdChild(elem, child, varyWrap, isCpt ) {
   /* brance: vary */
   if (isVary(child)) { 
-    main(elem, child.get(false), child, isCpt); 
+    fdChild(elem, child.get(false), child, isCpt); 
     return ;
   }
   /* brance: arr */
@@ -14,7 +14,7 @@ export default function main(elem, child, varyWrap, isCpt ) {
     if (varyWrap) {
       child.forEach(cldItm=>{
         // elem.appendChild(cldItm);
-        main(elem, cldItm, null, isCpt)
+        fdChild(elem, cldItm, null, isCpt)
       })
       varyWrap.$mounted_run(...child);
       varyWrap.$add_set((p_v, n_v)=>{
@@ -24,7 +24,7 @@ export default function main(elem, child, varyWrap, isCpt ) {
         // todo 待优化 
         n_v.forEach((i)=>{
           // pNode.appendChild(i);
-          main(elem, i, null, isCpt); 
+          fdChild(elem, i, null, isCpt); 
         })
         return [n_v];
       })
@@ -32,7 +32,7 @@ export default function main(elem, child, varyWrap, isCpt ) {
     }
     
     child.forEach((cldItm,idx)=>{
-      main(elem, cldItm, null, isCpt);
+      fdChild(elem, cldItm, null, isCpt);
     })
     return ;
   }
@@ -55,36 +55,10 @@ export default function main(elem, child, varyWrap, isCpt ) {
   }
   /* Result: other */
   console.warn('# todo child', elem, child);
-  main(elem, child.toString(), null, isCpt);
+  fdChild(elem, child.toString(), null, isCpt);
 }
+export default fdChild;
 
-function deal_text(elem, text, varyWrap){
-  
-  let txtNode = document.createTextNode(text);
-  elem.appendChild(txtNode);
-  
-  if (varyWrap) {
-    varyWrap.$mounted_run(text);
-    varyWrap.$add_set((p_v, n_v)=>{
-      txtNode.textContent = n_v;
-      return [n_v];
-    }, txtNode)
-  }
-  
-} 
-function deal_node(elem, node, varyWrap){
-  elem.appendChild(node);
-  
-  if (varyWrap) {
-    varyWrap.$mounted_run(node);
-    varyWrap.$add_set((p_v, n_v)=>{
-      let pNode = p_v.parentNode;
-      pNode.removeChild(p_v);
-      pNode.appendChild(n_v); 
-      return [n_v];
-    }, elem)
-  }
-} 
 
 
 
