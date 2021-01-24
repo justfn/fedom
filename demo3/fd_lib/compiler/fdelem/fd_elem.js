@@ -10,7 +10,10 @@ import {
 
 
 function fd_elem(tag, varyWrap, attrs, children){
-  if (isVary(tag)) { return fd_elem(tag.get(false), tag, attrs, children); }
+  if (isVary(tag)) { 
+    let _tag = tag.get(false);
+    return fd_elem( _tag, tag, attrs, children); 
+  }
   
   /* output 1: component */
   if (typeof tag === 'function') {

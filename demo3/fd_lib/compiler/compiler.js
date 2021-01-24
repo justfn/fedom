@@ -44,7 +44,7 @@ function compiler(tag, attrs, ...children){
     fd_child(elem, child, null, isCpt);
   })
   
-  
+  // 组件初始化回调
   context._mountedFns.forEach((mountedFn,idx)=>{
     mountedFn({
       root: elem, 

@@ -14,17 +14,14 @@ export default function pageJSX(props,context){
     <PageA>
       <Header name={'特性-JSX能力'} />
       
-      { /* 注释，默认什么都不会渲染 */ }
-      
       <Section title="渲染文本">
-        <hr />
-        { '@@@@@@@@@@@@@' }
+        { '一段文本' }
+        又一段文本
+        { /* 注释，默认什么都不会渲染 */ }
+        // 双斜杠不会作为注释
       </Section>
       
-      
-      
-      <section>
-        渲染html 
+      <Section title="渲染html">
         <ol>
           <li>1</li>
           <li>2</li>
@@ -36,12 +33,13 @@ export default function pageJSX(props,context){
             return <dd>{itm}</dd>
           })
         }
-      </section>
+      </Section>
       
-      <section>
-        渲染组件 
-      </section>
-    
+      <Section title="渲染组件">
+        <CptA name="名称2" />
+        <CptA name="名称1" />
+      </Section>
+      
     </PageA>
   );
 }
