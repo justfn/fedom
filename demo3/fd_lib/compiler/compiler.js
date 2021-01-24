@@ -13,16 +13,12 @@ import fd_child from "./child/fd_child.js";
   attrs     null|{ key:str | key:obj | key:arr | key:vary  } 
   children  [ str|elem|arr|vary ] 
 */
-// let refObj = {};
 let _order_num = 0; 
 
 // console.log('##### compiler ');
 function compiler(tag, attrs, ...children){
   // console.log( '# compiler', [...arguments] );
   attrs = attrs ?? {};
-  // if (tag._scope_id) {
-  //   attrs.__scope = tag._scope_id;
-  // }
   
   // console.log('# compiler', tag, attrs, children, _order_num );
   const { 
@@ -34,13 +30,8 @@ function compiler(tag, attrs, ...children){
   } = fd_elem(tag, null, attrs, children);
   // console.log('# compiler', elem, isCpt, tag.toString().slice(0,11), _order_num++ );
   
-  // let {
-  //   refKV, 
-  // } = 
   fd_attrs(elem, attrs, isCpt, context );
-  // Object.assign(refObj, refKV);
   
-  // if (isCpt) { console.log( children ); }
   children.forEach(child=>{
     if (child===undefined || child===null) { return ; }
     

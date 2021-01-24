@@ -3,7 +3,6 @@
 function vary_cls_str(elem, varyWrap){
   let vl = varyWrap.get(false);
   varyWrap.$mounted_run(elem.className);
-  // 收集更新 
   varyWrap.$add_set((p_v, n_v)=>{
     elem.className = n_v;
     return [n_v];
@@ -15,7 +14,6 @@ function vary_cls_arr(elem, arr){
 function vary_cls_arr_itm(elem, itm){
   let it = itm.get(false);
   itm.$mounted_run(elem.classList);
-  // 收集更新 
   itm.$add_set((p_v, n_v)=>{
     if (p_v!=='') { elem.classList.remove(p_v); }
     if (n_v!=='') { elem.classList.add(n_v); }
@@ -24,10 +22,12 @@ function vary_cls_arr_itm(elem, itm){
   return it;
 } 
 function vary_sty_str(elem, varyWrap){
-  let vl = varyWrap.get(false);
-  elem.setAttribute("style",vl)
+  let str = varyWrap.get(false);
+  console.log('# todo');
 } 
-function vary_sty_obj(){
+function vary_sty_obj(elem, varyWrap){
+  let obj = varyWrap.get(false);
+  
   console.log('# todo');
 } 
 function vary_sty_obj_val(elem, styKey, varyWrap ){
