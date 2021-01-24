@@ -1,4 +1,4 @@
-import { isVary, } from "../../vary/Vary.js";
+// import { isVary, } from "../../vary/Vary.js";
 import { 
   deal_cpt, 
 } from "./cpt.js";

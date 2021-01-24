@@ -2,28 +2,22 @@ import { isVary, } from "../../vary/Vary.js";
 import fd_attrs from "../attrs/fd_attrs.js";
 import add_cpt_apis from "./add_cpt_apis.js";
 import { 
-  deal_vary_str, 
-  deal_vary_cpt, 
+  vary_str, 
+  vary_cpt, 
 } from "./vary_value.js";
 
 
 
 
-function fdElem(tag, attrs, children, varyWrap){
-  /* Vary */
-  if (isVary(tag)) {
-    // tag.$mounted_run();
-    return fdElem(tag.get(false), attrs, children, tag);
-  }
+function fd_elem(tag, varyWrap, attrs, children){
+  if (isVary(tag)) { return fd_elem(tag.get(false), tag, attrs, children); }
   
   /* output 1: component */
   if (typeof tag === 'function') {
     // 注意：此处又将调用 compiler 
     let { elem, ...rest } = add_cpt_apis(tag, attrs, children);
     // Feature: 组件动态化 注意 变量名需大写否则jsx不处理  
-    if (varyWrap) {
-      deal_vary_cpt(elem, attrs, varyWrap);
-    }
+    if (varyWrap) { vary_cpt(elem, attrs, varyWrap); }
     
     return {
       elem: elem,
@@ -35,9 +29,7 @@ function fdElem(tag, attrs, children, varyWrap){
   if (typeof tag === 'string') {
     let elem = document.createElement(tag);
     // Feature: 标签名动态化,注意 变量名需大写否则jsx不处理  
-    if (varyWrap) {
-      deal_vary_str(elem, attrs, varyWrap);
-    }
+    if (varyWrap) { vary_str(elem, attrs, varyWrap); }
     
     return {
       elem: elem,
@@ -47,7 +39,7 @@ function fdElem(tag, attrs, children, varyWrap){
   /* output 3: other todo */
   console.warn('# todo tag', tag, attrs, varyWrap);
 }
-export default fdElem;
+export default fd_elem;
 
 
 

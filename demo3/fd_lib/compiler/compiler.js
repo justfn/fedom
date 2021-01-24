@@ -1,9 +1,7 @@
 /* 编译器 
 */
 
-import { 
-  isVary, 
-} from "../vary/Vary.js";
+// import { isVary, } from "../vary/Vary.js";
 import fd_elem from "./fdelem/fd_elem.js";
 import fd_attrs from "./attrs/fd_attrs.js";
 import fd_child from "./child/fd_child.js";
@@ -33,7 +31,7 @@ function compiler(tag, attrs, ...children){
     context = {
       _mountedFns: [],
     }, 
-  } = fd_elem(tag, attrs, children, null);
+  } = fd_elem(tag, null, attrs, children);
   // console.log('# compiler', elem, isCpt, tag.toString().slice(0,11), _order_num++ );
   
   // let {

@@ -1,6 +1,11 @@
 import { isVary, } from "../../vary/Vary.js";
-import { deal_node, } from "./node.js";
-import { deal_text, } from "./text.js";
+import { 
+  deal_node, 
+  deal_text, 
+} from "./deal.js";
+import { 
+  vary_arr, 
+} from "./vary_value.js";
 
 function fdChild(elem, child, varyWrap, isCpt ) {
   /* brance: vary */
@@ -12,22 +17,7 @@ function fdChild(elem, child, varyWrap, isCpt ) {
   if (child instanceof Array) { 
     // Feature: 子节点为数组且为动态的时 
     if (varyWrap) {
-      child.forEach(cldItm=>{
-        // elem.appendChild(cldItm);
-        fdChild(elem, cldItm, null, isCpt)
-      })
-      varyWrap.$mounted_run(...child);
-      varyWrap.$add_set((p_v, n_v)=>{
-        // let pNode = p_v[0].parentNode;
-        let pNode = elem;
-        pNode.innerHTML = '';
-        // todo 待优化 
-        n_v.forEach((i)=>{
-          // pNode.appendChild(i);
-          fdChild(elem, i, null, isCpt); 
-        })
-        return [n_v];
-      })
+      vary_arr(elem, child, varyWrap, isCpt, fdChild);
       return ;
     }
     

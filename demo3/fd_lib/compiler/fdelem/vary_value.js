@@ -2,7 +2,7 @@ import fd_attrs from "../attrs/fd_attrs.js";
 
 
 
-function deal_vary_cpt(elem, attrs, varyWrap){
+function vary_cpt(elem, attrs, varyWrap){
   let pNode = elem.parentNode;
   let pre_node = elem;
   let nxt_node = null;
@@ -19,7 +19,7 @@ function deal_vary_cpt(elem, attrs, varyWrap){
   })
 } 
 
-function deal_vary_str(elem, attrs, varyWrap){
+function vary_str(elem, attrs, varyWrap){
   let pNode = elem.parentNode;
   let pre_node = elem; 
   let nxt_node = null;
@@ -45,7 +45,7 @@ function deal_vary_str(elem, attrs, varyWrap){
 } 
 
 export {
-  deal_vary_cpt,
-  deal_vary_str,
+  vary_cpt,
+  vary_str,
 }
 
