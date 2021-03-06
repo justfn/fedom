@@ -1,8 +1,11 @@
-import { VaryValue } from "../../../../../fd_lib/index.js";
-
 import "./appHome.less";
 import PageA from "../../../Parts/PageA/PageA.js";
 import Header from "../../../Parts/Header/Header.js";
+
+const {
+  VaryValue,
+} = window.$fd;
+
 
 export default function(props,context){
   

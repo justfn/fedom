@@ -1,6 +1,10 @@
-import { VaryValue, } from "../../../../fd_lib/index.js";
 
 import "./FloatCatalog.less";
+
+
+const {
+  VaryValue,
+} = window.$fd;
 
 const isFold = VaryValue(true, (val)=>{
   if (val) { return 'none'; }

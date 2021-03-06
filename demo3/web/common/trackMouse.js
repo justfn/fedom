@@ -1,6 +1,8 @@
 
+const {
+  VaryValue, 
+} = window.$fd;
 
-import { VaryValue, } from "../../fd_lib/index.js";
 
 export default function(elem){
   let x = VaryValue(0);

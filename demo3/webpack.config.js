@@ -17,7 +17,7 @@ module.exports = {
           options: {
             presets: ['@babel/preset-env',],
             plugins: [
-              ['@babel/plugin-transform-react-jsx', { pragma: 'window.$fd_compile' },],
+              ['@babel/plugin-transform-react-jsx', { pragma: 'window.$fd.compiler' },],
               '@babel/plugin-proposal-class-properties',
             ]
           },

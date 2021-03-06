@@ -1,10 +1,14 @@
-import { VaryValue } from "../../../../../fd_lib/index.js";
 
 import "./jsx.less";
 import PageA from "../../../Parts/PageA/PageA.js";
 import Header from "../../../Parts/Header/Header.js";
 import Section from "../../../Parts/Section/Section.js";
 import CptA from "./CptA.js";
+
+
+const {
+  VaryValue,
+} = window.$fd;
 
 export default function pageJSX(props,context){
   

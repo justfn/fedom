@@ -1,6 +1,10 @@
-import { VaryValue, } from "../../../../fd_lib/index.js";
 
 import "./Header.less";
+
+
+const {
+  VaryValue,
+} = window.$fd;
 
 export default function Header(props, context){
   let klass = props.class ?? '';

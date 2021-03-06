@@ -1,31 +1,33 @@
+const {
+  Router,
+} = window.$fd;
 
-import { Router, } from "../../fd_lib/index.js";
 
 const routes = {
   // 首页、主页 
   '/': {
-    component: ()=>import('../views/pages/home/home.js'),
+    component: ()=>import('../pages/home/home.js'),
     alias: '/home',
     isCache: true, // bol|fn,是否缓存 
   },
   // 特性展示 
   '/feature': {
     // alias: '/feature/home',
-    // component: ()=>import('../views/pages/fealture/fealtureHome/fealtureHome.js'),
+    // component: ()=>import('../pages/fealture/fealtureHome/fealtureHome.js'),
     isCache: true, // bol|fn,是否缓存 
     children: {
       'jsx': {
-        component: ()=>import('../views/pages/fealture/jsx/jsx.js'),
+        component: ()=>import('../pages/fealture/jsx/jsx.js'),
       },
     }, 
   },
   // 应用：特性综合使用 
   '/apps': {
-    component: ()=>import('../views/pages/apps/appHome/appHome.js'),
+    component: ()=>import('../pages/apps/appHome/appHome.js'),
     isCache: true, // bol|fn,是否缓存 
     children: {
       'TicTacToe': {
-        component: ()=>import('../views/pages/apps/TicTacToe/TicTacToe.js'),
+        component: ()=>import('../pages/apps/TicTacToe/TicTacToe.js'),
       },
     },
   },
@@ -35,7 +37,7 @@ const routes = {
     isCache: true, // bol|fn,是否缓存 
     children: {
       'home': {
-        component: ()=>import('../views/pages/test/testHome/testHome.js'),
+        component: ()=>import('../pages/test/testHome/testHome.js'),
       },
     }
   },

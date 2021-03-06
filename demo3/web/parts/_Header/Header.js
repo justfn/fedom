@@ -1,5 +1,7 @@
-import { VaryValue, } from "../../../../fd_lib/index.js";
 
+const {
+  VaryValue,
+} = window.$fd;
 
 let val1 = VaryValue('c');
 export default function(props){

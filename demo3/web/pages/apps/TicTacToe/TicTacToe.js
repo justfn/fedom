@@ -1,12 +1,14 @@
-import { VaryValue, } from "../../../../../fd_lib/index.js";
 
 import "./TicTacToe.less";
 import PageA from "../../../Parts/PageA/PageA.js";
 import Board from "./Board.js";
 import Board0 from "./Board0.js";
 import CptA from "./CptA.js";
+const {
+  VaryValue,
+} = window.$fd;
 
-import trackMouse from "../../../../libs/trackMouse.js";
+import trackMouse from "../../../common/trackMouse.js";
 const mousePosition = trackMouse(document.body);
 
 export default function(props, context, router){

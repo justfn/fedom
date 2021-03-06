@@ -1,18 +1,21 @@
 
-
 import "./home.less";
 import PageA from "../../Parts/PageA/PageA.js";
 import Header from "../../Parts/Header/Header.js";
 import CptA from "../apps/TicTacToe/CptA.js";
 import FloatCatalog from "../../Parts/FloatCatalog/FloatCatalog.js";
 
-let VaryTag = $VaryValue(Header);
-let isActive = $VaryValue(true);
-let varyText = $VaryValue('fd 001');
-let val2 = $VaryValue(0);
+const {
+  VaryValue, 
+} = window.$fd
+
+let VaryTag = VaryValue(Header);
+let isActive = VaryValue(true);
+let varyText = VaryValue('fd 001');
+let val2 = VaryValue(0);
 let elDom = document.createElement("div")
 elDom.textContent = 'testaaa';
-let headerTitle = $VaryValue(0);
+let headerTitle = VaryValue(0);
 setTimeout(function(){
   headerTitle.set(function(val){
     return ++val;
@@ -22,7 +25,7 @@ setTimeout(function(){
 // console.log('# page_home');
 
 export default function(props, context){
-  let varyShowPart1 = $VaryValue('block');
+  let varyShowPart1 = VaryValue('block');
   let style = {
     'color': 'red',
     'font-size': '20px',
@@ -43,7 +46,7 @@ export default function(props, context){
     })
   }
   
-  let varyInputVal = $VaryValue('init val');
+  let varyInputVal = VaryValue('init val');
   let inputHandel = (evt)=>{
     let val = evt.target.value
     varyInputVal.value = val; 
