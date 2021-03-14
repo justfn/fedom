@@ -2,6 +2,8 @@
 
 ```
 todo: 
+  $isRender 
+  $isShow  
   编译空间 
     ref 字符串形式支持 
     data-scope_id="xx" 
