@@ -1,3 +1,8 @@
+
+
+import message from "../../message.js";
+
+
 /** 可变量对象 
 * @author  fsl 
 * @time    时间值 
@@ -125,7 +130,10 @@ export default class Vary {
 /* 是否为可变量对象 
 */
 export function isVary(val){
-  return val instanceof Vary;
+  let bol = val instanceof Vary;
+  if (bol && isVary(val.get(false))) { throw message.errors.mutil_vary; }
+  
+  return bol;
 }
 
 /* 使用可变量 

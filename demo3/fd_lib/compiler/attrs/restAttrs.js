@@ -4,14 +4,16 @@ import {
   vary_cls_str,
   vary_cls_arr,
   vary_cls_arr_itm,
+} from "../../featrues/vary/attrClass.js";
+import {
   vary_sty_str,
   vary_sty_obj,
   vary_sty_obj_val,
-} from "./vary_value.js";
+} from "../../featrues/vary/attrStyle.js";
 
-function deal_class(elem, value, varyWrap){
+export function addClassAttr(elem, value, varyWrap){
   if (isVary(value)) {
-    deal_class(elem, value.get(false), value);
+    addClassAttr(elem, value.get(false), value);
     return ;
   }
   
@@ -41,7 +43,7 @@ function deal_class(elem, value, varyWrap){
   console.warn('# todo attrs class', elem, value);
 } 
 
-function deal_style(elem, value, varyWrap){
+export function addStyleAttr(elem, value, varyWrap){
   if (isVary(value)) {
     deal_style(elem, value.get(false), value);
     return ;
@@ -66,7 +68,7 @@ function deal_style(elem, value, varyWrap){
   console.warn('# todo attrs style', elem, value);
 } 
 
-function deal_event(elem, evtName, listener){
+export function addEventAttr(elem, evtName, listener){
   
   elem.addEventListener(evtName, (evt)=>{
     return listener(evt);
@@ -74,18 +76,12 @@ function deal_event(elem, evtName, listener){
   
 } 
 
-function deal_ref_callback(elem, callback ){
+export function addRefAttr(elem, callback ){
   if (typeof callback !== 'function') { return ; }
   
   callback(elem);
 } 
 
 
-export {
-  deal_class,
-  deal_style,
-  deal_event,
-  deal_ref_callback,
-};
 
 

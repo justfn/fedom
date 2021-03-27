@@ -9,7 +9,7 @@ const {
   VaryValue, 
 } = window.$fd
 
-let VaryTag = VaryValue(Header);
+let Header_ = VaryValue(Header);
 let isActive = VaryValue(true);
 let varyText = VaryValue('fd 001');
 let val2 = VaryValue(0);
@@ -63,7 +63,7 @@ export default function(props, context){
     
     // varyShowPart1.value = 'block'
     
-    VaryTag.value = CptA
+    Header_.value = CptA
   }
   return (
     <PageA class={[ 'fe', isActive, 'dom',  ]} 
@@ -82,7 +82,7 @@ export default function(props, context){
       <hr />
       { /* Feature: 动态化-标签、组件 
         */ }
-      <VaryTag class="bbbb"  />
+      <Header_ class="bbbb"  />
       
       <hr />
       { /* Feature: 动态化-子节点-文本、数值 */ }

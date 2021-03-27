@@ -1,15 +1,18 @@
 import { isVary, } from "../../featrues/vary/Vary.js";
 
 /* 处理表单元素 */
-function is_form_elems(node){
+export function isFormNode(node){
   let nodeName = node.nodeName ?? '';
   nodeName = nodeName.toLowerCase();
   return ['input'].includes(nodeName);
 };
-function deal_form_elems(elem,key,val){
+export function addFormAttrs(elem,key,val){
   // 处理 input value 
   if (elem.nodeName.toLowerCase()==='input' && key==='value') {
     let inputVal = val;
+    
+    /* Features: 
+    */
     if (isVary(val)) {
       inputVal = val.get(false);
       val.$add_set((p_v,n_v)=>{
@@ -27,8 +30,4 @@ function deal_form_elems(elem,key,val){
   }
 } 
 
-export {
-  is_form_elems,
-  deal_form_elems,
-};
 
