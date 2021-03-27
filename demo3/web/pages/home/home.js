@@ -62,6 +62,8 @@ export default function(props, context){
     varyInputVal.value = Date.now();
     
     // varyShowPart1.value = 'block'
+    
+    VaryTag.value = CptA
   }
   return (
     <PageA class={[ 'fe', isActive, 'dom',  ]} 
@@ -78,7 +80,8 @@ export default function(props, context){
       
       
       <hr />
-      { /* Feature: 动态化-标签、组件 */ }
+      { /* Feature: 动态化-标签、组件 
+        */ }
       <VaryTag class="bbbb"  />
       
       <hr />

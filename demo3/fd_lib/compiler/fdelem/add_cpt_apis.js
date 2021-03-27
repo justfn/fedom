@@ -19,9 +19,9 @@ function add_cpt_apis(cpt, attrs, children){
     $routes: $getRoutes(true),
   };
   attrs.children = [...children];
-  let elem = cpt(attrs, context);
+  let realNode = cpt(attrs, context);
   return {
-    elem,
+    realNode,
     context,
   };
 }

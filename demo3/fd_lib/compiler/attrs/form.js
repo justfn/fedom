@@ -1,4 +1,4 @@
-import { isVary, } from "../../vary/Vary.js";
+import { isVary, } from "../../featrues/vary/Vary.js";
 
 /* 处理表单元素 */
 function is_form_elems(node){

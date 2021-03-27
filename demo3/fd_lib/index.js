@@ -2,7 +2,7 @@
 */
 
 import compiler from "./compiler/compiler.js";
-import { VaryValue, } from "./vary/Vary.js";
+import { VaryValue, } from "./featrues/vary/Vary.js";
 import render from "./render.js";
 import Router from "./router/router.js";
 

@@ -1,7 +1,6 @@
 /* 编译器 
 */
 
-// import { isVary, } from "../vary/Vary.js";
 import fd_elem from "./fdelem/fd_elem.js";
 import fd_attrs from "./attrs/fd_attrs.js";
 import fd_child from "./child/fd_child.js";
@@ -22,15 +21,15 @@ function compiler(tag, attrs, ...children){
   
   // console.log('# compiler', tag, attrs, children, _order_num );
   const { 
-    elem, 
+    realNode, 
     isCpt, 
     context = {
       _mountedFns: [],
     }, 
   } = fd_elem(tag, null, attrs, children);
-  // console.log('# compiler', elem, isCpt, tag.toString().slice(0,11), _order_num++ );
+  // console.log('# compiler', realNode, isCpt, tag.toString().slice(0,11), _order_num++ );
   
-  fd_attrs(elem, attrs, isCpt, context );
+  fd_attrs(realNode, attrs, isCpt, context );
   
   children.forEach(child=>{
     if (child===undefined || child===null) { return ; }
@@ -41,16 +40,16 @@ function compiler(tag, attrs, ...children){
       if (child.length===0) { return ; }
     }
     if (isCpt) { child = '' }
-    fd_child(elem, child, null, isCpt);
+    fd_child(realNode, child, null, isCpt);
   })
   
   // 组件初始化回调
   context._mountedFns.forEach((mountedFn,idx)=>{
     mountedFn({
-      root: elem, 
+      root: realNode, 
     });
   })
-  return elem;
+  return realNode;
 }
 export default compiler;
 

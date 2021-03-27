@@ -1,7 +1,7 @@
 
 /* fedom 节点
 */
-
+import message from "../../message.js";
 
 import { isVary, } from "../../featrues/vary/Vary.js";
 import { isComponent, } from "../../featrues/component/Component.js";
@@ -35,17 +35,25 @@ import {
 } from "../child/vary_value.js";
 
 class FNode {
-  constructor(tagName, attrs, children){
-    attrs = attrs || {}; 
-    this.attrs = { 
-      ...attrs, 
-      children: [...children],
+  constructor(tagName, attrs, children, varyTag){
+    this.fnodeType = this.getTagType(tagName);
+    this.children = [...children];
+    let props = attrs || {}; 
+    this.props = { 
+      ...props, 
+      children: this.children,
     }
-    console.log( 1 );
-    this._dealElem(tagName, children);
-    console.log( 2);
-    this._dealAttrs(attrs);
-    this._dealChildren(children);
+    let { 
+      realNode, 
+    } = this._dealElem({
+      tagName, 
+      props: this.props, 
+      children: this.children,
+      varyTag: varyTag, 
+    });
+    this._dealAttrs(realNode, props);
+    this._dealChildren(realNode, this.children);
+    
     
     /* ** feature_todo: 生命周期 渲染后的回调 
     // this.fnContext._mountedFns.forEach((mountedFn,idx)=>{
@@ -55,8 +63,13 @@ class FNode {
     // })
     */
   }
-  // 节点类型: tag | fn | cls 
+  // 节点类型: tag | fn | cls | vary
   fnodeType = ''; 
+  realType = ''; // tag | fn | cls 
+  // 子节点集合 
+  children = [];
+  // 节点属性集合 
+  props = {};
   // 函数组件的 context 
   fnContext = {
     _mountedFns: [],
@@ -75,71 +88,106 @@ class FNode {
     $replace,
     $routes: $getRoutes(true),
   };
-  // 节点属性集合 
-  attrs = {};
   // 真实节点 
   realNode = '';
   
+  /* --------------------------------------------------------------- tools */
+  // 检查节点类型 
+  getTagType(tagName){
+    if (isVary(tagName)) { 
+      let realTag = tagName.get(false);
+      let realType = this.getTagType(realTag);
+      if (realType==='vary') { throw message.errors.mutil_vary; }
+      
+      this.realType = realType;
+      return 'vary'; 
+    }
+    if (isComponent(tagName)) { return 'cls'; }
+    if (typeof tagName === 'function') { return 'fn'; }
+    if (typeof tagName === 'string') { return 'tag'; }
+    
+    return 'unknow';
+  }
   
   /* --------------------------------------------------------------- 处理元素 */
-  _dealElem(tagName, children){
-    let tagVary = null; 
-    /* ** feature_todo: vary tagName 
-    */
-    console.log(1,isVary(tagName), tagName, this.attrs);
-    if (isVary(tagName)) { 
-      console.log(2, isVary(tagName), tagName, this.attrs);
-      tagVary = tagName;
-      let tagName = tagVary.get(false);
-      return this._dealElem( tagName, children); 
-    }
-    
-    /* branch 1: tagName 最终的出口 */
-    if (typeof tagName === 'string') {
-      console.log( this.fnodeType, '111' );
-      this.fnodeType = 'tag'
-      this.realNode = document.createElement(tagName);
-      /* ** feature_todo: vary tagName string 
-      */
-      // Feature: 标签名动态化,注意 变量名需大写否则jsx不处理  
-      if (tagVary) { vary_str_el(this.realNode, attrs, tagVary); }
+  _dealElem({ tagName, props, children, varyTag }){
+    if (isVary(tagName)&&varyTag) { 
+      throw message.errors.mutil_vary;
       return ;
     }
     
-    /* branch 2: function */
+    /* ** feature_todo: vary tagName 
+    */
+    if (isVary(tagName)) { 
+      varyTag = tagName;
+      tagName = varyTag.get(false);
+      let fNode = new FNode(tagName, props, children, varyTag);
+      return {
+        realNode: fNode.realNode,
+      }
+      // this._dealElem({
+      //   tagName, 
+      //   props, 
+      //   children, 
+      //   varyTag, 
+      // }); 
+    }
+    
+    /* branch 1: class */
     if (isComponent(tagName)) {
-      this.fnodeType = 'cls'
       // 注意：此处又将调用 compiler 
-      let ctx = new tagName(this.attrs);
-      this.realNode = ctx.render(this.attrs);
+      let ctx = new tagName(props);
+      let realNode = ctx.render(props);
+      // this.realNode = realNode;
       
       /* ** feature_todo: vary tagName cls cpt 
       */
       
-      return ;
+      return {
+        realNode, 
+      };
     }
     
-    /* branch 3: function */
+    /* branch 2: function */
     if (typeof tagName === 'function') {
-      console.log( this.fnodeType, '222' );
-      this.fnodeType = 'fn'
       // 注意：此处又将调用 compiler 
-      this.realNode = tagName(this.attrs, this.fnContext);
+      let realNode = tagName(props, this.fnContext);
+      // this.realNode = realNode;
       
       /* ** feature_todo: vary tagName fn cpt 
       */
       // Feature: 组件动态化 注意 变量名需大写否则jsx不处理  
-      if (tagVary) { vary_cpt(this.realNode, this.attrs, tagVary); }
+      if (varyTag) { 
+        console.log('000', realNode );
+        vary_cpt(realNode, props, varyTag); 
+      }
       
-      return ;
+      return {
+        realNode,
+      };
     }
     
+    /* branch 3: tagName 最终的出口 */
+    if (typeof tagName === 'string') {
+      let realNode = document.createElement(tagName);
+      // this.realNode = realNode;
+      
+      /* ** feature_todo: vary tagName string 
+      */
+      // Feature: 标签名动态化,注意 变量名需大写否则jsx不处理  
+      if (varyTag) { vary_str_el(realNode, props, varyTag); }
+      
+      return {
+        realNode,
+      };
+    }
+
+    
     /* branch 9: other todo */
-    console.warn('# todo tag', tagName, this.attrs, tagVary);
+    console.warn('# todo tag', tagName, props, varyTag);
   }
   /* --------------------------------------------------------------- 处理属性 */
-  _dealAttrs(attrs){
-    let elem = this.realNode;
+  _dealAttrs(elem, attrs){
     // /* brance: __scopeId todo */
     // if (key==='__scope') {
     //   elem.setAttribute(`data-fd_scope_id`, `fd_${val}`);
@@ -149,7 +197,7 @@ class FNode {
     /* ** feature_attr: ref_fn 
     // 组件需将属性作为props传递，只处理 ref，不绑定到元素上 
     */
-    if (this.fnodeType!=='tag') { return this._dealCptAttrs(); }
+    if (this.fnodeType!=='tag') { return this._dealCptAttrs(attrs); }
     
     for(let key in attrs){
       const val = attrs[key];
@@ -191,11 +239,11 @@ class FNode {
       
     };
   }
-  _dealCptAttrs(){
-    if (this.attrs.ref && typeof this.attrs.ref==='function') { attrs.ref(this); }
+  _dealCptAttrs(attrs){
+    if (attrs.ref && typeof attrs.ref==='function') { attrs.ref(this); }
   }
   /* --------------------------------------------------------------- 处理子元素 */
-  _dealChildren(children){
+  _dealChildren(realNode, children){
     children.forEach(child=>{
       if (child===undefined || child===null) { return ; }
       
@@ -207,7 +255,7 @@ class FNode {
         if (child.length===0) { return ; }
       }
       if (this.fnodeType!=='tag') { child = '' }
-      this._dealChild(this.realNode, child, null, this.fnodeType!=='tag');
+      this._dealChild(realNode, child, null, this.fnodeType!=='tag');
     })
   }
   _dealChild( elem, child, varyWrap, isCpt ){

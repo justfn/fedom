@@ -12,6 +12,7 @@ function vary_cpt(elem, attrs, varyWrap){
       mounted: (fn)=>{
       },
     })
+    console.log( elem.parentNode );
     pNode.replaceChild(nxt_node, pre_node);
     pre_node = nxt_node;
     // 替换掉组件 

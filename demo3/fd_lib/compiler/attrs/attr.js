@@ -1,5 +1,5 @@
 /* 处理属性 */
-import { isVary, } from "../../vary/Vary.js";
+import { isVary, } from "../../featrues/vary/Vary.js";
 import {
   vary_cls_str,
   vary_cls_arr,
