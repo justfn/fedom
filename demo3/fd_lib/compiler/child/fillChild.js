@@ -54,7 +54,7 @@ export function fillChild( fNode, child, varyChild ) {
   }
   /* Result: node */
   if (child instanceof Node) { 
-    nodeChild(realNode, child, varyChild);
+    nodeChild(fNode, child, varyChild);
     if (varyChild) { vary_nod( realNode, varyChild ); }
     return ;
   }

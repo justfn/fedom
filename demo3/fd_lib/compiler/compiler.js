@@ -30,12 +30,18 @@ function compiler(tagName, attrs, ...children){
   addAttrs( fNode );
   fillChildren( fNode );
   
-  // // 组件初始化回调
-  // fNode.context._mountedFns.forEach((mountedFn,idx)=>{
-  //   mountedFn({
-  //     root: realNode, 
-  //   });
-  // })
+  /* ** 组件渲染后回调 
+  to_do_: 待优化 */
+  setTimeout(()=>{
+    if (fNode.context._mountedFns) {
+      fNode.context._mountedFns.forEach((fn)=>{
+        fn && fn(fNode);
+      });
+    }
+    if (fNode.instance.onMounted) {
+      fNode.instance.onMounted(fNode);
+    }
+  })
   return fNode.realNode;
 }
 export default compiler;

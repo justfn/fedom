@@ -6,8 +6,8 @@ export function textChild(realNode, text){
   realNode.appendChild(txtNode);
   return txtNode;
 } 
-export function nodeChild(realNode, node){
-  realNode.appendChild(node);
+export function nodeChild(fNode, node){
+  fNode.realNode.appendChild(node);
 } 
 
 

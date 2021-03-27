@@ -1,6 +1,6 @@
 
 export default function (props, context ){
-  context.mounted(({ root, refs})=>{
+  context.onMounted(({ root, refs})=>{
     // console.log('# Square',  root, refs);
     
   })

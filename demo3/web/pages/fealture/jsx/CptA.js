@@ -2,7 +2,7 @@
 
 export default function (props, context){
   
-  context.mounted(({ root, })=>{
+  context.onMounted(({ root, })=>{
     // console.log( '# cpta', root, props); 
   })
   

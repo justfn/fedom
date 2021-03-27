@@ -3,7 +3,7 @@ import Square from "./Square.js";
 
 export default function (props, context){
   
-  context.mounted(({ root, refs })=>{
+  context.onMounted(({ root, refs })=>{
     // console.log( '# Board', root, refs);
     
   })

@@ -1,7 +1,7 @@
 
 
 import { isVary, } from "../../featrues/vary/Vary.js";
-import { isComponent, } from "../../featrues/component/Component.js";
+import { isComponent, } from "../../featrues/Component.js";
 import { $push, $replace, $getRoutes, } from "../../router/router.js";
 
 import tagClass from "../../featrues/vary/tagClass.js";
@@ -91,7 +91,7 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
     let context = {
       _mountedFns: [],
       // 搜集初始化执行操作 
-      mounted(fn){
+      onMounted(fn){
         this._mountedFns.push(fn);
       },
       // 提供插入富文本的能力 

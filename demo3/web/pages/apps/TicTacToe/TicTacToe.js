@@ -65,10 +65,10 @@ export default function(props, context, router){
   }; 
   let gameBoardRef = null; 
   
-  Vary_state.moves.mounted((...args)=>{
+  Vary_state.moves.onMounted((...args)=>{
     // console.log(args);
   })
-  context.mounted( ({ root, })=>{
+  context.onMounted( ({ root, })=>{
     // root.style.background = 'blue';
     console.log( '#==== ref',  root, refs );
     console.log('ref', gameBoardRef );
