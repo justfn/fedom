@@ -4,6 +4,8 @@
 import createFNode from "./fNode/fNode.js";
 import addAttrs from "./attrs/addAttrs.js";
 import fillChildren from "./child/fillChild.js";
+import onMounted from "../featrues/onMounted.js";
+import onUnmount from "../featrues/onUnmount.js";
 
 
 /* 处理 jsx 
@@ -30,18 +32,9 @@ function compiler(tagName, attrs, ...children){
   addAttrs( fNode );
   fillChildren( fNode );
   
-  /* ** 组件渲染后回调 
-  to_do_: 待优化 */
-  setTimeout(()=>{
-    if (fNode.context._mountedFns) {
-      fNode.context._mountedFns.forEach((fn)=>{
-        fn && fn(fNode);
-      });
-    }
-    if (fNode.instance.onMounted) {
-      fNode.instance.onMounted(fNode);
-    }
-  })
+  
+  onMounted(fNode);
+  onUnmount(fNode);
   return fNode.realNode;
 }
 export default compiler;
