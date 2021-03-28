@@ -1,33 +1,30 @@
-import { isVary, } from "../../featrues/vary/Vary.js";
+/* 处理表单元素 
+*/
 
-/* 处理表单元素 */
-export function isFormNode(node){
+import {
+  attrInputValue, 
+} from "../../featrues/vary/attrForm.js";
+
+export function isFormNode(fNode){
+  let node = fNode.realNode;
   let nodeName = node.nodeName ?? '';
   nodeName = nodeName.toLowerCase();
   return ['input'].includes(nodeName);
 };
-export function addFormAttrs(elem,key,val){
-  // 处理 input value 
-  if (elem.nodeName.toLowerCase()==='input' && key==='value') {
-    let inputVal = val;
-    
-    /* Features: 
-    */
-    if (isVary(val)) {
-      inputVal = val.get(false);
-      val.$add_set((p_v,n_v)=>{
-        elem.value = n_v;
-        return [n_v];
-      })
-      elem.addEventListener("input",function(evt){
-        let value = evt.currentTarget.value; 
-        val.set((pre_v)=>{
-          return value;
-        })
-      })
-    }
-    elem.setAttribute("value",inputVal)
-  }
+export function addFormAttrs(fNode, key, val){
+  let elem = fNode.realNode;
+  if (elem.nodeName.toLowerCase()==='input' && key==='value') { 
+    inputValueAttr(fNode,key,val);
+  }   
+} 
+// 处理 input value 
+export function inputValueAttr(fNode, key, val ){
+  let elem = fNode.realNode;
+  
+  let inputVal = val;
+  /* Features: */
+  inputVal = attrInputValue(fNode, val);
+  elem.setAttribute("value",inputVal)
 } 
 
 

@@ -17,7 +17,9 @@
     context.onUnmounted 
     onUnmount
     onUnmounted
-    实现思路: MutationObserver 
+    实现思路: 
+      MutationObserver 
+      页面切换时机, 组件切换时机 触发 
 
 
 

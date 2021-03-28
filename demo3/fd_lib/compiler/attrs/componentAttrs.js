@@ -1,8 +1,7 @@
-
-
 /* ** 处理只有组件上存在的属性 
 */
-export default function onlyCptAttrs(fNode){
+
+export default function componentAttrs(fNode){
   let {
     realNode, 
     attrs, 

@@ -1,4 +1,5 @@
-/* 处理属性 */
+/* ** 处理通用属性属性 
+*/
 import { isVary, } from "../../featrues/vary/Vary.js";
 import {
   vary_cls_str,
@@ -11,7 +12,8 @@ import {
   vary_sty_obj_val,
 } from "../../featrues/vary/attrStyle.js";
 
-export function addClassAttr(elem, value, varyWrap){
+export function addClassAttr(fNode, value, varyWrap){
+  let elem = fNode.realNode;
   if (isVary(value)) {
     addClassAttr(elem, value.get(false), value);
     return ;
@@ -43,7 +45,8 @@ export function addClassAttr(elem, value, varyWrap){
   console.warn('# todo attrs class', elem, value);
 } 
 
-export function addStyleAttr(elem, value, varyWrap){
+export function addStyleAttr(fNode, value, varyWrap){
+  let elem = fNode.realNode;
   if (isVary(value)) {
     deal_style(elem, value.get(false), value);
     return ;
@@ -68,7 +71,8 @@ export function addStyleAttr(elem, value, varyWrap){
   console.warn('# todo attrs style', elem, value);
 } 
 
-export function addEventAttr(elem, evtName, listener){
+export function addEventAttr(fNode, evtName, listener){
+  let elem = fNode.realNode;
   
   elem.addEventListener(evtName, (evt)=>{
     return listener(evt);
@@ -76,10 +80,10 @@ export function addEventAttr(elem, evtName, listener){
   
 } 
 
-export function addRefAttr(elem, callback ){
+export function addRefAttr(fNode, callback ){
   if (typeof callback !== 'function') { return ; }
   
-  callback(elem);
+  callback(fNode.realNode);
 } 
 
 
