@@ -8,6 +8,9 @@ import {
   textChild, 
 } from "./typedChild.js";
 import { isVary, } from "../../featrues/vary/Vary.js";
+
+// to_do: 待合并为 childValVary 
+import childValVary from "../../featrues/vary/childVary.js";
 import varyChildString from "../../featrues/vary/childString.js";
 import varyChildNode from "../../featrues/vary/childNode.js";
 import varyChildArray from "../../featrues/vary/childArray.js";

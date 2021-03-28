@@ -58,12 +58,17 @@ export default function(props, context){
     <li>htmlDom 333</li>
   `)
   
+  let val = Header_.value;
+  console.log( val, '=== ');
   let changeClickHandle = ()=>{
     varyInputVal.value = Date.now();
     
     // varyShowPart1.value = 'block'
-    
-    Header_.value = CptA
+    if (Header_.value===null) {
+      Header_.value = val;
+      console.log( val, ' == ');
+    }
+    Header_.value = null;
   }
   return (
     <PageA class={[ 'fe', isActive, 'dom',  ]} 

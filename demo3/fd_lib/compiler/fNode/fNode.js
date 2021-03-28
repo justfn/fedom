@@ -4,9 +4,7 @@ import { isVary, } from "../../featrues/vary/Vary.js";
 import { isComponent, } from "../../featrues/Component.js";
 import { $push, $replace, $getRoutes, } from "../../router/router.js";
 
-import tagClass from "../../featrues/vary/tagClass.js";
-import tagFunction from "../../featrues/vary/tagFunction.js";
-import tagString from "../../featrues/vary/tagString.js";
+import varyTagName from "../../featrues/vary/tagVary.js";
 
 
 
@@ -65,10 +63,6 @@ export class FNode {
 /* ** 创建 FNode 
 */
 export default function createFNode({ varyTag, tagName, attrs, children }){
-  let props = {
-    ...attrs,
-    children: [...children],
-  }
   if (isVary(tagName)) { 
     if (varyTag) { throw message.errors.mutil_vary; }
     
@@ -80,12 +74,17 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
     }); 
   }
   
+  let props = {
+    ...attrs,
+    children: [...children],
+  }
+  let fNode = null;
   /* output 1: class */
   if (isComponent(tagName)) {
     // 注意：此处又将调用 compiler 
     let instance = new tagName(props);
     let realNode = instance.render(props);
-    let fNode = new FNode({
+    fNode = new FNode({
       varyTag,
       tagName, 
       realNode,
@@ -93,16 +92,9 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
       children, 
       instance, 
     });
-    
-    /* ** Features: to_do 
-    组件动态化  
-    */
-    tagClass(fNode);
-    
-    return fNode;
   }
   /* output 2: function */
-  if (typeof tagName === 'function') {
+  else if (typeof tagName === 'function') {
     // 注意：此处又将调用 compiler 
     let context = {
       _mountedFns: [],
@@ -123,7 +115,7 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
     }
     let realNode = tagName(props, context);
     
-    let fNode = new FNode({
+    fNode = new FNode({
       varyTag,
       tagName, 
       realNode,
@@ -131,34 +123,29 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
       children, 
       context, 
     })
-    /* ** Features: 组件动态化 
-    注意 变量名需大写否则jsx不处理  
-    */
-    tagFunction(fNode);
-    
-    return fNode;
   }
   /* output 3: tag_str  */
-  if (typeof tagName === 'string') {
+  else if (typeof tagName === 'string') {
     let realNode = document.createElement(tagName);
-    let fNode = new FNode({
+    fNode = new FNode({
       varyTag,
       tagName, 
       realNode,
       attrs, 
       children, 
     });
-    
-    /* ** Features: 标签名动态化
-    注意 变量名需大写否则jsx不处理  
-    */
-    tagString(fNode);
-    
-    return fNode;
+  }
+  /* output 4: other todo */
+  else {
+    console.warn('# todo tag', tagName, attrs, varyTag);
   }
   
-  /* output 4: other todo */
-  console.warn('# todo tag', tagName, attrs, varyTag);
+  /* ** Features: 标签名动态化
+  注意 变量名需大写否则jsx不处理  
+  */
+  varyTagName(fNode);
+  
+  return fNode;
 }
 
 
