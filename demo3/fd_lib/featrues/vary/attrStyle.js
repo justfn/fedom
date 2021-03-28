@@ -1,18 +1,28 @@
 
-export function vary_sty_str(elem, varyWrap){
-  let str = varyWrap.get(false);
+import { isVary, } from "./Vary.js";
+
+
+export function varyAttrStyleStr(fNode, varyAttr){
+  if (!varyAttr) { return ; }
+  
+  let str = varyAttr.get(false);
   console.log('# todo');
 } 
-export function vary_sty_obj(elem, varyWrap){
-  let obj = varyWrap.get(false);
+export function varyAttrStyleObj(fNode, varyAttr){
+  if (!varyAttr) { return ; }
+  
+  let obj = varyAttr.get(false);
   
   console.log('# todo');
 } 
-export function vary_sty_obj_val(elem, styKey, varyWrap ){
-  let value = varyWrap.get(false);
+export function varyAttrStyleOval(fNode, styKey, varyAttrVal ){
+  if (!isVary(varyAttrVal)) { return varyAttrVal; }
+  
+  let elem = fNode.realNode;
+  let value = varyAttrVal.get(false);
   elem.style[styKey] = value;
-  varyWrap.$mounted_run( value );
-  varyWrap.$add_set((p_v,n_v)=>{
+  varyAttrVal.$mounted_run( value );
+  varyAttrVal.$add_set((p_v,n_v)=>{
     elem.style[styKey] = n_v;
     return [n_v];
   })

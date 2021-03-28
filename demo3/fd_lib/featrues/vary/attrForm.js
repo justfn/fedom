@@ -1,6 +1,6 @@
 
 import { isVary, } from "./Vary.js";
-export function attrInputValue(fNode, varyVal){
+export function varyAttrInputValue(fNode, varyVal){
   if (!isVary(varyVal)) { return varyVal; }
   
   let inputVal = varyVal.get(false);

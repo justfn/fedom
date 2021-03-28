@@ -1,12 +1,16 @@
-import { isVary, } from "../../featrues/vary/Vary.js";
+/* 填充子节点 
+*/
+
+import message from "../../message.js";
 
 import { 
   nodeChild, 
   textChild, 
 } from "./typedChild.js";
-import vary_str from "../../featrues/vary/childString.js";
-import vary_nod from "../../featrues/vary/childNode.js";
-import vary_arr from "../../featrues/vary/childArray.js";
+import { isVary, } from "../../featrues/vary/Vary.js";
+import varyChildString from "../../featrues/vary/childString.js";
+import varyChildNode from "../../featrues/vary/childNode.js";
+import varyChildArray from "../../featrues/vary/childArray.js";
 
 export default function fillChildren(fNode){
   fNode.children.forEach(child=>{
@@ -27,6 +31,8 @@ export function fillChild( fNode, child, varyChild ) {
   
   /* brance: vary */
   if (isVary(child)) { 
+    if (varyChild) { throw message.errors.mutil_vary; };
+    
     fillChild(fNode, child.get(false), child); 
     return ;
   }
@@ -35,27 +41,43 @@ export function fillChild( fNode, child, varyChild ) {
     child.forEach((cldItm,idx)=>{
       fillChild(fNode, cldItm, null);
     })
-    if (varyChild) { vary_arr(fNode, child, varyChild, fillChild); }
+    
+    /* ** Features: 
+    */
+    varyChildArray(fNode, child, varyChild, fillChild);
+    
     return ;
   }
   
   /* Result: undefind null */
   if (child === undefined || child === null) {
-    let txtNode = textChild(realNode, '');
-    if (varyChild) { vary_str(txtNode, '', varyChild) }
+    let txtNode = textChild(fNode, '');
+    
+    /* ** Features: 
+    */
+    varyChildString(txtNode, '', varyChild);
+    
     return;
   }
   /* Result: text */
   if (typeof child === 'string' || typeof child === 'number' ) {
     child += '';
-    let txtNode = textChild(realNode, child);
-    if (varyChild) { vary_str(txtNode, child, varyChild) }
+    let txtNode = textChild(fNode, child);
+    
+    /* ** Features: 
+    */
+    varyChildString(txtNode, child, varyChild)
+    
     return ;
   }
   /* Result: node */
   if (child instanceof Node) { 
     nodeChild(fNode, child, varyChild);
-    if (varyChild) { vary_nod( realNode, varyChild ); }
+    
+    /* ** Features: 
+    */
+    varyChildNode( fNode, varyChild );
+    
     return ;
   }
   /* Result: other */

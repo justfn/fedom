@@ -1,5 +1,5 @@
 
-
+import message from "../../message.js";
 import { isVary, } from "../../featrues/vary/Vary.js";
 import { isComponent, } from "../../featrues/Component.js";
 import { $push, $replace, $getRoutes, } from "../../router/router.js";
@@ -8,6 +8,20 @@ import tagClass from "../../featrues/vary/tagClass.js";
 import tagFunction from "../../featrues/vary/tagFunction.js";
 import tagString from "../../featrues/vary/tagString.js";
 
+
+
+/* ** 工具方法: 获取 tag 类型  
+// Inputs: tagName  
+// Output: nodeType str,节点类型: tag | fn | cls 
+*/
+export function getRealTagTypes(tagName){
+  if (isVary(tagName)) { return getRealTagTypes(tagName.get(false)); }
+  if (isComponent(tagName)) { return 'cls'; }
+  if (typeof tagName === 'function') { return 'fn'; }
+  if (typeof tagName === 'string') { return 'tag'; }
+  
+  return 'unknow';
+}  
 
 /* ** FNode 
 */
@@ -56,6 +70,8 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
     children: [...children],
   }
   if (isVary(tagName)) { 
+    if (varyTag) { throw message.errors.mutil_vary; }
+    
     return createFNode({
       varyTag: tagName, 
       tagName: tagName.get(false),
@@ -122,7 +138,7 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
     
     return fNode;
   }
-  /* output 3: tag  */
+  /* output 3: tag_str  */
   if (typeof tagName === 'string') {
     let realNode = document.createElement(tagName);
     let fNode = new FNode({
@@ -145,17 +161,4 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
   console.warn('# todo tag', tagName, attrs, varyTag);
 }
 
-
-/* ** 工具方法: 获取 tag 类型  
-// Inputs: tagName  
-// Output: nodeType str,节点类型: tag | fn | cls 
-*/
-export function getRealTagTypes(tagName){
-  if (isVary(tagName)) { return getRealTagTypes(tagName.get(false)); }
-  if (isComponent(tagName)) { return 'cls'; }
-  if (typeof tagName === 'function') { return 'fn'; }
-  if (typeof tagName === 'string') { return 'tag'; }
-  
-  return 'unknow';
-}  
 

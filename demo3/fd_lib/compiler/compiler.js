@@ -18,7 +18,6 @@ let _order_num = 0;
 
 // console.log('##### compiler ');
 function compiler(tagName, attrs, ...children){
-  // console.log( '# compiler', [...arguments] );
   attrs = attrs ?? {};
   
   // console.log('# compiler', tagName, attrs, children, _order_num );
@@ -33,8 +32,8 @@ function compiler(tagName, attrs, ...children){
   fillChildren( fNode );
   
   
-  onMounted(fNode);
-  onUnmount(fNode);
+  onMounted( fNode );
+  onUnmount( fNode );
   return fNode.realNode;
 }
 export default compiler;

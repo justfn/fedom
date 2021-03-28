@@ -1,6 +1,8 @@
 
 
-export default  function vary_nod(realNode, varyWrap){
+export default  function childNode(fNode, varyWrap){
+  if (!varyWrap) { return ; }
+  
   let node = varyWrap.get(false);
   varyWrap.$mounted_run(node);
   varyWrap.$add_set((p_v, n_v)=>{
@@ -9,7 +11,7 @@ export default  function vary_nod(realNode, varyWrap){
     // pNode.appendChild(n_v); 
     pNode.replaceChild(n_v,p_v);
     return [n_v];
-  }, realNode)
+  }, fNode.realNode)
 } 
 
 

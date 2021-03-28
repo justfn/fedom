@@ -1,20 +1,28 @@
 
-
-export function vary_cls_str(elem, varyWrap){
-  let vl = varyWrap.get(false);
-  varyWrap.$mounted_run(elem.className);
-  varyWrap.$add_set((p_v, n_v)=>{
+import { isVary, } from "./Vary.js";
+export function varyAttrClassStr(fNode, varyAttr){
+  if (!varyAttr) { return ; }
+  
+  let elem = fNode.realNode;
+  let vl = varyAttr.get(false);
+  varyAttr.$mounted_run(elem.className);
+  varyAttr.$add_set((p_v, n_v)=>{
     elem.className = n_v;
     return [n_v];
   }, elem.className);
 } 
-export function vary_cls_arr(elem, arr){
+export function varyAttrClassArr(fNode, varyAttr){
+  if (!varyAttr) { return ; }
+  
   console.log('todo ');
 } 
-export function vary_cls_arr_itm(elem, itm){
-  let it = itm.get(false);
-  itm.$mounted_run(elem.classList);
-  itm.$add_set((p_v, n_v)=>{
+export function varyAttrClassAitm(fNode, varyAttrItm){
+  if (!isVary(varyAttrItm)) { return varyAttrItm; }
+  
+  let elem = fNode.realNode;
+  let it = varyAttrItm.get(false);
+  varyAttrItm.$mounted_run(elem.classList);
+  varyAttrItm.$add_set((p_v, n_v)=>{
     if (p_v!=='') { elem.classList.remove(p_v); }
     if (n_v!=='') { elem.classList.add(n_v); }
     return [n_v];
