@@ -66,9 +66,10 @@ export default function(props, context){
     // varyShowPart1.value = 'block'
     if (Header_.value===null) {
       Header_.value = val;
-      console.log( val, ' == ');
     }
-    Header_.value = null;
+    else {
+      Header_.value = null;
+    }
   }
   return (
     <PageA class={[ 'fe', isActive, 'dom',  ]} 
