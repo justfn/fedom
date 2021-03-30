@@ -1,21 +1,27 @@
 /* 入口文件 
 */
 
+import "./utils/dev.js";
+import { globalWrite, } from "./utils/globalWR.js";
+
 import compiler from "./compiler/compiler.js";
 import render from "./render.js";
 import Router from "./router/router.js";
 import { VaryValue, isVary, } from "./featrues/vary/Vary.js";
 import Component, { isComponent } from "./featrues/Component.js";
 
-if (!window.$fd) { window.$fd = {}; }
-if (!window.$fd.compiler) { window.$fd.compiler = compiler; }
-if (!window.$fd.render) { window.$fd.render = render; }
-if (!window.$fd.Router) { window.$fd.Router = Router; }
-if (!window.$fd.VaryValue) { window.$fd.VaryValue = VaryValue; }
-if (!window.$fd.Component) { window.$fd.Component = Component; }
-if (!window.$fd.utils) { window.$fd.utils = {}; }
-window.$fd.utils.isVary = isVary;
-window.$fd.utils.isComponent = isComponent;
+globalWrite('compiler', compiler);
+globalWrite('render', render);
+globalWrite('Router', Router);
+globalWrite('VaryValue', VaryValue);
+globalWrite('Component', Component);
+// 工具集合 
+globalWrite('utils.isVary', isVary);
+globalWrite('utils.isComponent', isComponent);
+// 元素集合 
+globalWrite('elems', {});
+// 状态集合 
+globalWrite('status.isLoaded', false);
 
 export {
   render,
