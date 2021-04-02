@@ -18,7 +18,7 @@ export default function varyTagName(fNode){
   let pre_node_removed = null;
   let pre_node_style_display = pre_node.style.display;
   let nxt_node = null;
-  varyTag.$add_set((p_v, n_v)=>{
+  varyTag.$add_set(({nxtTrimedValue})=>{
     pNode = pNode ?? pre_node.parentNode;
     /* ** 根据设置的不同值 
     true   显示当前元素 
@@ -27,24 +27,28 @@ export default function varyTagName(fNode){
     */
     
     // Features: 设值为true/false 显示/隐藏该节点 
-    if (typeof n_v === 'boolean') {
-      let display = n_v ? pre_node_style_display : 'none';
+    if (typeof nxtTrimedValue === 'boolean') {
+      let display = nxtTrimedValue ? pre_node_style_display : 'none';
       pre_node.style.display = display; 
-      return [pre_node];
+      return {
+        next_value: pre_node,
+      };
     }
     
     // Features: null 删除该节点 
-    if (n_v===null) {
+    if (nxtTrimedValue===null) {
       nxt_node = document.createComment("fedom vary tag and remove")
       pre_node_removed = pre_node;
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;
-      return [nxt_node];
+      return {
+        next_value: nxt_node,
+      };
     }
     
     // Features: 替换为html节点  
-    if (typeof n_v === 'string') {
-      nxt_node = document.createElement(n_v);
+    if (typeof nxtTrimedValue === 'string') {
+      nxt_node = document.createElement(nxtTrimedValue);
       addAttrs(fNode);
       // to_do: 待优化 
       Array.prototype.forEach.call( [...pre_node.childNodes], (itm)=>{
@@ -52,22 +56,32 @@ export default function varyTagName(fNode){
       })
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;
-      return [n_v, pNode];
+      return {
+        next_value: nxtTrimedValue,
+        parent_node: pNode,
+      };
     }
     
     // Features: 替换为组件 
-    if (isComponent(n_v)) {
-      let inst = new n_v(props);
+    if (isComponent(nxtTrimedValue)) {
+      let inst = new nxtTrimedValue(props);
       nxt_node = inst.render(props);
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;
-      return [n_v, pNode];
+      
+      return {
+        next_value: nxtTrimedValue,
+        parent_node: pNode,
+      };
     }
-    if (typeof n_v === 'function') {
-      nxt_node = n_v(props, fNode.context)
+    if (typeof nxtTrimedValue === 'function') {
+      nxt_node = nxtTrimedValue(props, fNode.context)
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;
-      return [n_v, pNode];
+      return {
+        next_value: nxtTrimedValue,
+        parent_node: pNode,
+      };
     }
     
     throw message.errors.unsuport_vary_tag;

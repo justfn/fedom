@@ -59,7 +59,7 @@ export default function(props, context){
   `)
   
   let val = Header_.value;
-  console.log( val, '=== ');
+  // console.log( val, '=== ');
   let changeClickHandle = ()=>{
     varyInputVal.value = Date.now();
     
@@ -76,6 +76,8 @@ export default function(props, context){
       style={style} 
       onClick={fn1}
       >
+      <CptA />
+      
       <button onClick={changeClickHandle}>AAAAAAAAAAAAAAAAAAA</button>
       <div style={{display:varyShowPart1,}} onClick={()=>{varyShowPart1.value='none';}}>
         <hr />
@@ -108,6 +110,12 @@ export default function(props, context){
       
       <input value={varyInputVal} />
       { varyInputVal }
+      
+      {
+        [1,2,3].map((itm,idx)=>{
+          return <h1>{itm}</h1>
+        })
+      }
       
       <hr />
       <hr />

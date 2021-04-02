@@ -20,7 +20,7 @@ let _order_num = 0;
 function compiler(tagName, attrs, ...children){
   attrs = attrs ?? {};
   _order_num++;
-  log( '# compiler_1', _order_num );
+  // log( '# compiler_1', _order_num );
   
   const fNode = createFNode({
     varyTag: null, 
@@ -42,6 +42,7 @@ function compiler(tagName, attrs, ...children){
     globalWrite('status.isLoaded', true);
     
     log('##################### page loaded');
+    log(_order_num);
   })
   
   return fNode.realNode;

@@ -22,9 +22,8 @@ export function varyAttrStyleOval(fNode, styKey, varyAttrVal ){
   let value = varyAttrVal.get(false);
   elem.style[styKey] = value;
   varyAttrVal.$mounted_run( value );
-  varyAttrVal.$add_set((p_v,n_v)=>{
-    elem.style[styKey] = n_v;
-    return [n_v];
+  varyAttrVal.$add_set(({ nxtTrimedValue })=>{
+    elem.style[styKey] = nxtTrimedValue;
   })
   return value;
 } 

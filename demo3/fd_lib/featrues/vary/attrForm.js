@@ -4,9 +4,8 @@ export function varyAttrInputValue(fNode, varyVal){
   if (!isVary(varyVal)) { return varyVal; }
   
   let inputVal = varyVal.get(false);
-  varyVal.$add_set((p_v,n_v)=>{
-    fNode.realNode.value = n_v;
-    return [n_v];
+  varyVal.$add_set(({ nxtTrimedValue })=>{
+    fNode.realNode.value = nxtTrimedValue;
   })
   fNode.realNode.addEventListener("input",(evt)=>{
     let value = evt.currentTarget.value; 

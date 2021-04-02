@@ -47,11 +47,17 @@ export class FNode {
     this.instance = instance;
   }
   
+  // Vary,tag的壳 
   varyTag = null;
+  // KW,fNode节点类型  'tag' | 'fn' | 'cls' 
   nodeType = '-';
+  // Node,fNode对应的真实节点 
   realNode = null;
+  // obj,不包含 .children 
   attrs = {};
+  // obj,包含 .children 
   props = {};
+  // arr,子节点集合
   children = [];
   // 函数组件的第二个参数 
   context = {};
