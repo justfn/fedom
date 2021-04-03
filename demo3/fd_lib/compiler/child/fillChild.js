@@ -3,7 +3,7 @@
 import config from "../../config.js";
 import message from "../../message.js";
 
-import { isStringValue, isNumberValue, isArrayValue, isNodeValue,  } from "../../utils/judge.js";
+import { isStringValue, isNumberValue, isArrayValue, isNodeValue, isEmptyValue,  } from "../../utils/judge.js";
 import { 
   nodeChild, 
   textChild, 
@@ -52,24 +52,24 @@ export function fillChild( fNode, child, varyChild ) {
         fillChild(fNode, cldItm, null);
       })
     }
-    return ;
   }
-  
   /* Result: undefind | null | text */
-  if (child === undefined || child === null) { child = ''; }
-  if ( isStringValue(child) || isNumberValue(child) ) {
+  else if ( isEmptyValue(child) ) { 
+    patchNode = textChild(fNode, '');
+  }
+  else if ( isStringValue(child) || isNumberValue(child) ) {
     child += '';
     patchNode = textChild(fNode, child);
-    return ;
   }
   /* Result: node */
-  if ( isNodeValue(child) ) { 
+  else if ( isNodeValue(child) ) { 
     nodeChild(fNode, child);
-    return ;
   }
   /* Result: other */
-  fillChild(fNode, child.toString(), null);
-  console.warn('################################ todo child', realNode, child);
+  else {
+    fillChild(fNode, child.toString(), null);
+    console.warn('################################ todo child', child);
+  }
   
   /* ** Features: 
   */

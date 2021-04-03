@@ -85,6 +85,7 @@ export default function varyTagName(fNode){
       };
     }
     
+    console.warn( nxtTrimedValue );
     throw message.errors.unsuport_vary_tag;
   })
 } 

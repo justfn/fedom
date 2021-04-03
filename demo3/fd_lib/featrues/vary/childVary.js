@@ -7,8 +7,6 @@ import { isStringValue, isNumberValue, isNodeValue, isArrayValue, } from "../../
 export default function childValVary(pNode, child, varyChild, patchNode ){
   if (!varyChild) { return ; }
   
-  let cNode = child;
-  
   varyChild.$patch(patchNode);
   varyChild.$mounted_run(child);
   varyChild.$add_set(({ preTrimedValue, nxtTrimedValue, patchValue })=>{
@@ -18,7 +16,6 @@ export default function childValVary(pNode, child, varyChild, patchNode ){
       patch_val = updateNode(pre_val.parentNode, nxtTrimedValue, pre_val, null).patchNode;
     }
     else if ( isArrayValue(pre_val) ) {
-      // to_do 空数组处理 
       if ( pre_val.length > 0 ) {
         let pNode = pre_val[0].parentNode;
         let flgCommentNode = document.createComment("fedom array children removed")
@@ -27,12 +24,17 @@ export default function childValVary(pNode, child, varyChild, patchNode ){
           if (idx===0) { pNode.replaceChild(flgCommentNode,itm) }
           else { pNode.removeChild(itm); }
         })
-        patch_val = updateNode(pNode, nxtTrimedValue, flgCommentNode, null);
+        patch_val = updateNode(pNode, nxtTrimedValue, flgCommentNode, null).patchNode;
       }
-      else { patch_val = updateNode(pNode, nxtTrimedValue, patchNode, null); }
+      // to_do 空数组处理 
+      else { patch_val = updateNode(pNode, nxtTrimedValue, patchNode, null).patchNode; }
     }
     else {
-      console.log('### todo', pNode, child);
+      console.log('### to_do: childVary');
+      console.log(patchValue);
+      console.log(preTrimedValue);
+      console.log(child);
+      console.log(pNode);
     }
     
     return {
@@ -45,7 +47,8 @@ function updateNode(parentNode, childNode, flgNode, beforeNode){
   let patchNode = null;
   if ( childNode===undefined || childNode===null ) { childNode = '' }
   
-  if ( isStringValue(childNode) ) {
+  if ( isStringValue(childNode) || isNumberValue(childNode) ) {
+    childNode = childNode + '';
     childNode = document.createTextNode(childNode);
     patchNode = childNode;
     insertNode(parentNode, childNode, flgNode, beforeNode);
@@ -64,7 +67,7 @@ function updateNode(parentNode, childNode, flgNode, beforeNode){
         if ( isArrayValue(itm) ) { throw message.errors.mutil_vary_array_child; }
         
         if (idx===0) { preChid = updateNode(parentNode, itm, flgNode, null).childNode; }
-        else { preChid = updateNode(parentNode, itm, null, preChid); }
+        else { preChid = updateNode(parentNode, itm, null, preChid).childNode; }
       })
     }
   }

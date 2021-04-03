@@ -46,7 +46,7 @@ export default function(props, context){
     })
   }
   
-  let varyInputVal = VaryValue('init val');
+  let varyInputVal = VaryValue('initval');
   let inputHandel = (evt)=>{
     let val = evt.target.value
     varyInputVal.value = val; 

@@ -42,7 +42,7 @@ function compiler(tagName, attrs, ...children){
     globalWrite('status.isLoaded', true);
     
     log('##################### page loaded');
-    log(_order_num);
+    log('### total:',_order_num);
   })
   
   return fNode.realNode;
