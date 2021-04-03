@@ -1,6 +1,7 @@
 
 import message from "../../message.js";
 import { isComponent, } from "../Component.js";
+import { isBooleanValue, isStringValue, isFunctionValue, } from "../../utils/judge.js";
 import addAttrs from "../../compiler/attrs/addAttrs.js";
 
 
@@ -27,7 +28,7 @@ export default function varyTagName(fNode){
     */
     
     // Features: 设值为true/false 显示/隐藏该节点 
-    if (typeof nxtTrimedValue === 'boolean') {
+    if ( isBooleanValue(nxtTrimedValue) ) {
       let display = nxtTrimedValue ? pre_node_style_display : 'none';
       pre_node.style.display = display; 
       return {
@@ -47,7 +48,7 @@ export default function varyTagName(fNode){
     }
     
     // Features: 替换为html节点  
-    if (typeof nxtTrimedValue === 'string') {
+    if ( isStringValue(nxtTrimedValue) ) {
       nxt_node = document.createElement(nxtTrimedValue);
       addAttrs(fNode);
       // to_do: 待优化 
@@ -74,7 +75,7 @@ export default function varyTagName(fNode){
         parent_node: pNode,
       };
     }
-    if (typeof nxtTrimedValue === 'function') {
+    if ( isFunctionValue(nxtTrimedValue) ) {
       nxt_node = nxtTrimedValue(props, fNode.context)
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;

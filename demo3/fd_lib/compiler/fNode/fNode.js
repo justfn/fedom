@@ -1,8 +1,11 @@
-
+import config from "../../config.js";
 import message from "../../message.js";
 import { isVary, } from "../../featrues/vary/Vary.js";
 import { isComponent, } from "../../featrues/Component.js";
-import { $push, $replace, $getRoutes, } from "../../router/router.js";
+import { isFunctionValue, isStringValue, } from "../../utils/judge.js";
+import routerPush from "../../router/routerPush.js";
+import routerReplace from "../../router/routerReplace.js";
+import { $getRoutes, } from "../../router/router.js";
 
 import varyTagName from "../../featrues/vary/tagVary.js";
 
@@ -10,13 +13,13 @@ import varyTagName from "../../featrues/vary/tagVary.js";
 
 /* ** 工具方法: 获取 tag 类型  
 // Inputs: tagName  
-// Output: nodeType str,节点类型: tag | fn | cls 
+// Output: nodeType str,节点类型 
 */
 export function getRealTagTypes(tagName){
   if (isVary(tagName)) { return getRealTagTypes(tagName.get(false)); }
-  if (isComponent(tagName)) { return 'cls'; }
-  if (typeof tagName === 'function') { return 'fn'; }
-  if (typeof tagName === 'string') { return 'tag'; }
+  if (isComponent(tagName)) { return config.tag_types.component; }
+  if (isFunctionValue(tagName)) { return config.tag_types.function; }
+  if (isStringValue(tagName)) { return config.tag_types.origin; }
   
   return 'unknow';
 }  
@@ -100,7 +103,7 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
     });
   }
   /* output 2: function */
-  else if (typeof tagName === 'function') {
+  else if ( isFunctionValue(tagName) ) {
     // 注意：此处又将调用 compiler 
     let context = {
       _mountedFns: [],
@@ -115,8 +118,8 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
         return [...div.childNodes];
       },
       // 路由跳转能力
-      $push,
-      $replace,
+      $push: routerPush,
+      $replace: routerReplace,
       $routes: $getRoutes(true),
     }
     let realNode = tagName(props, context);
@@ -131,7 +134,7 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
     })
   }
   /* output 3: tag_str  */
-  else if (typeof tagName === 'string') {
+  else if ( isStringValue(tagName) ) {
     let realNode = document.createElement(tagName);
     fNode = new FNode({
       varyTag,

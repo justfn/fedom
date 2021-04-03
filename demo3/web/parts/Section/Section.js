@@ -1,13 +1,17 @@
 
 import "./Section.less";
 
+const {
+  VaryValue,
+} = window.$fd;
+
 
 export default function Section(props, context){
-  let isShow = $VaryValue(true,(bol)=>{
+  let isShow = VaryValue(true,(bol)=>{
     if (bol) { return ''; }
     return 'none';
   })
-  let isRotate = $VaryValue(isShow, (vv)=>{
+  let isRotate = VaryValue(isShow, (vv)=>{
     let v = vv.value;
     if (v) { return ''; }
     

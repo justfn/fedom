@@ -1,5 +1,6 @@
 /* ** 卸载前
 */
+import config from "../config.js";
 
 export default function onUnmount(fNode){
   // 方法一: 
@@ -15,7 +16,7 @@ function onRemoveNode(fNode){
 } 
 function observe(fNode){
   // // 非组件节点不处理 
-  // if (fNode.nodeType==='tag') { return ; }
+  // if (fNode.nodeType===config.tag_types.origin) { return ; }
   // // 组件防重处理 
   // if (fNode.children.length>0) { return ; } 
   // 

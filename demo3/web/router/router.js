@@ -3,47 +3,55 @@ const {
 } = window.$fd;
 
 
-const routes = {
+const routes_ = [
   // 首页、主页 
-  '/': {
+  {
+    path: '/',
     component: ()=>import('../pages/home/home.js'),
     alias: '/home',
     isCache: true, // bol|fn,是否缓存 
   },
   // 特性展示 
-  '/feature': {
+  {
+    path: '/feature',
     // alias: '/feature/home',
     // component: ()=>import('../pages/fealture/fealtureHome/fealtureHome.js'),
     isCache: true, // bol|fn,是否缓存 
-    children: {
-      'jsx': {
+    children: [
+      {
+        path: 'jsx',
         component: ()=>import('../pages/fealture/jsx/jsx.js'),
       },
-    }, 
+    ],
   },
   // 应用：特性综合使用 
-  '/apps': {
+  {
+    path: '/apps',
     component: ()=>import('../pages/apps/appHome/appHome.js'),
     isCache: true, // bol|fn,是否缓存 
-    children: {
-      'TicTacToe': {
+    children: [
+      {
+        path: 'TicTacToe',
         component: ()=>import('../pages/apps/TicTacToe/TicTacToe.js'),
       },
-    },
+    ],
   },
-  // 其他测试点 
-  '/test': {
+  // 其他测试点
+  {
+    path: '/test',
     redirect: '/home',  // #todo: fixbug 
     isCache: true, // bol|fn,是否缓存 
-    children: {
-      'home': {
+    children: [
+      {
+        path: 'home',
         component: ()=>import('../pages/test/testHome/testHome.js'),
       },
-    }
+    ],
   },
-}
+]
+
 const options = {
-  routes,
+  routes: routes_,
   root: document.querySelector("#app"),
   beforeEach(pathObj, prePathObj){
     // console.log( pathObj, prePathObj );

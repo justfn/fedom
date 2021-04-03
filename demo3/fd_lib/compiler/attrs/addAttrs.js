@@ -1,4 +1,5 @@
 
+import config from "../../config.js";
 import componentAttrs from "./componentAttrs.js";
 import { 
   addClassAttr, 
@@ -12,22 +13,14 @@ import {
 } from "./formAttrs.js";
 
 export default function addAttrs(fNode){
-  if (fNode.nodeType!=='tag') { return componentAttrs(fNode); }
+  if (fNode.nodeType!==config.tag_types.origin) { 
+    componentAttrs(fNode); 
+    return ; 
+  }
   
-  // /* brance: __scopeId todo */
-  // if (key==='__scope') {
-  //   realNode.setAttribute(`data-fd_scope_id`, `fd_${val}`);
-  //   continue; 
-  // }
   
-  let {
-    realNode, 
-    attrs, 
-    context,
-  } = fNode;
-  
-  for(let key in attrs){
-    const val = attrs[key];
+  for(let key in fNode.attrs){
+    const val = fNode.attrs[key];
     
     if (val===undefined || val===null) { val = ''; }
     
@@ -58,10 +51,10 @@ export default function addAttrs(fNode){
     }
     /* brance: other_key */
     try {
-      realNode.setAttribute(key, val);
+      fNode.realNode.setAttribute(key, val);
     } 
     catch (e) {
-      console.warn('# todo attrs other', realNode, key, val);
+      console.warn('# todo attrs other', fNode.realNode, key, val);
     } 
     
   };

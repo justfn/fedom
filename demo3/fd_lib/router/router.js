@@ -1,16 +1,34 @@
 
 import { render, } from "../index.js";
+import formatRoutes from "./formatRoutes.js";
+import parseHash from "./parseHash.js";
+import routerReplace from "./routerReplace.js";
 
-const _routes = [];
+let _routes = [];
 export default class Router {
   constructor(routeOptions = {}){ 
     const {
-      routes = {},
+      routes = [
+        // {
+        //   path: '',
+        //   alias: '',
+        //   redirect: '',
+        //   component: <cpt>,
+        //   isCache: <bol>,
+        //   children: [],
+        // }
+      ],
       root = document.body,
-      beforeEach = (v=>true),
+      beforeEach = (v=>v),
     } = routeOptions;
+    let {
+      routeMap,
+      routeList,
+    } = formatRoutes(routes);
     // 路由Map
-    this._route_map = this._dealRoutes(routes);
+    this._route_map = routeMap;
+    _routes = routeList;
+    this._routes = routeList;
     this._root = root; 
     this._cached_routes = {
       // <path>: <PageElem>
@@ -25,33 +43,6 @@ export default class Router {
   
   // $update_cache = (path, isCache)=>{ }
   
-  // 处理路由，将路由Map化 
-  _dealRoutes = (routes, routeMap={}, prePath='' )=>{
-    for(let pathKey in routes){
-      let pathOption = routes[pathKey];
-      if ( !/^\//.test(pathKey) ) {
-        if (prePath!=='/') { prePath += '/' }
-        pathKey = `${prePath}${pathKey}`;
-      }
-      if (pathOption.alias) {
-        let _opt = { ...pathOption }
-        routeMap[_opt.alias] = _opt;
-        _opt._alias = _opt.alias;
-        delete _opt.alias;
-        pathOption = _opt;
-      }
-      routeMap[pathKey] = pathOption;
-      _routes.push({
-        ...pathOption,
-        path: pathKey,
-      })
-      let children = pathOption.children;
-      if (children) {
-        this._dealRoutes(children, routeMap, pathKey)
-      }
-    };
-    return routeMap;
-  }
   // 路由变换监听  
   _hashchangeListener = (evt)=>{
     // console.log(location.hash);
@@ -60,7 +51,7 @@ export default class Router {
     // evt.newURL: "http://0.0.0.0:9000/#/tic_tac_toe"
     let oldPathObj = {};
     if (evt.oldURL) {
-      let oldPathObj = this._getHashPathObj(evt.oldURL);
+      let oldPathObj = parseHash(evt.oldURL);
       let oldPathOption = this._route_map[oldPathObj.path] ?? {};
       
       // 缓存DOM 
@@ -73,7 +64,7 @@ export default class Router {
       }
     }
     
-    let pathObj = this._getHashPathObj(evt.newURL);
+    let pathObj = parseHash(evt.newURL);
     
     let isGo = this._beforeEach(pathObj, oldPathObj);
     if (!isGo) { 
@@ -92,7 +83,7 @@ export default class Router {
     .then((htmlNode)=>{
       // 重定向 
       if (pathOption.redirect) {
-        $replace(pathOption.redirect, pathObj.query);
+        routerReplace(pathOption.redirect, pathObj.query);
         return Promise.reject();
       }
       
@@ -128,80 +119,16 @@ export default class Router {
       if (err) { console.error(err); }
     })
   }
-  // 解析路由参数 
-  _getHashPathObj = (fullUrl)=>{
-    let result = {
-      path: '',
-      query: {},
-      hash: '',
-    }
-    let hash = fullUrl.split('#')[1];
-    if (!hash) { return result; }
-    
-    let [path, queryMore] = hash.split('?');
-    result.path = path;
-    if ( queryMore ) {
-      let [ query, hash ] = queryMore.split('#');
-      query.split('&').forEach((itm,idx)=>{
-        let [key, val] = itm.split('=')
-        result.query[key] = val ?? '';
-      })
-      if (hash) {
-        result.hash = hash;
-      }
-    }
-    
-    return result;
-  }
-  
 }
 
 
-// 拼接路由参数 
-function _jointHashPath(path,obj,isFull=true){
-  let url = '';
-  if (isFull) {
-    const { origin, pathname, search, } = window.location;
-    let basePath = origin+pathname+search;
-    url = basePath 
-  }
-  url += `#${path}`;
-  let qry = '';
-  let keyNum = 0; 
-  for(let key in obj){
-    keyNum++;
-    let val = obj[key];
-    qry += `&${key}=${val}`
-  };
-  if (keyNum>0) { 
-    qry = '?' + qry.slice(1) 
-  }
-  return url + qry;
-} 
 /* 对外接口 ===================================================================*/
-export function $push(path,queryObj={}){
-  let url = _jointHashPath(path,queryObj);
-  console.log(url);
-  location.hash = _jointHashPath(path, queryObj, false);
-  // location.assign(url)
-} 
-export function $replace(path,queryObj={}){
-  let url = _jointHashPath(path,queryObj);
-  location.replace(url);
-} 
 export function $getRoutes(isOrgin=false){
   if (isOrgin) { return [..._routes];  }
   
   // todo 待优化 
   return JSON.parse(JSON.stringify(_routes));
 }
-
-
-
-
-
-
-
 
 
 

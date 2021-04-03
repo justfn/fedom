@@ -3,6 +3,7 @@
 
 import message from "../../message.js";
 import { isVary, } from "../../featrues/vary/Vary.js";
+import { isStringValue, isMapValue, isFunctionValue, isArrayValue, } from "../../utils/judge.js";
 import {
   varyAttrClassStr,
   varyAttrClassArr,
@@ -23,7 +24,7 @@ export function addClassAttr(fNode, value, varyAttr){
   }
   
   // 出口1：
-  if (typeof value === 'string') {
+  if ( isStringValue(value) ) {
     fNode.realNode.setAttribute("class", value);
     
     /* ** Features: 
@@ -33,7 +34,7 @@ export function addClassAttr(fNode, value, varyAttr){
     return ;
   }
   // 出口2：
-  if (value instanceof Array) {
+  if ( isArrayValue(value) ) {
     let vl = value.reduce((retV,itm)=>{ 
       let it = itm; 
       
@@ -65,7 +66,7 @@ export function addStyleAttr(fNode, value, varyAttr){
   }
   
   // 出口1：
-  if (typeof value === 'string') {
+  if ( isStringValue(value) ) {
     fNode.realNode.setAttribute("style", value);
     
     /* ** Features: 
@@ -75,7 +76,7 @@ export function addStyleAttr(fNode, value, varyAttr){
     return ;
   }
   // 出口2：
-  if (typeof value === 'object') {
+  if ( isMapValue(value) ) {
     for(var ky in value){
       let vl = value[ky];
       
@@ -104,7 +105,7 @@ export function addEventAttr(fNode, evtName, listener){
 } 
 
 export function addRefAttr(fNode, callback ){
-  if (typeof callback !== 'function') { return ; }
+  if ( !isFunctionValue(callback) ) { return ; }
   
   callback(fNode.realNode);
 } 
