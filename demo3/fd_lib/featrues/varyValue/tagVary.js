@@ -24,7 +24,7 @@ export default function varyTagName(fNode){
   let pre_node_removed = null;
   let pre_node_style_display = pre_node.style.display;
   let nxt_node = null;
-  varyTag.$add_set(({nxtTrimedValue})=>{
+  varyTag.add_set(({nxtTrimedValue})=>{
     pNode = pNode ?? pre_node.parentNode;
     /* ** 根据设置的不同值 
     true   显示当前元素 

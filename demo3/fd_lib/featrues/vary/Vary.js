@@ -114,11 +114,11 @@ export default class Vary {
   需在首次渲染后,将文本节点进行补偿替换 
   2 空数组子节点首次渲染时,将无实体节点插入,使用注释节点占位,该注释节点作为补偿节点存储 
   */
-  $patchNode = (val)=>{
+  patchNode = (val)=>{
     this._nodeValuePatch = val;
   }
   // 收集更新 
-  $add_set = (setRun, extra)=>{
+  add_set = (setRun, extra)=>{
     this._sets.push((setVal, isLazy)=>{
       let pre_v = this.get(true);
       let pre_v_t = this.get(false);
@@ -147,7 +147,7 @@ export default class Vary {
     });
   }
   // 执行初始化 
-  $mounted_run = (...args)=>{
+  mounted_run = (...args)=>{
     this._mounteds.forEach((mountedFn,idx)=>{
       mountedFn(this.get(true), this.get(false), ...args);
     })

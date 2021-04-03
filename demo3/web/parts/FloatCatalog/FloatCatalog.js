@@ -14,12 +14,12 @@ const isFold = VaryValue(true, (val)=>{
 
 export default function FloatCatalog(props, context){
   
-  let routes = [...context.$routes];
+  let routes = [...context.routes];
   // routes.push({ path: '/' })
   let links = routes.map((itm,idx)=>{
     return (
       <div>
-        <div class="routeItem" onClick={()=>context.$push(itm.path)}>{ itm.path }</div>
+        <div class="routeItem" onClick={()=>context.push(itm.path)}>{ itm.path }</div>
       </div>
     )
   })

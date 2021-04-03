@@ -7,9 +7,9 @@ import { isStringValue, isNumberValue, isNodeValue, isArrayValue, } from "../../
 export default function childValVary(pNode, child, varyChild, patchNode ){
   if (!varyChild) { return ; }
   
-  varyChild.$patchNode(patchNode);
-  varyChild.$mounted_run(child);
-  varyChild.$add_set(({ preTrimedValue, nxtTrimedValue, patchNodeValue })=>{
+  varyChild.patchNode(patchNode);
+  varyChild.mounted_run(child);
+  varyChild.add_set(({ preTrimedValue, nxtTrimedValue, patchNodeValue })=>{
     let patch_val = null;
     let pre_val = patchNodeValue || preTrimedValue;
     if ( isNodeValue(pre_val) ) {

@@ -48,7 +48,7 @@ export default class Router {
     window.addEventListener("hashchange", this._hashchangeListener);
   }
   
-  // $update_cache = (path, isCache)=>{ }
+  // update_cache = (path, isCache)=>{ }
   
   // 路由变换监听  
   _hashchangeListener = (evt)=>{
@@ -130,7 +130,7 @@ export default class Router {
 
 
 /* 对外接口 ===================================================================*/
-export function $getRoutes(isOrgin=false){
+export function getRoutes(isOrgin=false){
   if (isOrgin) { return [..._routes];  }
   
   // todo 待优化 

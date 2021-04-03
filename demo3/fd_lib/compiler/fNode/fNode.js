@@ -2,7 +2,7 @@ import config from "../../config/config.js";
 import message from "../../config/message.js";
 import routerPush from "../../router/routerPush.js";
 import routerReplace from "../../router/routerReplace.js";
-import { $getRoutes, } from "../../router/router.js";
+import { getRoutes, } from "../../router/router.js";
 import varyTagName from "../../featrues/varyValue/tagVary.js";
 import cpntRender from "../../featrues/Component/cpntRender.js";
 import { 
@@ -123,9 +123,9 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
         return [...div.childNodes];
       },
       // 路由跳转能力
-      $push: routerPush,
-      $replace: routerReplace,
-      $routes: $getRoutes(true),
+      push: routerPush,
+      replace: routerReplace,
+      routes: getRoutes(true),
     }
     let realNode = tagName(props, context);
     
