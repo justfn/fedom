@@ -4,6 +4,7 @@ import routerPush from "../../router/routerPush.js";
 import routerReplace from "../../router/routerReplace.js";
 import { $getRoutes, } from "../../router/router.js";
 import varyTagName from "../../featrues/varyValue/tagVary.js";
+import cpntRender from "../../featrues/Component/cpntRender.js";
 import { 
   isComponent, 
   isVary, 
@@ -93,13 +94,14 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
   /* output 1: class */
   if (isComponent(tagName)) {
     // 注意：此处又将调用 compiler 
-    let instance = new tagName(props);
-    let renderFunc = instance.render_ || instance.render;
-    let realNode = renderFunc.bind(instance)(props);
+    let {
+      instance,
+      renderNode,
+    } = cpntRender(tagName, props);
     fNode = new FNode({
       varyTag,
       tagName, 
-      realNode,
+      realNode: renderNode,
       attrs, 
       children, 
       instance, 

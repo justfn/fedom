@@ -13,12 +13,10 @@ export default class PageB extends Component {
     super(props)
   }
   
-  // render
-  
-  render( children  ){
+  render_(){
     return (
       <section class={['PageB']}>
-        { children }
+        { this.render() }
         
         <FloatCatalog />
       </section>

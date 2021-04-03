@@ -1,3 +1,4 @@
+import "./upLogic.less";
 import PageB from "../../../parts/PageB/PageB.js";
 
 import trackMouse from "../../../common/trackMouse.js";
@@ -15,7 +16,7 @@ export default class Page extends PageB {
   
   
   render(){
-    return super.render(
+    return (
       <section class="upLogic">
         <div>
           <span>坐标X:</span>
@@ -26,6 +27,8 @@ export default class Page extends PageB {
           <span>{ this.mousePosition.y }</span>
         </div>
       </section>
-    );
+    )
   };
 }
+
+

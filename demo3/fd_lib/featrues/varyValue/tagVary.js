@@ -1,6 +1,7 @@
 
 import message from "../../config/message.js";
 import addAttrs from "../../compiler/attrs/addAttrs.js";
+import cpntRender from "../../featrues/Component/cpntRender.js";
 import { 
   isComponent, 
   isBooleanValue, 
@@ -69,8 +70,11 @@ export default function varyTagName(fNode){
     
     // Features: 替换为组件 
     if (isComponent(nxtTrimedValue)) {
-      let inst = new nxtTrimedValue(props);
-      nxt_node = inst.render(props);
+      let {
+        instance,
+        renderNode,
+      } = cpntRender(nxtTrimedValue,props);
+      nxt_node = renderNode;
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;
       
