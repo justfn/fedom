@@ -6,12 +6,12 @@ import {
   varyAttrClassStr,
   varyAttrClassArr,
   varyAttrClassAitm,
-} from "../../featrues/vary/attrClass.js";
+} from "../../featrues/varyValue/attrClass.js";
 import {
   varyAttrStyleStr,
   varyAttrStyleObj,
   varyAttrStyleOval,
-} from "../../featrues/vary/attrStyle.js";
+} from "../../featrues/varyValue/attrStyle.js";
 import { 
   isVary,
   isStringValue, 

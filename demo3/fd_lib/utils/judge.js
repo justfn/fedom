@@ -3,7 +3,7 @@
 import config from "../config/config.js";
 import message from "../config/message.js";
 import Component from "../featrues/Component/Component.js";
-import Vary from "../featrues/vary/Vary.js";
+import Vary from "../featrues/Vary/Vary.js";
 
 export function isOrginTag(val){
   if (!isStringValue(val)) { return console.log(' # isOrginTag function error: arguments is not string '); }

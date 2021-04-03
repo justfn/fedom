@@ -4,8 +4,8 @@ import { globalWrite, globalRead, } from "../utils/globalWR.js";
 import createFNode from "./fNode/fNode.js";
 import addAttrs from "./attrs/addAttrs.js";
 import fillChildren from "./child/fillChild.js";
-import onMounted from "../featrues/onMounted.js";
-import onUnmount from "../featrues/onUnmount.js";
+import onMounted from "../featrues/lifecycle/onMounted.js";
+import onUnmount from "../featrues/lifecycle/onUnmount.js";
 
 
 /* 处理 jsx 

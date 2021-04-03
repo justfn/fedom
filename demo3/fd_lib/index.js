@@ -8,7 +8,7 @@ import compiler from "./compiler/compiler.js";
 import render from "./render.js";
 import Router from "./router/router.js";
 import Component from "./featrues/Component/Component.js";
-import { VaryValue, } from "./featrues/vary/Vary.js";
+import { VaryValue, } from "./featrues/Vary/Vary.js";
 import { 
   isComponent, 
   isVary, 

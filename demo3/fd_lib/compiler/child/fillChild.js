@@ -17,7 +17,7 @@ import {
 } from "../../utils/judge.js";
 
 // to_do: 待合并为 childValVary 
-import childValVary from "../../featrues/vary/childVary.js";
+import childValVary from "../../featrues/varyValue/childVary.js";
 
 export default function fillChildren(fNode){
   fNode.children.forEach(child=>{

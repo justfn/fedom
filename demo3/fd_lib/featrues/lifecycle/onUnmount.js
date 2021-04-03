@@ -1,6 +1,6 @@
 /* ** 卸载前
 */
-import config from "../config/config.js";
+import config from "../../config/config.js";
 
 export default function onUnmount(fNode){
   // 方法一: 

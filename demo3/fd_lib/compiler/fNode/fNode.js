@@ -3,7 +3,7 @@ import message from "../../config/message.js";
 import routerPush from "../../router/routerPush.js";
 import routerReplace from "../../router/routerReplace.js";
 import { $getRoutes, } from "../../router/router.js";
-import varyTagName from "../../featrues/vary/tagVary.js";
+import varyTagName from "../../featrues/varyValue/tagVary.js";
 import { 
   isComponent, 
   isVary, 
