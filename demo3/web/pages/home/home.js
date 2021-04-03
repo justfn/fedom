@@ -2,7 +2,6 @@
 import "./home.less";
 import PageA from "../../Parts/PageA/PageA.js";
 import Header from "../../Parts/Header/Header.js";
-import CptA from "../apps/TicTacToe/CptA.js";
 import FloatCatalog from "../../Parts/FloatCatalog/FloatCatalog.js";
 
 const {
@@ -76,7 +75,6 @@ export default function(props, context){
       style={style} 
       onClick={fn1}
       >
-      <CptA />
       
       <button onClick={changeClickHandle}>AAAAAAAAAAAAAAAAAAA</button>
       <div style={{display:varyShowPart1,}} onClick={()=>{varyShowPart1.value='none';}}>
