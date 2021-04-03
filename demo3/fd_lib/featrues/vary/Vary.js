@@ -28,7 +28,7 @@ export default class Vary {
     this._value = val; 
     this._trimValueFn =  trimFn ?? (v=>v); // 整理成最终返回值 
     this._valueTrimed = this._trimValueFn(val);
-    this._valuePatch = null; // 补偿值 
+    this._nodeValuePatch = null; // 节点补偿值 
     this.__valueTrimedNxt = symbol_1; // 缓存下一次格式化的值,避免多次执行'_trimValueFn'函数  
     if (isVary(val)) {
       val.watch((preV,nxtV,preVTrimed,nxtVTrimed)=>{
@@ -106,13 +106,13 @@ export default class Vary {
   }  
   
   /* --------------------------------------------------------- 工具方法  */
-  /* ** 补偿更新 
+  /* ** 补偿更新Node节点  
   1 设置文本字符串作为子节点时,初始渲染后,第二次更新无法通过文本定位该文本节点 
   需在首次渲染后,将文本节点进行补偿替换 
   2 空数组子节点首次渲染时,将无实体节点插入,使用注释节点占位,该注释节点作为补偿节点存储 
   */
-  $patch = (val)=>{
-    this._valuePatch = val;
+  $patchNode = (val)=>{
+    this._nodeValuePatch = val;
   }
   // 收集更新 
   $add_set = (setRun, extra)=>{
@@ -131,13 +131,12 @@ export default class Vary {
       } = setRun({
         preTrimedValue: pre_v_t,
         nxtTrimedValue: this.__valueTrimedNxt,
-        patchValue: this._valuePatch,
+        patchNodeValue: this._nodeValuePatch,
         preValue: pre_v,
         nxtValue: nxt_v,
         extra: extra,
       }) || {};
-      // } = setRun(pre_v_t, this.__valueTrimedNxt, pre_v, nxt_v, extra);
-      this._valuePatch = patch_value;
+      if ( patch_value ) { this._nodeValuePatch = patch_value; }
       return {
         ...extra,
         nextValue: nxt_v,

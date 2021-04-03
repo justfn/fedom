@@ -7,11 +7,11 @@ import { isStringValue, isNumberValue, isNodeValue, isArrayValue, } from "../../
 export default function childValVary(pNode, child, varyChild, patchNode ){
   if (!varyChild) { return ; }
   
-  varyChild.$patch(patchNode);
+  varyChild.$patchNode(patchNode);
   varyChild.$mounted_run(child);
-  varyChild.$add_set(({ preTrimedValue, nxtTrimedValue, patchValue })=>{
+  varyChild.$add_set(({ preTrimedValue, nxtTrimedValue, patchNodeValue })=>{
     let patch_val = null;
-    let pre_val = patchValue || preTrimedValue;
+    let pre_val = patchNodeValue || preTrimedValue;
     if ( isNodeValue(pre_val) ) {
       patch_val = updateNode(pre_val.parentNode, nxtTrimedValue, pre_val, null).patchNode;
     }
@@ -31,10 +31,10 @@ export default function childValVary(pNode, child, varyChild, patchNode ){
     }
     else {
       console.log('### to_do: childVary');
-      console.log(patchValue);
-      console.log(preTrimedValue);
-      console.log(child);
-      console.log(pNode);
+      console.log('patchNodeValue', patchNodeValue);
+      console.log('preTrimedValue', preTrimedValue);
+      console.log('pNode', pNode);
+      console.log('child', child);
     }
     
     return {
