@@ -15,8 +15,14 @@ export default class Router {
         //   redirect: '',
         //   component: <cpt>,
         //   isCache: <bol>,
-        //   children: [],
-        // }
+        //   children: [
+        //     {
+        //       path: '', // 是否以 / 开头都无区别
+        //       ...
+        //     },
+        //     ...
+        //   ],
+        // },
       ],
       root = document.body,
       beforeEach = (v=>v),
@@ -27,6 +33,7 @@ export default class Router {
     } = formatRoutes(routes);
     // 路由Map
     this._route_map = routeMap;
+    console.log( routeMap );
     _routes = routeList;
     this._routes = routeList;
     this._root = root; 

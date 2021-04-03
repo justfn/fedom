@@ -6,10 +6,8 @@
 export default function formatRoutes(routes, prePath='', routeMap={}, routeList=[]){
   routes.forEach((pathOption,idx)=>{
     let pathKey = pathOption.path;
-    if ( !/^\//.test(pathKey) ) {
-      if (prePath!=='/') { prePath += '/' }
-      pathKey = `${prePath}${pathKey}`;
-    }
+    if ( !/^\//.test(pathKey) ) { pathKey = `/${pathKey}`; }
+    pathKey = prePath + pathKey;
     if (pathOption.alias) {
       let _opt = { ...pathOption }
       routeMap[_opt.alias] = _opt;
@@ -32,3 +30,4 @@ export default function formatRoutes(routes, prePath='', routeMap={}, routeList=
     routeList: routeList,
   };
 } 
+

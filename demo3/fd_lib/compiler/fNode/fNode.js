@@ -92,7 +92,8 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
   if (isComponent(tagName)) {
     // 注意：此处又将调用 compiler 
     let instance = new tagName(props);
-    let realNode = instance.render(props);
+    let renderFunc = instance.render_ || instance.render;
+    let realNode = renderFunc.bind(instance)(props);
     fNode = new FNode({
       varyTag,
       tagName, 

@@ -1,4 +1,4 @@
-import PageA from "../../../parts/PageA/PageA.js";
+import PageB from "../../../parts/PageB/PageB.js";
 
 import trackMouse from "../../../common/trackMouse.js";
 
@@ -6,7 +6,7 @@ const {
   Component,
 } = window.$fd;
 
-export default class Pageaa extends Component {
+export default class Page extends PageB {
   constructor(props){
     super(props);
     
@@ -15,10 +15,8 @@ export default class Pageaa extends Component {
   
   
   render(){
-    
-    
-    return (
-      <PageA class="upLogic">
+    return super.render(
+      <section class="upLogic">
         <div>
           <span>坐标X:</span>
           <span>{ this.mousePosition.x }</span>
@@ -27,7 +25,7 @@ export default class Pageaa extends Component {
           <span>坐标Y:</span>
           <span>{ this.mousePosition.y }</span>
         </div>
-      </PageA>
+      </section>
     );
   };
 }
