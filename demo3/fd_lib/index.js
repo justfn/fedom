@@ -27,4 +27,5 @@ export {
   render,
   Router,
   VaryValue,
+  Component,
 }

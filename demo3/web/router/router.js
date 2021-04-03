@@ -22,6 +22,10 @@ const routes_ = [
         path: 'jsx',
         component: ()=>import('../pages/fealture/jsx/jsx.js'),
       },
+      {
+        path: 'upLogic',
+        component: ()=>import('../pages/fealture/upLogic/upLogic.js'),
+      },
     ],
   },
   // 应用：特性综合使用 

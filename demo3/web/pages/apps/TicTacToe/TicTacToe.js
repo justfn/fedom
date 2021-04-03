@@ -4,15 +4,14 @@ import PageA from "../../../Parts/PageA/PageA.js";
 import Board from "./Board.js";
 import Board0 from "./Board0.js";
 import CptA from "./CptA.js";
+
 const {
   VaryValue,
 } = window.$fd;
 
-import trackMouse from "../../../common/trackMouse.js";
-const mousePosition = trackMouse(document.body);
+
 
 export default function(props, context, router){
-  console.log('# welcome!!!');
   const scope_state = {
     xIsNext: true,
     stepNumber: 0,
@@ -43,9 +42,6 @@ export default function(props, context, router){
         );
       });;
     }),
-    varyTxt: VaryValue('hello'),
-    tag: VaryValue('section'),
-    cpt: VaryValue(Board),
   };
   function statusUpadte(st){
     const winner = calculateWinner(st.square);
@@ -59,20 +55,6 @@ export default function(props, context, router){
     
     st.status.set(()=>{ return "Next player: " + (scope_state.xIsNext ? "X" : "O") })
   } 
-  let refs = {
-    gameBoardRef: null, 
-    boardCpt: null, 
-  }; 
-  let gameBoardRef = null; 
-  
-  // Vary_state.moves.onMounted((...args)=>{
-  //   // console.log(args);
-  // })
-  context.onMounted( ({ root, })=>{
-    // root.style.background = 'blue';
-    console.log( '#==== ref',  root, refs );
-    console.log('ref', gameBoardRef );
-  })
   
   
   let game_run_next = (i)=>{
@@ -93,32 +75,16 @@ export default function(props, context, router){
     })
   }
   
-  let num = 0;
-  let tags = ['div', 'span', 'acticle']
-  let cpts = [ Board0, CptA, Board ]
-  let changeTest = ()=>{
-    Vary_state.tag.value = tags[num];
-    Vary_state.cpt.value = cpts[num];
-    num++; 
-    
-    Vary_state.varyTxt.value = 'world'; 
-  }
-  Vary_state.varyTxt.watch( (  pV, nV )=>{
-    console.log( pV, nV);
-  })
   return (
     <PageA class={["app_TicTacToe"]}>
-      <Vary_state.tag class="component_Game" >
-        
-        { Vary_state.varyTxt  }
-        
+      <section class="component_Game" >
       
-        <div class="b02 game-board" ref={ el=>gameBoardRef=el }>
-          { /* 
-          */ } 
-          <Vary_state.cpt class="c0011" ref={ el=>refs.boardCpt=el } squares={Vary_state.square} onClick={game_run_next}  />        
+        <div class="b02 game-board" >
+          <Board class="c0011" 
+            squares={Vary_state.square} 
+            onClick={game_run_next} 
+          />        
             
-          { /* */ } 
         </div>
         
         <div class="b03 game-info" >
@@ -137,15 +103,9 @@ export default function(props, context, router){
           </div>
         </div>
         
-        <div class="b04">
-          <div class="c04">{ mousePosition.x }</div>
-          <div class="c05">{ mousePosition.y }</div>
-        </div>
         
-        <div>
-            <button onClick={changeTest}> 测试 </button>
-        </div>
-      </Vary_state.tag>
+        
+      </section>
     </PageA>
   )
 }

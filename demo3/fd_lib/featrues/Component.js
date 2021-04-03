@@ -26,6 +26,12 @@ export default class Component {
   
 }
 
+/* ** 判断值是否继承自 Component*/
 export function isComponent(val){
-  return val instanceof Component;
+  if (!val) { return false; }
+  
+  let proto = val.prototype;
+  if (!proto) { return false; }
+  
+  return proto instanceof Component;
 } 
