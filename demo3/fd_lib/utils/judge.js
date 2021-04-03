@@ -1,6 +1,9 @@
 /** 判断函数 
 */
 import config from "../config.js";
+import message from "../message.js";
+import Component from "../featrues/Component/Component.js";
+import Vary from "../featrues/vary/Vary.js";
 
 export function isOrginTag(val){
   if (!isStringValue(val)) { return console.log(' # isOrginTag function error: arguments is not string '); }
@@ -36,6 +39,26 @@ export function isNodeValue(val){
   return val instanceof Node;
 } 
 
+/* ** 判断值是否继承自 Component*/
+export function isComponent(val){
+  if (!val) { return false; }
+  
+  let proto = val.prototype;
+  if (!proto) { return false; }
+  
+  return proto instanceof Component;
+} 
+
+/* 值是否为可变量对象 
+*/
+export function isVary(val){
+  if (!val) { return false; }
+  
+  let bol = val instanceof Vary;
+  if (bol && isVary(val.get(false))) { throw message.errors.mutil_vary; }
+  
+  return bol;
+}
 
 
 

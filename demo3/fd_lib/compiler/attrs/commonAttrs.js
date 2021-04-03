@@ -2,8 +2,6 @@
 */
 
 import message from "../../message.js";
-import { isVary, } from "../../featrues/vary/Vary.js";
-import { isStringValue, isMapValue, isFunctionValue, isArrayValue, } from "../../utils/judge.js";
 import {
   varyAttrClassStr,
   varyAttrClassArr,
@@ -14,6 +12,13 @@ import {
   varyAttrStyleObj,
   varyAttrStyleOval,
 } from "../../featrues/vary/attrStyle.js";
+import { 
+  isVary,
+  isStringValue, 
+  isMapValue, 
+  isFunctionValue,
+  isArrayValue, 
+} from "../../utils/judge.js";
 
 export function addClassAttr(fNode, value, varyAttr){
   if (isVary(value)) {

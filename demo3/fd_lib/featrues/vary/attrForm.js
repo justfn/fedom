@@ -1,5 +1,9 @@
 
-import { isVary, } from "./Vary.js";
+import {
+  isVary,
+} from "../../utils/judge.js";
+
+
 export function varyAttrInputValue(fNode, varyVal){
   if (!isVary(varyVal)) { return varyVal; }
   

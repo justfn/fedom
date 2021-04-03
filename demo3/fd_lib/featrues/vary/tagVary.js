@@ -1,8 +1,12 @@
 
 import message from "../../message.js";
-import { isComponent, } from "../Component.js";
-import { isBooleanValue, isStringValue, isFunctionValue, } from "../../utils/judge.js";
 import addAttrs from "../../compiler/attrs/addAttrs.js";
+import { 
+  isComponent, 
+  isBooleanValue, 
+  isStringValue, 
+  isFunctionValue, 
+} from "../../utils/judge.js";
 
 
 export default function varyTagName(fNode){

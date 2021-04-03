@@ -1,13 +1,15 @@
 import config from "../../config.js";
 import message from "../../message.js";
-import { isVary, } from "../../featrues/vary/Vary.js";
-import { isComponent, } from "../../featrues/Component.js";
-import { isFunctionValue, isStringValue, } from "../../utils/judge.js";
 import routerPush from "../../router/routerPush.js";
 import routerReplace from "../../router/routerReplace.js";
 import { $getRoutes, } from "../../router/router.js";
-
 import varyTagName from "../../featrues/vary/tagVary.js";
+import { 
+  isComponent, 
+  isVary, 
+  isFunctionValue, 
+  isStringValue, 
+} from "../../utils/judge.js";
 
 
 

@@ -7,8 +7,12 @@ import { globalWrite, } from "./utils/globalWR.js";
 import compiler from "./compiler/compiler.js";
 import render from "./render.js";
 import Router from "./router/router.js";
-import { VaryValue, isVary, } from "./featrues/vary/Vary.js";
-import Component, { isComponent } from "./featrues/Component.js";
+import Component from "./featrues/Component/Component.js";
+import { VaryValue, } from "./featrues/vary/Vary.js";
+import { 
+  isComponent, 
+  isVary, 
+} from "./utils/judge.js";
 
 globalWrite('compiler', compiler);
 globalWrite('render', render);

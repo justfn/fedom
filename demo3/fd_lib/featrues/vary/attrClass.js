@@ -1,5 +1,7 @@
 
-import { isVary, } from "./Vary.js";
+import { 
+  isVary, 
+} from "../../utils/judge.js";
 export function varyAttrClassStr(fNode, varyAttr){
   if (!varyAttr) { return ; }
   

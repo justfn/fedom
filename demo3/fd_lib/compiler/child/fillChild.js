@@ -3,12 +3,18 @@
 import config from "../../config.js";
 import message from "../../message.js";
 
-import { isStringValue, isNumberValue, isArrayValue, isNodeValue, isEmptyValue,  } from "../../utils/judge.js";
 import { 
   nodeChild, 
   textChild, 
 } from "./typedChild.js";
-import { isVary, } from "../../featrues/vary/Vary.js";
+import { 
+  isVary, 
+  isStringValue, 
+  isNumberValue, 
+  isArrayValue, 
+  isNodeValue, 
+  isEmptyValue,  
+} from "../../utils/judge.js";
 
 // to_do: 待合并为 childValVary 
 import childValVary from "../../featrues/vary/childVary.js";

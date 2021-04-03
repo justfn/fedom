@@ -1,6 +1,9 @@
 
 
 import message from "../../message.js";
+import {
+  isVary,
+} from "../../utils/judge.js";
 
 
 /** 可变量对象 
@@ -149,15 +152,6 @@ export default class Vary {
       mountedFn(this.get(true), this.get(false), ...args);
     })
   }
-}
-
-/* 是否为可变量对象 
-*/
-export function isVary(val){
-  let bol = val instanceof Vary;
-  if (bol && isVary(val.get(false))) { throw message.errors.mutil_vary; }
-  
-  return bol;
 }
 
 /* 使用可变量 
