@@ -1,5 +1,5 @@
 
-import config from "../../config.js";
+import config from "../../config/config.js";
 import componentAttrs from "./componentAttrs.js";
 import { 
   addClassAttr, 

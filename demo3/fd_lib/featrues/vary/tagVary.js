@@ -1,5 +1,5 @@
 
-import message from "../../message.js";
+import message from "../../config/message.js";
 import addAttrs from "../../compiler/attrs/addAttrs.js";
 import { 
   isComponent, 

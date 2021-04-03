@@ -1,5 +1,5 @@
-import config from "../../config.js";
-import message from "../../message.js";
+import config from "../../config/config.js";
+import message from "../../config/message.js";
 import routerPush from "../../router/routerPush.js";
 import routerReplace from "../../router/routerReplace.js";
 import { $getRoutes, } from "../../router/router.js";

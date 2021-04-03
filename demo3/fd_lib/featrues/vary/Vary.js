@@ -1,6 +1,6 @@
 
 
-import message from "../../message.js";
+import message from "../../config/message.js";
 import {
   isVary,
 } from "../../utils/judge.js";

@@ -1,7 +1,7 @@
 /* ** 处理通用属性属性 
 */
 
-import message from "../../message.js";
+import message from "../../config/message.js";
 import {
   varyAttrClassStr,
   varyAttrClassArr,

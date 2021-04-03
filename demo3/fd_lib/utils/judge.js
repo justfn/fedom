@@ -1,7 +1,7 @@
 /** 判断函数 
 */
-import config from "../config.js";
-import message from "../message.js";
+import config from "../config/config.js";
+import message from "../config/message.js";
 import Component from "../featrues/Component/Component.js";
 import Vary from "../featrues/vary/Vary.js";
 

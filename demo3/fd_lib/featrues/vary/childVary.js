@@ -1,5 +1,5 @@
 
-import message from "../../message.js";
+import message from "../../config/message.js";
 import { isStringValue, isNumberValue, isNodeValue, isArrayValue, } from "../../utils/judge.js";
 
 /* 子节点可变 

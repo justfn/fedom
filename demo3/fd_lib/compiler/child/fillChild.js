@@ -1,7 +1,7 @@
 /* 填充子节点 
 */
-import config from "../../config.js";
-import message from "../../message.js";
+import config from "../../config/config.js";
+import message from "../../config/message.js";
 
 import { 
   nodeChild, 
