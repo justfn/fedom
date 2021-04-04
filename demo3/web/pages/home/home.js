@@ -18,12 +18,12 @@ export default function(props, context){
   let val2 = VaryValue(0);
   // let headerTitle = VaryValue(0);
   // setTimeout(function(){
-    //   headerTitle.set(function(val){
-    //     return ++val;
-    //   })
-    // },1000)
-    
-    // console.log('# page_home');
+  //   headerTitle.set(function(val){
+  //     return ++val;
+  //   })
+  // },1000)
+  
+  // console.log('# page_home');
       
       
   let varyShowPart1 = VaryValue('block');

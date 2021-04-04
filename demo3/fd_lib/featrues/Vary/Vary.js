@@ -67,7 +67,7 @@ export default class Vary {
       });
     }
     else {
-      nxt_v = setHandle(pre_v, pre_v_t); 
+      nxt_v = setHandle(pre_v, pre_v_t) ?? pre_v; 
       this.__valueTrimedNxt = this._trimValueFn(nxt_v);
       this._sets.forEach(setFn=>{ 
         setFn(nxt_v, isLazy); 
@@ -110,12 +110,12 @@ export default class Vary {
   /* --------------------------------------------------------- 工具方法  */
   // 收集更新 
   add_set = (setRun, extra)=>{
-    this._sets.push((setVal, isLazy)=>{
+    this._sets.push((setHandle, isLazy)=>{
       let pre_v = this.get(true);
       let pre_v_t = this.get(false);
-      let nxt_v = setVal; 
+      let nxt_v = setHandle; 
       if (!isLazy) { 
-        nxt_v = setVal(pre_v, pre_v_t, extra); 
+        nxt_v = setHandle(pre_v, pre_v_t, extra) ?? pre_v; 
         if (this.__valueTrimedNxt===symbol_1) {
           this.__valueTrimedNxt = this._trimValueFn(nxt_v);
         }
