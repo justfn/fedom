@@ -2,7 +2,7 @@
 */
 
 
-export default function onUnmounted(fNode){
+export default function onMounted(fNode){
   // to_do_: setTimeout待优化  
   setTimeout(()=>{
     if (fNode.context._mountedFns && fNode.context._mountedFns.length ) {

@@ -18,8 +18,6 @@ export default class Component {
   onMounted(){}
   // 卸载-前 
   onUnmount(){ }
-  // 卸载-后 
-  onUnmounted(){ }
   
   /* --------------------------------------------------------- 工具方法 */
   utils = { }

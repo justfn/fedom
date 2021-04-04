@@ -14,9 +14,9 @@
     props.xx.watch() 
   3 组件卸载 
     context.onUnmount 
-    context.onUnmounted 
+    context.onUnmounted setTimeout 
     onUnmount
-    onUnmounted
+    onUnmounted setTimeout 
     实现思路: 
       MutationObserver 
       页面切换时机, 组件切换时机 触发 
@@ -31,7 +31,6 @@
 
 
 todo: 
-  onUnmounted 生命周期 
   写框架文档 
 
 
