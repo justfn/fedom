@@ -31,7 +31,7 @@
 
 
 todo: 
-  路由 redirect bug 修复  
+  onUnmounted 生命周期 
   写框架文档 
 
 
