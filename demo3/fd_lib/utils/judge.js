@@ -47,6 +47,9 @@ export function isComponent(val){
   
   return proto instanceof Component;
 } 
+export function isFDComponent(val){
+  return isComponent(val) || isFunctionValue(val);
+} 
 /* 值是否为可变量对象值 
 */
 export function isVary(val){

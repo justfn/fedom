@@ -152,6 +152,8 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
     console.warn('# todo tag', tagName, attrs, varyTag);
   }
   
+  
+  // console.log( 'createFNode', varyTag, tagName, attrs, children );
   /* ** Features: 标签名动态化
   注意 变量名需大写否则jsx不处理  
   */

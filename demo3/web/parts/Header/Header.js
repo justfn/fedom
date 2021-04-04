@@ -7,10 +7,15 @@ const {
 } = window.$fd;
 
 export default function Header(props, context){
+  // console.log(' Header --');
   let klass = props.class ?? '';
+  context.onUnmount((...args)=>{
+    console.log( ' Header unmount ', args);
+  })
   return (
     <h1 class={['part_Header', klass ]}> 
       { props.name }
+      { '****************' }
     </h1>
   );
 }

@@ -3,6 +3,7 @@ import "./home.less";
 import PageA from "../../Parts/PageA/PageA.js";
 import Header from "../../Parts/Header/Header.js";
 import FloatCatalog from "../../Parts/FloatCatalog/FloatCatalog.js";
+import PartA from "../../parts/PartA/PartA.js";
 
 const {
   VaryValue, 
@@ -67,6 +68,9 @@ export default function(props, context){
     // varyShowPart1.value = 'block'
     if (Header_.value===null) {
       Header_.value = val;
+    }
+    else if ( Header_.value === val ) {
+      Header_.value = PartA;
     }
     else {
       Header_.value = null;

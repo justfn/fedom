@@ -5,12 +5,12 @@ import config from "../../config/config.js";
 // 页面 
 let cpntList = [];
 
-export default function onUnmount(fNode){
+export default function onUnmount(fNode, ...args){
   // 方法一: 
   // observe(fNode);
   
   // 方法二: 
-  onRemoveNode(fNode);
+  onRemoveNode(fNode, ...args);
   
 } 
 
@@ -18,19 +18,27 @@ export default function onUnmount(fNode){
 1: 路由切换, 渲染时收集页面级组件,切换前调用 
 2: 动态组件切换时调用 
 */
-function onRemoveNode(fNode){
+function onRemoveNode(fNode, ...args){
   if ( fNode.context && fNode.context._unmountFns ) {
     fNode.context._unmountFns.forEach((callback)=>{
-      callback();
+      callback(...args);
     })
+    
+    // setTimeout(()=>{
+    //   fNode.context = null;
+    // })
     return ;
   }
   if ( fNode.instance && fNode.instance.onUnmount ) {
-    fNode.instance.onUnmount();
+    fNode.instance.onUnmount(...args);
+    
+    // setTimeout(()=>{
+    //   fNode.instance = null;
+    // })
     return ;
   }
 
-  console.log('to_do: ', fNode);
+  // console.log('to_do: ', fNode);
 } 
 
 

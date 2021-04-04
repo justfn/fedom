@@ -67,7 +67,8 @@ export default class Vary {
       });
     }
     else {
-      nxt_v = setHandle(pre_v, pre_v_t) ?? pre_v; 
+      nxt_v = setHandle(pre_v, pre_v_t); 
+      if (nxt_v===undefined) { nxt_v = pre_v }
       this.__valueTrimedNxt = this._trimValueFn(nxt_v);
       this._sets.forEach(setFn=>{ 
         setFn(nxt_v, isLazy); 
@@ -112,7 +113,8 @@ export default class Vary {
       let pre_v_t = this.get(false);
       let nxt_v = setHandle; 
       if (!isLazy) { 
-        nxt_v = setHandle(pre_v, pre_v_t, extra) ?? pre_v; 
+        nxt_v = setHandle(pre_v, pre_v_t, extra); 
+        if (nxt_v===undefined) { nxt_v = pre_v }
         if (this.__valueTrimedNxt===symbol_1) {
           this.__valueTrimedNxt = this._trimValueFn(nxt_v);
         }

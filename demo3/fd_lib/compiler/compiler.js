@@ -7,7 +7,6 @@ import fillChildren from "./child/fillChild.js";
 import onMounted from "../featrues/lifecycle/onMounted.js";
 import onUnmount from "../featrues/lifecycle/onUnmount.js";
 import onPageLoaded from "../featrues/lifecycle/onPageLoaded.js";
-// console.log('##### compiler ');
 
 
 let _order_num = 0; 
@@ -19,6 +18,7 @@ attrs     null|{ key:str | key:obj | key:arr | key:vary  }
 children  [ str|elem|arr|vary ] 
 */
 export default function compiler(tagName, attrs, ...children){
+  // console.log('##### compiler ');
   attrs = attrs ?? {};
   _order_num++;
   
