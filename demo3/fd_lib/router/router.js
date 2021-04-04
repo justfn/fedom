@@ -44,7 +44,6 @@ export default class Router {
     this._beforeEach = beforeEach;
     
     // onHashChange(this._route_map, this._root, this._beforeEach);
-    
     onHashChange( this._hashChange );
     initHashChange();
   }

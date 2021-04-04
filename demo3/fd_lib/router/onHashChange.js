@@ -4,30 +4,35 @@ import { globalWrite, globalRead, } from "../utils/globalWR.js";
 
 
 
-/* ** 路由切换钩子 
-*/
+let isInit = false;
 let listenerList = [];
-function onHashChange(listener){
-  listenerList.push(listener);
-} 
+
 
 /* ** 路由切换 
 */
 function hashchangeListener( evt ){
-  globalWrite('status.isLoaded', false);
-
-  listenerList.forEach(fn=>fn(evt))
-
   // console.log(location.hash);
   // console.log(evt);
   // evt.oldURL: "http://0.0.0.0:9000/#/home"
   // evt.newURL: "http://0.0.0.0:9000/#/tic_tac_toe"
+
+  listenerList.forEach(fn=>fn(evt))
 } 
 
-export default onHashChange;
+/* ** 监听路由切换 
+*/
+export default function onHashChange(listener){
+  listenerList.push(listener);
+} 
 export function initHashChange(){
-  window.addEventListener("hashchange", hashchangeListener );
+  if (isInit) { return ; }
+  isInit = true;
+  
   // 初始执行 
-  setTimeout(()=>{ hashchangeListener({ newURL: window.location.href, }) })
+  hashchangeListener({ 
+    newURL: window.location.href, 
+    isInitRun: true,
+  });
+  window.addEventListener("hashchange", hashchangeListener );
 } 
 

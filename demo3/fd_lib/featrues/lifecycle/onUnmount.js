@@ -19,8 +19,20 @@ export default function onUnmount(fNode){
 2: 动态组件切换时调用 
 */
 function onRemoveNode(fNode){
-  // console.log('todo');
+  if ( fNode.context && fNode.context._unmountFns ) {
+    fNode.context._unmountFns.forEach((callback)=>{
+      callback();
+    })
+    return ;
+  }
+  if ( fNode.instance && fNode.instance.onUnmount ) {
+    fNode.instance.onUnmount();
+    return ;
+  }
+
+  console.log('to_do: ', fNode);
 } 
+
 
 /* ** 监听dom变动 
 */

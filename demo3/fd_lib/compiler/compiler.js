@@ -7,18 +7,18 @@ import fillChildren from "./child/fillChild.js";
 import onMounted from "../featrues/lifecycle/onMounted.js";
 import onUnmount from "../featrues/lifecycle/onUnmount.js";
 import onPageLoaded from "../featrues/lifecycle/onPageLoaded.js";
+// console.log('##### compiler ');
 
 
-/* 处理 jsx 
-  执行顺序 & 深度优先 
-  tagName   tagNameStr|componentFn|vary 
-  attrs     null|{ key:str | key:obj | key:arr | key:vary  } 
-  children  [ str|elem|arr|vary ] 
-*/
 let _order_num = 0; 
 
-// console.log('##### compiler ');
-function compiler(tagName, attrs, ...children){
+/* ** 处理 jsx 
+执行顺序 & 深度优先 
+tagName   tagNameStr|componentFn|vary 
+attrs     null|{ key:str | key:obj | key:arr | key:vary  } 
+children  [ str|elem|arr|vary ] 
+*/
+export default function compiler(tagName, attrs, ...children){
   attrs = attrs ?? {};
   _order_num++;
   
@@ -45,14 +45,13 @@ function compiler(tagName, attrs, ...children){
   
   
   onMounted( fNode);
-  onUnmount( fNode );
+  // onUnmount( fNode );
   onPageLoaded( fNode, _order_num, ()=>{
     _order_num = 0;
   });
   
   return fNode.realNode;
 }
-export default compiler;
 
 
 

@@ -95,17 +95,14 @@ export default class Vary {
   }
   // 控制开关 
   on = ()=>{ this.isAlive = true; }
-  off = (isDied=false)=>{ 
-    if (isDied) {
-      // todo 待优化 
-      for(let key in this){
-        this[key] = null; 
-      };
-    }
-    else {
-      this.isAlive = false; 
-    }
-  }  
+  off = ()=>{ this.isAlive = false; }  
+  kill = ()=>{
+    this.isAlive = false; 
+    // todo 待优化 
+    for(let key in this){
+      this[key] = null; 
+    };
+  }
   
   /* --------------------------------------------------------- 工具方法  */
   // 收集更新 

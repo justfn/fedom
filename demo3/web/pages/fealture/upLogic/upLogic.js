@@ -11,23 +11,30 @@ export default class Page extends PageB {
   constructor(props){
     super(props);
     
+    let { x, y, unBind } = trackMouse(document.body);
+    this.x = x;
+    this.y = y;
+    this.x.watch((...args)=>{
+      console.log( 'watch:', args);
+    })
+    this.unBind = unBind;
+  }
+  
+  onUnmount(){
+    this.unBind();
   }
   
   
   render(){
-    let { x, y } = trackMouse(document.body);
-    x.watch((...args)=>{
-      console.log( 'watch:', args);
-    })
     return (
       <section class="upLogic">
         <div>
           <span>坐标X:</span>
-          <span>{ x }</span>
+          <span>{ this.x }</span>
         </div>
         <div>
           <span>坐标Y:</span>
-          <span>{ y }</span>
+          <span>{ this.y }</span>
         </div>
       </section>
     )
