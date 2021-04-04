@@ -11,8 +11,6 @@ export default function formatRoutes(routes, prePath='', routeMap={}, routeList=
     if (pathOption.alias) {
       let _opt = { ...pathOption }
       routeMap[_opt.alias] = _opt;
-      _opt._alias = _opt.alias;
-      delete _opt.alias;
       pathOption = _opt;
     }
     routeMap[pathKey] = pathOption;

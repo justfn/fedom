@@ -8,22 +8,24 @@ const {
   VaryValue, 
 } = window.$fd
 
-let Header_ = VaryValue(Header);
-let isActive = VaryValue(true);
-let varyText = VaryValue('fd 001');
-let val2 = VaryValue(0);
 let elDom = document.createElement("div")
-elDom.textContent = 'testaaa';
-// let headerTitle = VaryValue(0);
-// setTimeout(function(){
-//   headerTitle.set(function(val){
-//     return ++val;
-//   })
-// },1000)
-
-// console.log('# page_home');
+elDom.textContent = ' =================================== ';
 
 export default function(props, context){
+  let Header_ = VaryValue(Header);
+  let isActive = VaryValue(true);
+  let varyText = VaryValue('fd 001');
+  let val2 = VaryValue(0);
+  // let headerTitle = VaryValue(0);
+  // setTimeout(function(){
+    //   headerTitle.set(function(val){
+    //     return ++val;
+    //   })
+    // },1000)
+    
+    // console.log('# page_home');
+      
+      
   let varyShowPart1 = VaryValue('block');
   let style = {
     'color': 'red',
@@ -97,7 +99,9 @@ export default function(props, context){
       
       <hr />
       { /* Feature: 嵌入原生DOM节点元素 */ }
-      <td> { elDom } </td>
+      <h1>
+        { elDom }
+      </h1>
 
       <hr />
       { /* Feature: API-富文本渲染能力 */ }
