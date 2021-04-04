@@ -1,12 +1,28 @@
-// import compiler from "./compiler/index.js";
-import { globalWrite, } from "./utils/globalWR.js";
 
-export default function render(fEl, elWrap){
-  let elem = fEl; 
+import { globalWrite, } from "./utils/globalWR.js";
+import trimTextChild from "./compiler/child/trimTextChild.js";
+import { 
+  isArrayValue,
+  isNodeValue,
+  isTextChild,
+} from "./utils/judge.js";
+
+export default function render(nodes, appRootWrap){
+  globalWrite('elems.root', appRootWrap);
+  if ( isArrayValue(nodes) ) {
+    nodes.forEach((itm,idx)=>{ nodes(itm, appRootWrap); })
+    return ;
+  }
   
-  globalWrite('elems.root', elWrap);
+  if ( isTextChild(nodes) ) {
+    nodes = trimTextChild(nodes);
+    nodes = document.createTextNode(nodes);
+  }
+  else if ( !isNodeValue(nodes) ) {
+    console.log('## to_do: render unsport nodes', nodes);
+  }
   
-  elWrap.appendChild(elem);
+  appRootWrap.appendChild(nodes);
 } 
 
 
