@@ -43,17 +43,8 @@ function compiler(tagName, attrs, ...children){
   fillChildren( fNode );
   
   
-  onMounted( fNode );
+  onMounted( fNode, _order_num);
   onUnmount( fNode );
-  
-  /* todo: page_loaded 功能 */
-  setTimeout(()=>{
-    if (fNode.realNode.parentElement!==globalRead('elems.root') || globalRead('status.isLoaded')) { return ; }
-    globalWrite('status.isLoaded', true);
-    
-    log('##################### page loaded');
-    log('### total:',_order_num);
-  })
   
   return fNode.realNode;
 }

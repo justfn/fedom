@@ -59,7 +59,7 @@ const options = {
   root: document.querySelector("#app"),
   beforeEach(pathObj, prePathObj){
     // console.log( pathObj, prePathObj );
-    if (pathObj.path==='/aaa') { return false; }
+    if (pathObj.path==='/test/home') { return false; }
     
     return true;
   },

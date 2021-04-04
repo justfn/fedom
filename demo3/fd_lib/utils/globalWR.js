@@ -1,7 +1,24 @@
 /* 注入全局变量方便存储及使用 
 */
 
-if (!window.$fd) {  window.$fd = {}; }
+if (!window.$fd) {  window.$fd = {
+  status: {
+    isLoaded: false, 
+    pageNodeNum: 0,
+  },
+  compiler: null, 
+  render: null, 
+  Router: null,
+  VaryValue: null,
+  Component: null, 
+  utils: {
+    isVary: null,
+    isComponent: null, 
+  },
+  elems: {
+    root: null,
+  },
+};}
 
 export function globalWrite(keys,val){
   if (!keys) { return log('#warn: injectGlobal keys不存在'); }
