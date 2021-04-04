@@ -6,6 +6,7 @@ import addAttrs from "./attrs/addAttrs.js";
 import fillChildren from "./child/fillChild.js";
 import onMounted from "../featrues/lifecycle/onMounted.js";
 import onUnmount from "../featrues/lifecycle/onUnmount.js";
+import onPageLoaded from "../featrues/lifecycle/onPageLoaded.js";
 
 
 /* 处理 jsx 
@@ -43,8 +44,11 @@ function compiler(tagName, attrs, ...children){
   fillChildren( fNode );
   
   
-  onMounted( fNode, _order_num);
+  onMounted( fNode);
   onUnmount( fNode );
+  onPageLoaded( fNode, _order_num, ()=>{
+    _order_num = 0;
+  });
   
   return fNode.realNode;
 }

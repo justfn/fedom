@@ -1,8 +1,8 @@
 /* ** 组件渲染后回调 
 */
-import { globalWrite, globalRead, } from "../../utils/globalWR.js";
 
-export default function onUnmounted(fNode, num){
+
+export default function onUnmounted(fNode){
   // to_do_: setTimeout待优化  
   setTimeout(()=>{
     if (fNode.context._mountedFns && fNode.context._mountedFns.length ) {
@@ -14,20 +14,8 @@ export default function onUnmounted(fNode, num){
       fNode.instance.onMounted(fNode);
     }
     
-    pageLoaded(fNode, num);
   })
 } 
 
 
-/* todo: page_loaded 功能 */
-function pageLoaded(fNode, num){
-  if (
-    fNode.realNode.parentElement!==globalRead('elems.root') 
-    || globalRead('status.isLoaded')
-  ) { return ; }
-  globalWrite('status.isLoaded', true);
-  
-  globalWrite('status.pageNodeNum', num);
-  console.log( num );
-} 
 

@@ -2,6 +2,9 @@
 */
 import config from "../../config/config.js";
 
+// 页面 
+let cpntList = [];
+
 export default function onUnmount(fNode){
   // 方法一: 
   // observe(fNode);
@@ -18,6 +21,9 @@ export default function onUnmount(fNode){
 function onRemoveNode(fNode){
   // console.log('todo');
 } 
+
+/* ** 监听dom变动 
+*/
 // function observe(fNode){
 //   // 非组件节点不处理 
 //   if (fNode.nodeType===config.tag_types.origin) { return ; }
