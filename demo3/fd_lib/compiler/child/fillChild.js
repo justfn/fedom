@@ -3,6 +3,8 @@
 import config from "../../config/config.js";
 import message from "../../config/message.js";
 
+import childValVary from "../../featrues/varyValue/childVary.js";
+import trimTextChild from "./trimTextChild.js";
 import { 
   nodeChild, 
   textChild, 
@@ -14,35 +16,30 @@ import {
   isArrayValue, 
   isNodeValue, 
   isEmptyValue,  
+  isTextChild,  
 } from "../../utils/judge.js";
 
-// to_do: 待合并为 childValVary 
-import childValVary from "../../featrues/varyValue/childVary.js";
 
 export default function fillChildren(fNode){
   fNode.children.forEach(child=>{
-    if (child===undefined || child===null) { return ; }
-  
-    // 处理字符串子节点：去掉空格&忽略空字符串 
-    if ( isStringValue(child) ) { 
-      child = child.trim(); 
-      if (child.length===0) { return ; }
-    }
-    if (fNode.nodeType!==config.tag_types.origin) { child = '' }
+    if ( isTextChild(child) ) { child = trimTextChild(child); }
+    
     fillChild(fNode, child, null);
   })
 } 
 
 export function fillChild( fNode, child, varyChild ) {
-  let realNode = fNode.realNode;
+  // 组件子节点由用户控制插入 
+  if ( fNode.nodeType!==config.tag_types.origin ) { return ; }
   
   /* brance: vary */
-  if (isVary(child)) { 
+  if ( isVary(child) ) { 
     if (varyChild) { throw message.errors.mutil_vary; };
     
     fillChild(fNode, child.get(false), child); 
     return ;
   }
+  
   
   // console.log('P:  ', fNode.realNode);
   // console.log('C:  ', child);
@@ -59,12 +56,9 @@ export function fillChild( fNode, child, varyChild ) {
       })
     }
   }
-  /* Result: undefind | null | text */
-  else if ( isEmptyValue(child) ) { 
-    patchNode = textChild(fNode, '');
-  }
-  else if ( isStringValue(child) || isNumberValue(child) ) {
-    child += '';
+  /* Result: text child */
+  else if ( isTextChild(child) ) {
+    child = trimTextChild(child);
     patchNode = textChild(fNode, child);
   }
   /* Result: node */

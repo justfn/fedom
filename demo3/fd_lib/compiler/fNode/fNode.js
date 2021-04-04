@@ -41,6 +41,7 @@ export class FNode {
       instance = {}, 
     } = options;
     this.varyTag = varyTag;
+    this.tagName = tagName;
     this.nodeType = getRealTagTypes(tagName);
     this.realNode = realNode;
     this.attrs = { ...attrs, };
@@ -55,6 +56,7 @@ export class FNode {
   
   // Vary,tag的壳 
   varyTag = null;
+  tagName = '-';
   // KW,fNode节点类型  'tag' | 'fn' | 'cls' 
   nodeType = '-';
   // Node,fNode对应的真实节点 

@@ -20,15 +20,25 @@ let _order_num = 0;
 function compiler(tagName, attrs, ...children){
   attrs = attrs ?? {};
   _order_num++;
-  // log( '# compiler_1', _order_num );
   
+  // log( 
+  //   '# compiler_1', 
+  //   // tagName, 
+  //   // attrs, 
+  //   // children 
+  // );
   const fNode = createFNode({
     varyTag: null, 
     tagName, 
     attrs, 
     children,
   });
-  // log( '# compiler_2', fNode );
+  // log( 
+  //   '# compiler_2', 
+  //   // tagName, 
+  //   // attrs, 
+  //   // children 
+  // );
   addAttrs( fNode );
   fillChildren( fNode );
   

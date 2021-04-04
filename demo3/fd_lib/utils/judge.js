@@ -5,11 +5,11 @@ import message from "../config/message.js";
 import Component from "../featrues/Component/Component.js";
 import Vary from "../featrues/Vary/Vary.js";
 
-export function isOrginTag(val){
-  if (!isStringValue(val)) { return console.log(' # isOrginTag function error: arguments is not string '); }
-  
-  return config.orgin_elements.includes(val.toLowerCase());
-} 
+// export function isOrginTag(val){
+//   if (!isStringValue(val)) { return console.log(' # isOrginTag function error: arguments is not string '); }
+// 
+//   return config.orgin_elements.includes(val.toLowerCase());
+// } 
 export function isEmptyValue(val){
   if (val===undefined) { return true; }
   if (val===null) { return true; }
@@ -38,7 +38,6 @@ export function isBooleanValue(val){
 export function isNodeValue(val){
   return val instanceof Node;
 } 
-
 /* ** 判断值是否继承自 Component*/
 export function isComponent(val){
   if (!val) { return false; }
@@ -48,8 +47,7 @@ export function isComponent(val){
   
   return proto instanceof Component;
 } 
-
-/* 值是否为可变量对象 
+/* 值是否为可变量对象值 
 */
 export function isVary(val){
   if (!val) { return false; }
@@ -59,6 +57,18 @@ export function isVary(val){
   
   return bol;
 }
+
+
+/* 是否为文本节点: 
+包含数值 空值 undefined/null 空值为 '' 
+*/
+export function isTextChild(val){
+  if (isEmptyValue(val)) { return true; }
+  if (isNumberValue(val)) { return true; }
+  if (isStringValue(val)) { return true; }
+  
+  return false;
+} 
 
 
 

@@ -35,6 +35,14 @@ export default {
     // 类组件 
     component: 'component_tag',
   },
+  child_types: {
+    // 文本值 [包含数值/空值,空值为''] 
+    text: 'text_child',
+    // 节点值 
+    node: 'node_child',
+    // 数组
+    list: 'list_child',
+  },
   
   
 };

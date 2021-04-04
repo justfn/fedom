@@ -1,19 +1,31 @@
 
 import message from "../../config/message.js";
-import { isStringValue, isNumberValue, isNodeValue, isArrayValue, } from "../../utils/judge.js";
+import trimTextChild from "../../compiler/child/trimTextChild.js";
+import { 
+  isStringValue, 
+  isNumberValue, 
+  isNodeValue, 
+  isArrayValue, 
+  isTextChild, 
+} from "../../utils/judge.js";
+
 
 /* 子节点可变 
 */
 export default function childValVary(pNode, child, varyChild, patchNode ){
   if (!varyChild) { return ; }
   
-  varyChild.patchNode(patchNode);
+  /* ** 补偿更新Node节点  
+  1 设置文本字符串作为子节点时,初始渲染后,第二次更新无法通过文本定位该文本节点 
+  需在首次渲染后,将文本节点进行补偿替换 
+  2 空数组子节点首次渲染时,将无实体节点插入,使用注释节点占位,该注释节点作为补偿节点存储 
+  */
+  let patch_node = patchNode; // 缓存补偿的节点 
   varyChild.mounted_run(child);
-  varyChild.add_set(({ preTrimedValue, nxtTrimedValue, patchNodeValue })=>{
-    let patch_val = null;
-    let pre_val = patchNodeValue || preTrimedValue;
+  varyChild.add_set(({ preTrimedValue, nxtTrimedValue })=>{
+    let pre_val = patch_node || preTrimedValue;
     if ( isNodeValue(pre_val) ) {
-      patch_val = updateNode(pre_val.parentNode, nxtTrimedValue, pre_val, null).patchNode;
+      patch_node = updateNode(pre_val.parentNode, nxtTrimedValue, pre_val, null).patchNode;
     }
     else if ( isArrayValue(pre_val) ) {
       if ( pre_val.length > 0 ) {
@@ -24,32 +36,28 @@ export default function childValVary(pNode, child, varyChild, patchNode ){
           if (idx===0) { pNode.replaceChild(flgCommentNode,itm) }
           else { pNode.removeChild(itm); }
         })
-        patch_val = updateNode(pNode, nxtTrimedValue, flgCommentNode, null).patchNode;
+        patch_node = updateNode(pNode, nxtTrimedValue, flgCommentNode, null).patchNode;
       }
       // to_do 空数组处理 
-      else { patch_val = updateNode(pNode, nxtTrimedValue, patchNode, null).patchNode; }
+      else { patch_node = updateNode(pNode, nxtTrimedValue, patchNode, null).patchNode; }
     }
     else {
       console.log('### to_do: childVary');
-      console.log('patchNodeValue', patchNodeValue);
+      console.log('patch_node', patch_node);
       console.log('preTrimedValue', preTrimedValue);
       console.log('pNode', pNode);
       console.log('child', child);
     }
     
-    return {
-      patch_value: patch_val,
-    };
+    return { };
   })
 } 
 
 function updateNode(parentNode, childNode, flgNode, beforeNode){
   let patchNode = null;
-  if ( childNode===undefined || childNode===null ) { childNode = '' }
   
-  if ( isStringValue(childNode) || isNumberValue(childNode) ) {
-    childNode = childNode + '';
-    childNode = document.createTextNode(childNode);
+  if ( isTextChild(childNode) ) {
+    childNode = document.createTextNode( trimTextChild(childNode) );
     patchNode = childNode;
     insertNode(parentNode, childNode, flgNode, beforeNode);
   }

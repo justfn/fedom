@@ -14,12 +14,12 @@ let varyText = VaryValue('fd 001');
 let val2 = VaryValue(0);
 let elDom = document.createElement("div")
 elDom.textContent = 'testaaa';
-let headerTitle = VaryValue(0);
-setTimeout(function(){
-  headerTitle.set(function(val){
-    return ++val;
-  })
-},1000)
+// let headerTitle = VaryValue(0);
+// setTimeout(function(){
+//   headerTitle.set(function(val){
+//     return ++val;
+//   })
+// },1000)
 
 // console.log('# page_home');
 
@@ -107,6 +107,8 @@ export default function(props, context){
       <hr />
       
       <input value={varyInputVal} />
+      { varyInputVal }
+      <hr />
       { varyInputVal }
       
       {
