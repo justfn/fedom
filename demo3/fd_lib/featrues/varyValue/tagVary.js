@@ -18,7 +18,6 @@ export default function varyTagName(fNode){
   let varyTag = fNode.varyTag;
   if (!varyTag) { return ; }
   
-  console.log( 'varyTagName', fNode );
   let {
     realNode, 
     props, 
