@@ -12,7 +12,7 @@ export default function onUnmount(fNode){
 } 
 
 /* 
-1: 路由切换, 渲染时收集涉及的组件,切换前调用 
+1: 路由切换, 渲染时收集页面级组件,切换前调用 
 2: 动态组件切换时调用 
 */
 function onRemoveNode(fNode){

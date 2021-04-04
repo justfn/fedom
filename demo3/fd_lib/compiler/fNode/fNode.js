@@ -1,10 +1,8 @@
 import config from "../../config/config.js";
 import message from "../../config/message.js";
-import routerPush from "../../router/routerPush.js";
-import routerReplace from "../../router/routerReplace.js";
-import { getRoutes, } from "../../router/router.js";
 import varyTagName from "../../featrues/varyValue/tagVary.js";
 import cpntRender from "../../featrues/Component/cpntRender.js";
+import getContext from "../../featrues/Component/context.js";
 import { 
   isComponent, 
   isVary, 
@@ -112,23 +110,7 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
   /* output 2: function */
   else if ( isFunctionValue(tagName) ) {
     // 注意：此处又将调用 compiler 
-    let context = {
-      _mountedFns: [],
-      // 搜集初始化执行操作 
-      onMounted(fn){
-        this._mountedFns.push(fn);
-      },
-      // 提供插入富文本的能力 
-      html(htmlStr){
-        let div = document.createElement("div");
-        div.innerHTML = htmlStr;
-        return [...div.childNodes];
-      },
-      // 路由跳转能力
-      push: routerPush,
-      replace: routerReplace,
-      routes: getRoutes(true),
-    }
+    let context = getContext();
     let realNode = tagName(props, context);
     
     fNode = new FNode({

@@ -9,8 +9,8 @@ export default function(elem){
   let y = VaryValue(0);
   
   elem.addEventListener("mousemove",function(evt){
-    x.value = evt.clientX; 
-    y.value = evt.clientY; 
+    x.value = Math.round( evt.clientX/elem.clientWidth * 100 ); 
+    y.value = Math.round( evt.clientY/elem.clientHeight * 100 ); 
   })
   
   return {

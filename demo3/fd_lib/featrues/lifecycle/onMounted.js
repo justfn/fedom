@@ -5,7 +5,7 @@ import { globalWrite, globalRead, } from "../../utils/globalWR.js";
 export default function onUnmounted(fNode, num){
   // to_do_: setTimeout待优化  
   setTimeout(()=>{
-    if (fNode.context._mountedFns) {
+    if (fNode.context._mountedFns && fNode.context._mountedFns.length ) {
       fNode.context._mountedFns.forEach((fn)=>{
         fn && fn(fNode);
       });
