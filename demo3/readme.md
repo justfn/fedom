@@ -10,8 +10,6 @@
     onMounted
     fn_run setTimeout 
     render_run setTimeout 
-  3 组件更新   
-    $xx.watch() 
   3 组件卸载 
     context.onUnmount 
     context.onUnmounted  onUnmount&setTimeout  
@@ -20,6 +18,11 @@
     实现思路: 
       1 MutationObserver 
       2 路由切换时&组件替换时 
+  4 组件更新   
+    $xx.watch() 
+  5 路由事件 
+    onEnter todo 
+    onLeave todo 
 --------------------------------------------------------------------------------
 Features: 
   jsx 编码模式 
@@ -34,9 +37,9 @@ Features:
     整个数组 
     单个子节点 
     文本内容 
-  组件 
+  component 
     ref 回调函数形式 
-  路由 
+  router 
     缓存 
     页面级组件 context 中添加 router 和 route 
 --------------------------------------------------------------------------------
