@@ -51,16 +51,20 @@ export default class Router {
     let oldPathParams = parseHash(evt.oldURL);
     let newPathParams = parseHash(evt.newURL);
     
+    console.log( ' hashchange ', 1);
     if (!newPathParams.path) {
       window.location.hash = '/'
+      console.log( ' hashchange ', 2);
       return ;
     }
     let isGo = this._beforeEach(oldPathParams, newPathParams) ?? true;
     if (!isGo) { 
+      console.log( ' hashchange ', 3);
       console.log('# 阻止路由访问', newPathParams, oldPathParams);
       return ; 
     }
     
+    console.log( ' hashchange ', 4);
     let cachedPageMap = cachePage(this._route_map, oldPathParams, this._root.lastElementChild );
     let pathOption = this._route_map[newPathParams.path] ?? {};
     let showComponent = cachedPageMap[ newPathParams.path ];

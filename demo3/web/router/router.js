@@ -58,9 +58,8 @@ const routes_ = [
 const options = {
   routes: routes_,
   root: document.querySelector("#app"),
-  beforeEach(pathObj, prePathObj){
-    // console.log( pathObj, prePathObj );
-    if (pathObj.path==='/test/home') { return false; }
+  beforeEach(oldPathParams, newPathParams){
+    if (newPathParams.path==='/test/home') { return false; }
     
     return true;
   },
