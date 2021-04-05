@@ -2,6 +2,8 @@
 */
 
 export default function parseHash(fullUrl){
+  if (!fullUrl) { return {}; }
+  
   let result = {
     path: '',
     query: {},

@@ -1,9 +1,11 @@
 
 import { globalWrite, globalRead, } from "../utils/globalWR.js";
 import formatRoutes from "./formatRoutes.js";
-import routerReplace from "./routerReplace.js";
-import onHashChange, { initHashChange, } from "./onHashChange.js";
 import parseHash from "./parseHash.js";
+import onHashChange, { initHashChange, } from "./onHashChange.js";
+import routerReplace from "./routerReplace.js";
+import routerComponentProps from "./routerComponentProps.js";
+import cachePage from "./cachePage.js";
 import render from "../render.js";
 
 let _routes = [];
@@ -38,9 +40,9 @@ export default class Router {
     _routes = routeList;
     this._routes = routeList;
     this._root = root; 
-    this._cached_routes = {
-      // <path>: <PageElem>
-    };
+    // this._cached_routes = {
+    //   // <path>: <PageElem>
+    // };
     this._beforeEach = beforeEach;
     
     // onHashChange(this._route_map, this._root, this._beforeEach);
@@ -50,20 +52,11 @@ export default class Router {
   // update_cache = (path, isCache)=>{ }
   
   _hashChange = (evt)=>{
-    let oldPathObj = {};
-    if (evt.oldURL) {
-      let oldPathObj = parseHash(evt.oldURL);
-      let oldPathOption = this._route_map[oldPathObj.path] ?? {};
-      
-      // 缓存DOM 
-      if (oldPathOption.isCache && oldPathOption.component) {
-        this._cached_routes[oldPathObj.path] = this._root.lastElementChild;
-        if (oldPathOption.alias) { this._cached_routes[oldPathOption.alias] = this._root.lastElementChild; }
-        // console.log( '缓存html', this._root.lastElementChild );
-      }
-    }
-    
+    let oldPathObj = parseHash(evt.oldURL);
     let pathObj = parseHash(evt.newURL);
+    let cachedPageMap = cachePage(this._route_map, oldPathObj, this._root.lastElementChild );
+    
+    
     
     let isGo = this._beforeEach(pathObj, oldPathObj);
     if (!isGo) { 
@@ -77,7 +70,8 @@ export default class Router {
     }
     
     let pathOption = this._route_map[pathObj.path] ?? {};
-    Promise.resolve( this._cached_routes[pathObj.path] )
+    let showComponent = cachedPageMap[ pathObj.path ];
+    Promise.resolve( showComponent )
     // 先读缓存 
     .then((htmlNode)=>{
       // 重定向 
@@ -112,7 +106,10 @@ export default class Router {
     .then((module)=>{
       let Cpt = module.default;
       this._root.innerHTML = '';
-      render( <Cpt />, this._root )
+      render( 
+        <Cpt {...routerComponentProps(oldPathObj, )} />, 
+        this._root 
+      );
     })
     .catch((err)=>{
       if (err) { console.error(err); }

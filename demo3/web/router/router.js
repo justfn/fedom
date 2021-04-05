@@ -24,6 +24,7 @@ const routes_ = [
       },
       {
         path: 'upLogic',
+        isCache: true, // bol|fn,是否缓存 
         component: ()=>import('../pages/fealture/upLogic/upLogic.js'),
       },
     ],
