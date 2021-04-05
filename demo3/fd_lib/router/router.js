@@ -67,8 +67,8 @@ export default class Router {
     console.log( ' hashchange ', 4);
     let cachedPageMap = cachePage(this._route_map, oldPathParams, this._root.lastElementChild );
     let pathOption = this._route_map[newPathParams.path] ?? {};
-    let showComponent = cachedPageMap[ newPathParams.path ];
-    Promise.resolve( showComponent )
+    let cachedPageNode = cachedPageMap[ newPathParams.path ];
+    Promise.resolve( cachedPageNode )
     // 先读缓存 
     .then((htmlNode)=>{
       // 重定向 
@@ -101,10 +101,11 @@ export default class Router {
     })
     // 再解析渲染 
     .then((module)=>{
-      let Cpt = module.default;
+      let ShowComponent = module.default;
       this._root.innerHTML = '';
       render( 
-        <Cpt {...routerComponentProps(oldPathParams, newPathParams, cachedPageMap)} />, 
+        // ShowComponent({},{html(){return <div/>;}}), // todo 
+        <ShowComponent {...routerComponentProps(oldPathParams, newPathParams, cachedPageMap)} />, 
         this._root 
       );
     })
