@@ -40,43 +40,36 @@ export default class Router {
     _routes = routeList;
     this._routes = routeList;
     this._root = root; 
-    // this._cached_routes = {
-    //   // <path>: <PageElem>
-    // };
     this._beforeEach = beforeEach;
     
-    // onHashChange(this._route_map, this._root, this._beforeEach);
     onHashChange( this._hashChange );
     initHashChange();
   }
   // update_cache = (path, isCache)=>{ }
   
   _hashChange = (evt)=>{
-    let oldPathObj = parseHash(evt.oldURL);
-    let pathObj = parseHash(evt.newURL);
-    let cachedPageMap = cachePage(this._route_map, oldPathObj, this._root.lastElementChild );
+    let oldPathParams = parseHash(evt.oldURL);
+    let newPathParams = parseHash(evt.newURL);
     
-    
-    
-    let isGo = this._beforeEach(pathObj, oldPathObj);
-    if (!isGo) { 
-      console.log('# 阻止路由访问', pathObj, oldPathObj);
-      return ; 
-    }
-    
-    if (!pathObj.path) {
+    if (!newPathParams.path) {
       window.location.hash = '/'
       return ;
     }
+    let isGo = this._beforeEach(oldPathParams, newPathParams) ?? true;
+    if (!isGo) { 
+      console.log('# 阻止路由访问', newPathParams, oldPathParams);
+      return ; 
+    }
     
-    let pathOption = this._route_map[pathObj.path] ?? {};
-    let showComponent = cachedPageMap[ pathObj.path ];
+    let cachedPageMap = cachePage(this._route_map, oldPathParams, this._root.lastElementChild );
+    let pathOption = this._route_map[newPathParams.path] ?? {};
+    let showComponent = cachedPageMap[ newPathParams.path ];
     Promise.resolve( showComponent )
     // 先读缓存 
     .then((htmlNode)=>{
       // 重定向 
       if (pathOption.redirect) {
-        routerReplace(pathOption.redirect, pathObj.query);
+        routerReplace(pathOption.redirect, newPathParams.query);
         return Promise.reject();
       }
       
@@ -97,7 +90,7 @@ export default class Router {
       }
       // 出口2：报错 
       if (!pathOption.component) { 
-        return Promise.reject(`${pathObj.path} 路由，无页面组件！`); 
+        return Promise.reject(`${newPathParams.path} 路由，无页面组件！`); 
       }
       // 出口3：渲染组件 
       return pathOption.component(); 
@@ -107,7 +100,7 @@ export default class Router {
       let Cpt = module.default;
       this._root.innerHTML = '';
       render( 
-        <Cpt {...routerComponentProps(oldPathObj, )} />, 
+        <Cpt {...routerComponentProps(oldPathParams, newPathParams, cachedPageMap)} />, 
         this._root 
       );
     })

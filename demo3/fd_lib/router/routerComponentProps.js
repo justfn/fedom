@@ -3,14 +3,17 @@
 import routerPush from "./routerPush.js";
 import routerReplace from "./routerReplace.js";
 
-export default function (routeOption, routeParams){
+export default function routerComponentProps( oldPathParams, newPathParams, cachedPageMap){
   
   return {
-    hashQuery: {},
     _enterList: [],
     beforeRouteEnter(){ },
     routeEnter(){ },
     routeLeave(){ },
+    route: {
+      path: '',
+      query: '',
+    },
     router: {
       push: routerPush,
       replace: routerReplace,
