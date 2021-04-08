@@ -18,7 +18,7 @@
     context.onHide() 
     onHide()
   4 组件卸载 
-    context.onUnmount 
+    context.onUnmount [todo:未切换成功时,仍触发了] 
       onUnmount&setTimeout()  
     onUnmount()       
       onUnmount&setTimeout() 
