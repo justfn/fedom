@@ -3,8 +3,7 @@ import message from "../../config/message.js";
 import varyTagName from "../../featrues/varyValue/tagVary.js";
 import cpntRender from "../../featrues/Component/cpntRender.js";
 import getContext from "../../featrues/Component/context.js";
-import onHashChange from "../../router/onHashChange.js";
-import onUnmount from "../../featrues/lifecycle/onUnmount.js";
+import { getActiveFNodes, } from "../../featrues/lifecycle/onUnmount.js";
 import { 
   isComponent, 
   isVary, 
@@ -14,15 +13,6 @@ import {
 
 
 
-let cpntFNodeList = [];
-onHashChange((evt)=>{
-  if (evt.isInitRun) { return ; }
-  
-  cpntFNodeList.forEach(fNd=>{ 
-    onUnmount(fNd); 
-  })
-  cpntFNodeList = [];
-})
 
 /* ** 工具方法: 获取 tag 类型  
 // Inputs: tagName  
@@ -118,7 +108,7 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
       children, 
       instance, 
     });
-    cpntFNodeList.push(fNode);
+    getActiveFNodes(fNode);
   }
   /* output 2: function */
   else if ( isFunctionValue(tagName) ) {
@@ -134,7 +124,7 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
       children, 
       context, 
     })
-    cpntFNodeList.push(fNode);
+    getActiveFNodes(fNode);
   }
   /* output 3: tag_str  */
   else if ( isStringValue(tagName) ) {

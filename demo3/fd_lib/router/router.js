@@ -8,7 +8,11 @@ import routerComponentProps from "./routerComponentProps.js";
 import cachePage from "./cachePage.js";
 import render from "../render.js";
 
-let _routes = [];
+
+const store = {
+  // 配置的所有路由集合 
+  routeList: [],
+}
 export default class Router {
   constructor(routeOptions = {}){ 
     const {
@@ -35,10 +39,9 @@ export default class Router {
       routeMap,
       routeList,
     } = formatRoutes(routes);
+    store.routeList = routeList;
     // 路由Map
     this._route_map = routeMap;
-    _routes = routeList;
-    this._routes = routeList;
     this._root = root; 
     this._beforeEach = beforeEach;
     
@@ -51,10 +54,8 @@ export default class Router {
     let oldPathParams = parseHash(evt.oldURL);
     let newPathParams = parseHash(evt.newURL);
     
-    console.log( ' hashchange ', 1);
     if (!newPathParams.path) {
       window.location.hash = '/'
-      console.log( ' hashchange ', 2);
       return ;
     }
     let isGo = this._beforeEach(oldPathParams, newPathParams) ?? true;
@@ -63,8 +64,8 @@ export default class Router {
       console.log('# 阻止路由访问', newPathParams, oldPathParams);
       return ; 
     }
+    log( 'current hashpath: ', newPathParams.path);
     
-    console.log( ' hashchange ', 4);
     let cachedPageMap = cachePage(this._route_map, oldPathParams, this._root.lastElementChild );
     let pathOption = this._route_map[newPathParams.path] ?? {};
     let cachedPageNode = cachedPageMap[ newPathParams.path ];
@@ -119,10 +120,10 @@ export default class Router {
 
 /* 对外接口 ===================================================================*/
 export function getRoutes(isOrgin=false){
-  if (isOrgin) { return [..._routes];  }
+  if (isOrgin) { return [...store.routeList];  }
   
   // todo 待优化 
-  return JSON.parse(JSON.stringify(_routes));
+  return JSON.parse(JSON.stringify(store.routeList));
 }
 
 

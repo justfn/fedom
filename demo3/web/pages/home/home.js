@@ -13,6 +13,17 @@ let elDom = document.createElement("div")
 elDom.textContent = ' =================================== ';
 
 export default function(props, context){
+  context.onMounted(()=>{
+    console.log( 'home onMounted 1' );
+  })
+  setTimeout(()=>{
+    console.log( 'home onMounted 2' );
+    
+  })
+  context.onUnmount(()=>{
+    console.log( 'home onUnmount' );
+  })
+  
   let Header_ = VaryValue(Header);
   let isActive = VaryValue(true);
   let varyText = VaryValue('fd 001');
@@ -77,7 +88,7 @@ export default function(props, context){
     }
   }
   return (
-    <PageA class={[ 'fe', isActive, 'dom',  ]} 
+    <PageA class={[ 'fe', isActive, 'dom', console.log(111) ]} 
       style={style} 
       onClick={fn1}
       >
@@ -127,7 +138,7 @@ export default function(props, context){
       
       <hr />
       <hr />
-      <hr />
+      <hr class={console.log(222)} />
     </PageA>
   );
 }

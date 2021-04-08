@@ -1,49 +1,53 @@
 /* ** 卸载前
 */
 import config from "../../config/config.js";
+import onHashChange from "../../router/onHashChange.js";
 
-// 页面 
-let cpntList = [];
 
-export default function onUnmount(fNode, ...args){
-  // 方法一: 
-  // observe(fNode);
-  
-  // 方法二: 
-  onRemoveNode(fNode, ...args);
-  
-} 
 
-/* 
-1: 路由切换, 渲染时收集页面级组件,切换前调用 
-2: 动态组件切换时调用 
+/* ** 方法二: ------------------------------------------------------------------
+1: 动态组件切换时调用 
+2: 路由切换, 渲染时收集页面级组件,切换前调用 
 */
-function onRemoveNode(fNode, ...args){
+const store = {
+  activedFNodeList: [],
+}
+export function removeComponentRun(fNode, ...args){
   if ( fNode.context && fNode.context._unmountFns ) {
     fNode.context._unmountFns.forEach((callback)=>{
       callback(...args);
     })
     
-    // setTimeout(()=>{
-    //   fNode.context = null;
-    // })
     return ;
   }
   if ( fNode.instance && fNode.instance.onUnmount ) {
     fNode.instance.onUnmount(...args);
     
-    // setTimeout(()=>{
-    //   fNode.instance = null;
-    // })
     return ;
   }
 
   // console.log('to_do: ', fNode);
 } 
+export function getActiveFNodes(fNd){
+  store.activedFNodeList.push(fNd);
+} 
+onHashChange((evt)=>{
+  if (evt.isInitRun) { return ; }
+  
+  store.activedFNodeList.forEach(fNd=>{ 
+    removeComponentRun(fNd); 
+  })
+  store.activedFNodeList = [];
+})
 
 
-/* ** 监听dom变动 
-*/
+
+
+
+
+
+
+/* ** 方法一: 监听dom变动 -------------------------------------------------------
 // function observe(fNode){
 //   // 非组件节点不处理 
 //   if (fNode.nodeType===config.tag_types.origin) { return ; }
@@ -75,5 +79,6 @@ function onRemoveNode(fNode, ...args){
 // 
 //   })
 // } 
+*/
 
 

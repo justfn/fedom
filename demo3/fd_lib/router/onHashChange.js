@@ -4,7 +4,7 @@ import { globalWrite, globalRead, } from "../utils/globalWR.js";
 
 
 
-let isInit = false;
+let isInitSwitch = false;
 let listenerList = [];
 
 
@@ -25,8 +25,8 @@ export default function onHashChange(listener){
   listenerList.push(listener);
 } 
 export function initHashChange(){
-  if (isInit) { return ; }
-  isInit = true;
+  if (isInitSwitch) { return ; }
+  isInitSwitch = true;
   
   // 初始执行 
   hashchangeListener({ 

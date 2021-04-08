@@ -3,26 +3,25 @@
 ```
 --------------------------------------------------------------------------------
 生命周期
-  1 渲染前 
-    fn_run 
-    constructor_run 
-  2 渲染后 
-    onMounted
-    fn_run setTimeout 
-    render_run setTimeout 
-  3 组件卸载 
+  1 组件渲染 
+    fn_run() 
+      fn_run&setTimeout() 
+      context.onMounted()  
+    constructor_run() | render_run() 
+      render_run&setTimeout() 
+      constructor_run&setTimeout()  
+  2 组件更新 
+    $xxx.watch() 
+  3 组件缓存  [todo] 
+    context.onShow() 
+    onShow()
+    context.onHide() 
+    onHide()
+  4 组件卸载 
     context.onUnmount 
-    context.onUnmounted  onUnmount&setTimeout  
-    onUnmount
-    onUnmounted onUnmount&setTimeout 
-    实现思路: 
-      1 MutationObserver 
-      2 路由切换时&组件替换时 
-  4 组件更新   
-    $xx.watch() 
-  5 路由事件 
-    onEnter todo 
-    onLeave todo 
+      onUnmount&setTimeout()  
+    onUnmount()       
+      onUnmount&setTimeout() 
 --------------------------------------------------------------------------------
 Features: 
   jsx 编码模式 
@@ -31,6 +30,9 @@ Features:
     动态化监听 
     动态化开关 
     动态化嵌套 
+    $xx [todo] 
+    $xx.$$  [todo] 
+    $xx.xx.$$  [todo] 
   vary标签
   vary属性
   vary子节点
@@ -56,6 +58,18 @@ todo:
       可优化传操, 如 替换节点/增加节点/删除节点 等 
   编译模式优化考虑 
 --------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```
 

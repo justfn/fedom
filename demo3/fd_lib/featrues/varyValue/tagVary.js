@@ -3,7 +3,7 @@ import message from "../../config/message.js";
 import addAttrs from "../../compiler/attrs/addAttrs.js";
 import cpntRender from "../../featrues/Component/cpntRender.js";
 import cpntUpdate from "../../featrues/Component/cpntUpdate.js";
-import onUnmount from "../../featrues/lifecycle/onUnmount.js";
+import { removeComponentRun, } from "../../featrues/lifecycle/onUnmount.js";
 import getContext from "../Component/context.js";
 import { 
   isComponent, 
@@ -47,7 +47,7 @@ export default function varyTagName(fNode){
     
     // Features: null 删除该节点 
     if (nxtTrimedValue===null) {
-      onUnmount(fNode); 
+      removeComponentRun(fNode); 
       cpntUpdate(fNode, null, null);
       nxt_node = document.createComment("fedom vary tag and remove")
       pre_node_removed = pre_node;
@@ -61,7 +61,7 @@ export default function varyTagName(fNode){
     
     // Features: 替换为html节点  
     if ( isStringValue(nxtTrimedValue) ) {
-      onUnmount(fNode); 
+      removeComponentRun(fNode); 
       cpntUpdate(fNode, null, null);
       nxt_node = document.createElement(nxtTrimedValue);
       addAttrs(fNode);
@@ -80,7 +80,7 @@ export default function varyTagName(fNode){
     
     // Features: 替换为组件 
     if (isComponent(nxtTrimedValue)) {
-      onUnmount(fNode); 
+      removeComponentRun(fNode); 
       let {
         instance,
         renderNode,
@@ -98,7 +98,7 @@ export default function varyTagName(fNode){
     
     // Features: 替换为组件 
     if ( isFunctionValue(nxtTrimedValue) ) {
-      onUnmount(fNode); 
+      removeComponentRun(fNode); 
       let context = getContext();
       cpntUpdate(fNode, context, null);
       nxt_node = nxtTrimedValue(props, context)

@@ -5,7 +5,6 @@ import createFNode from "./fNode/fNode.js";
 import addAttrs from "./attrs/addAttrs.js";
 import fillChildren from "./child/fillChild.js";
 import onMounted from "../featrues/lifecycle/onMounted.js";
-import onUnmount from "../featrues/lifecycle/onUnmount.js";
 import onPageLoaded from "../featrues/lifecycle/onPageLoaded.js";
 
 
@@ -45,7 +44,6 @@ export default function compiler(tagName, attrs, ...children){
   
   
   onMounted( fNode);
-  // onUnmount( fNode );
   onPageLoaded( fNode, _order_num, ()=>{
     _order_num = 0;
   });

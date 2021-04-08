@@ -1,9 +1,16 @@
 /* ** 页面缓存处理 
 
 */
-import { isFunctionValue, } from "../utils/judge.js";
+import { 
+  isFunctionValue, 
+} from "../utils/judge.js";
 
-let cachedPageMap = {};
+
+const store = {
+  cachedPathElemMap: {
+    // <path>: <Element>
+  },
+}
 export default function cachePage(routeMap, routeParams, pageElem){
   if (!routeParams) { return {}; }   
   
@@ -15,16 +22,16 @@ export default function cachePage(routeMap, routeParams, pageElem){
     if ( isFunctionValue(isCache) ) { isCache = isCache(); }
     
     if ( isCache ) {
-      cachedPageMap[ path ] = pageElem;
+      store.cachedPathElemMap[ path ] = pageElem;
       let alias = routeOption.alias;
-      if (alias) { cachedPageMap[ alias ] = pageElem; }
+      if (alias) { store.cachedPathElemMap[ alias ] = pageElem; }
     }
     else {
-      cachedPageMap[ path ] = null;
+      store.cachedPathElemMap[ path ] = null;
     }
   }
   
-  return cachedPageMap;
+  return store.cachedPathElemMap;
 } 
 
 
