@@ -4,6 +4,7 @@ import varyTagName from "../../featrues/varyValue/tagVary.js";
 import cpntRender from "../../featrues/Component/cpntRender.js";
 import getContext from "../../featrues/Component/context.js";
 import { getActiveFNodes, } from "../../featrues/lifecycle/onUnmount.js";
+import { updateActiveComponentFNodes, } from "../../router/router.js";
 import { 
   isComponent, 
   isVary, 
@@ -110,6 +111,7 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
       instance, 
     });
     getActiveFNodes(fNode);
+    updateActiveComponentFNodes(fNode);
   }
   /* output 2: function */
   else if ( isFunctionValue(tagName) ) {
@@ -126,6 +128,7 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
       context, 
     })
     getActiveFNodes(fNode);
+    updateActiveComponentFNodes(fNode);
   }
   /* output 3: tag_str  */
   else if ( isStringValue(tagName) ) {
@@ -158,10 +161,8 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
   /* ** Features: 标签名动态化
   注意 变量名需大写否则jsx不处理  
   */
-  console.log( '111', fNode);
   varyTagName(fNode);
   
-  console.log( '222', fNode);
   return fNode;
 }
 

@@ -7,6 +7,9 @@ import routerReplace from "./routerReplace.js";
 import routerComponentProps from "./routerComponentProps.js";
 import cachePage from "./cachePage.js";
 import render from "../render.js";
+import {
+  isFunctionValue, 
+} from "../utils/judge.js";
 
 
 const store = {
@@ -62,6 +65,7 @@ export default class Router {
     let newPathParams = parseHash(evt.newURL);
     
     store.activedPath = newPathParams.path; 
+    updatePathComponentFNdsMap(this._route_map);
     
     callback({
       init: !!evt.isInitRun,
@@ -80,12 +84,8 @@ export default class Router {
     // 不允许跳转 
     let isGo = this._beforeEach(oldPathParams, newPathParams) ?? true;
     if (!isGo) { 
-      callback({
-        init: !!evt.isInitRun,
-        type: 'nopermit',
-        oldPathParams, 
-        newPathParams, 
-      });
+      log('不允许访问');
+      routerReplace(oldPathParams.path, oldPathParams.query);
       return ; 
     }
     
@@ -104,12 +104,6 @@ export default class Router {
       // 不重复渲染相同DOM 
       if (isExit) { 
         log('cache page: 不重复渲染相同DOM ');
-        callback({
-          init: !!evt.isInitRun,
-          type: 'cached',
-          oldPathParams, 
-          newPathParams, 
-        });
         return; 
       }
       
@@ -132,13 +126,8 @@ export default class Router {
     
     // 未指定需渲染的页面组件 
     if (!pathOption.component) { 
-      log('render error: 未指定页面组件');
-      callback({
-        init: !!evt.isInitRun,
-        type: 'error',
-        oldPathParams, 
-        newPathParams, 
-      });
+      console.warn('render error: 未指定页面组件');
+      routerReplace(oldPathParams.path, oldPathParams.query);
       return; 
     }
     
@@ -180,14 +169,28 @@ export default class Router {
   }
 }
 // 路由组件映射 
-export function getFNds(fNd){
+export function updatePathComponentFNdsMap(routeMap){
+  let routeOption = routeMap[store.activedPath] || {};
+  if ( !routeOption.component ) { return ; }
+  let isCache = routeOption.isCache;
+  if ( isFunctionValue(isCache) ) { isCache = isCache(); }
+  if ( isCache ) { return ; }
+  
+  store.pathFNdsMap[store.activedPath] = [];
+} 
+export function updateActiveComponentFNodes(fNd){
   let list = store.pathFNdsMap[store.activedPath];
   if (!list) { 
     store.pathFNdsMap[store.activedPath] = []; 
     list = store.pathFNdsMap[store.activedPath];
   }
   
-  list.push(fNd); // to_do 
+  let isExit = list.some((itm,idx)=>{ return itm===fNd; });
+  if (!isExit) { list.push(fNd); }
+} 
+export function getActiveComponentFNodes(path){
+  path = path || store.activedPath;
+  return store.pathFNdsMap[path] || [];
 } 
 
 /* 对外接口 ===================================================================*/

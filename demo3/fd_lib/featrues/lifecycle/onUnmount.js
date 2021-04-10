@@ -2,6 +2,7 @@
 */
 import config from "../../config/config.js";
 import onHashChange from "../../router/onHashChange.js";
+import { getActiveComponentFNodes, } from "../../router/router.js";
 
 
 
@@ -31,14 +32,22 @@ export function removeComponentRun(fNode, ...args){
 export function getActiveFNodes(fNd){
   store.activedFNodeList.push(fNd);
 } 
+
 onHashChange((evt, option)=>{
+  // console.log( evt, option);
   if (option.init) { return ; }
-  if (!['render','render-error','cache'].includes(option.type)) { return ; }
+  if (!['renderred','render-error','cached'].includes(option.type)) { return ; }
+  // 
+  // store.activedFNodeList.forEach(fNd=>{ 
+  //   removeComponentRun(fNd); 
+  // })
+  // store.activedFNodeList = [];
   
-  store.activedFNodeList.forEach(fNd=>{ 
+  let list = getActiveComponentFNodes(option.oldPathParams.path);
+  console.log(option.oldPathParams.path, list );
+  list.forEach(fNd=>{
     removeComponentRun(fNd); 
   })
-  store.activedFNodeList = [];
 })
 
 

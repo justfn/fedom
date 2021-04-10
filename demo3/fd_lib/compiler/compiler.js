@@ -47,7 +47,6 @@ export default function compiler(tagName, attrs, ...children){
   onPageLoaded( fNode, _order_num, ()=>{
     _order_num = 0;
   });
-  console.log( fNode.realNode );
   return fNode.realNode;
 }
 
