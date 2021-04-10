@@ -2,7 +2,7 @@
 */
 
 export default function parseHash(fullUrl){
-  if (!fullUrl) { return {}; }
+  fullUrl = fullUrl || window.location.href; 
   
   let result = {
     path: '',

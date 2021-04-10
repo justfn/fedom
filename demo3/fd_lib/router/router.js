@@ -12,6 +12,12 @@ import render from "../render.js";
 const store = {
   // 配置的所有路由集合 
   routeList: [],
+  // 
+  activedPath: '',
+  // 
+  pathFNdsMap: {
+    // <path>: <fNdList>, 
+  },
 }
 export default class Router {
   constructor(routeOptions = {}){ 
@@ -55,6 +61,8 @@ export default class Router {
     let oldPathParams = parseHash(evt.oldURL);
     let newPathParams = parseHash(evt.newURL);
     
+    store.activedPath = newPathParams.path; 
+    
     callback({
       init: !!evt.isInitRun,
       type: 'start',
@@ -95,7 +103,13 @@ export default class Router {
       let isExit = [ ...this._root.childNodes ].some( itm=>itm===cachedPageNode )
       // 不重复渲染相同DOM 
       if (isExit) { 
-        console.log('todo: 待处理场景 ');
+        log('cache page: 不重复渲染相同DOM ');
+        callback({
+          init: !!evt.isInitRun,
+          type: 'cached',
+          oldPathParams, 
+          newPathParams, 
+        });
         return; 
       }
       
@@ -118,6 +132,7 @@ export default class Router {
     
     // 未指定需渲染的页面组件 
     if (!pathOption.component) { 
+      log('render error: 未指定页面组件');
       callback({
         init: !!evt.isInitRun,
         type: 'error',
@@ -160,11 +175,20 @@ export default class Router {
       } 
     })
     .catch((err)=>{
-      console.log('todo: 待处理场景');
+      console.log('todo: 待处理场景', err);
     })
   }
 }
-
+// 路由组件映射 
+export function getFNds(fNd){
+  let list = store.pathFNdsMap[store.activedPath];
+  if (!list) { 
+    store.pathFNdsMap[store.activedPath] = []; 
+    list = store.pathFNdsMap[store.activedPath];
+  }
+  
+  list.push(fNd); // to_do 
+} 
 
 /* 对外接口 ===================================================================*/
 export function getRoutes(isOrgin=false){

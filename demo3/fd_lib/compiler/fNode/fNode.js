@@ -9,6 +9,7 @@ import {
   isVary, 
   isFunctionValue, 
   isStringValue, 
+  isNullValue, 
 } from "../../utils/judge.js";
 
 
@@ -22,7 +23,7 @@ export function getRealTagTypes(tagName){
   if (isVary(tagName)) { return getRealTagTypes(tagName.get(false)); }
   if (isComponent(tagName)) { return config.tag_types.component; }
   if (isFunctionValue(tagName)) { return config.tag_types.function; }
-  if (isStringValue(tagName)) { return config.tag_types.origin; }
+  if (isStringValue(tagName) || isNullValue(tagName) ) { return config.tag_types.origin; }
   
   return 'unknow';
 }  
@@ -137,6 +138,16 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
       children, 
     });
   }
+  else if ( isNullValue(tagName) ) {
+    fNode = new FNode({
+      varyTag,
+      tagName, 
+      realNode: document.createComment("fedom empty: "),
+      attrs, 
+      children, 
+    });
+    // console.log( fNode );
+  }
   /* output 4: other todo */
   else {
     console.warn('# todo tag', tagName, attrs, varyTag);
@@ -147,8 +158,10 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
   /* ** Features: 标签名动态化
   注意 变量名需大写否则jsx不处理  
   */
+  console.log( '111', fNode);
   varyTagName(fNode);
   
+  console.log( '222', fNode);
   return fNode;
 }
 

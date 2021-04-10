@@ -21,6 +21,7 @@ export default class Page extends PageB {
   }
   
   onUnmount(){
+    console.log('  onUnmount  ');
     this.unBind();
   }
   

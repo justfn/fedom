@@ -24,7 +24,8 @@ export default function(props, context){
     console.log( 'home onUnmount' );
   })
   
-  let Header_ = VaryValue(Header);
+  let $Header_ = VaryValue(null);
+  // let $Header_ = VaryValue(Header);
   let isActive = VaryValue(true);
   let varyText = VaryValue('fd 001');
   let val2 = VaryValue(0);
@@ -71,20 +72,20 @@ export default function(props, context){
     <li>htmlDom 333</li>
   `)
   
-  let val = Header_.value;
+  let val = $Header_.value;
   // console.log( val, '=== ');
   let changeClickHandle = ()=>{
     varyInputVal.value = Date.now();
     
     // varyShowPart1.value = 'block'
-    if (Header_.value===null) {
-      Header_.value = val;
+    if ($Header_.value===null) {
+      $Header_.value = Header;
     }
-    else if ( Header_.value === val ) {
-      Header_.value = PartA;
+    else if ( $Header_.value === Header ) {
+      $Header_.value = PartA;
     }
     else {
-      Header_.value = null;
+      $Header_.value = null;
     }
   }
   return (
@@ -105,7 +106,7 @@ export default function(props, context){
       <hr />
       { /* Feature: 动态化-标签、组件 
         */ }
-      <Header_ class="bbbb"  />
+      <$Header_ isShowVary="123" class="bbbb"  />
       
       <hr />
       { /* Feature: 动态化-子节点-文本、数值 */ }

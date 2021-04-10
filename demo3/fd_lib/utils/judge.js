@@ -10,6 +10,9 @@ import Vary from "../featrues/Vary/Vary.js";
 // 
 //   return config.orgin_elements.includes(val.toLowerCase());
 // } 
+export function isNullValue(val){
+  return val===null;
+} 
 export function isEmptyValue(val){
   if (val===undefined) { return true; }
   if (val===null) { return true; }
@@ -37,6 +40,10 @@ export function isBooleanValue(val){
 } 
 export function isNodeValue(val){
   return val instanceof Node;
+} 
+export function isCommentNode(val){
+  if (!val) { return false; }
+  return val.nodeName==='#comment';
 } 
 /* ** 判断值是否继承自 Component*/
 export function isComponent(val){

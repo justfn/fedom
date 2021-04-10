@@ -11,12 +11,16 @@ import {
   isFormNode, 
   addFormAttrs, 
 } from "./formAttrs.js";
+import {
+  isCommentNode, 
+} from "../../utils/judge.js";
 
 export default function addAttrs(fNode){
   if (fNode.nodeType!==config.tag_types.origin) { 
     componentAttrs(fNode); 
     return ; 
   }
+  if (isCommentNode(fNode.realNode)) { return ; }
   
   
   for(let key in fNode.attrs){

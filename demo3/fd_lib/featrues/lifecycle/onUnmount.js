@@ -33,7 +33,7 @@ export function getActiveFNodes(fNd){
 } 
 onHashChange((evt, option)=>{
   if (option.init) { return ; }
-  if (!['renderred','cached'].includes(option.type)) { return ; }
+  if (!['render','render-error','cache'].includes(option.type)) { return ; }
   
   store.activedFNodeList.forEach(fNd=>{ 
     removeComponentRun(fNd); 
