@@ -31,8 +31,9 @@ export function removeComponentRun(fNode, ...args){
 export function getActiveFNodes(fNd){
   store.activedFNodeList.push(fNd);
 } 
-onHashChange((evt)=>{
-  if (evt.isInitRun) { return ; }
+onHashChange((evt, option)=>{
+  if (option.init) { return ; }
+  if (!['renderred','cached'].includes(option.type)) { return ; }
   
   store.activedFNodeList.forEach(fNd=>{ 
     removeComponentRun(fNd); 

@@ -45,75 +45,123 @@ export default class Router {
     this._root = root; 
     this._beforeEach = beforeEach;
     
-    onHashChange( this._hashChange );
-    initHashChange();
+    // onHashChange(  );
+    initHashChange(this._hashChange);
   }
   // update_cache = (path, isCache)=>{ }
   
-  _hashChange = (evt)=>{
+  _hashChange = (evt, callback)=>{
+    callback = callback || (v=>v);
     let oldPathParams = parseHash(evt.oldURL);
     let newPathParams = parseHash(evt.newURL);
     
+    callback({
+      init: !!evt.isInitRun,
+      type: 'start',
+      oldPathParams, 
+      newPathParams, 
+    });
+    
+    
+    // hash路由错误 
     if (!newPathParams.path) {
-      window.location.hash = '/'
+      window.location.hash = '/';
       return ;
     }
+    
+    // 不允许跳转 
     let isGo = this._beforeEach(oldPathParams, newPathParams) ?? true;
     if (!isGo) { 
-      console.log( ' hashchange ', 3);
-      console.log('# 阻止路由访问', newPathParams, oldPathParams);
+      callback({
+        init: !!evt.isInitRun,
+        type: 'nopermit',
+        oldPathParams, 
+        newPathParams, 
+      });
       return ; 
     }
-    log( 'current hashpath: ', newPathParams.path);
     
-    let cachedPageMap = cachePage(this._route_map, oldPathParams, this._root.lastElementChild );
+    // 路由重定向 
     let pathOption = this._route_map[newPathParams.path] ?? {};
+    if (pathOption.redirect) {
+      routerReplace(pathOption.redirect, newPathParams.query);
+      return ;
+    }
+    
+    // 使用缓存页面 
+    let cachedPageMap = cachePage(this._route_map, oldPathParams, this._root.lastElementChild );
     let cachedPageNode = cachedPageMap[ newPathParams.path ];
-    Promise.resolve( cachedPageNode )
-    // 先读缓存 
-    .then((htmlNode)=>{
-      // 重定向 
-      if (pathOption.redirect) {
-        routerReplace(pathOption.redirect, newPathParams.query);
-        return Promise.reject();
+    if (cachedPageNode) { 
+      let isExit = [ ...this._root.childNodes ].some( itm=>itm===cachedPageNode )
+      // 不重复渲染相同DOM 
+      if (isExit) { 
+        console.log('todo: 待处理场景 ');
+        return; 
       }
       
-      // 出口1：读缓存 
-      if (htmlNode) { 
-        let isExit = [ ...this._root.childNodes ].some((itm,idx)=>{
-          return itm === htmlNode;
-        })
-        if (isExit) { 
-          // console.log('# 不重复渲染相同DOM', htmlNode);
-          return Promise.reject(); 
-        }
-        
-        this._root.innerHTML = '';
-        // console.log('# 加载缓存', htmlNode);
-        render( htmlNode, this._root );
-        return Promise.reject();
-      }
-      // 出口2：报错 
-      if (!pathOption.component) { 
-        return Promise.reject(`${newPathParams.path} 路由，无页面组件！`); 
-      }
-      // 出口3：渲染组件 
-      return pathOption.component(); 
-    })
-    // 再解析渲染 
-    .then((module)=>{
-      let ShowComponent = module.default;
       this._root.innerHTML = '';
-      render( 
-        // ShowComponent({},{html(){return <div/>;}}), // todo 
-        <ShowComponent {...routerComponentProps(oldPathParams, newPathParams, cachedPageMap)} />, 
-        this._root 
-      );
+      callback({
+        init: !!evt.isInitRun,
+        type: 'cache',
+        oldPathParams, 
+        newPathParams, 
+      });
+      render( cachedPageNode, this._root );
+      callback({
+        init: !!evt.isInitRun,
+        type: 'cached',
+        oldPathParams, 
+        newPathParams, 
+      });
+      return ;
+    }
+    
+    // 未指定需渲染的页面组件 
+    if (!pathOption.component) { 
+      callback({
+        init: !!evt.isInitRun,
+        type: 'error',
+        oldPathParams, 
+        newPathParams, 
+      });
+      return; 
+    }
+    
+    // 渲染指定页面组件 
+    pathOption.component().then(module=>{
+      this._root.innerHTML = '';
+      callback({
+        init: !!evt.isInitRun,
+        type: 'render',
+        oldPathParams, 
+        newPathParams, 
+      });
+      try {
+        let ShowComponent = module.default;
+        render( 
+          // ShowComponent({},{html(){return <div/>;}}), // todo 
+          <ShowComponent {...routerComponentProps(oldPathParams, newPathParams, cachedPageMap)} />, 
+          this._root 
+        );
+        callback({
+          init: !!evt.isInitRun,
+          type: 'renderred',
+          oldPathParams, 
+          newPathParams, 
+        });
+      } 
+      catch (err) {
+        callback({
+          init: !!evt.isInitRun,
+          type: 'render-error',
+          oldPathParams, 
+          newPathParams, 
+        });
+      } 
     })
     .catch((err)=>{
-      if (err) { console.error(err); }
+      console.log('todo: 待处理场景');
     })
-
   }
 }
 

@@ -3,36 +3,45 @@
 import { globalWrite, globalRead, } from "../utils/globalWR.js";
 
 
+const store = {
+  isInitSwitch: false, // 防止多次初始化 
+  listenerList: [],
+}
 
-let isInitSwitch = false;
-let listenerList = [];
 
-
-/* ** 路由切换 
-*/
-function hashchangeListener( evt ){
-  // console.log(location.hash);
-  // console.log(evt);
-  // evt.oldURL: "http://0.0.0.0:9000/#/home"
-  // evt.newURL: "http://0.0.0.0:9000/#/tic_tac_toe"
-
-  listenerList.forEach(fn=>fn(evt))
-} 
 
 /* ** 监听路由切换 
 */
 export default function onHashChange(listener){
-  listenerList.push(listener);
+  store.listenerList.push(listener);
 } 
-export function initHashChange(){
-  if (isInitSwitch) { return ; }
-  isInitSwitch = true;
+
+export function initHashChange(hashchangeRun){
+  if (store.isInitSwitch) { return ; }
+  store.isInitSwitch = true;
   
+  window.addEventListener("hashchange", (evt)=>{
+    hashchangeRun(evt, (option)=>{
+      hashchangeListener(evt, option)
+    })
+  });
   // 初始执行 
-  hashchangeListener({ 
+  let evt = {
     newURL: window.location.href, 
     isInitRun: true,
+  }
+  hashchangeRun( evt, (option)=>{
+    hashchangeListener(evt, option)
   });
-  window.addEventListener("hashchange", hashchangeListener );
+} 
+/* ** 路由切换 
+*/
+function hashchangeListener( evt, option ){
+  // console.log(location.hash);
+  // console.log(evt);
+  // evt.oldURL: "http://0.0.0.0:9000/#/home"
+  // evt.newURL: "http://0.0.0.0:9000/#/tic_tac_toe"
+  
+  store.listenerList.forEach(fn=>fn(evt, option))
 } 
 
