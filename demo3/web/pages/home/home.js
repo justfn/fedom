@@ -13,12 +13,8 @@ let elDom = document.createElement("div")
 elDom.textContent = ' =================================== ';
 
 export default function(props, context){
-  context.onMounted(()=>{
-    console.log( 'home onMounted 1' );
-  })
   setTimeout(()=>{
-    console.log( 'home onMounted 2' );
-    
+    console.log( 'home mounted ' );
   })
   context.onUnmount(()=>{
     console.log( 'home onUnmount' );

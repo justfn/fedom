@@ -14,10 +14,12 @@ export default class Component {
   }
   // 渲染-前1 
   render(){ }
-  // 渲染-后 
-  onMounted(){}
+  // 使用缓存 
+  onShow(){}
   // 卸载-前 
   onUnmount(){ }
+  // // 渲染-后 
+  // onMounted(){}
   
   /* --------------------------------------------------------- 工具方法 */
   utils = { }

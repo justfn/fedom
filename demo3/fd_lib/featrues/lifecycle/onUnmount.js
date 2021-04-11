@@ -10,12 +10,9 @@ import { getActiveComponentFNodes, } from "../../router/router.js";
 1: 动态组件切换时调用 
 2: 路由切换, 渲染时收集页面级组件,切换前调用 
 */
-const store = {
-  activedFNodeList: [],
-}
 export function removeComponentRun(fNode, ...args){
-  if ( fNode.context && fNode.context._unmountFns ) {
-    fNode.context._unmountFns.forEach((callback)=>{
+  if ( fNode.context && fNode.context._onUnmountFns ) {
+    fNode.context._onUnmountFns.forEach((callback)=>{
       callback(...args);
     })
     
@@ -29,22 +26,13 @@ export function removeComponentRun(fNode, ...args){
 
   // console.log('to_do: ', fNode);
 } 
-export function getActiveFNodes(fNd){
-  store.activedFNodeList.push(fNd);
-} 
 
 onHashChange((evt, option)=>{
-  // console.log( evt, option);
+  // console.log( 'unmount ', evt, option);
   if (option.init) { return ; }
-  if (!['renderred','render-error','cached'].includes(option.type)) { return ; }
-  // 
-  // store.activedFNodeList.forEach(fNd=>{ 
-  //   removeComponentRun(fNd); 
-  // })
-  // store.activedFNodeList = [];
+  if (!['render', 'cache'].includes(option.type)) { return ; }
   
   let list = getActiveComponentFNodes(option.oldPathParams.path);
-  console.log(option.oldPathParams.path, list );
   list.forEach(fNd=>{
     removeComponentRun(fNd); 
   })

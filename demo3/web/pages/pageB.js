@@ -12,9 +12,9 @@ class PageB extends Component {
     props.xx.watch(this.propsXxxChange)
   }
   propsXxxChange = (pre, now)=>{ }
-  onMounted(){}
-  onUnmount(){}
-  onUnmounted(){}
+  onUnmount(){
+    
+  }
   
   
   render(){

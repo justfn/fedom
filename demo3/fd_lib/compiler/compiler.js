@@ -4,8 +4,6 @@ import { globalWrite, globalRead, } from "../utils/globalWR.js";
 import createFNode from "./fNode/fNode.js";
 import addAttrs from "./attrs/addAttrs.js";
 import fillChildren from "./child/fillChild.js";
-// import onMounted from "../featrues/lifecycle/onMounted.js";
-import onPageLoaded from "../featrues/lifecycle/onPageLoaded.js";
 
 
 let _order_num = 0; 
@@ -42,11 +40,6 @@ export default function compiler(tagName, attrs, ...children){
   addAttrs( fNode );
   fillChildren( fNode );
   
-  
-  // onMounted( fNode );
-  onPageLoaded( fNode, _order_num, ()=>{
-    _order_num = 0;
-  });
   return fNode.realNode;
 }
 

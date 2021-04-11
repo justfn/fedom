@@ -1,6 +1,6 @@
 /* 入口文件 
 */
-
+import "./featrues/lifecycle/index.js";
 import "./utils/dev.js";
 import { globalWrite, } from "./utils/globalWR.js";
 

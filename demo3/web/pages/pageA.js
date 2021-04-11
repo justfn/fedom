@@ -6,9 +6,12 @@ function pageA(props,context){
     
   })
   
-  context.onMounted = ()=>{ }
-  context.onUnmount = ()=>{ }
-  context.onUnmounted = ()=>{ }
+  context.onUnmount = ()=>{ 
+    console.log( 'pagea unmount');
+    setTimeout(()=>{
+      console.log( 'pagea unmounted');
+    })
+  }
   
   return (
     <div class="PageA">

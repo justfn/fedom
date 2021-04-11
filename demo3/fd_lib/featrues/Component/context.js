@@ -8,17 +8,22 @@ import { getRoutes, } from "../../router/router.js";
 export default function getContext(){
   
   return {
-    // 渲染后将执行的回调集合 
-    _mountedFns: [],
-    // 搜集初始化执行操作 
-    onMounted(fn){
-      this._mountedFns.push(fn);
+    // // 渲染后将执行的回调集合 
+    // _mountedFns: [],
+    // // 搜集初始化执行操作 
+    // onMounted(fn){
+    //   this._mountedFns.push(fn);
+    // },
+    
+    _onShowFns: [],
+    onShow(fn){
+      this._onShowFns.push(fn);
     },
     // 卸载前将执行的回调集合 
-    _unmountFns: [],
+    _onUnmountFns: [],
     // 收集卸载前的操作  
     onUnmount(fn){
-      this._unmountFns.push(fn);
+      this._onUnmountFns.push(fn);
     },
     // 提供插入富文本的能力 
     html(htmlStr){

@@ -2,8 +2,8 @@
 
 export default function (props, context){
   
-  context.onMounted(({ root, })=>{
-    // console.log( '# cpta', root, props); 
+  setTimeout(()=>{
+    console.log('cpta mounted');
   })
   
   return (

@@ -3,7 +3,6 @@ import message from "../../config/message.js";
 import varyTagName from "../../featrues/varyValue/tagVary.js";
 import cpntRender from "../../featrues/Component/cpntRender.js";
 import getContext from "../../featrues/Component/context.js";
-import { getActiveFNodes, } from "../../featrues/lifecycle/onUnmount.js";
 import { updateActiveComponentFNodes, } from "../../router/router.js";
 import { 
   isComponent, 
@@ -110,7 +109,6 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
       children, 
       instance, 
     });
-    getActiveFNodes(fNode);
     updateActiveComponentFNodes(fNode);
   }
   /* output 2: function */
@@ -127,7 +125,6 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
       children, 
       context, 
     })
-    getActiveFNodes(fNode);
     updateActiveComponentFNodes(fNode);
   }
   /* output 3: tag_str  */

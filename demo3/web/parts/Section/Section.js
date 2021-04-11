@@ -22,9 +22,6 @@ export default function Section(props, context){
     })
   }
   
-  // context.onMounted((...args)=>{
-  //   console.log( 'onMouted', args );
-  // })
   
   return (
     <section class={['part_Section', props.class??'']}>

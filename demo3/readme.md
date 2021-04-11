@@ -6,17 +6,14 @@
   1 组件渲染 
     fn_run() 
       fn_run&setTimeout() 
-      context.onMounted()  
     constructor_run() | render_run() 
       render_run&setTimeout() 
       constructor_run&setTimeout()  
   2 组件更新 
     $xxx.watch() 
-  3 组件缓存  [todo] 
+  3 组件缓存   
     context.onShow() 
     onShow()
-    context.onHide() 
-    onHide()
   4 组件卸载 
     context.onUnmount 
       onUnmount&setTimeout()  
@@ -46,6 +43,7 @@ Features:
     页面级组件 context 中添加 router 和 route 
 --------------------------------------------------------------------------------
 todo: 
+  varyShow={bol} 
   写框架文档 
   编译空间 
     ref 字符串形式支持 

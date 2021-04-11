@@ -10,7 +10,18 @@ const {
 export default class Page extends PageB {
   constructor(props){
     super(props);
-    
+    this.init();
+  }
+  onShow(){
+    this.init();
+  }
+  onUnmount(){
+    console.log('  onUnmount  ');
+    this.unBind();
+  }
+  
+  init(){
+    console.log(' 000 ');
     let { x, y, unBind } = trackMouse(document.body);
     this.x = x;
     this.y = y;
@@ -18,11 +29,6 @@ export default class Page extends PageB {
       console.log( 'watch:', args);
     })
     this.unBind = unBind;
-  }
-  
-  onUnmount(){
-    console.log('  onUnmount  ');
-    this.unBind();
   }
   
   
