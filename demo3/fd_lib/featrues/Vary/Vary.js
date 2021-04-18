@@ -28,10 +28,10 @@ export default class Vary {
     this._num_id = nId ?? NaN;
     
     this.isAlive = true; 
-    this._value = val; 
+    this._$$ = val; 
     this._trimValueFn =  trimFn ?? (v=>v); // 整理成最终返回值 
-    this._valueTrimed = this._trimValueFn(val);
-    this.__valueTrimedNxt = symbol_1; // 缓存下一次格式化的值,避免多次执行'_trimValueFn'函数  
+    this._$$Trimed = this._trimValueFn(val);
+    this.__$$TrimedNxt = symbol_1; // 缓存下一次格式化的值,避免多次执行'_trimValueFn'函数  
     if (isVary(val)) {
       val.watch((preV,nxtV,preVTrimed,nxtVTrimed)=>{
         this.set((pre_v)=>{
@@ -49,11 +49,11 @@ export default class Vary {
   /* --------------------------------------------------------- 对外接口  */
   // 取值 
   get = (isOriginal=true)=>{ 
-    if (isOriginal) { return this._value; }
+    if (isOriginal) { return this._$$; }
     
-    return this._valueTrimed; 
+    return this._$$Trimed; 
   }
-  get value(){ return this.get(true); }
+  get $$(){ return this.get(true); }
   // 设值  
   set = (setHandle, isLazy=true)=>{
     if (!this.isAlive) { return Promise.reject('sleeping'); }
@@ -69,21 +69,21 @@ export default class Vary {
     else {
       nxt_v = setHandle(pre_v, pre_v_t); 
       if (nxt_v===undefined) { nxt_v = pre_v }
-      this.__valueTrimedNxt = this._trimValueFn(nxt_v);
+      this.__$$TrimedNxt = this._trimValueFn(nxt_v);
       this._sets.forEach(setFn=>{ 
         setFn(nxt_v, isLazy); 
       });
     }
-    this._value = nxt_v;
-    let tmpV = this._valueTrimed;
-    this._valueTrimed = this.__valueTrimedNxt;
-    this.__valueTrimedNxt = symbol_1; 
+    this._$$ = nxt_v;
+    let tmpV = this._$$Trimed;
+    this._$$Trimed = this.__$$TrimedNxt;
+    this.__$$TrimedNxt = symbol_1; 
     this._watchs.forEach( watchFn=>{
-      watchFn(pre_v, nxt_v, tmpV, this._valueTrimed);
+      watchFn(pre_v, nxt_v, tmpV, this._$$Trimed);
     })
     return Promise.resolve(nxt_v);
   }
-  set value(val){ this.set(v=>val, true) }
+  set $$(val){ this.set(v=>val, true) }
   // 收集渲染后执行的函数 
   mounted = (mountedHandle)=>{
     this._mounteds.push(mountedHandle);
@@ -115,13 +115,13 @@ export default class Vary {
       if (!isLazy) { 
         nxt_v = setHandle(pre_v, pre_v_t, extra); 
         if (nxt_v===undefined) { nxt_v = pre_v }
-        if (this.__valueTrimedNxt===symbol_1) {
-          this.__valueTrimedNxt = this._trimValueFn(nxt_v);
+        if (this.__$$TrimedNxt===symbol_1) {
+          this.__$$TrimedNxt = this._trimValueFn(nxt_v);
         }
       }
       let updatedReturenValue = setRun({
         preTrimedValue: pre_v_t,
-        nxtTrimedValue: this.__valueTrimedNxt,
+        nxtTrimedValue: this.__$$TrimedNxt,
         preValue: pre_v,
         nxtValue: nxt_v,
         extra: extra,

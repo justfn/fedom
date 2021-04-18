@@ -7,6 +7,7 @@ import PartA from "../../parts/PartA/PartA.js";
 
 const {
   VaryValue, 
+  VaryKeys,
 } = window.$fd
 
 let elDom = document.createElement("div")
@@ -20,8 +21,8 @@ export default function(props, context){
     console.log( 'home onUnmount' );
   })
   
-  let $Header_ = VaryValue(null);
-  // let $Header_ = VaryValue(Header);
+  let Header$ = VaryValue(null);
+  // let Header$ = VaryValue(Header);
   let isActive = VaryValue(true);
   let varyText = VaryValue('fd 001');
   let val2 = VaryValue(0);
@@ -33,6 +34,12 @@ export default function(props, context){
   // },1000)
   
   // console.log('# page_home');
+  
+  let varyKeys$ = VaryKeys({
+    a: 111,
+    b: 222,
+    c: 333,
+  })
       
       
   let varyShowPart1 = VaryValue('block');
@@ -59,7 +66,7 @@ export default function(props, context){
   let varyInputVal = VaryValue('initval');
   let inputHandel = (evt)=>{
     let val = evt.target.value
-    varyInputVal.value = val; 
+    varyInputVal.$$ = val; 
   }
   
   let htmlDom = context.html(`
@@ -68,20 +75,20 @@ export default function(props, context){
     <li>htmlDom 333</li>
   `)
   
-  let val = $Header_.value;
+  let val = Header$.$$;
   // console.log( val, '=== ');
   let changeClickHandle = ()=>{
-    varyInputVal.value = Date.now();
+    varyInputVal.$$ = Date.now();
     
-    // varyShowPart1.value = 'block'
-    if ($Header_.value===null) {
-      $Header_.value = Header;
+    // varyShowPart1.$$ = 'block'
+    if (Header$.$$===null) {
+      Header$.$$ = Header;
     }
-    else if ( $Header_.value === Header ) {
-      $Header_.value = PartA;
+    else if ( Header$.$$ === Header ) {
+      Header$.$$ = PartA;
     }
     else {
-      $Header_.value = null;
+      Header$.$$ = null;
     }
   }
   return (
@@ -91,18 +98,24 @@ export default function(props, context){
       >
       
       <button onClick={changeClickHandle}>AAAAAAAAAAAAAAAAAAA</button>
-      <div style={{display:varyShowPart1,}} onClick={()=>{varyShowPart1.value='none';}}>
+      <div style={{display:varyShowPart1,}} onClick={()=>{varyShowPart1.$$='none';}}>
         <hr />
         { /* jsx能力 */ }
         
         
       </div>
       
+      <div>
+        { varyKeys$.a }
+        { varyKeys$.b }
+        { varyKeys$.c }
+      </div>
+      
       
       <hr />
       { /* Feature: 动态化-标签、组件 
         */ }
-      <$Header_ isShowVary="123" class="bbbb"  />
+      <Header$ isShowVary="123" class="bbbb"  />
       
       <hr />
       { /* Feature: 动态化-子节点-文本、数值 */ }

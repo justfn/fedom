@@ -14,7 +14,7 @@ export default function(props){
       if (n_v>=10) { return ; }
       
       setTimeout(function(){
-        props.titleVary.value = ++n_v;
+        props.titleVary.$$ = ++n_v;
       },1000)
     })
     

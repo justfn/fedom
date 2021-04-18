@@ -27,11 +27,12 @@ Features:
     动态化监听 
     动态化开关 
     动态化嵌套 
-    $xx [todo] 
-    $xx.$$  [todo] 
-    $xx.xx.$$  [todo] 
+    xx$  
+    xx$.$$   
+    xx$.xx.$$  [对象键值动态化] 
   vary标签
   vary属性
+    varyShow={bol} [to_do]
   vary子节点
     整个数组 
     单个子节点 
@@ -43,7 +44,6 @@ Features:
     页面级组件 context 中添加 router 和 route 
 --------------------------------------------------------------------------------
 todo: 
-  varyShow={bol} 
   写框架文档 
   编译空间 
     ref 字符串形式支持 

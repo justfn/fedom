@@ -9,6 +9,7 @@ import render from "./render.js";
 import Router from "./router/router.js";
 import Component from "./featrues/Component/Component.js";
 import { VaryValue, } from "./featrues/Vary/Vary.js";
+import VaryKeys from "./featrues/Vary/VaryKeys.js";
 import { 
   isComponent, 
   isVary, 
@@ -18,6 +19,7 @@ globalWrite('compiler', compiler);
 globalWrite('render', render);
 globalWrite('Router', Router);
 globalWrite('VaryValue', VaryValue);
+globalWrite('VaryKeys', VaryKeys);
 globalWrite('Component', Component);
 // 工具集合 
 globalWrite('utils.isVary', isVary);

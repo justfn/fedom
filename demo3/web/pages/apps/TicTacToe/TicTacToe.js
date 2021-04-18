@@ -83,7 +83,7 @@ export default class Child extends PageB {
     }) 
     .then((nexVal)=>{
       this.history.push(this.squareList.map((itm,idx)=>{
-        return itm.value
+        return itm.$$
       }))
     })
     this.moves.set((list)=>{
@@ -115,10 +115,10 @@ export default class Child extends PageB {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (
-        squares[a].value 
-        && squares[a].value === squares[b].value 
-        && squares[a].value === squares[c].value
-      ) { return squares[a].value; }
+        squares[a].$$ 
+        && squares[a].$$ === squares[b].$$ 
+        && squares[a].$$ === squares[c].$$
+      ) { return squares[a].$$; }
     }
     return null;
   }
