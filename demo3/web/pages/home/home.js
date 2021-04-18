@@ -21,6 +21,7 @@ export default function(props, context){
     console.log( 'home onUnmount' );
   })
   
+  // let Header$ = VaryValue(Header);
   let Header$ = VaryValue(null);
   // let Header$ = VaryValue(Header);
   let isActive = VaryValue(true);
@@ -97,7 +98,7 @@ export default function(props, context){
       onClick={fn1}
       >
       
-      <button onClick={changeClickHandle}>AAAAAAAAAAAAAAAAAAA</button>
+      <button onClick={changeClickHandle}> 切换元素 </button>
       <div style={{display:varyShowPart1,}} onClick={()=>{varyShowPart1.$$='none';}}>
         <hr />
         { /* jsx能力 */ }
@@ -115,7 +116,9 @@ export default function(props, context){
       <hr />
       { /* Feature: 动态化-标签、组件 
         */ }
-      <Header$ isShowVary="123" class="bbbb"  />
+      <Header$ isShowVary="123" class="bbbb"  >
+        123
+      </Header$>
       
       <hr />
       { /* Feature: 动态化-子节点-文本、数值 */ }

@@ -19,24 +19,24 @@ export function isEmptyValue(val){
   
   return false;
 } 
-export function isArrayValue(val){
-  return val instanceof Array;
+export function isBooleanValue(val){
+  return typeof val==='boolean';
+} 
+export function isNumberValue(val){
+  return typeof val==='number';
+} 
+export function isStringValue(val){
+  return typeof val==='string';
 } 
 export function isMapValue(val){
   // to_do: 待优化 
   return typeof val==='object';
 } 
+export function isArrayValue(val){
+  return val instanceof Array;
+} 
 export function isFunctionValue(val){
   return typeof val==='function';
-} 
-export function isStringValue(val){
-  return typeof val==='string';
-} 
-export function isNumberValue(val){
-  return typeof val==='number';
-} 
-export function isBooleanValue(val){
-  return typeof val==='boolean';
 } 
 export function isNodeValue(val){
   return val instanceof Node;

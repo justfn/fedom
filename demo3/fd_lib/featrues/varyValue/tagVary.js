@@ -11,6 +11,7 @@ import {
   isStringValue, 
   isFunctionValue, 
   isFDComponent, 
+  isEmptyValue, 
 } from "../../utils/judge.js";
 
 
@@ -37,17 +38,17 @@ export default function varyTagName(fNode){
     */
     
     // Features: 设值为true/false 显示/隐藏该节点 
-    if ( isBooleanValue(nxtTrimedValue) ) {
-      let display = nxtTrimedValue ? pre_node_style_display : 'none';
-      pre_node.style.display = display; 
-      return ;
-      // {
-      //   next_value: pre_node,
-      // };
-    }
+    // if ( isBooleanValue(nxtTrimedValue) ) {
+    //   let display = nxtTrimedValue ? pre_node_style_display : 'none';
+    //   pre_node.style.display = display; 
+    //   return ;
+    //   // {
+    //   //   next_value: pre_node,
+    //   // };
+    // }
     
     // Features: null 删除该节点 
-    if (nxtTrimedValue===null) {
+    if (isEmptyValue(nxtTrimedValue)) {
       removeComponentRun(fNode); 
       cpntUpdate(fNode, null, null);
       nxt_node = document.createComment("fedom vary tag and remove")
