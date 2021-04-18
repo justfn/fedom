@@ -17,10 +17,13 @@ import {
   isNodeValue, 
   isEmptyValue,  
   isTextChild,  
+  isCommentNode,  
 } from "../../utils/judge.js";
 
 
 export default function fillChildren(fNode){
+  if (isCommentNode(fNode.realNode)) { return ; }
+  
   fNode.children.forEach(child=>{
     if ( isTextChild(child) ) { child = trimTextChild(child); }
     

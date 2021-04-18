@@ -15,7 +15,10 @@ export default function Header(props, context){
   return (
     <h1 class={['part_Header', klass ]}> 
       { props.name }
+      <br />
       { '****************' }
+      <br />
+      { props.children }
     </h1>
   );
 }
