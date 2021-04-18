@@ -21,6 +21,7 @@ export default function(props, context){
     console.log( 'home onUnmount' );
   })
   
+  
   // let Header$ = VaryValue(Header);
   let Header$ = VaryValue(null);
   // let Header$ = VaryValue(Header);
@@ -43,7 +44,7 @@ export default function(props, context){
   })
       
       
-  let varyShowPart1 = VaryValue('block');
+  let varyShowPart1 = VaryValue(true);
   let style = {
     'color': 'red',
     'font-size': '20px',
@@ -79,9 +80,9 @@ export default function(props, context){
   let val = Header$.$$;
   // console.log( val, '=== ');
   let changeClickHandle = ()=>{
+    console.log( ' 1');
     varyInputVal.$$ = Date.now();
     
-    // varyShowPart1.$$ = 'block'
     if (Header$.$$===null) {
       Header$.$$ = Header;
     }
@@ -92,6 +93,11 @@ export default function(props, context){
       Header$.$$ = null;
     }
   }
+  let isShow$ = VaryValue(false);
+  let changeClickHandle1 = ()=>{
+    console.log( isShow$.$$ );
+    isShow$.$$ = !isShow$.$$;
+  }
   return (
     <PageA class={[ 'fe', isActive, 'dom', console.log(111) ]} 
       style={style} 
@@ -99,14 +105,16 @@ export default function(props, context){
       >
       
       <button onClick={changeClickHandle}> 切换元素 </button>
-      <div style={{display:varyShowPart1,}} onClick={()=>{varyShowPart1.$$='none';}}>
+      <button onClick={changeClickHandle1}> 是否显示1 </button>
+      <button onClick={()=>{ varyShowPart1.$$=!varyShowPart1.$$ }} > 是否显示2 </button>
+      <div varyShow={false}>
+        jsx能力
         <hr />
         { /* jsx能力 */ }
         
-        
       </div>
       
-      <div>
+      <div varyShow={isShow$}>
         { varyKeys$.a }
         { varyKeys$.b }
         { varyKeys$.c }

@@ -32,7 +32,7 @@ Features:
     xx$.xx.$$  [对象键值动态化] 
   vary标签
   vary属性
-    varyShow={bol} [to_do]
+    varyShow={bol} 
   vary子节点
     整个数组 
     单个子节点 

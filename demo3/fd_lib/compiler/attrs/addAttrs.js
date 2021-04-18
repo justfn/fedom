@@ -14,17 +14,24 @@ import {
 import {
   isCommentNode, 
 } from "../../utils/judge.js";
+import attrVaryShow from "../../featrues/varyValue/attrVaryShow.js";
 
 export default function addAttrs(fNode){
-  if (fNode.nodeType!==config.tag_types.origin) { 
+  let {
+    realNode, 
+    attrs, 
+    nodeType, 
+  } = fNode;
+  attrVaryShow(realNode, attrs);
+  if (nodeType!==config.tag_types.origin) { 
     componentAttrs(fNode); 
     return ; 
   }
-  if (isCommentNode(fNode.realNode)) { return ; }
+  if (isCommentNode(realNode)) { return ; }
   
   
-  for(let key in fNode.attrs){
-    const val = fNode.attrs[key];
+  for(let key in attrs){
+    const val = attrs[key];
     
     if (val===undefined || val===null) { val = ''; }
     
@@ -55,10 +62,10 @@ export default function addAttrs(fNode){
     }
     /* brance: other_key */
     try {
-      fNode.realNode.setAttribute(key, val);
+      realNode.setAttribute(key, val);
     } 
     catch (e) {
-      console.warn('# todo attrs other', fNode.realNode, key, val);
+      console.warn('# todo attrs other', realNode, key, val);
     } 
     
   };
