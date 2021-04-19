@@ -20,7 +20,7 @@ export default class Component {
   onUnmount(){ }
   // // 渲染-后 
   // onMounted(){}
-  
+  refs = {};
   /* --------------------------------------------------------- 工具方法 */
   utils = { }
   

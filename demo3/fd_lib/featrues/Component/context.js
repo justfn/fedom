@@ -31,6 +31,10 @@ export default function getContext(){
       div.innerHTML = htmlStr;
       return [...div.childNodes];
     },
+    // 
+    refs: {
+      // 
+    },
     // 路由跳转能力
     push: routerPush,
     replace: routerReplace,

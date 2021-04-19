@@ -58,7 +58,7 @@ export class FNode {
   // Vary,tag的壳 
   varyTag = null;
   tagName = '-';
-  // KW,fNode节点类型  'tag' | 'fn' | 'cls' 
+  // KW,fNode节点类型  
   nodeType = '-';
   // Node,fNode对应的真实节点 
   realNode = null;
