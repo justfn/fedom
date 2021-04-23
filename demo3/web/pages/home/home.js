@@ -8,6 +8,7 @@ import PartA from "../../parts/PartA/PartA.js";
 const {
   VaryValue, 
   VaryKeys,
+  RefValue,
 } = window.$fd
 
 let elDom = document.createElement("div")
@@ -20,6 +21,24 @@ export default function(props, context){
   context.onUnmount(()=>{
     console.log( 'home onUnmount' );
   })
+  
+  // context.plan('plnA').then(()=>{
+  // })
+  
+  let ref1 = RefValue();
+  let ref2 = RefValue();
+  
+  console.log( ref1 , 'ref1 ');
+  ref1.then((ctx)=>{
+    console.log(ctx, 'ctx1');
+  })
+  ref1.then((ctx)=>{
+    console.log(ctx, 'ctx2');
+  })
+  ref2.then((ctx)=>{
+    console.log(ctx, 'ctx3');
+  })
+  
   
   
   // let Header$ = VaryValue(Header);
@@ -99,7 +118,7 @@ export default function(props, context){
     isShow$.$$ = !isShow$.$$;
   }
   return (
-    <PageA class={[ 'fe', isActive, 'dom', console.log(111) ]} 
+    <PageA ref={ref1} class={[ 'fe', isActive, 'dom', console.log(111) ]} 
       style={style} 
       onClick={fn1}
       >
@@ -124,7 +143,7 @@ export default function(props, context){
       <hr />
       { /* Feature: 动态化-标签、组件 
         */ }
-      <Header$ isShowVary="123" class="bbbb"  >
+      <Header$  isShowVary="123" class="bbbb"  >
         123
       </Header$>
       

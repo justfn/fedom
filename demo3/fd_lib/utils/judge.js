@@ -4,6 +4,7 @@ import config from "../config/config.js";
 import message from "../config/message.js";
 import Component from "../featrues/Component/Component.js";
 import Vary from "../featrues/Vary/Vary.js";
+import Ref from "../featrues/ref/Ref.js";
 
 // export function isOrginTag(val){
 //   if (!isStringValue(val)) { return console.log(' # isOrginTag function error: arguments is not string '); }
@@ -64,6 +65,15 @@ export function isVary(val){
   
   let bol = val instanceof Vary;
   if (bol && isVary(val.get(false))) { throw message.errors.mutil_vary; }
+  
+  return bol;
+}
+/* 值是否为ref 
+*/
+export function isRefValue(val){
+  if (!val) { return false; }
+  
+  let bol = val instanceof Ref;
   
   return bol;
 }

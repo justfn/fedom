@@ -4,10 +4,13 @@ import config from "../../config/config.js";
 import { 
   isFunctionValue, 
   isStringValue, 
+  isRefValue, 
 } from "../../utils/judge.js";
 
 export default function componentAttrs(fNode){
   let refVal = fNode.attrs.ref;
+  if (!refVal) { return ; }
+  
   // 组件需将属性作为props传递，只处理 ref，不绑定到元素上 
   if ( isFunctionValue(refVal) ) { 
     refVal({
@@ -15,8 +18,19 @@ export default function componentAttrs(fNode){
       ...fNode.context, 
       ...fNode.instance, 
     })
+    return ;
   }
   
+  if (isRefValue(refVal)) {
+    refVal._resolve({
+      node: fNode.realNode,
+      ...fNode.context, 
+      ...fNode.instance, 
+    });
+    return ;
+  }
+  
+  console.log('todo: 不支持的 ref 类型', fNode.realNode, refVal);
   
   // // to_do
   // if ( isStringValue(refVal) ) {

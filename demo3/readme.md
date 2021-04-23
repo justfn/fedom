@@ -30,7 +30,7 @@ Features:
     xx$  
     xx$.$$   
     xx$.xx.$$  [对象键值动态化] 
-  vary标签
+  vary标签 [todo: 支持 RefValue ]
   vary属性
     varyShow={bol} 
   vary子节点
