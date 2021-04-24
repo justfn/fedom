@@ -2,7 +2,7 @@
 
 import message from "../../config/message.js";
 import {
-  isVary,
+  isVaryValue,
 } from "../../utils/judge.js";
 
 
@@ -32,7 +32,7 @@ export default class Vary {
     this._trimValueFn =  trimFn ?? (v=>v); // 整理成最终返回值 
     this._$$Trimed = this._trimValueFn(val);
     this.__$$TrimedNxt = symbol_1; // 缓存下一次格式化的值,避免多次执行'_trimValueFn'函数  
-    if (isVary(val)) {
+    if (isVaryValue(val)) {
       val.watch((preV,nxtV,preVTrimed,nxtVTrimed)=>{
         this.set((pre_v)=>{
           return val;

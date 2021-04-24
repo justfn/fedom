@@ -1,11 +1,11 @@
 
 import {
-  isVary,
+  isVaryValue,
 } from "../../utils/judge.js";
 
 
 export function varyAttrInputValue(fNode, varyVal){
-  if (!isVary(varyVal)) { return varyVal; }
+  if (!isVaryValue(varyVal)) { return varyVal; }
   
   let inputVal = varyVal.get(false);
   varyVal.add_set(({ nxtTrimedValue })=>{

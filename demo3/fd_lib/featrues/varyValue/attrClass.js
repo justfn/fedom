@@ -1,6 +1,6 @@
 
 import { 
-  isVary, 
+  isVaryValue, 
 } from "../../utils/judge.js";
 export function varyAttrClassStr(fNode, varyAttr){
   if (!varyAttr) { return ; }
@@ -18,7 +18,7 @@ export function varyAttrClassArr(fNode, varyAttr){
   console.log('todo ');
 } 
 export function varyAttrClassAitm(fNode, varyAttrItm){
-  if (!isVary(varyAttrItm)) { return varyAttrItm; }
+  if (!isVaryValue(varyAttrItm)) { return varyAttrItm; }
   
   let elem = fNode.realNode;
   let it = varyAttrItm.get(false);

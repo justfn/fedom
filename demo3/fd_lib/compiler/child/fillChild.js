@@ -10,7 +10,7 @@ import {
   textChild, 
 } from "./typedChild.js";
 import { 
-  isVary, 
+  isVaryValue, 
   isStringValue, 
   isNumberValue, 
   isArrayValue, 
@@ -36,7 +36,7 @@ export function fillChild( fNode, child, varyChild ) {
   if ( fNode.nodeType!==config.tag_types.origin ) { return ; }
   
   /* brance: vary */
-  if ( isVary(child) ) { 
+  if ( isVaryValue(child) ) { 
     if (varyChild) { throw message.errors.mutil_vary; };
     
     fillChild(fNode, child.get(false), child); 

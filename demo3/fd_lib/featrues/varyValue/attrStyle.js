@@ -1,6 +1,6 @@
 
 import {
-  isVary,
+  isVaryValue,
 } from "../../utils/judge.js";
 
 
@@ -18,7 +18,7 @@ export function varyAttrStyleObj(fNode, varyAttr){
   console.log('# todo');
 } 
 export function varyAttrStyleOval(fNode, styKey, varyAttrVal ){
-  if (!isVary(varyAttrVal)) { return varyAttrVal; }
+  if (!isVaryValue(varyAttrVal)) { return varyAttrVal; }
   
   let elem = fNode.realNode;
   let value = varyAttrVal.get(false);

@@ -1,7 +1,7 @@
 /* ** 控制组件/元素是否显示 */
 import { 
   isCommentNode, 
-  isVary, 
+  isVaryValue, 
 } from "../../utils/judge.js";
 
 const global_config = {
@@ -15,7 +15,7 @@ export default function varyAttrVaryShow(realNode, attrs){
   let attrVal = originAttrVal;
   let orginDisplay = realNode.style.display;
   if (orginDisplay==='none') { orginDisplay = ''; }
-  if (isVary(originAttrVal)) { 
+  if (isVaryValue(originAttrVal)) { 
     attrVal = attrVal.$$; 
     originAttrVal.add_set(({ preTrimedValue, nxtTrimedValue })=>{
       realNode.style.display = nxtTrimedValue ? orginDisplay : 'none';

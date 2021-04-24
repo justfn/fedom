@@ -12,7 +12,7 @@ if (!window.$fd) {  window.$fd = {
   VaryValue: null,
   Component: null, 
   utils: {
-    isVary: null,
+    isVaryValue: null,
     isComponent: null, 
   },
   elems: {

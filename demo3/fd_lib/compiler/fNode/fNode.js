@@ -6,7 +6,7 @@ import getContext from "../../featrues/Component/context.js";
 import { updateActiveComponentFNodes, } from "../../router/router.js";
 import { 
   isComponent, 
-  isVary, 
+  isVaryValue, 
   isFunctionValue, 
   isStringValue, 
   isNullValue, 
@@ -20,7 +20,7 @@ import {
 // Output: nodeType str,节点类型 
 */
 export function getRealTagTypes(tagName){
-  if (isVary(tagName)) { return getRealTagTypes(tagName.get(false)); }
+  if (isVaryValue(tagName)) { return getRealTagTypes(tagName.get(false)); }
   if (isComponent(tagName)) { return config.tag_types.component; }
   if (isFunctionValue(tagName)) { return config.tag_types.function; }
   if (isStringValue(tagName) || isNullValue(tagName) ) { return config.tag_types.origin; }
@@ -78,7 +78,7 @@ export class FNode {
 /* ** 创建 FNode 
 */
 export default function createFNode({ varyTag, tagName, attrs, children }){
-  if (isVary(tagName)) { 
+  if (isVaryValue(tagName)) { 
     if (varyTag) { throw message.errors.mutil_vary; }
     
     return createFNode({

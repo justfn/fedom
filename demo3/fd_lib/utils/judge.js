@@ -60,11 +60,11 @@ export function isFDComponent(val){
 } 
 /* 值是否为可变量对象值 
 */
-export function isVary(val){
+export function isVaryValue(val){
   if (!val) { return false; }
   
   let bol = val instanceof Vary;
-  if (bol && isVary(val.get(false))) { throw message.errors.mutil_vary; }
+  if (bol && isVaryValue(val.get(false))) { throw message.errors.mutil_vary; }
   
   return bol;
 }

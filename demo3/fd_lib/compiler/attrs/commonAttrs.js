@@ -13,15 +13,16 @@ import {
   varyAttrStyleOval,
 } from "../../featrues/varyValue/attrStyle.js";
 import { 
-  isVary,
+  isVaryValue,
   isStringValue, 
   isMapValue, 
   isFunctionValue,
   isArrayValue, 
+  isRefValue, 
 } from "../../utils/judge.js";
 
 export function addClassAttr(fNode, value, varyAttr){
-  if (isVary(value)) {
+  if (isVaryValue(value)) {
     if (varyAttr) { throw message.errors.mutil_vary; }
     
     addClassAttr(fNode, value.get(false), value);
@@ -63,7 +64,7 @@ export function addClassAttr(fNode, value, varyAttr){
 } 
 
 export function addStyleAttr(fNode, value, varyAttr){
-  if (isVary(value)) {
+  if (isVaryValue(value)) {
     if (varyAttr) { throw message.errors.mutil_vary; }
     
     addStyleAttr(fNode, value.get(false), value);
@@ -109,10 +110,17 @@ export function addEventAttr(fNode, evtName, listener){
   
 } 
 
-export function addRefAttr(fNode, callback ){
-  if ( !isFunctionValue(callback) ) { return ; }
+export function addRefAttr(fNode, value ){
+  if ( isFunctionValue(value) ) { 
+    value(fNode.realNode);
+    return ; 
+  }
   
-  callback(fNode.realNode);
+  if (isRefValue(value)) {
+    isRefValue._resolve(fNode.realNode);
+  }
+  
+  
 } 
 
 
