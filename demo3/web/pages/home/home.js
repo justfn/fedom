@@ -27,16 +27,20 @@ export default function(props, context){
   
   let ref1 = RefValue();
   let ref2 = RefValue();
+  let ref3 = RefValue();
   
-  console.log( ref1 , 'ref1 ');
   ref1.then((ctx)=>{
-    console.log(ctx, 'ctx1');
+    console.log(ctx, 'ref1');
   })
   ref1.then((ctx)=>{
-    console.log(ctx, 'ctx2');
+    console.log(ctx, 'ref1');
   })
   ref2.then((ctx)=>{
-    console.log(ctx, 'ctx3');
+    console.log(ctx, 'ref2');
+  })
+  ref3.then((ctx)=>{
+    console.log(ctx, 'ref3');
+    ctx.methods.alert();
   })
   
   
@@ -133,7 +137,7 @@ export default function(props, context){
         
       </div>
       
-      <div varyShow={isShow$}>
+      <div varyShow={isShow$} ref={ref2}>
         { varyKeys$.a }
         { varyKeys$.b }
         { varyKeys$.c }
@@ -143,7 +147,7 @@ export default function(props, context){
       <hr />
       { /* Feature: 动态化-标签、组件 
         */ }
-      <Header$  isShowVary="123" class="bbbb"  >
+      <Header$  isShowVary="123" class="bbbb" ref={ref3}  name="header-component" >
         123
       </Header$>
       

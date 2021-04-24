@@ -12,6 +12,14 @@ export default function Header(props, context){
   context.onUnmount((...args)=>{
     console.log( ' Header unmount ', args);
   })
+  
+  context.methods = {
+    alert(){
+      alert('header alert!')
+    }
+  }
+  
+  
   return (
     <h1 class={['part_Header', klass ]}> 
       { props.name }

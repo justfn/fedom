@@ -21,6 +21,20 @@ import {
   isRefValue, 
 } from "../../utils/judge.js";
 
+export function addRefAttr(fNode, value ){
+  if (isRefValue(value)) {
+    value._resolve(fNode.realNode);
+    return ;
+  }
+  
+  if ( isFunctionValue(value) ) { 
+    value(fNode.realNode);
+    return ; 
+  }
+  
+  
+} 
+
 export function addClassAttr(fNode, value, varyAttr){
   if (isVaryValue(value)) {
     if (varyAttr) { throw message.errors.mutil_vary; }
@@ -107,19 +121,6 @@ export function addEventAttr(fNode, evtName, listener){
   fNode.realNode.addEventListener(evtName, (evt)=>{
     return listener(evt);
   })
-  
-} 
-
-export function addRefAttr(fNode, value ){
-  if ( isFunctionValue(value) ) { 
-    value(fNode.realNode);
-    return ; 
-  }
-  
-  if (isRefValue(value)) {
-    isRefValue._resolve(fNode.realNode);
-  }
-  
   
 } 
 

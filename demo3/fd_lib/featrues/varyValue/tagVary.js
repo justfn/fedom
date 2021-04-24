@@ -5,6 +5,7 @@ import cpntRender from "../../featrues/Component/cpntRender.js";
 import cpntUpdate from "../../featrues/Component/cpntUpdate.js";
 import { removeComponentRun, } from "../../featrues/lifecycle/onUnmount.js";
 import getContext from "../Component/context.js";
+import componentAttrs from "../../compiler/attrs/componentAttrs.js";
 import { 
   isComponent, 
   isBooleanValue, 
@@ -91,6 +92,7 @@ export default function varyTagName(fNode){
       nxt_node = renderNode;
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;
+      componentAttrs(fNode);
       return ;
       // {
       //   next_value: nxtTrimedValue,
@@ -106,6 +108,7 @@ export default function varyTagName(fNode){
       nxt_node = nxtTrimedValue(props, context)
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;
+      componentAttrs(fNode);
       return ;
       // {
       //   next_value: nxtTrimedValue,
@@ -114,7 +117,7 @@ export default function varyTagName(fNode){
     }
     
     
-    console.warn( nxtTrimedValue );
+    console.warn('动态标签: ', nxtTrimedValue );
     throw message.errors.unsuport_vary_tag;
   })
 } 

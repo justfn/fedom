@@ -30,7 +30,7 @@ Features:
     xx$  
     xx$.$$   
     xx$.xx.$$  [对象键值动态化] 
-  vary标签 [todo: 支持 RefValue ]
+  vary标签 
   vary属性
     varyShow={bol} 
   vary子节点
@@ -38,7 +38,9 @@ Features:
     单个子节点 
     文本内容 
   component 
+    ref={<RefValue>} 异步执行  
     ref 回调函数形式 
+    不支持string_ref 
   router 
     缓存 
     页面级组件 context 中添加 router 和 route 
@@ -46,7 +48,6 @@ Features:
 todo: 
   写框架文档 
   编译空间 
-    ref 字符串形式支持 
     data-scope_id="xx" 
   表单支持 
   css 模块化 
