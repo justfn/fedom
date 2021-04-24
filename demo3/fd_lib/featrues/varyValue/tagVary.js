@@ -1,6 +1,8 @@
 
 import message from "../../config/message.js";
+import createFNode from "../../compiler/fNode/fNode.js";
 import addAttrs from "../../compiler/attrs/addAttrs.js";
+import fillChildren from "../../compiler/child/fillChild.js";
 import cpntRender from "../../featrues/Component/cpntRender.js";
 import cpntUpdate from "../../featrues/Component/cpntUpdate.js";
 import { removeComponentRun, } from "../../featrues/lifecycle/onUnmount.js";
@@ -22,13 +24,15 @@ export default function varyTagName(fNode){
   
   let {
     realNode, 
+    attrs, 
     props, 
+    children, 
   } = fNode;
   let pNode = realNode.parentNode;
   let pre_node = realNode; 
   let pre_node_removed = null;
-  let pre_node_style_display = 'auto';
-  if (pre_node.style) { pre_node_style_display = pre_node.style.display; };
+  // let pre_node_style_display = 'auto';
+  // if (pre_node.style) { pre_node_style_display = pre_node.style.display; };
   let nxt_node = null;
   varyTag.add_set( ({nxtTrimedValue})=>{
     pNode = pNode ?? pre_node.parentNode;
@@ -38,18 +42,15 @@ export default function varyTagName(fNode){
     null   删除元素 
     */
     
-    // Features: 设值为true/false 显示/隐藏该节点 
-    // if ( isBooleanValue(nxtTrimedValue) ) {
-    //   let display = nxtTrimedValue ? pre_node_style_display : 'none';
-    //   pre_node.style.display = display; 
-    //   return ;
-    //   // {
-    //   //   next_value: pre_node,
-    //   // };
-    // }
+    // Features: 设值为true 回显原节点内容 
+    if ( nxtTrimedValue===true ) {
+      pNode.replaceChild(pre_node_removed, pre_node);
+      pre_node = pre_node_removed;
+      return ;
+    }
     
     // Features: null 删除该节点 
-    if (isEmptyValue(nxtTrimedValue)) {
+    if ( isEmptyValue(nxtTrimedValue) ) {
       removeComponentRun(fNode); 
       cpntUpdate(fNode, null, null);
       nxt_node = document.createComment("fedom vary tag and remove")
@@ -66,13 +67,19 @@ export default function varyTagName(fNode){
     if ( isStringValue(nxtTrimedValue) ) {
       removeComponentRun(fNode); 
       cpntUpdate(fNode, null, null);
-      nxt_node = document.createElement(nxtTrimedValue);
-      addAttrs(fNode);
-      // to_do: 待优化 
-      Array.prototype.forEach.call( [...pre_node.childNodes], (itm)=>{
-        nxt_node.appendChild(itm);
-      })
+      
+      let newFNode = createFNode({
+        varyTag: null, 
+        tagName: nxtTrimedValue,
+        attrs, 
+        children,
+      });
+      addAttrs( newFNode );
+      fillChildren(newFNode);
+      let nxt_node = newFNode.realNode;
+      console.log( ' ++++ ', nxt_node,  pre_node);
       pNode.replaceChild(nxt_node, pre_node);
+      
       pre_node = nxt_node;
       return ;
       // {
@@ -84,6 +91,7 @@ export default function varyTagName(fNode){
     // Features: 替换为组件 
     if (isComponent(nxtTrimedValue)) {
       removeComponentRun(fNode); 
+      // todo: 待优化为 createFNode 
       let {
         instance,
         renderNode,
@@ -103,6 +111,7 @@ export default function varyTagName(fNode){
     // Features: 替换为组件 
     if ( isFunctionValue(nxtTrimedValue) ) {
       removeComponentRun(fNode); 
+      // todo: 待优化为 createFNode 
       let context = getContext();
       cpntUpdate(fNode, context, null);
       nxt_node = nxtTrimedValue(props, context)

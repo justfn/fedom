@@ -17,8 +17,10 @@ export default function Section(props, context){
   let showFn = ()=>{
     // ContentWrap$.$$ = !ContentWrap$.$$
     ContentWrap$.set((pre, preTrim)=>{
-      console.log( pre, preTrim );
-      return pre ? null : 'div';
+      // console.log( pre, preTrim );
+      let result = pre ? null : 'section';
+      console.log( result );
+      return result; 
       // return 'span';
     })
   }

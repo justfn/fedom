@@ -38,9 +38,12 @@ Features:
     单个子节点 
     文本内容 
   component 
-    ref={<RefValue>} 异步执行  
-    ref 回调函数形式 
-    不支持string_ref 
+    ref
+      ref={<RefValue>} 异步执行  
+      ref 回调函数形式 
+      不支持string_ref 
+    render 
+      render_  ->  render 
   router 
     缓存 
     页面级组件 context 中添加 router 和 route 
