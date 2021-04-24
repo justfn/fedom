@@ -7,17 +7,18 @@ const {
 
 
 export default function Section(props, context){
-  let contentWrap$ = VaryValue('div');
-  let isRotate$ = VaryValue(contentWrap$, (vv)=>{
+  let ContentWrap$ = VaryValue('div');
+  let isRotate$ = VaryValue(ContentWrap$, (vv)=>{
     let v = vv.$$;
     if (!!v) { return ''; }
     
     return 'rolate';
   });
   let showFn = ()=>{
-    // contentWrap$.$$ = !contentWrap$.$$
-    contentWrap$.set((pre,preTrim)=>{
-      console.log( pre, preT );
+    // ContentWrap$.$$ = !ContentWrap$.$$
+    ContentWrap$.set((pre, preTrim)=>{
+      console.log( pre, preTrim );
+      return pre ? null : 'div';
       // return 'span';
     })
   }
@@ -29,9 +30,9 @@ export default function Section(props, context){
         <div class="ps_lft"> {props.title} </div>
         <div class={["ps_rit", isRotate$]}> ▼ </div>
       </h1>
-      <contentWrap$ class={['ps_wrap']}>
+      <ContentWrap$ class={['ps_wrap']}>
         { props.children }
-      </contentWrap$>
+      </ContentWrap$>
       
     </section>
   );

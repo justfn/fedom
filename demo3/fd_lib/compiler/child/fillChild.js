@@ -51,7 +51,7 @@ export function fillChild( fNode, child, varyChild ) {
   if ( isArrayValue(child) ) { 
     if (child.length===0) {
       patchNode = document.createComment("fedom: empty array child for position");
-      fNode.appendChild(patchNode);
+      fillChild(fNode, patchNode, null);
     }
     else {
       child.forEach((cldItm,idx)=>{

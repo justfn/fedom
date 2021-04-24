@@ -15,7 +15,7 @@ attrs     null|{ key:str | key:obj | key:arr | key:vary  }
 children  [ str|elem|arr|vary ] 
 */
 export default function compiler(tagName, attrs, ...children){
-  // console.log('##### compiler ');
+  // console.log('##### compiler 1', tagName);
   attrs = attrs ?? {};
   _order_num++;
   
@@ -40,6 +40,7 @@ export default function compiler(tagName, attrs, ...children){
   addAttrs( fNode );
   fillChildren( fNode );
   
+  // console.log('##### compiler 2', fNode);
   return fNode.realNode;
 }
 
