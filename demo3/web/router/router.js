@@ -53,7 +53,23 @@ const routes_ = [
       },
     ],
   },
+  // 仿造react官网 
+  {
+    path: '/dosLikeReact',
+    redirect: '/dosLikeReact/home',  // 
+    isCache: true, // bol|fn,是否缓存 
+    children: [
+      {
+        path: '/home',
+        isCache: true, // bol|fn,是否缓存 
+        component: ()=>import('../pages/dosLikeReact/home/home.js'),
+      },
+    ],
+  },
+  
 ]
+
+
 
 const options = {
   routes: routes_,

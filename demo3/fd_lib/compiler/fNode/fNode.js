@@ -77,7 +77,8 @@ export class FNode {
 
 /* ** 创建 FNode 
 */
-export default function createFNode({ varyTag, tagName, attrs, children }){
+let scope_id = 0;
+export default function createFNode({ varyTag, tagName, attrs, children, scope, }){
   if (isVaryValue(tagName)) { 
     if (varyTag) { throw message.errors.mutil_vary; }
     
@@ -116,6 +117,13 @@ export default function createFNode({ varyTag, tagName, attrs, children }){
     // 注意：此处又将调用 compiler 
     let context = getContext();
     let realNode = tagName(props, context);
+    // if (context.scopeId!==undefined) {
+    //   scope.id = context.scopeId;
+    // }
+    // else {
+    //   scope_id++;
+    //   scope.id = 'scope_id-'+scope_id;
+    // }
     
     fNode = new FNode({
       varyTag,
