@@ -66,6 +66,19 @@ const routes_ = [
       },
     ],
   },
+  // 个人简历  
+  {
+    path: '/resume',
+    redirect: '/resume/home',  // 
+    isCache: true, // bol|fn,是否缓存 
+    children: [
+      {
+        path: '/home',
+        isCache: true, // bol|fn,是否缓存 
+        component: ()=>import('../pages/resume/home/home.js'),
+      },
+    ],
+  },
   
 ]
 
