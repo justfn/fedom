@@ -1,6 +1,7 @@
 
 
 import message from "../../config/message.js";
+import diffValue from "../../utils/diffValue.js";
 import {
   isVaryValue,
 } from "../../utils/judge.js";
@@ -62,12 +63,16 @@ export default class Vary {
     let pre_v_t = this.get(false);
     let nxt_v = null;
     if (!isLazy) { 
+      // todo; diff value 
       this._sets.forEach(setFn=>{ 
         nxt_v = setFn(setHandle, isLazy).nextValue; 
       });
     }
     else {
       nxt_v = setHandle(pre_v, pre_v_t); 
+      // diff nxt_v pre_v 
+      if (diffValue(pre_v, nxt_v)) { return ; }
+      
       if (nxt_v===undefined) { nxt_v = pre_v }
       this.__$$TrimedNxt = this._trimValueFn(nxt_v);
       this._sets.forEach(setFn=>{ 
@@ -105,7 +110,7 @@ export default class Vary {
     };
   }
   
-  /* --------------------------------------------------------- 工具方法  */
+  /* --------------------------------------------------------- 方法  */
   // 收集更新 
   add_set = (setRun, extra)=>{
     this._sets.push((setHandle, isLazy)=>{

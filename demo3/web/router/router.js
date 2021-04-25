@@ -51,6 +51,10 @@ const routes_ = [
         path: 'home',
         component: ()=>import('../pages/test/testHome/testHome.js'),
       },
+      {
+        path: 'chooseList',
+        component: ()=>import('../pages/test/chooseList/chooseList.js'),
+      },
     ],
   },
   // 仿造react官网 

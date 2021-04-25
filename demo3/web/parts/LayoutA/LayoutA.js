@@ -9,7 +9,7 @@ export default function LayoutA(props, context){
   
   
   return (
-    <section class={['PageA', ...klass]}>
+    <section class={['PageA', klass]}>
       { props.children }
       
       <FloatCatalog />
