@@ -11,9 +11,21 @@ export function isFormNode(fNode){
   return ['input'].includes(nodeName);
 };
 export function addFormAttrs(fNode, key, val){
-  if (fNode.realNode.nodeName.toLowerCase()!=='input' || key!=='value') { return ; }   
+  if (fNode.realNode.nodeName.toLowerCase()!=='input') { 
+    console.log('not input node');
+    return ; 
+  }   
   
-  inputValueAttr(fNode,key,val);
+  if (key==='value') {
+    inputValueAttr(fNode, key, val);
+    return ;
+  }
+  
+  if (key==='placeholder') {
+    inputPlaceholderAttr(fNode, key, val);
+    return ;
+  }
+  
 } 
 // 处理 input value 
 export function inputValueAttr(fNode, key, val ){
@@ -25,6 +37,17 @@ export function inputValueAttr(fNode, key, val ){
   inputVal = varyAttrInputValue(fNode, val);
   
   fNode.realNode.setAttribute("value",inputVal)
+} 
+// 处理 input placeholder 
+export function inputPlaceholderAttr(fNode, key, val ){
+  
+  let inputVal = val;
+  
+  /* Features: 
+  */
+  // inputVal = xxx(fNode, val);
+  
+  fNode.realNode.setAttribute("placeholder", inputVal)
 } 
 
 

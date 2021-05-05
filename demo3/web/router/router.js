@@ -39,6 +39,10 @@ const routes_ = [
         path: 'TicTacToe',
         component: ()=>import('../pages/apps/TicTacToe/TicTacToe.js'),
       },
+      {
+        path: 'TodoList',
+        component: ()=>import('../pages/apps/TodoList/todoList.js'),
+      },
     ],
   },
   // 其他测试点

@@ -22,7 +22,15 @@ import {
 
 
 export default function fillChildren(fNode){
-  if (isCommentNode(fNode.realNode)) { return ; }
+  if (isCommentNode(fNode.realNode)) { 
+    // console.log( fNode.realNode, ' todo 1 ');
+    return ; 
+  }
+  
+  if ( fNode.children.length===0 ) {
+    // console.log( fNode.realNode, ' todo 2');
+    return ;
+  }
   
   fNode.children.forEach(child=>{
     if ( isTextChild(child) ) { child = trimTextChild(child); }
