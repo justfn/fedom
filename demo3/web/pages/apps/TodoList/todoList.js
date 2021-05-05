@@ -9,11 +9,19 @@ const {
 export default function TodoList(props, context){
   
   const inputVal$ = VaryValue('');
-  const todoList$ = VaryValue([1], (v)=>{
-    console.log( v , 'v ');
-    // return v;
-    return <div>{ v }</div>;
+  const todoList$ = VaryValue([], (list)=>{
+    console.log( list , 'list ');
+    return list;
+    // return list.map((itm,idx)=>{
+    //   return <div> { itm }</div>
+    // });
+    // return <div>{ list }</div>;
   });
+  const list1 = [
+    // 1,
+    // 2,
+    4, 
+  ]
   
   const evts = {
     click: (evt)=>{
@@ -38,8 +46,12 @@ export default function TodoList(props, context){
       </div>
       
       <div class="part2">
+        { todoList$ }
       </div>
-      { todoList$ }
+      
+      <div> 
+      </div>
+      { list1 } 
       
     </div>
   );

@@ -54,14 +54,13 @@ export function fillChild( fNode, child, varyChild ) {
   
   // console.log('P:  ', fNode.realNode);
   // console.log('C:  ', child);
-  let patchNode = null;
+  let textPatchNode = null;
+  let arrayStartPatchNode = null; 
   /* brance: arr */
   if ( isArrayValue(child) ) { 
-    if (child.length===0) {
-      patchNode = document.createComment("fedom: empty array child for position");
-      fillChild(fNode, patchNode, null);
-    }
-    else {
+    arrayStartPatchNode = document.createComment("fedom: start of array child for position");
+    nodeChild(fNode, arrayStartPatchNode);
+    if (child.length>0) {
       child.forEach((cldItm,idx)=>{
         fillChild(fNode, cldItm, null);
       })
@@ -70,7 +69,7 @@ export function fillChild( fNode, child, varyChild ) {
   /* Result: text child */
   else if ( isTextChild(child) ) {
     child = trimTextChild(child);
-    patchNode = textChild(fNode, child);
+    textPatchNode = textChild(fNode, child);
   }
   /* Result: node */
   else if ( isNodeValue(child) ) { 
@@ -84,7 +83,7 @@ export function fillChild( fNode, child, varyChild ) {
   
   /* ** Features: 
   */
-  childValVary(fNode, child, varyChild, patchNode);
+  childValVary(fNode, child, varyChild, textPatchNode);
 }
 
 

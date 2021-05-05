@@ -12,7 +12,7 @@ import {
 
 /* 子节点可变 
 */
-export default function childValVary(pNode, child, varyChild, patchNode ){
+export default function childValVary(fNode, child, varyChild, patchNode ){
   if (!varyChild) { return ; }
   
   /* ** 补偿更新Node节点  
