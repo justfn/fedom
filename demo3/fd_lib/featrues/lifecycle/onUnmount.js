@@ -38,7 +38,17 @@ onHashChange((evt, option)=>{
   })
 })
 
-
+window.addEventListener("beforeunload", (evt)=>{
+  let list = getActiveComponentFNodes();
+  console.log(' ====================================== ', list );
+  list.forEach(fNd=>{
+    removeComponentRun(fNd, {
+      event: evt, 
+    }); 
+  })
+  
+  
+})
 
 
 

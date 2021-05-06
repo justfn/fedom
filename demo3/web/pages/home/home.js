@@ -20,6 +20,8 @@ export default function(props, context){
   })
   context.onUnmount(()=>{
     console.log( 'home onUnmount' );
+    alert(' onUnmount  ');
+    sessionStorage.aaa = Date.now(); 
   })
   
   // context.plan('plnA').then(()=>{
