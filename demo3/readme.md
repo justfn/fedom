@@ -34,7 +34,7 @@ Features:
   vary属性
     varyShow={bol} 
   vary子节点
-    整个数组 [todo: ]
+    整个数组 
     单个子节点 
     文本内容 
   component 
