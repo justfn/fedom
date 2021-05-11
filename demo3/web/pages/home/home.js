@@ -20,7 +20,7 @@ export default function(props, context){
   })
   context.onUnmount(()=>{
     console.log( 'home onUnmount' );
-    alert(' onUnmount  ');
+    // alert(' onUnmount  ');
     sessionStorage.aaa = Date.now(); 
   })
   

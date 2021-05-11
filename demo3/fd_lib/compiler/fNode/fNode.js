@@ -5,7 +5,7 @@ import cpntRender from "../../featrues/Component/cpntRender.js";
 import getContext from "../../featrues/Component/context.js";
 import { updateActiveComponentFNodes, } from "../../router/router.js";
 import { 
-  isComponent, 
+  isComponentValue, 
   isVaryValue, 
   isFunctionValue, 
   isStringValue, 
@@ -21,7 +21,7 @@ import {
 */
 export function getRealTagTypes(tagName){
   if (isVaryValue(tagName)) { return getRealTagTypes(tagName.get(false)); }
-  if (isComponent(tagName)) { return config.tag_types.component; }
+  if (isComponentValue(tagName)) { return config.tag_types.component; }
   if (isFunctionValue(tagName)) { return config.tag_types.function; }
   if (isStringValue(tagName) || isNullValue(tagName) ) { return config.tag_types.origin; }
   
@@ -96,7 +96,7 @@ export default function createFNode({ varyTag, tagName, attrs, children, scope, 
   }
   let fNode = null;
   /* output 1: class */
-  if (isComponent(tagName)) {
+  if (isComponentValue(tagName)) {
     // 注意：此处又将调用 compiler 
     let {
       instance,
@@ -150,7 +150,7 @@ export default function createFNode({ varyTag, tagName, attrs, children, scope, 
     fNode = new FNode({
       varyTag,
       tagName, 
-      realNode: document.createComment("fedom empty: "),
+      realNode: document.createComment("fedom empty: null tagName"),
       attrs, 
       children, 
     });

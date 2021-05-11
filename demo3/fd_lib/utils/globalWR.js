@@ -13,7 +13,7 @@ if (!window.$fd) {  window.$fd = {
   Component: null, 
   utils: {
     isVaryValue: null,
-    isComponent: null, 
+    isComponentValue: null, 
   },
   elems: {
     root: null,
@@ -21,7 +21,7 @@ if (!window.$fd) {  window.$fd = {
 };}
 
 export function globalWrite(keys,val){
-  if (!keys) { return log('#warn: injectGlobal keys不存在'); }
+  if (!keys) { return fd_dev_log('#warn: injectGlobal keys不存在'); }
   
   let keyArr = keys.split('.');
   let current = window.$fd;
@@ -33,7 +33,7 @@ export function globalWrite(keys,val){
   })
 } 
 export function globalRead(keys){
-  if (!keys) { return log('#warn getGlobal keys不存在!'); }
+  if (!keys) { return fd_dev_log('#warn getGlobal keys不存在!'); }
   
   let keyArrs = keys.split('.');
   let result = window.$fd;

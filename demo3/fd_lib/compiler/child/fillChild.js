@@ -16,24 +16,21 @@ import {
   isArrayValue, 
   isNodeValue, 
   isEmptyValue,  
-  isTextChild,  
+  isTextValue,  
   isCommentNode,  
 } from "../../utils/judge.js";
 
 
 export default function fillChildren(fNode){
-  if (isCommentNode(fNode.realNode)) { 
-    // console.log( fNode.realNode, ' todo 1 ');
-    return ; 
-  }
+  // 注释节点 
+  if (isCommentNode(fNode.realNode)) { return; fd_dev_log('fedom: 注释节点不处理子节点', fNode); }
   
-  if ( fNode.children.length===0 ) {
-    // console.log( fNode.realNode, ' todo 2');
-    return ;
-  }
+  // 无子节点 
+  if ( fNode.children.length===0 ) { return; fd_dev_log('fedom: 无子节点', fNode); }
   
+  // 处理子节点 
   fNode.children.forEach(child=>{
-    if ( isTextChild(child) ) { child = trimTextChild(child); }
+    if ( isTextValue(child) ) { child = trimTextChild(child); }
     
     fillChild(fNode, child, null);
   })
@@ -55,11 +52,12 @@ export function fillChild( fNode, child, varyChild ) {
   // console.log('P:  ', fNode.realNode);
   // console.log('C:  ', child);
   let textPatchNode = null;
-  let arrayStartPatchNode = null; 
+  let arrPathcNode = null; 
   /* brance: arr */
   if ( isArrayValue(child) ) { 
-    arrayStartPatchNode = document.createComment("fedom: start of array child for position");
-    nodeChild(fNode, arrayStartPatchNode);
+    // 数组子节点,标记起始位置,便于后续更新
+    arrPathcNode = document.createComment("fedom: start of array child for position");
+    nodeChild(fNode, arrPathcNode);
     if (child.length>0) {
       child.forEach((cldItm,idx)=>{
         fillChild(fNode, cldItm, null);
@@ -67,7 +65,7 @@ export function fillChild( fNode, child, varyChild ) {
     }
   }
   /* Result: text child */
-  else if ( isTextChild(child) ) {
+  else if ( isTextValue(child) ) {
     child = trimTextChild(child);
     textPatchNode = textChild(fNode, child);
   }
@@ -83,7 +81,13 @@ export function fillChild( fNode, child, varyChild ) {
   
   /* ** Features: 
   */
-  childValVary(fNode, child, varyChild, textPatchNode);
+  childValVary({
+    fNode, 
+    child, 
+    varyChild, 
+    textPatchNode,
+    arrPathcNode,
+  });
 }
 
 

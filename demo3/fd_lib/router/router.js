@@ -84,7 +84,7 @@ export default class Router {
     // 不允许跳转 
     let isGo = this._beforeEach(oldPathParams, newPathParams) ?? true;
     if (!isGo) { 
-      log('不允许访问');
+      fd_dev_log('不允许访问');
       routerReplace(oldPathParams.path, oldPathParams.query);
       return ; 
     }
@@ -103,7 +103,7 @@ export default class Router {
       let isExit = [ ...this._root.childNodes ].some( itm=>itm===cachedPageNode )
       // 不重复渲染相同DOM 
       if (isExit) { 
-        log('cache page: 不重复渲染相同DOM ');
+        fd_dev_log('cache page: 不重复渲染相同DOM ');
         return; 
       }
       

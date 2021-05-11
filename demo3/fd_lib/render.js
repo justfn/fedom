@@ -4,7 +4,7 @@ import trimTextChild from "./compiler/child/trimTextChild.js";
 import { 
   isArrayValue,
   isNodeValue,
-  isTextChild,
+  isTextValue,
 } from "./utils/judge.js";
 
 export default function render(nodes, appRootWrap){
@@ -14,7 +14,7 @@ export default function render(nodes, appRootWrap){
     return ;
   }
   
-  if ( isTextChild(nodes) ) {
+  if ( isTextValue(nodes) ) {
     nodes = trimTextChild(nodes);
     nodes = document.createTextNode(nodes);
   }

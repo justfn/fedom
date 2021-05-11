@@ -10,12 +10,11 @@ export default function TodoList(props, context){
   
   const inputVal$ = VaryValue('');
   const todoList$ = VaryValue([], (list)=>{
-    console.log( list , 'list ');
     return list;
-    // return list.map((itm,idx)=>{
-    //   return <div> { itm }</div>
-    // });
-    // return <div>{ list }</div>;
+    return list.map((itm,idx)=>{
+      return <div> { itm }</div>
+    });
+    return <div>{ list }</div>;
   });
   const list1 = [
     // 1,

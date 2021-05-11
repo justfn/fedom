@@ -1,7 +1,7 @@
 /* ** 开发用的功能  
 */
 
-window.log = (...args)=>{
-  console.log('#dev ', ...args);
+window.fd_dev_log = (...args)=>{
+  console.log('#fedom_dev_tip:', ...args);
 }
 

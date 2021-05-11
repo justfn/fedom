@@ -6,13 +6,20 @@ import {
   isNumberValue, 
   isNodeValue, 
   isArrayValue, 
-  isTextChild, 
+  isTextValue, 
 } from "../../utils/judge.js";
 
 
 /* 子节点可变 
 */
-export default function childValVary(fNode, child, varyChild, patchNode ){
+export default function childValVary(params={}){
+  let {
+    fNode, 
+    child, 
+    varyChild, 
+    textPatchNode, 
+    arrPathcNode, 
+  } = params; 
   if (!varyChild) { return ; }
   
   /* ** 补偿更新Node节点  
@@ -20,76 +27,187 @@ export default function childValVary(fNode, child, varyChild, patchNode ){
   需在首次渲染后,将文本节点进行补偿替换 
   2 空数组子节点首次渲染时,将无实体节点插入,使用注释节点占位,该注释节点作为补偿节点存储 
   */
-  let patch_node = patchNode; // 缓存补偿的节点 
   varyChild.mounted_run(child);
   varyChild.add_set(({ preTrimedValue, nxtTrimedValue })=>{
-    let pre_val = patch_node || preTrimedValue;
-    if ( isNodeValue(pre_val) ) {
-      patch_node = updateNode(pre_val.parentNode, nxtTrimedValue, pre_val, null).patchNode;
-    }
-    else if ( isArrayValue(pre_val) ) {
-      if ( pre_val.length > 0 ) {
-        let pNode = pre_val[0].parentNode;
-        let flgCommentNode = document.createComment("fedom array children removed")
-        // to_do 待优化: 移除旧元素  
-        pre_val.forEach((itm,idx)=>{
-          if (idx===0) { pNode.replaceChild(flgCommentNode,itm) }
-          else { pNode.removeChild(itm); }
-        })
-        patch_node = updateNode(pNode, nxtTrimedValue, flgCommentNode, null).patchNode;
-      }
-      // to_do 空数组处理 
-      else { patch_node = updateNode(pNode, nxtTrimedValue, patchNode, null).patchNode; }
-    }
-    else {
-      console.log('### to_do: childVary');
-      console.log('patch_node', patch_node);
-      console.log('preTrimedValue', preTrimedValue);
-      console.log('pNode', pNode);
-      console.log('child', child);
+    if ( isArrayValue(preTrimedValue) ) {
+      const patchObj = updateListChild({
+        listChild: preTrimedValue, 
+        startFlgNode: arrPathcNode, 
+        newChild: nxtTrimedValue,
+      })
+      textPatchNode = patchObj.txtPatch;
+      arrPathcNode = patchObj.arrPatch;
+      return ;
     }
     
-    return { };
+    if ( isTextValue(preTrimedValue) ) {
+      const patchObj = updateListChild({
+        textFlgChild: textPatchNode, 
+        newChild: nxtTrimedValue,
+      })
+      textPatchNode = patchObj.txtPatch;
+      arrPathcNode = patchObj.arrPatch;
+      return ;
+    }
+    
+    if ( isNodeValue(preTrimedValue) ) {
+      const patchObj = updateNodeChild({
+        nodeChild: preTrimedValue, 
+        newChild: nxtTrimedValue,
+      })
+      textPatchNode = patchObj.txtPatch;
+      arrPathcNode = patchObj.arrPatch;
+      return ;
+    }
+    
+    console.log('### to_do: childVary');
+    console.log('preTrimedValue', preTrimedValue);
+    console.log('child', child);
   })
 } 
 
-function updateNode(parentNode, childNode, flgNode, beforeNode){
-  let patchNode = null;
-  
-  if ( isTextChild(childNode) ) {
-    childNode = document.createTextNode( trimTextChild(childNode) );
-    patchNode = childNode;
-    insertNode(parentNode, childNode, flgNode, beforeNode);
-  }
-  else if ( isNodeValue(childNode) ) {
-    insertNode(parentNode, childNode, flgNode, beforeNode);
-  }
-  else if ( isArrayValue(childNode) ) {
-    let preChid = null;
-    if (childNode.length===0) {
-      patchNode = document.createComment("fedom: empty array child for position");
-      insertNode(parentNode, patchNode, flgNode, beforeNode);
-    }
-    else {
-      childNode.forEach((itm,idx)=>{
-        if ( isArrayValue(itm) ) { throw message.errors.mutil_vary_array_child; }
-        
-        if (idx===0) { preChid = updateNode(parentNode, itm, flgNode, null).childNode; }
-        else { preChid = updateNode(parentNode, itm, null, preChid).childNode; }
+function updateListChild({ listChild, startFlgNode, newChild, }){
+  let pNode = startFlgNode.parentNode;
+  // to_do 待优化: 移除旧节点 
+  listChild.forEach((itm,idx)=>{ pNode.removeChild(startFlgNode.nextSibling); })
+  // 插入新节点 
+  if (isArrayValue(newChild)) {
+    let flgNode = startFlgNode;
+    newChild.forEach((itm,idx)=>{
+      flgNode = insertNode({
+        positionNode: flgNode, 
+        childNode: itm, 
+        oldChildNode: null,
       })
+    })
+    return {
+      txtPatch: null,
+      arrPatch: startFlgNode,
+    };
+  }
+  if (isTextValue(newChild)) {
+    let txtPatch = insertNode({
+      positionNode: startFlgNode, 
+      childNode: newChild, 
+      oldChildNode: startFlgNode,
+    })
+    return {
+      txtPatch,
+      arrPatch: null,
     }
   }
-  else {
-    console.log('### to_do: updateNode undefined child type');
+  if (isNodeValue(newChild)) {
+    insertNode({
+      positionNode: startFlgNode, 
+      childNode: newChild, 
+      oldChildNode: startFlgNode,
+    })
+    return {
+      txtPatch: null,
+      arrPatch: null,
+    }
   }
   
-  return {
-    patchNode,
-    childNode: patchNode || childNode,
-  };
+  console.error('error: updateListChild')
 } 
-function insertNode(parentNode, childNode, replaceNode, beforeNode){
-  if (replaceNode) { parentNode.replaceChild(childNode, replaceNode); }
-  else if (beforeNode) { parentNode.insertBefore(childNode, beforeNode.nextSibling); }
-  else { console.error('## updateNode error') }
+function updateTextChild({ textFlgChild, newChild }){
+  if (isTextValue(newChild) ) {
+    newChild = insertNode({
+      positionNode: textFlgChild, 
+      childNode: newChild, 
+      oldChildNode: textFlgChild,
+    })
+    return {
+      txtPatch: newChild, 
+      arrPatch: null,
+    };
+  }
+  
+  if (isNodeValue(newChild) ) {
+    insertNode({
+      positionNode: textFlgChild, 
+      childNode: newChild, 
+      oldChildNode: textFlgChild,
+    })
+    return {
+      txtPatch: null, 
+      arrPatch: null,
+    };
+  }
+  
+  if (isArrayValue(newChild)) {
+    let arrPatch = document.createComment("fedom: start of array child for position");
+    insertNode({
+      positionNode: textFlgChild, 
+      childNode: arrPatch, 
+      oldChildNode: textFlgChild,
+    });
+    let flgNode = arrPatch;
+    newChild.forEach((itm,idx)=>{
+      flgNode = insertNode({
+        positionNode: flgNode, 
+        childNode: itm, 
+        oldChildNode: null,
+      });
+    })
+    return {
+      txtPatch: null, 
+      arrPatch,
+    };
+  }
+} 
+function updateNodeChild({ nodeChild, newChild }){
+  // let pNode = nodeChild.parentNode;
+  if (isNodeValue(newChild)) {
+    insertNode({
+      positionNode: nodeChild, 
+      childNode: newChild, 
+      oldChildNode: nodeChild,
+    })
+    return {
+      txtPatch: null, 
+      arrPatch: null,
+    };
+  }
+  
+  if (isTextValue(newChild)) {
+    newChild = insertNode({
+      positionNode: nodeChild, 
+      childNode: newChild, 
+      oldChildNode: nodeChild,
+    })
+    return {
+      txtPatch: newChild, 
+      arrPatch: null,
+    };
+  }
+  
+  if (isArrayValue(newChild)) {
+    let arrPatch = document.createComment("fedom: start of array child for position");
+    insertNode({
+      positionNode: nodeChild, 
+      childNode: arrPatch, 
+      oldChildNode: nodeChild,
+    });
+    let flgNode = arrPatch;
+    newChild.forEach((itm,idx)=>{
+      flgNode = insertNode({
+        positionNode: flgNode, 
+        childNode: itm, 
+        oldChildNode: null,
+      })
+    })
+    return {
+      txtPatch: null, 
+      arrPatch: arrPatch,
+    };
+  }
+} 
+function insertNode({ positionNode, childNode, oldChildNode, }){
+  let parentNode = positionNode.parentNode; 
+  if (isTextValue(childNode)) { childNode =  document.createTextNode( trimTextChild(childNode) ); }
+  if (childNode) { parentNode.insertBefore(childNode, positionNode.nextSibling); }
+  if (oldChildNode) { parentNode.removeChild(oldChildNode); }
+  
+  return childNode;
 } 

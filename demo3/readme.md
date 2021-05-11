@@ -11,7 +11,7 @@
       constructor_run&setTimeout()  
   2 组件更新 
     $xxx.watch() 
-  3 组件缓存   
+  3 组件缓存 
     context.onShow() 
     onShow()
   4 组件卸载 

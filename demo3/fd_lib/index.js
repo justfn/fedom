@@ -12,7 +12,7 @@ import { VaryValue, } from "./featrues/Vary/Vary.js";
 import VaryKeys from "./featrues/Vary/VaryKeys.js";
 import { RefValue, } from "./featrues/ref/Ref.js";
 import { 
-  isComponent, 
+  isComponentValue, 
   isVaryValue, 
 } from "./utils/judge.js";
 
@@ -25,7 +25,7 @@ globalWrite('RefValue', RefValue);
 globalWrite('Component', Component);
 // 工具集合 
 globalWrite('utils.isVaryValue', isVaryValue);
-globalWrite('utils.isComponent', isComponent);
+globalWrite('utils.isComponentValue', isComponentValue);
 // 元素集合 
 globalWrite('elems', {});
 // 状态集合 
