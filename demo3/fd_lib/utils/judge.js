@@ -17,6 +17,8 @@ export function isBooleanValue(val){
 } 
 // 是否为数值 
 export function isNumberValue(val){
+  if ( Number.isNaN(val) ) { return false; }
+  
   return typeof val==='number';
 } 
 // 是否为字符串 

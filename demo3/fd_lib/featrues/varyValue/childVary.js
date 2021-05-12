@@ -64,6 +64,34 @@ export default function childValVary(params={}){
     console.log('preTrimedValue', preTrimedValue);
     console.log('child', child);
   })
+  varyChild.add_list_set(({index, list})=>{
+    let len = varyChild.$$.length; 
+    // 删除操作 
+    if (!isArrayValue(list)) {
+      // if (index>=len) { return ; }
+      
+      console.log( 'remove: ', index );
+      let itmNode = findPositionNode(arrPathcNode, index+1);
+      refreshNode({
+        positionNode: itmNode, 
+        childNode: null, 
+        oldChildNode: itmNode,
+      })
+      return ;
+    }
+    
+    // 新增操作 
+    let itmNode = findPositionNode(arrPathcNode, index);
+    itmNode = itmNode || arrPathcNode; 
+    list.forEach((itm,idx)=>{
+      refreshNode({
+        positionNode: itmNode, 
+        childNode: itm, 
+        oldChildNode: null,
+      })
+    })
+    
+  })
 } 
 
 function updateListChild({ listChild, startFlgNode, newChild, }){
@@ -74,7 +102,7 @@ function updateListChild({ listChild, startFlgNode, newChild, }){
   if (isArrayValue(newChild)) {
     let flgNode = startFlgNode;
     newChild.forEach((itm,idx)=>{
-      flgNode = insertNode({
+      flgNode = refreshNode({
         positionNode: flgNode, 
         childNode: itm, 
         oldChildNode: null,
@@ -86,7 +114,7 @@ function updateListChild({ listChild, startFlgNode, newChild, }){
     };
   }
   if (isTextValue(newChild)) {
-    let txtPatch = insertNode({
+    let txtPatch = refreshNode({
       positionNode: startFlgNode, 
       childNode: newChild, 
       oldChildNode: startFlgNode,
@@ -97,7 +125,7 @@ function updateListChild({ listChild, startFlgNode, newChild, }){
     }
   }
   if (isNodeValue(newChild)) {
-    insertNode({
+    refreshNode({
       positionNode: startFlgNode, 
       childNode: newChild, 
       oldChildNode: startFlgNode,
@@ -112,7 +140,7 @@ function updateListChild({ listChild, startFlgNode, newChild, }){
 } 
 function updateTextChild({ textFlgChild, newChild }){
   if (isTextValue(newChild) ) {
-    newChild = insertNode({
+    newChild = refreshNode({
       positionNode: textFlgChild, 
       childNode: newChild, 
       oldChildNode: textFlgChild,
@@ -124,7 +152,7 @@ function updateTextChild({ textFlgChild, newChild }){
   }
   
   if (isNodeValue(newChild) ) {
-    insertNode({
+    refreshNode({
       positionNode: textFlgChild, 
       childNode: newChild, 
       oldChildNode: textFlgChild,
@@ -137,14 +165,14 @@ function updateTextChild({ textFlgChild, newChild }){
   
   if (isArrayValue(newChild)) {
     let arrPatch = document.createComment("fedom: start of array child for position");
-    insertNode({
+    refreshNode({
       positionNode: textFlgChild, 
       childNode: arrPatch, 
       oldChildNode: textFlgChild,
     });
     let flgNode = arrPatch;
     newChild.forEach((itm,idx)=>{
-      flgNode = insertNode({
+      flgNode = refreshNode({
         positionNode: flgNode, 
         childNode: itm, 
         oldChildNode: null,
@@ -159,7 +187,7 @@ function updateTextChild({ textFlgChild, newChild }){
 function updateNodeChild({ nodeChild, newChild }){
   // let pNode = nodeChild.parentNode;
   if (isNodeValue(newChild)) {
-    insertNode({
+    refreshNode({
       positionNode: nodeChild, 
       childNode: newChild, 
       oldChildNode: nodeChild,
@@ -171,7 +199,7 @@ function updateNodeChild({ nodeChild, newChild }){
   }
   
   if (isTextValue(newChild)) {
-    newChild = insertNode({
+    newChild = refreshNode({
       positionNode: nodeChild, 
       childNode: newChild, 
       oldChildNode: nodeChild,
@@ -184,14 +212,14 @@ function updateNodeChild({ nodeChild, newChild }){
   
   if (isArrayValue(newChild)) {
     let arrPatch = document.createComment("fedom: start of array child for position");
-    insertNode({
+    refreshNode({
       positionNode: nodeChild, 
       childNode: arrPatch, 
       oldChildNode: nodeChild,
     });
     let flgNode = arrPatch;
     newChild.forEach((itm,idx)=>{
-      flgNode = insertNode({
+      flgNode = refreshNode({
         positionNode: flgNode, 
         childNode: itm, 
         oldChildNode: null,
@@ -203,11 +231,19 @@ function updateNodeChild({ nodeChild, newChild }){
     };
   }
 } 
-function insertNode({ positionNode, childNode, oldChildNode, }){
+function refreshNode({ positionNode, childNode, oldChildNode, }){
   let parentNode = positionNode.parentNode; 
   if (isTextValue(childNode)) { childNode =  document.createTextNode( trimTextChild(childNode) ); }
   if (childNode) { parentNode.insertBefore(childNode, positionNode.nextSibling); }
   if (oldChildNode) { parentNode.removeChild(oldChildNode); }
   
   return childNode;
+} 
+function findPositionNode(flgNode, num){
+  new Array(num).fill('').forEach((itm)=>{
+    if (!flgNode) { return ; }
+    
+    flgNode = flgNode.nextSibling;
+  })
+  return flgNode;
 } 

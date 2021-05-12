@@ -4,6 +4,9 @@ import message from "../../config/message.js";
 import diffValue from "../../utils/diffValue.js";
 import {
   isVaryValue,
+  isArrayValue,
+  isEmptyValue,
+  isNumberValue, 
 } from "../../utils/judge.js";
 
 
@@ -33,6 +36,16 @@ export default class Vary {
     this._trimValueFn =  trimFn ?? (v=>v); // 整理成最终返回值 
     this._$$Trimed = this._trimValueFn(val);
     this.__$$TrimedNxt = symbol_1; // 缓存下一次格式化的值,避免多次执行'_trimValueFn'函数  
+    
+    // VaryList 备份&跟踪 
+    this._$$List = [
+      // {
+      //   $$: <val>,
+      //   id: <udx>,
+      // }
+    ]; 
+    this.initList();
+    
     if (isVaryValue(val)) {
       val.watch((preV,nxtV,preVTrimed,nxtVTrimed)=>{
         this.set((pre_v)=>{
@@ -44,6 +57,7 @@ export default class Vary {
     this._mounteds = [];
     
     this._sets = [];
+    this._listSets = [];
     this._watchs = [];
   }
   
@@ -86,6 +100,10 @@ export default class Vary {
     this._watchs.forEach( watchFn=>{
       watchFn(pre_v, nxt_v, tmpV, this._$$Trimed);
     })
+    
+    // VaryList 处理 
+    if (isVaryValue(nxt_v)) { this.initList(); }
+    
     return Promise.resolve(nxt_v);
   }
   set $$(val){ this.set(v=>val, true) }
@@ -143,6 +161,86 @@ export default class Vary {
       mountedFn(this.get(true), this.get(false), ...args);
     })
   }
+  
+  /* --------------------------------------------------------- list独有功能 */
+  arr_item_id_num = -1;
+  initList = ()=>{
+    let list = this.get();
+    if (!isArrayValue(list)) { return ; }
+    
+    this._$$List = list.map((itm,idx)=>{
+      this.arr_item_id_num = idx;
+      return {
+        $$: itm, 
+        id: idx,
+      }
+    })
+  }
+  insert = (insertRun)=>{
+    let oldList = this.get();
+    if (!isArrayValue(oldList)) { return console.warn('varyvalue: 非法调用'); }
+    
+    const [idx, lst] = insertRun(oldList);
+    
+    if (isEmptyValue(idx)) { idx = oldList.length; }
+    this._listSets.forEach((listSetItm)=>{
+      listSetItm({
+        index: idx,
+        list: lst,
+      });
+    })
+    return Promise.resolve();
+  }
+  remove = (id, idx)=>{
+    let oldList = this.get();
+    if (!isArrayValue(oldList)) { return console.warn('varyvalue: 非法调用'); }
+    let index = 0;
+    
+    if (!isEmptyValue(id)) { 
+      console.log('id ===', id,  this._$$List );
+      index = this._$$List.findIndex(itm=>{ return itm.id===id; }); 
+    }
+    idx = idx * 1;
+    if (isNumberValue(idx)) { 
+      console.log('idx ===', idx, this._$$List );
+      index = idx; 
+    }
+    
+    this._listSets.forEach((listSetItm)=>{
+      listSetItm({
+        index,
+      });
+    })
+    return Promise.resolve();
+  }
+  // 收集更新-数组 
+  add_list_set = (listSetRun)=>{
+    this._listSets.push(({index, list, id})=>{
+      listSetRun({
+        index,
+        list, 
+      }) 
+      
+      let oldList = this.get();
+      let newList = [...oldList];
+      // 新增 
+      if (list) { 
+        newList.splice(index, 0, ...list); 
+        let listBackup = list.map((itm,idx)=>{
+          this.arr_item_id_num++;
+          console.log( 'add', this.arr_item_id_num);
+          return {
+            $$: itm, 
+            id: this.arr_item_id_num,
+          }
+        })
+        this._$$List.splice(index, 0, ...listBackup); 
+      }
+      // 删除 
+      else { newList.splice(index, 1); }
+      this._$$ = newList;
+    });
+  } 
 }
 
 /* 使用可变量 

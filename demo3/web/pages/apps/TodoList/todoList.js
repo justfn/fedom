@@ -4,18 +4,13 @@ import "./todoList.less";
 const {
   VaryValue,
   VaryKeys,
+  VaryList, 
 } = window.$fd;
 
 export default function TodoList(props, context){
   
   const inputVal$ = VaryValue('');
-  const todoList$ = VaryValue([], (list)=>{
-    return list;
-    return list.map((itm,idx)=>{
-      return <div> { itm }</div>
-    });
-    return <div>{ list }</div>;
-  });
+  const todoList$ = VaryList([1]);
   const list1 = [
     // 1,
     // 2,
@@ -25,16 +20,28 @@ export default function TodoList(props, context){
   const evts = {
     click: (evt)=>{
       console.log(evt);
-      todoList$.set((v)=>{
+      let newTodo = inputVal$.$$;
+      todoList$.insert(( list )=>{
         return [
-          ...v,
-          inputVal$.$$,
+          list.length, 
+          [ 
+            <div onClick={()=>evts.removeTodo( list.length )}>{ newTodo }</div> 
+          ]
         ];
       })
       .then(()=>{
+        inputVal$.set(()=>{
+          return '';
+        })
         console.log( todoList$ );
       })
     },
+    removeTodo: ( id )=>{
+      todoList$.remove( id )
+      .then(()=>{
+        console.log( 'remove id: ', id);
+      })
+    }
   }
   
   return (
