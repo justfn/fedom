@@ -10,7 +10,33 @@ const {
 export default function TodoList(props, context){
   
   const inputVal$ = VaryValue('');
-  const todoList$ = VaryList([1]);
+  const todoList$ = VaryList(
+    [
+      {
+        text: '初始值001', 
+        isDone: false,
+      },
+      {
+        text: '初始值002', 
+        isDone: false,
+      },
+      {
+        text: '初始值003', 
+        isDone: false,
+      },
+      {
+        text: '初始值004', 
+        isDone: false,
+      },
+      {
+        text: '初始值005', 
+        isDone: false,
+      },
+    ], 
+    (id, itm, idx, list)=>{
+      return <div onClick={()=>evts.removeTodo( id, itm.text )}>{ itm.text }</div> ;
+    }
+  );
   const list1 = [
     // 1,
     // 2,
@@ -25,7 +51,10 @@ export default function TodoList(props, context){
         return [
           list.length, 
           [ 
-            <div onClick={()=>evts.removeTodo( list.length )}>{ newTodo }</div> 
+            {
+              text: newTodo,
+              isDone: false, 
+            },
           ]
         ];
       })
@@ -36,10 +65,12 @@ export default function TodoList(props, context){
         console.log( todoList$ );
       })
     },
-    removeTodo: ( id )=>{
+    removeTodo: ( id, text )=>{
+      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> removeTodo id: ", id)
+      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> removeTodo text: ", text)
       todoList$.remove( id )
       .then(()=>{
-        console.log( 'remove id: ', id);
+        // 
       })
     }
   }

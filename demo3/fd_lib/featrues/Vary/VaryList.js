@@ -10,7 +10,7 @@ import {
 } from "../../utils/judge.js";
 
 export class ListVary extends Vary {
-  constructor(val, trimFn){
+  constructor(val, itmTrimFn, trimFn){
     super(val, trimFn)
     
     // VaryList 备份&跟踪 
@@ -22,15 +22,14 @@ export class ListVary extends Vary {
     ]; 
     this.initList();
     
-    this._listSets = [];
+    this._listInSets = [];
+    this._listRmSets = [];
+    this._listItemTrimFn = itmTrimFn;
   }
   
   arr_item_id_num = -1;
   initList = ()=>{
-    let list = this.get();
-    if (!isArrayValue(list)) { return ; }
-    
-    this._$$List = list.map((itm,idx)=>{
+    this._$$List = this._$$.map((itm,idx)=>{
       this.arr_item_id_num = idx;
       return {
         $$: itm, 
@@ -39,98 +38,108 @@ export class ListVary extends Vary {
     })
   }
   
-  insert = (insertRunOrIdx, lst)=>{
-    let oldList = this.get();
-    if (!isArrayValue(oldList)) { return console.warn('varyvalue: 非法调用'); }
+  /* --------------------------------------------------------- KITs  */
+  _splice = (begin,num,lst=[], trimList=[])=>{
+    let bakList = lst.map((itm,idx)=>{
+      this.arr_item_id_num++;
+      // console.log( 'add', this.arr_item_id_num);
+      return {
+        $$: itm, 
+        id: this.arr_item_id_num,
+      }
+    })
     
+    this._$$.splice(begin, num, ...lst);
+    this._$$Trimed.splice(begin, num, ...trimList);
+    this._$$List.splice(begin, num, ...bakList);
+  }
+  /* --------------------------------------------------------- APIs  */
+  insert = (insertRunOrIdx, lst)=>{
     let idx = insertRunOrIdx;
     if (isFunctionValue(insertRunOrIdx)) {
-      let result = insertRunOrIdx(oldList);
+      let result = insertRunOrIdx([...this._$$]);
       idx = result[0];
       lst = result[1];
     }
+    if (isEmptyValue(idx)) { idx = this._$$.length; }
     
-    if (isEmptyValue(idx)) { idx = oldList.length; }
-    this._listSets.forEach((listSetItm)=>{
-      listSetItm({
+    let trimList = lst.map((itm,idx)=>{
+      return this._listItemTrimFn(this.arr_item_id_num+idx+1, itm, idx, this._$$);
+    })
+    this._listInSets.forEach((listInSetItm)=>{
+      listInSetItm({
         index: idx,
-        list: lst,
+        list: trimList,
       });
     })
+    this._splice(idx, 0, lst, trimList);
     return Promise.resolve();
   }
   remove = (removeRunOrId, idx)=>{
-    let oldList = this.get();
-    if (!isArrayValue(oldList)) { return console.warn('varyvalue: 非法调用'); }
-    let index = 0;
-    
     let id = removeRunOrId; 
     if (isFunctionValue(removeRunOrId)) {
-      let result = removeRunOrId(oldList);
+      let result = removeRunOrId([...this._$$]);
       id = result[0]; 
       idx = result[1];
     }
     
-    
+    let index = 0;
     if (!isEmptyValue(id)) { 
-      // console.log('id ===', id,  this._$$List );
       index = this._$$List.findIndex(itm=>{ return itm.id===id; }); 
     }
-    idx = idx * 1;
-    if (isNumberValue(idx)) { 
-      // console.log('idx ===', idx, this._$$List );
-      index = idx; 
-    }
+    if (isNumberValue(idx)) { index = idx; }
     
-    this._listSets.forEach((listSetItm)=>{
-      listSetItm({
+    if (index>this._$$.length-1 || index<0) { return console.error('fd: VaryList delete out of limit '); }
+    
+    this._listRmSets.forEach((listRmSetItm)=>{
+      listRmSetItm({
         index,
       });
     })
+    this._splice(index, 1);
     return Promise.resolve();
   }
-  update = (updateRun)=>{
-    let oldList = this.get();
-    if (!isArrayValue(oldList)) { return console.warn('varyvalue: 非法调用'); }
+  update = (updateRunOrIdx, val)=>{
+    let idx = updateRunOrIdx;
+    if (isFunctionValue(updateRunOrIdx)) {
+      let result = updateRunOrIdx([...this._$$]);
+      idx = result[0];
+      val = result[1];
+    }
     
-    let [ idx, val ] = updateRun(oldList);
     this.insert(()=>{ return [ idx, [val]]; })
     this.remove(()=>{ return [ null, idx ]; });
     
     return Promise.resolve();
   }
-  // 收集更新-数组 
-  add_list_set = (listSetRun)=>{
-    this._listSets.push(({index, list, id})=>{
-      listSetRun({
+  // 收集更新-插入 
+  add_list_in = (listInSetRun)=>{
+    this._listInSets.push(({index, list, id})=>{
+      listInSetRun({
         index,
         list, 
       }) 
-      
-      let oldList = this.get();
-      let newList = [...oldList];
-      // 新增 
-      if (list) { 
-        newList.splice(index, 0, ...list); 
-        let listBackup = list.map((itm,idx)=>{
-          this.arr_item_id_num++;
-          console.log( 'add', this.arr_item_id_num);
-          return {
-            $$: itm, 
-            id: this.arr_item_id_num,
-          }
-        })
-        this._$$List.splice(index, 0, ...listBackup); 
-      }
-      // 删除 
-      else { newList.splice(index, 1); }
-      this._$$ = newList;
+    });
+  } 
+  // 收集更新-删除
+  add_list_rm = (listRemoveRun)=>{
+    this._listRmSets.push(({index})=>{
+      listRemoveRun({
+        index,
+      }) 
     });
   } 
 }
 
-export function VaryList(list, trimFn){
-  const varyedList = new ListVary(list, trimFn);
+export function VaryList(list, itmTrimFn){
+  if (!isArrayValue(list)) { return console.error('fd: 非 List, 不可使用 VaryList'); }
+  
+  itmTrimFn = itmTrimFn || function(id, val){ return val; }
+  const varyedList = new ListVary(list, itmTrimFn, (lst)=>{
+    return list.map((itm,idx)=>{
+      return itmTrimFn(idx, itm, idx, list);
+    });
+  });
   
   
   return varyedList;

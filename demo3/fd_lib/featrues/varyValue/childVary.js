@@ -66,23 +66,9 @@ export default function childValVary(params={}){
     console.log('child', child);
   })
   if (isVaryList(varyChild)) {
-    varyChild.add_list_set(({index, list})=>{
+    // 插入操作 
+    varyChild.add_list_in(({index, list})=>{
       let len = varyChild.$$.length; 
-      // 删除操作 
-      if (!isArrayValue(list)) {
-        // if (index>=len) { return ; }
-        
-        console.log( 'remove: ', index );
-        let itmNode = findPositionNode(arrPathcNode, index+1);
-        refreshNode({
-          positionNode: itmNode, 
-          childNode: null, 
-          oldChildNode: itmNode,
-        })
-        return ;
-      }
-      
-      // 新增操作 
       let itmNode = findPositionNode(arrPathcNode, index);
       itmNode = itmNode || arrPathcNode; 
       list.forEach((itm,idx)=>{
@@ -92,7 +78,17 @@ export default function childValVary(params={}){
           oldChildNode: null,
         })
       })
-      
+    })
+    
+    // 删除操作 
+    varyChild.add_list_rm(({index})=>{
+      let itmNode = findPositionNode(arrPathcNode, index+1);
+      // console.log( 'remove index: ', index, itmNode );
+      refreshNode({
+        positionNode: itmNode, 
+        childNode: false, 
+        oldChildNode: itmNode,
+      })
     })
   }
 } 
@@ -244,6 +240,7 @@ function refreshNode({ positionNode, childNode, oldChildNode, }){
 } 
 function findPositionNode(flgNode, num){
   new Array(num).fill('').forEach((itm)=>{
+    // console.log( flgNode );
     if (!flgNode) { return ; }
     
     flgNode = flgNode.nextSibling;
