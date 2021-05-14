@@ -7,6 +7,7 @@ import {
   isNodeValue, 
   isArrayValue, 
   isTextValue, 
+  isVaryList,
 } from "../../utils/judge.js";
 
 
@@ -64,34 +65,36 @@ export default function childValVary(params={}){
     console.log('preTrimedValue', preTrimedValue);
     console.log('child', child);
   })
-  varyChild.add_list_set(({index, list})=>{
-    let len = varyChild.$$.length; 
-    // 删除操作 
-    if (!isArrayValue(list)) {
-      // if (index>=len) { return ; }
+  if (isVaryList(varyChild)) {
+    varyChild.add_list_set(({index, list})=>{
+      let len = varyChild.$$.length; 
+      // 删除操作 
+      if (!isArrayValue(list)) {
+        // if (index>=len) { return ; }
+        
+        console.log( 'remove: ', index );
+        let itmNode = findPositionNode(arrPathcNode, index+1);
+        refreshNode({
+          positionNode: itmNode, 
+          childNode: null, 
+          oldChildNode: itmNode,
+        })
+        return ;
+      }
       
-      console.log( 'remove: ', index );
-      let itmNode = findPositionNode(arrPathcNode, index+1);
-      refreshNode({
-        positionNode: itmNode, 
-        childNode: null, 
-        oldChildNode: itmNode,
+      // 新增操作 
+      let itmNode = findPositionNode(arrPathcNode, index);
+      itmNode = itmNode || arrPathcNode; 
+      list.forEach((itm,idx)=>{
+        refreshNode({
+          positionNode: itmNode, 
+          childNode: itm, 
+          oldChildNode: null,
+        })
       })
-      return ;
-    }
-    
-    // 新增操作 
-    let itmNode = findPositionNode(arrPathcNode, index);
-    itmNode = itmNode || arrPathcNode; 
-    list.forEach((itm,idx)=>{
-      refreshNode({
-        positionNode: itmNode, 
-        childNode: itm, 
-        oldChildNode: null,
-      })
+      
     })
-    
-  })
+  }
 } 
 
 function updateListChild({ listChild, startFlgNode, newChild, }){

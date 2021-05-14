@@ -3,7 +3,8 @@
 import config from "../config/config.js";
 import message from "../config/message.js";
 import Component from "../featrues/Component/Component.js";
-import Vary from "../featrues/Vary/Vary.js";
+import { Vary } from "../featrues/Vary/Vary.js";
+import { ListVary } from "../featrues/Vary/VaryList.js";
 import Ref from "../featrues/ref/Ref.js";
 
 
@@ -65,6 +66,14 @@ export function isVaryValue(val){
   
   return bol;
 }
+// 值是否为列表可变量值 
+export function isVaryList(val){
+  if (!val) { return false; }
+  
+  let bol = val instanceof ListVary;
+  
+  return bol;
+} 
 // 值是否为Ref类型  
 export function isRefValue(val){
   if (!val) { return false; }
