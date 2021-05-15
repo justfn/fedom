@@ -83,6 +83,16 @@ export default function TodoList(props, context){
       itm.isDone.set((val)=>{
         return !val;
       })
+      .then(()=>{
+        
+        // console.log( JSON.stringify( todoList$.$$.map((itm,idx)=>{
+        //   return {
+        //     ...itm,
+        //     isDone: itm.isDone.$$, 
+        //   }
+        // }), 2, 2 ));
+      })
+      
       // todoList$.update(id, {
       //   ...itm, 
       //   isDone: !itm.isDone,

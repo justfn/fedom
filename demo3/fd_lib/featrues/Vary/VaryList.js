@@ -164,7 +164,6 @@ export function VaryList(list, itmTrimFn){
     });
   });
   
-  
   return varyedList;
 } 
 

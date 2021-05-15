@@ -9,7 +9,7 @@ import render from "./render.js";
 import Router from "./router/router.js";
 import Component from "./featrues/Component/Component.js";
 import { VaryValue, } from "./featrues/Vary/Vary.js";
-import VaryKeys from "./featrues/Vary/VaryKeys.js";
+import { VaryKeys, } from "./featrues/Vary/VaryKeys.js";
 import { VaryList } from "./featrues/Vary/VaryList.js";
 import { RefValue, } from "./featrues/ref/Ref.js";
 import { 

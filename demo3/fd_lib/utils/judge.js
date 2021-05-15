@@ -3,8 +3,9 @@
 import config from "../config/config.js";
 import message from "../config/message.js";
 import Component from "../featrues/Component/Component.js";
-import { Vary } from "../featrues/Vary/Vary.js";
-import { ListVary } from "../featrues/Vary/VaryList.js";
+import { Vary, } from "../featrues/Vary/Vary.js";
+import { ListVary, } from "../featrues/Vary/VaryList.js";
+import { KeysVary, } from "../featrues/Vary/VaryKeys.js";
 import Ref from "../featrues/ref/Ref.js";
 
 
@@ -71,6 +72,14 @@ export function isVaryList(val){
   if (!val) { return false; }
   
   let bol = val instanceof ListVary;
+  
+  return bol;
+} 
+// 值是否为键值集可变量值 
+export function isVaryKeys(val){
+  if (!val) { return false; }
+  
+  let bol = val instanceof KeysVary;
   
   return bol;
 } 
