@@ -75,7 +75,8 @@ export function fillChild( fNode, child, varyChild ) {
   }
   /* Result: other */
   else {
-    fillChild(fNode, child.toString(), null);
+    child = trimTextChild(child+'');
+    textPatchNode = textChild(fNode, child);
     console.warn('################################ todo child', child);
   }
   

@@ -33,8 +33,16 @@ export default function TodoList(props, context){
         isDone: false,
       },
     ], 
-    (id, itm, idx, list)=>{
-      return <div onClick={()=>evts.removeTodo( id, itm.text )}>{ itm.text }</div> ;
+    (itm, idx, id, list)=>{
+      return (
+        <div class="itm-wrap">
+          <span onClick={()=>evts.updateTodoItm( id, itm )}> {itm.isDone} </span>
+          <div >
+            { itm.text }
+          </div>
+          <span onClick={()=>evts.removeTodoItm( id, itm.text )}>删除</span>
+        </div>
+      );
     }
   );
   const list1 = [
@@ -44,7 +52,7 @@ export default function TodoList(props, context){
   ]
   
   const evts = {
-    click: (evt)=>{
+    addTodoItm: (evt)=>{
       console.log(evt);
       let newTodo = inputVal$.$$;
       todoList$.insert(( list )=>{
@@ -65,21 +73,25 @@ export default function TodoList(props, context){
         console.log( todoList$ );
       })
     },
-    removeTodo: ( id, text )=>{
-      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> removeTodo id: ", id)
-      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> removeTodo text: ", text)
+    removeTodoItm: (id, text )=>{
       todoList$.remove( id )
       .then(()=>{
         // 
       })
-    }
+    },
+    updateTodoItm: (id, itm)=>{
+      todoList$.update(id, {
+        ...itm, 
+        isDone: !itm.isDone,
+      })
+    },
   }
   
   return (
     <div class="TodoList">
       <div class="part1">
         <input value={inputVal$} placeholder="请输入代办事项" class="input" />
-        <button onClick={evts.click}>添加</button>
+        <button onClick={evts.addTodoItm}>添加</button>
       </div>
       
       <div class="part2">

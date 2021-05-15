@@ -27,44 +27,68 @@ export class ListVary extends Vary {
     this._listItemTrimFn = itmTrimFn;
   }
   
-  arr_item_id_num = -1;
+  arr_item_id_num = -99;
   initList = ()=>{
     this._$$List = this._$$.map((itm,idx)=>{
       this.arr_item_id_num = idx;
       return {
         $$: itm, 
-        id: idx,
+        id: `id_${idx}`,
       }
     })
   }
   
   /* --------------------------------------------------------- KITs  */
-  _splice = (begin,num,lst=[], trimList=[])=>{
-    let bakList = lst.map((itm,idx)=>{
+  _splice = (begin, num, list=[], trimList=[])=>{
+    let bakList = list.map((itm,idx)=>{
       this.arr_item_id_num++;
-      // console.log( 'add', this.arr_item_id_num);
       return {
         $$: itm, 
-        id: this.arr_item_id_num,
+        id: `id_${this.arr_item_id_num}`,
       }
     })
     
-    this._$$.splice(begin, num, ...lst);
+    this._$$.splice(begin, num, ...list);
     this._$$Trimed.splice(begin, num, ...trimList);
     this._$$List.splice(begin, num, ...bakList);
   }
+  _isItmIdValue = (val)=>{
+    if (!val) { return false; }
+    if (!val.startsWith) { return false; }
+    if (!val.startsWith('id_')) { return false; }
+    
+    return true;
+  }
+  _findIdx = (id)=>{
+    let idx = this._$$List.findIndex( itm=>itm.id===id ); 
+    if (idx===-1) { throw 'fd VaryList id 错误'; }
+    
+    return idx;
+  }
+  _checkIdx = (idx)=>{
+    if (isEmptyValue(idx)) { idx = 0 } 
+    if (!isNumberValue(idx)) { throw 'fd VaryList idx 错误'; }
+    if (idx>this._$$.length) { idx = this._$$.length }
+    if (idx<0) { idx = 0 }
+    
+    return idx;
+  }
   /* --------------------------------------------------------- APIs  */
-  insert = (insertRunOrIdx, lst)=>{
-    let idx = insertRunOrIdx;
-    if (isFunctionValue(insertRunOrIdx)) {
-      let result = insertRunOrIdx([...this._$$]);
+  insert = (insertRunOrItmidOrIdx, lst)=>{
+    let idx = insertRunOrItmidOrIdx;
+    if (isFunctionValue(insertRunOrItmidOrIdx)) {
+      let result = insertRunOrItmidOrIdx([...this._$$]);
       idx = result[0];
       lst = result[1];
     }
-    if (isEmptyValue(idx)) { idx = this._$$.length; }
+    else if ( this._isItmIdValue(insertRunOrItmidOrIdx)) {
+      idx = this._findIdx(insertRunOrItmidOrIdx)
+    }
+    idx = this._checkIdx(idx);
     
     let trimList = lst.map((itm,idx)=>{
-      return this._listItemTrimFn(this.arr_item_id_num+idx+1, itm, idx, this._$$);
+      let itmId = `id_${this.arr_item_id_num+idx+1}`
+      return this._listItemTrimFn( itm, idx, itmId, this._$$);
     })
     this._listInSets.forEach((listInSetItm)=>{
       listInSetItm({
@@ -75,40 +99,39 @@ export class ListVary extends Vary {
     this._splice(idx, 0, lst, trimList);
     return Promise.resolve();
   }
-  remove = (removeRunOrId, idx)=>{
-    let id = removeRunOrId; 
-    if (isFunctionValue(removeRunOrId)) {
-      let result = removeRunOrId([...this._$$]);
-      id = result[0]; 
-      idx = result[1];
+  remove = (removeRunOrItmidOrIdx)=>{
+    let idx = removeRunOrItmidOrIdx;
+    if (isFunctionValue(removeRunOrItmidOrIdx)) {
+      idx = removeRunOrItmidOrIdx([...this._$$]);
     }
-    
-    let index = 0;
-    if (!isEmptyValue(id)) { 
-      index = this._$$List.findIndex(itm=>{ return itm.id===id; }); 
+    else if (this._isItmIdValue(removeRunOrItmidOrIdx)) {
+      idx = this._findIdx(removeRunOrItmidOrIdx)
     }
-    if (isNumberValue(idx)) { index = idx; }
-    
-    if (index>this._$$.length-1 || index<0) { return console.error('fd: VaryList delete out of limit '); }
+    idx = this._checkIdx(idx);
     
     this._listRmSets.forEach((listRmSetItm)=>{
       listRmSetItm({
-        index,
+        index: idx,
       });
     })
-    this._splice(index, 1);
+    this._splice(idx, 1);
     return Promise.resolve();
   }
-  update = (updateRunOrIdx, val)=>{
-    let idx = updateRunOrIdx;
-    if (isFunctionValue(updateRunOrIdx)) {
-      let result = updateRunOrIdx([...this._$$]);
+  update = (updateRunOrItmidOrIdx, val)=>{
+    let idx = updateRunOrItmidOrIdx;
+    if (isFunctionValue(updateRunOrItmidOrIdx)) {
+      let result = updateRunOrItmidOrIdx([...this._$$]);
       idx = result[0];
       val = result[1];
     }
+    else if (this._isItmIdValue(updateRunOrItmidOrIdx)) {
+      idx = this._findIdx(updateRunOrItmidOrIdx)
+    }
+    idx = this._checkIdx(idx);
     
-    this.insert(()=>{ return [ idx, [val]]; })
-    this.remove(()=>{ return [ null, idx ]; });
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", idx, val)
+    this.remove( idx );
+    this.insert( idx, [val] );
     
     return Promise.resolve();
   }
@@ -134,10 +157,10 @@ export class ListVary extends Vary {
 export function VaryList(list, itmTrimFn){
   if (!isArrayValue(list)) { return console.error('fd: 非 List, 不可使用 VaryList'); }
   
-  itmTrimFn = itmTrimFn || function(id, val){ return val; }
+  itmTrimFn = itmTrimFn || function(val, idx, id, list){ return val; }
   const varyedList = new ListVary(list, itmTrimFn, (lst)=>{
     return list.map((itm,idx)=>{
-      return itmTrimFn(idx, itm, idx, list);
+      return itmTrimFn(itm, idx, `id_${idx}`, list);
     });
   });
   
