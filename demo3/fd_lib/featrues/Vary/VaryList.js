@@ -20,7 +20,7 @@ export class ListVary extends Vary {
       //   id: <idx>,
       // }
     ]; 
-    this.initList();
+    this._initList();
     
     this._listInSets = [];
     this._listRmSets = [];
@@ -28,7 +28,7 @@ export class ListVary extends Vary {
   }
   
   arr_item_id_num = -99;
-  initList = ()=>{
+  _initList = ()=>{
     this._$$List = this._$$.map((itm,idx)=>{
       this.arr_item_id_num = idx;
       return {
@@ -74,7 +74,7 @@ export class ListVary extends Vary {
     return idx;
   }
   /* --------------------------------------------------------- APIs  */
-  insert = (insertRunOrItmidOrIdx, lst)=>{
+  $insert = (insertRunOrItmidOrIdx, lst)=>{
     let idx = insertRunOrItmidOrIdx;
     if (isFunctionValue(insertRunOrItmidOrIdx)) {
       let result = insertRunOrItmidOrIdx([...this._$$]);
@@ -99,7 +99,7 @@ export class ListVary extends Vary {
     this._splice(idx, 0, lst, trimList);
     return Promise.resolve();
   }
-  remove = (removeRunOrItmidOrIdx)=>{
+  $remove = (removeRunOrItmidOrIdx)=>{
     let idx = removeRunOrItmidOrIdx;
     if (isFunctionValue(removeRunOrItmidOrIdx)) {
       idx = removeRunOrItmidOrIdx([...this._$$]);
@@ -117,7 +117,7 @@ export class ListVary extends Vary {
     this._splice(idx, 1);
     return Promise.resolve();
   }
-  update = (updateRunOrItmidOrIdx, val)=>{
+  $update = (updateRunOrItmidOrIdx, val)=>{
     let idx = updateRunOrItmidOrIdx;
     if (isFunctionValue(updateRunOrItmidOrIdx)) {
       let result = updateRunOrItmidOrIdx([...this._$$]);
@@ -130,13 +130,13 @@ export class ListVary extends Vary {
     idx = this._checkIdx(idx);
     
     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", idx, val)
-    this.remove( idx );
-    this.insert( idx, [val] );
+    this.$remove( idx );
+    this.$insert( idx, [val] );
     
     return Promise.resolve();
   }
   // 收集更新-插入 
-  add_list_in = (listInSetRun)=>{
+  _add_list_in = (listInSetRun)=>{
     this._listInSets.push(({index, list, id})=>{
       listInSetRun({
         index,
@@ -145,7 +145,7 @@ export class ListVary extends Vary {
     });
   } 
   // 收集更新-删除
-  add_list_rm = (listRemoveRun)=>{
+  _add_list_rm = (listRemoveRun)=>{
     this._listRmSets.push(({index})=>{
       listRemoveRun({
         index,

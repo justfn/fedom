@@ -55,7 +55,7 @@ export default function(props, context){
   let val2 = VaryValue(0);
   // let headerTitle = VaryValue(0);
   // setTimeout(function(){
-  //   headerTitle.set(function(val){
+  //   headerTitle.$set(function(val){
   //     return ++val;
   //   })
   // },1000)
@@ -79,7 +79,7 @@ export default function(props, context){
   }
   let fn2 = function(evt){
     evt.stopPropagation();
-    isActive.set((v)=>{
+    isActive.$set((v)=>{
       return !v;
       
       if (v=='active') {

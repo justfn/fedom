@@ -31,7 +31,7 @@ export class Vary {
   constructor(val, trimFn, nId) {
     this._num_id = nId ?? NaN;
     
-    this.isAlive = true; 
+    this._isAlive = true; 
     this._$$ = val; 
     this._trimValueFn =  trimFn ?? (v=>v); // 整理成最终返回值 
     this._$$Trimed = this._trimValueFn(val);
@@ -39,8 +39,8 @@ export class Vary {
     
     
     if (isVaryValue(val)) {
-      val.watch((preV,nxtV,preVTrimed,nxtVTrimed)=>{
-        this.set((pre_v)=>{
+      val.$watch((preV,nxtV,preVTrimed,nxtVTrimed)=>{
+        this.$set((pre_v)=>{
           return val;
         })
       })
@@ -54,18 +54,17 @@ export class Vary {
   
   /* --------------------------------------------------------- 对外接口  */
   // 取值 
-  get = (isOriginal=true)=>{ 
+  $get = (isOriginal=true)=>{ 
     if (isOriginal) { return this._$$; }
     
     return this._$$Trimed; 
   }
-  get $$(){ return this.get(true); }
   // 设值  
-  set = (setHandle, isLazy=true)=>{
-    if (!this.isAlive) { return Promise.reject('sleeping'); }
+  $set = (setHandle, isLazy=true)=>{
+    if (!this._isAlive) { return Promise.reject('sleeping'); }
     
-    let pre_v = this.get(true);
-    let pre_v_t = this.get(false);
+    let pre_v = this.$get(true);
+    let pre_v_t = this.$get(false);
     let nxt_v = null;
     if (!isLazy) { 
       // todo; diff value 
@@ -97,22 +96,23 @@ export class Vary {
     
     return Promise.resolve(nxt_v);
   }
-  set $$(val){ this.set(v=>val, true) }
+  get $$(){ return this.$get(true); }
+  set $$(val){ this.$set(v=>val, true) }
   // 收集渲染后执行的函数 
-  mounted = (mountedHandle)=>{
+  $mounted = (mountedHandle)=>{
     this._mounteds.push(mountedHandle);
   }
   // 收集更新时执行的函数 
-  watch = (watchHandle)=>{
+  $watch = (watchHandle)=>{
     this._watchs.push((p_v, n_v, pVTrimed, nVTrimed)=>{
       watchHandle(p_v, n_v, pVTrimed, nVTrimed);
     })
   }
   // 控制开关 
-  on = ()=>{ this.isAlive = true; }
-  off = ()=>{ this.isAlive = false; }  
-  kill = ()=>{
-    this.isAlive = false; 
+  $on = ()=>{ this._isAlive = true; }
+  $off = ()=>{ this._isAlive = false; }  
+  $kill = ()=>{
+    this._isAlive = false; 
     // todo 待优化 
     for(let key in this){
       this[key] = null; 
@@ -121,10 +121,10 @@ export class Vary {
   
   /* --------------------------------------------------------- 方法  */
   // 收集更新 
-  add_set = (setRun, extra)=>{
+  _add_set = (setRun, extra)=>{
     this._sets.push((setHandle, isLazy)=>{
-      let pre_v = this.get(true);
-      let pre_v_t = this.get(false);
+      let pre_v = this.$get(true);
+      let pre_v_t = this.$get(false);
       let nxt_v = setHandle; 
       if (!isLazy) { 
         nxt_v = setHandle(pre_v, pre_v_t, extra); 
@@ -147,9 +147,9 @@ export class Vary {
     });
   }
   // 执行初始化 
-  mounted_run = (...args)=>{
+  _mounted_run = (...args)=>{
     this._mounteds.forEach((mountedFn,idx)=>{
-      mountedFn(this.get(true), this.get(false), ...args);
+      mountedFn(this.$get(true), this.$get(false), ...args);
     })
   }
   

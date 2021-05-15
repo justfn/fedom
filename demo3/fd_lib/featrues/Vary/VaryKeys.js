@@ -11,16 +11,24 @@ const global_config = {
   // 忽略的keys
   keys: [
     '$$',
-    'get',
-    'set',
-    'mounted',
-    'watch',
-    'on',
-    'off',
-    'kill',
-    'add_set',
-    'mounted_run',
-    'update',
+    '$get',
+    '$set',
+    '$mounted',
+    '$watch',
+    '$on',
+    '$off',
+    '$kill',
+    '$update',
+    '_$$',
+    '_$$Trimed',
+    '_$$TrimedNxt',
+    '_isAlive',
+    '_mounteds',
+    '_sets',
+    '_watchs',
+    '_trimValueFn',
+    '_add_set',
+    '_mounted_run',
   ],
 };
 
@@ -44,7 +52,7 @@ export class KeysVary extends Vary {
     let vVal = this[key]; 
     if (!isVaryValue(vVal)) { throw 'fd VaryKeys update error: is not VaryValue' }
     
-    return vVal.set((preV)=>{
+    return vVal.$set((preV)=>{
       return val;
     });
   }

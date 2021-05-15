@@ -17,7 +17,7 @@ export default function varyAttrVaryShow(realNode, attrs){
   if (orginDisplay==='none') { orginDisplay = ''; }
   if (isVaryValue(originAttrVal)) { 
     attrVal = attrVal.$$; 
-    originAttrVal.add_set(({ preTrimedValue, nxtTrimedValue })=>{
+    originAttrVal._add_set(({ preTrimedValue, nxtTrimedValue })=>{
       realNode.style.display = nxtTrimedValue ? orginDisplay : 'none';
     })
   }

@@ -28,8 +28,8 @@ export default function childValVary(params={}){
   需在首次渲染后,将文本节点进行补偿替换 
   2 空数组子节点首次渲染时,将无实体节点插入,使用注释节点占位,该注释节点作为补偿节点存储 
   */
-  varyChild.mounted_run(child);
-  varyChild.add_set(({ preTrimedValue, nxtTrimedValue })=>{
+  varyChild._mounted_run(child);
+  varyChild._add_set(({ preTrimedValue, nxtTrimedValue })=>{
     if ( isArrayValue(preTrimedValue) ) {
       const patchObj = updateListChild({
         listChild: preTrimedValue, 
@@ -66,7 +66,7 @@ export default function childValVary(params={}){
   })
   if (isVaryList(varyChild)) {
     // 插入操作 
-    varyChild.add_list_in(({index, list})=>{
+    varyChild._add_list_in(({index, list})=>{
       let len = varyChild.$$.length; 
       let itmNode = findPositionNode(arrPathcNode, index);
       itmNode = itmNode || arrPathcNode; 
@@ -80,7 +80,7 @@ export default function childValVary(params={}){
     })
     
     // 删除操作 
-    varyChild.add_list_rm(({index})=>{
+    varyChild._add_list_rm(({index})=>{
       let itmNode = findPositionNode(arrPathcNode, index+1);
       // console.log( 'remove index: ', index, itmNode );
       refreshNode({

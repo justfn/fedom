@@ -55,7 +55,7 @@ export default function TodoList(props, context){
     addTodoItm: (evt)=>{
       console.log(evt);
       let newTodo = inputVal$.$$;
-      todoList$.insert(( list )=>{
+      todoList$.$insert(( list )=>{
         return [
           list.length, 
           [ 
@@ -67,20 +67,20 @@ export default function TodoList(props, context){
         ];
       })
       .then(()=>{
-        inputVal$.set(()=>{
+        inputVal$.$set(()=>{
           return '';
         })
         console.log( todoList$ );
       })
     },
     removeTodoItm: (id, text )=>{
-      todoList$.remove( id )
+      todoList$.$remove( id )
       .then(()=>{
         // 
       })
     },
     updateTodoItm: (id, itm)=>{
-      itm.isDone.set((val)=>{
+      itm.isDone.$set((val)=>{
         return !val;
       })
       .then(()=>{
@@ -93,7 +93,7 @@ export default function TodoList(props, context){
         // }), 2, 2 ));
       })
       
-      // todoList$.update(id, {
+      // todoList$.$update(id, {
       //   ...itm, 
       //   isDone: !itm.isDone,
       // })

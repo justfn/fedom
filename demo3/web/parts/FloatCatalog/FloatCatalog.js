@@ -27,7 +27,7 @@ export default function FloatCatalog(props, context){
   })
   
   let foldHandle = ()=>{
-    isFold.set((val)=>{
+    isFold.$set((val)=>{
       return !val;
     })
   }
