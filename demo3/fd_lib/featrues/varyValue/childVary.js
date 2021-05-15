@@ -41,16 +41,6 @@ export default function childValVary(params={}){
       return ;
     }
     
-    if ( isTextValue(preTrimedValue) ) {
-      const patchObj = updateListChild({
-        textFlgChild: textPatchNode, 
-        newChild: nxtTrimedValue,
-      })
-      textPatchNode = patchObj.txtPatch;
-      arrPathcNode = patchObj.arrPatch;
-      return ;
-    }
-    
     if ( isNodeValue(preTrimedValue) ) {
       const patchObj = updateNodeChild({
         nodeChild: preTrimedValue, 
@@ -61,9 +51,18 @@ export default function childValVary(params={}){
       return ;
     }
     
-    console.log('### to_do: childVary');
-    console.log('preTrimedValue', preTrimedValue);
-    console.log('child', child);
+    preTrimedValue = preTrimedValue + '';
+    const patchObj = updateTextChild({
+      textFlgChild: textPatchNode, 
+      newChild: nxtTrimedValue,
+    })
+    textPatchNode = patchObj.txtPatch;
+    arrPathcNode = patchObj.arrPatch;
+    // if ( isTextValue(preTrimedValue) ) { }
+    // console.log('### to_do: childVary');
+    // console.log('preTrimedValue', preTrimedValue);
+    // console.log('child', child);
+    // return ;
   })
   if (isVaryList(varyChild)) {
     // 插入操作 
@@ -138,18 +137,6 @@ function updateListChild({ listChild, startFlgNode, newChild, }){
   console.error('error: updateListChild')
 } 
 function updateTextChild({ textFlgChild, newChild }){
-  if (isTextValue(newChild) ) {
-    newChild = refreshNode({
-      positionNode: textFlgChild, 
-      childNode: newChild, 
-      oldChildNode: textFlgChild,
-    })
-    return {
-      txtPatch: newChild, 
-      arrPatch: null,
-    };
-  }
-  
   if (isNodeValue(newChild) ) {
     refreshNode({
       positionNode: textFlgChild, 
@@ -182,6 +169,18 @@ function updateTextChild({ textFlgChild, newChild }){
       arrPatch,
     };
   }
+  
+  // if (isTextValue(newChild) ) { }
+  newChild = newChild + ''
+  newChild = refreshNode({
+    positionNode: textFlgChild, 
+    childNode: newChild, 
+    oldChildNode: textFlgChild,
+  })
+  return {
+    txtPatch: newChild, 
+    arrPatch: null,
+  };
 } 
 function updateNodeChild({ nodeChild, newChild }){
   // let pNode = nodeChild.parentNode;

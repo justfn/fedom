@@ -14,23 +14,23 @@ export default function TodoList(props, context){
     [
       {
         text: '初始值001', 
-        isDone: false,
+        isDone: VaryValue(false),
       },
       {
         text: '初始值002', 
-        isDone: false,
+        isDone: VaryValue(false),
       },
       {
         text: '初始值003', 
-        isDone: false,
+        isDone: VaryValue(false),
       },
       {
         text: '初始值004', 
-        isDone: false,
+        isDone: VaryValue(false),
       },
       {
         text: '初始值005', 
-        isDone: false,
+        isDone: VaryValue(false),
       },
     ], 
     (itm, idx, id, list)=>{
@@ -61,7 +61,7 @@ export default function TodoList(props, context){
           [ 
             {
               text: newTodo,
-              isDone: false, 
+              isDone: VaryValue(false), 
             },
           ]
         ];
@@ -80,10 +80,13 @@ export default function TodoList(props, context){
       })
     },
     updateTodoItm: (id, itm)=>{
-      todoList$.update(id, {
-        ...itm, 
-        isDone: !itm.isDone,
+      itm.isDone.set((val)=>{
+        return !val;
       })
+      // todoList$.update(id, {
+      //   ...itm, 
+      //   isDone: !itm.isDone,
+      // })
     },
   }
   
