@@ -111,7 +111,7 @@ export default class TicTacToeV2 extends PageB {
   
   render(){
     return (
-      <section class={["app_TicTacToe"]}>
+      <section class={["app_TicTacToeV2"]}>
         <section class="component_Game" >
           <div class="game-board" >
             
