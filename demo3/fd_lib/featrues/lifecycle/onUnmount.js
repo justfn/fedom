@@ -51,7 +51,10 @@ window.addEventListener("beforeunload", (evt)=>{
 })
 
 
-
+export default function onUnmount(unmountRun){
+  // todo 
+  // unmountRun(instanceOrContext)
+} 
 
 
 

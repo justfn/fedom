@@ -60,6 +60,7 @@ export default class Router {
   // update_cache = (path, isCache)=>{ }
   
   _hashChange = (evt, callback)=>{
+    // console.log(" >>>>>>>>>>>>>> ", 'hash change');
     callback = callback || (v=>v);
     let oldPathParams = parseHash(evt.oldURL);
     let newPathParams = parseHash(evt.newURL);
