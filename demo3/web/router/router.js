@@ -40,6 +40,10 @@ const routes_ = [
         component: ()=>import('../pages/apps/TicTacToe/TicTacToe.js'),
       },
       {
+        path: 'TicTacToeV2',
+        component: ()=>import('../pages/apps/TicTacToeV2/TicTacToe.js'),
+      },
+      {
         path: 'TodoList',
         component: ()=>import('../pages/apps/TodoList/todoList.js'),
       },

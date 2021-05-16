@@ -73,11 +73,10 @@ export function fillChild( fNode, child, varyChild ) {
   else if ( isNodeValue(child) ) { 
     nodeChild(fNode, child);
   }
-  /* Result: other */
+  /* Result: other 默认按照字符串处理 */
   else {
     child = trimTextChild(child+'');
     textPatchNode = textChild(fNode, child);
-    console.warn('################################ todo child', child);
   }
   
   /* ** Features: 

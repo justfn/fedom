@@ -55,16 +55,20 @@ export default function TodoList(props, context){
     addTodoItm: (evt)=>{
       console.log(evt);
       let newTodo = inputVal$.$$;
-      todoList$.$insert(( list )=>{
-        return [
-          list.length, 
-          [ 
-            {
-              text: newTodo,
-              isDone: VaryValue(false), 
-            },
-          ]
-        ];
+      // todoList$.$insert(( list )=>{
+      //   return [
+      //     list.length, 
+      //     [ 
+      //       {
+      //         text: newTodo,
+      //         isDone: VaryValue(false), 
+      //       },
+      //     ]
+      //   ];
+      // })
+      todoList$.$push({
+        text: newTodo,
+        isDone: VaryValue(false), 
       })
       .then(()=>{
         inputVal$.$set(()=>{

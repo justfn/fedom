@@ -86,8 +86,9 @@ export class ListVary extends Vary {
     }
     idx = this._checkIdx(idx);
     
-    let trimList = lst.map((itm,idx)=>{
-      let itmId = `id_${this.arr_item_id_num+idx+1}`
+    let trimList = lst.map((itm, idx1)=>{
+      let _idx = this.arr_item_id_num+idx1+1;
+      let itmId = `id_${_idx}`
       return this._listItemTrimFn( itm, idx, itmId, this._$$);
     })
     this._listInSets.forEach((listInSetItm)=>{
@@ -129,11 +130,71 @@ export class ListVary extends Vary {
     }
     idx = this._checkIdx(idx);
     
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", idx, val)
-    this.$remove( idx );
-    this.$insert( idx, [val] );
+    return this.$remove( idx )
+    .then(()=>{
+      return this.$insert( idx, [val] );
+    })
+  }
+  $slice = (startIdxOrId, endIdxOrId)=>{
+    let startIdx = startIdxOrId;
+    let endIdx = endIdxOrId;
+    if (this._isItmIdValue(startIdxOrId)) { startIdx = this._findIdx(startIdxOrId); }
+    if (this._isItmIdValue(endIdxOrId)) { endIdx = this._findIdx(endIdxOrId); }
+    startIdx = this._checkIdx(startIdx);
+    endIdx = this._checkIdx(endIdx);
+    if (startIdx>=endIdx) { throw 'fd VaryList slice start is bigger than end' }
     
-    return Promise.resolve();
+    let promiseList = [];
+    let lenEnd = this.$$.length - endIdx;
+    if (lenEnd>0) {
+      Array(lenEnd).fill('').forEach((itm,idx)=>{
+        promiseList.push( this.$remove(endIdx) )
+      })
+    }
+    let lenStart = startIdx - 0; 
+    if (lenStart>0) {
+      Array(lenStart).fill('').forEach((itm,idx)=>{
+        promiseList.push( this.$remove(0) )
+      })
+    }
+    
+    return Promise.all( promiseList )
+  }
+  $unshift = (...list)=>{
+    return this.$insert(0, list)
+    .then(()=>{
+      return this.$$.length;
+    })
+  }
+  $push = (...list)=>{
+    return this.$insert(this.$$.length, list)
+    .then(()=>{
+      return this.$$.length;
+    })
+  }
+  $shift = ()=>{
+    if (this.$$.length===0) { return Promise.resolve(); }
+    
+    let firstItm = this.$$[0];
+    return this.$remove(0).then(()=>{
+      return firstItm;
+    })
+  }
+  $pop = ()=>{
+    if (this.$$.length===0) { return Promise.resolve(); }
+    
+    let lastItm = this.$$[this.$$.length-1];
+    return this.$remove(this.$$.length-1)
+    .then(()=>{
+      return lastItm;
+    })
+  }
+  $map = (forEachRun)=>{
+    forEachRun = forEachRun || function(){ };
+    
+    return this._$$List.map((itm, idx, list)=>{
+      return forEachRun(itm.$$, idx, itm.id, list)
+    })
   }
   // 收集更新-插入 
   _add_list_in = (listInSetRun)=>{
@@ -154,12 +215,13 @@ export class ListVary extends Vary {
   } 
 }
 
+
 export function VaryList(list, itmTrimFn){
   if (!isArrayValue(list)) { return console.error('fd: 非 List, 不可使用 VaryList'); }
   
   itmTrimFn = itmTrimFn || function(val, idx, id, list){ return val; }
   const varyedList = new ListVary(list, itmTrimFn, (lst)=>{
-    return list.map((itm,idx)=>{
+    return list.map((itm, idx)=>{
       return itmTrimFn(itm, idx, `id_${idx}`, list);
     });
   });

@@ -75,7 +75,7 @@ export class Vary {
     else {
       nxt_v = setHandle(pre_v, pre_v_t); 
       // diff nxt_v pre_v 
-      if (diffValue(pre_v, nxt_v)) { return ; }
+      if (diffValue(pre_v, nxt_v)) { return Promise.resolve(); }
       
       if (nxt_v===undefined) { nxt_v = pre_v }
       this.__$$TrimedNxt = this._trimValueFn(nxt_v);
