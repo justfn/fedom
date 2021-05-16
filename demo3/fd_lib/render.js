@@ -5,24 +5,31 @@ import {
   isArrayValue,
   isNodeValue,
   isTextValue,
+  isComponentValue,
 } from "./utils/judge.js";
 
-export default function render(nodes, appRootWrap){
-  globalWrite('elems.root', appRootWrap);
-  if ( isArrayValue(nodes) ) {
-    nodes.forEach((itm,idx)=>{ nodes(itm, appRootWrap); })
-    return ;
+export default function render( listOrNodeOrTextOrComponent, wrap){
+  if ( isArrayValue(listOrNodeOrTextOrComponent) ) {
+    listOrNodeOrTextOrComponent.forEach((itm,idx)=>{ render(itm, wrap); })
+    return listOrNodeOrTextOrComponent;
   }
   
-  if ( isTextValue(nodes) ) {
-    nodes = trimTextChild(nodes);
-    nodes = document.createTextNode(nodes);
-  }
-  else if ( !isNodeValue(nodes) ) {
-    console.log('## to_do: render unsport nodes', nodes);
+  if ( isTextValue(listOrNodeOrTextOrComponent) ) {
+    listOrNodeOrTextOrComponent = trimTextChild(listOrNodeOrTextOrComponent);
+    listOrNodeOrTextOrComponent = document.createTextNode(listOrNodeOrTextOrComponent);
+    wrap.appendChild(listOrNodeOrTextOrComponent);
+    return listOrNodeOrTextOrComponent;
   }
   
-  appRootWrap.appendChild(nodes);
+  if ( isNodeValue(listOrNodeOrTextOrComponent) ) {
+    wrap.appendChild(listOrNodeOrTextOrComponent);
+    return {
+      instance: listOrNodeOrTextOrComponent.instance, 
+      context: listOrNodeOrTextOrComponent.context, 
+    };
+  }
+   
+  console.log('render todo: ', listOrNodeOrTextOrComponent );
 } 
 
 

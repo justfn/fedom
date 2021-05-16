@@ -11,13 +11,34 @@ const routes_ = [
     alias: '/home',
     isCache: true, // bol|fn,是否缓存 
   },
+  // 测试 
+  {
+    path: '/test',
+    redirect: '/home',  // #todo: fixbug 
+    isCache: true, // bol|fn,是否缓存 
+    children: [
+      {
+        path: 'home',
+        component: ()=>import('../pages/test/testHome/testHome.js'),
+      },
+      {
+        path: 'chooseList',
+        component: ()=>import('../pages/test/chooseList/chooseList.js'),
+      },
+    ],
+  },
   // 特性展示 
   {
-    path: '/feature',
+    path: '/features',
     // alias: '/feature/home',
     // component: ()=>import('../pages/fealture/fealtureHome/fealtureHome.js'),
     isCache: true, // bol|fn,是否缓存 
     children: [
+      // 无法进入的页面 
+      {
+        path: 'unpass',
+        component: ()=>import('../pages/fealture/jsx/jsx.js'),
+      },
       {
         path: 'jsx',
         component: ()=>import('../pages/fealture/jsx/jsx.js'),
@@ -26,6 +47,18 @@ const routes_ = [
         path: 'upLogic',
         isCache: true, // bol|fn,是否缓存 
         component: ()=>import('../pages/fealture/upLogic/upLogic.js'),
+      },
+    ],
+  },
+  // 文档 
+  {
+    path: '/docs',
+    alias: '/docs/home',
+    isCache: true, // bol|fn,是否缓存 
+    children: [
+      {
+        path: 'home',
+        component: ()=>import('../pages/docs/home/docsHome.js'),
       },
     ],
   },
@@ -46,22 +79,6 @@ const routes_ = [
       {
         path: 'TodoList',
         component: ()=>import('../pages/apps/TodoList/todoList.js'),
-      },
-    ],
-  },
-  // 其他测试点
-  {
-    path: '/test',
-    redirect: '/home',  // #todo: fixbug 
-    isCache: true, // bol|fn,是否缓存 
-    children: [
-      {
-        path: 'home',
-        component: ()=>import('../pages/test/testHome/testHome.js'),
-      },
-      {
-        path: 'chooseList',
-        component: ()=>import('../pages/test/chooseList/chooseList.js'),
       },
     ],
   },
@@ -100,7 +117,7 @@ const options = {
   routes: routes_,
   root: document.querySelector("#app"),
   beforeEach(oldPathParams, newPathParams){
-    if (newPathParams.path==='/test/home') { return false; }
+    if (newPathParams.path==='/features/unpass') { return false; }
     
     return true;
   },

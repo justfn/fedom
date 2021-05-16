@@ -5,9 +5,10 @@ import "./testHome.less";
 
 const {
   VaryValue,
+  render, 
 } = window.$fd;
 
-export default function(props,context){
+export default function(props, context){
   
   
   
@@ -18,5 +19,3 @@ export default function(props,context){
     </PageA>
   );
 }
-
-
