@@ -9,18 +9,23 @@ import {
   isEmptyValue, 
 } from "../../utils/judge.js";
 
+class ListId {
+  constructor(idNum){
+    this.value = idNum;
+  }
+}
 export class ListVary extends Vary {
-  constructor(val, itmTrimFn, trimFn){
+  constructor(val, initIdList, itmTrimFn, trimFn){
     super(val, trimFn)
     
     // VaryList 备份&跟踪 
     this._$$List = [
       // {
       //   $$: <val>,
-      //   id: <idx>,
+      //   id: new ListId(idx),
       // }
     ]; 
-    this._initList();
+    this._initList(initIdList);
     
     this._listInSets = [];
     this._listRmSets = [];
@@ -28,23 +33,22 @@ export class ListVary extends Vary {
   }
   
   arr_item_id_num = -99;
-  _initList = ()=>{
+  _initList = (initIdList)=>{
     this._$$List = this._$$.map((itm,idx)=>{
       this.arr_item_id_num = idx;
       return {
         $$: itm, 
-        id: `id_${idx}`,
+        id: initIdList[idx],
       }
     })
   }
   
   /* --------------------------------------------------------- KITs  */
-  _splice = (begin, num, list=[], trimList=[])=>{
+  _splice = (begin, num, list=[], updateIdList=[], trimList=[])=>{
     let bakList = list.map((itm,idx)=>{
-      this.arr_item_id_num++;
       return {
         $$: itm, 
-        id: `id_${this.arr_item_id_num}`,
+        id: updateIdList[idx],
       }
     })
     
@@ -53,14 +57,15 @@ export class ListVary extends Vary {
     this._$$List.splice(begin, num, ...bakList);
   }
   _isItmIdValue = (val)=>{
-    if (!val) { return false; }
-    if (!val.startsWith) { return false; }
-    if (!val.startsWith('id_')) { return false; }
+    if ( !val ) { return false; }
+    if ( val instanceof ListId ) { return true; }
     
-    return true;
+    return false;
   }
   _findIdx = (id)=>{
-    let idx = this._$$List.findIndex( itm=>itm.id===id ); 
+    let idx = this._$$List.findIndex( 
+      itm=>itm.id===id 
+    ); 
     if (idx===-1) { throw 'fd VaryList id 错误'; }
     
     return idx;
@@ -86,9 +91,11 @@ export class ListVary extends Vary {
     }
     idx = this._checkIdx(idx);
     
+    let updateIdList = [];
     let trimList = lst.map((itm, idx1)=>{
-      let _idx = this.arr_item_id_num+idx1+1;
-      let itmId = `id_${_idx}`
+      this.arr_item_id_num++;
+      let itmId = new ListId( this.arr_item_id_num );
+      updateIdList.push(itmId);
       return this._listItemTrimFn( itm, idx, itmId, this._$$);
     })
     this._listInSets.forEach((listInSetItm)=>{
@@ -97,7 +104,7 @@ export class ListVary extends Vary {
         list: trimList,
       });
     })
-    this._splice(idx, 0, lst, trimList);
+    this._splice(idx, 0, lst, updateIdList, trimList);
     return Promise.resolve();
   }
   $remove = (removeRunOrItmidOrIdx)=>{
@@ -220,10 +227,15 @@ export function VaryList(list, itmTrimFn){
   if (!isArrayValue(list)) { return console.error('fd: 非 List, 不可使用 VaryList'); }
   
   itmTrimFn = itmTrimFn || function(val, idx, id, list){ return val; }
-  const varyedList = new ListVary(list, itmTrimFn, (lst)=>{
-    return list.map((itm, idx)=>{
-      return itmTrimFn(itm, idx, `id_${idx}`, list);
-    });
+  
+  let initIdList = [];
+  let trimedList = list.map((itm, idx)=>{
+    let itmId = new ListId(idx);
+    initIdList.push(itmId);
+    return itmTrimFn(itm, idx, itmId, list);
+  });
+  const varyedList = new ListVary(list, initIdList, itmTrimFn, (lst)=>{
+    return trimedList;
   });
   
   return varyedList;
