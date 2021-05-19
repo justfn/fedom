@@ -18,8 +18,8 @@ export function removeComponentRun(fNode, ...args){
     
     return ;
   }
-  if ( fNode.instance && fNode.instance.onUnmount ) {
-    fNode.instance.onUnmount(...args);
+  if ( fNode.context && fNode.context.onUnmount ) {
+    fNode.context.onUnmount(...args);
     
     return ;
   }
@@ -53,7 +53,7 @@ window.addEventListener("beforeunload", (evt)=>{
 
 export default function onUnmount(unmountRun){
   // todo 
-  // unmountRun(instanceOrContext)
+  // unmountRun(contextOrContext)
 } 
 
 

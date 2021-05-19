@@ -39,7 +39,6 @@ export class FNode {
       attrs = {}, 
       children = [], 
       context = {}, 
-      instance = {}, 
     } = options;
     this.varyTag = varyTag;
     this.tagName = tagName;
@@ -52,7 +51,6 @@ export class FNode {
       children: this.children,
     };
     this.context = context;
-    this.instance = instance;
   }
   
   // Vary,tag的壳 
@@ -68,10 +66,8 @@ export class FNode {
   props = {};
   // arr,子节点集合
   children = [];
-  // 函数组件的第二个参数 
+  // 函数组件的第二个参数/类组件实例 
   context = {};
-  // 类组件实例 
-  instance = {}; 
 }
 
 
@@ -99,7 +95,7 @@ export default function createFNode({ varyTag, tagName, attrs, children, scope, 
   if (isComponentValue(tagName)) {
     // 注意：此处又将调用 compiler 
     let {
-      instance,
+      context,
       renderNode,
     } = cpntRender(tagName, props);
     fNode = new FNode({
@@ -108,7 +104,7 @@ export default function createFNode({ varyTag, tagName, attrs, children, scope, 
       realNode: renderNode,
       attrs, 
       children, 
-      instance, 
+      context: context, 
     });
     updateActiveComponentFNodes(fNode);
   }

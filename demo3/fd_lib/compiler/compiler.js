@@ -51,7 +51,6 @@ export default function compiler(tagName, attrs, ...children){
   // 传递 实例/context 
   if (isFDComponent(tagName)) {
     try {
-      fNode.realNode.instance = fNode.instance
       fNode.realNode.context = fNode.context
     } 
     catch (err) { console.log('compiler todo ', err); } 

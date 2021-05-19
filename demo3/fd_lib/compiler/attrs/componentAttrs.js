@@ -16,7 +16,6 @@ export default function componentAttrs(fNode){
     refVal({
       node: fNode.realNode,
       ...fNode.context, 
-      ...fNode.instance, 
     })
     return ;
   }
@@ -25,7 +24,6 @@ export default function componentAttrs(fNode){
     refVal._resolve({
       node: fNode.realNode,
       ...fNode.context, 
-      ...fNode.instance, 
     });
     return ;
   }

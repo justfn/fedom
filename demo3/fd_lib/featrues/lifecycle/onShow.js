@@ -30,8 +30,8 @@ export function componentShowRun(fNode, ...args){
     
     return ;
   }
-  if ( fNode.instance && fNode.instance.onShow ) {
-    fNode.instance.onShow(...args);
+  if ( fNode.context && fNode.context.onShow ) {
+    fNode.context.onShow(...args);
     
     return ;
   }

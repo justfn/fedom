@@ -1,12 +1,9 @@
 
 
-export default function cpntUpdate(fNode, context, instance){
+export default function cpntUpdate(fNode, context){
   fNode.context = context;
-  fNode.instance = instance;
   // fNode.varyTag.kill();
   // fNode.context = {}; 
-  // fNode.instance = {}; 
-  
   
   
 } 

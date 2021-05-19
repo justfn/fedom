@@ -7,7 +7,7 @@ export default function cpntRender(Klass, ...args){
   let renderNode = renderFunc.bind(instance)();
   
   return {
-    instance,
+    context: instance,
     renderNode,
   };
 } 

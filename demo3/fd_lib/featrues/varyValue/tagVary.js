@@ -93,10 +93,10 @@ export default function varyTagName(fNode){
       removeComponentRun(fNode); 
       // todo: 待优化为 createFNode 
       let {
-        instance,
+        context,
         renderNode,
       } = cpntRender(nxtTrimedValue,props);
-      cpntUpdate(fNode, {}, instance);
+      cpntUpdate(fNode, context);
       nxt_node = renderNode;
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;

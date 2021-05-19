@@ -24,8 +24,7 @@ export default function render( listOrNodeOrTextOrComponent, wrap){
   if ( isNodeValue(listOrNodeOrTextOrComponent) ) {
     wrap.appendChild(listOrNodeOrTextOrComponent);
     return {
-      instance: listOrNodeOrTextOrComponent.instance, 
-      context: listOrNodeOrTextOrComponent.context, 
+      ...listOrNodeOrTextOrComponent.context, 
     };
   }
    

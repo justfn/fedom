@@ -10,8 +10,8 @@ export default function onMounted(fNode){
         fn && fn(fNode);
       });
     }
-    if (fNode.instance.onMounted) {
-      fNode.instance.onMounted(fNode);
+    if (fNode.context.onMounted) {
+      fNode.context.onMounted(fNode);
     }
     
   })
