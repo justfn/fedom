@@ -39,6 +39,7 @@ export default function(props, context){
   })
   ref2.then((ctx)=>{
     console.log(ctx, 'ref2');
+    console.log(ctx.childNodes.length, 'ref2');
   })
   ref3.then((ctx)=>{
     console.log(ctx, 'ref3');
@@ -96,7 +97,7 @@ export default function(props, context){
     varyInputVal.$$ = val; 
   }
   
-  let htmlDom = context.html(`
+  let htmlDom = context.utils.html(`
     <div>htmlDom 111 </div>
     <h1>htmlDom 222</h1>
     <li>htmlDom 333</li>

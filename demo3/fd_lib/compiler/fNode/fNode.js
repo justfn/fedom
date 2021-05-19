@@ -112,7 +112,13 @@ export default function createFNode({ varyTag, tagName, attrs, children, scope, 
   else if ( isFunctionValue(tagName) ) {
     // 注意：此处又将调用 compiler 
     let context = getContext();
-    let realNode = tagName(props, context);
+    let realNode = null;
+    try { realNode = tagName(props, context); } 
+    catch (err) {
+      console.error(err) 
+      throw err;
+    } 
+    context.root._resolve(realNode);
     // if (context.scopeId!==undefined) {
     //   scope.id = context.scopeId;
     // }
