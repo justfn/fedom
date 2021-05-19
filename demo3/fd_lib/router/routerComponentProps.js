@@ -1,7 +1,7 @@
 /* ** 路由组件新增的属性/功能 
 */
-import routerPush from "./routerPush.js";
-import routerReplace from "./routerReplace.js";
+import routerPush from "./history/push.js";
+import routerReplace from "./history/replace.js";
 
 export default function routerComponentProps( oldPathParams, newPathParams, cachedPageMap){
   

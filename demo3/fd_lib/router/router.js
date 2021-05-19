@@ -3,7 +3,8 @@ import { globalWrite, globalRead, } from "../utils/globalWR.js";
 import formatRoutes from "./formatRoutes.js";
 import parseHash from "./parseHash.js";
 import onHashChange, { initHashChange, } from "./onHashChange.js";
-import routerReplace from "./routerReplace.js";
+import routerPush from "./history/push.js";
+import routerReplace from "./history/replace.js";
 import routerComponentProps from "./routerComponentProps.js";
 import cachePage from "./cachePage.js";
 import render from "../render.js";
@@ -168,6 +169,11 @@ export default class Router {
       console.log('todo: 待处理场景', err);
     })
   }
+  
+  /* --------------------------------------------------------- 工具方法 */
+  push = routerPush;
+  replace = routerReplace;
+  routes = getRoutes(true);
 }
 // 路由组件映射 
 export function updatePathComponentFNdsMap(routeMap){

@@ -1,8 +1,8 @@
 /* ** 函数组件的第二个参数 context
 */
 
-import routerPush from "../../router/routerPush.js";
-import routerReplace from "../../router/routerReplace.js";
+import routerPush from "../../router/history/push.js";
+import routerReplace from "../../router/history/replace.js";
 import { getRoutes, } from "../../router/router.js";
 import utils from "./utils.js";
 import { RefValue, } from "../ref/Ref.js";
