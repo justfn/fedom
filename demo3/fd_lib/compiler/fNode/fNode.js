@@ -2,7 +2,7 @@ import config from "../../config/config.js";
 import message from "../../config/message.js";
 import varyTagName from "../../featrues/varyValue/tagVary.js";
 import cpntRender from "../../featrues/Component/cpntRender.js";
-import getContext from "../../featrues/Component/context.js";
+import Context from "../../featrues/Component/Context.js";
 import { updateActiveComponentFNodes, } from "../../router/router.js";
 import { 
   isComponentValue, 
@@ -111,7 +111,7 @@ export default function createFNode({ varyTag, tagName, attrs, children, scope, 
   /* output 2: function */
   else if ( isFunctionValue(tagName) ) {
     // 注意：此处又将调用 compiler 
-    let context = getContext();
+    let context = new Context(props);
     let realNode = null;
     try { realNode = tagName(props, context); } 
     catch (err) {

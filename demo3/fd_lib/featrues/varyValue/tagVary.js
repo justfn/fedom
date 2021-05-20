@@ -6,7 +6,7 @@ import fillChildren from "../../compiler/child/fillChild.js";
 import cpntRender from "../../featrues/Component/cpntRender.js";
 import cpntUpdate from "../../featrues/Component/cpntUpdate.js";
 import { removeComponentRun, } from "../../featrues/lifecycle/onUnmount.js";
-import getContext from "../Component/context.js";
+import Context from "../Component/Context.js";
 import componentAttrs from "../../compiler/attrs/componentAttrs.js";
 import { 
   isComponentValue, 
@@ -112,7 +112,7 @@ export default function varyTagName(fNode){
     if ( isFunctionValue(nxtTrimedValue) ) {
       removeComponentRun(fNode); 
       // todo: 待优化为 createFNode 
-      let context = getContext();
+      let context = new Context(props);
       cpntUpdate(fNode, context, null);
       nxt_node = nxtTrimedValue(props, context)
       pNode.replaceChild(nxt_node, pre_node);

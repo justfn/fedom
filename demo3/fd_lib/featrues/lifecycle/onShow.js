@@ -3,6 +3,12 @@
 
 import onHashChange from "../../router/onHashChange.js";
 import { getActiveComponentFNodes, } from "../../router/router.js";
+import {
+  isComponentValue, 
+  isContextValue, 
+  isFunctionValue, 
+  isArrayValue, 
+} from "../../utils/judge.js";
 
 
 
@@ -22,20 +28,32 @@ onHashChange((evt, option)=>{
 })
 
 
-export function componentShowRun(fNode, ...args){
+export function componentShowRun(fNode, showArgs){
   if ( fNode.context && fNode.context._onShowFns ) {
     fNode.context._onShowFns.forEach((callback)=>{
-      callback(...args);
+      callback(showArgs);
     })
     
     return ;
   }
   if ( fNode.context && fNode.context.onShow ) {
-    fNode.context.onShow(...args);
+    fNode.context.onShow(showArgs);
     
     return ;
   }
 
   // console.log('to_do: ', fNode);
+} 
+
+
+export default function onShow(context, callback){
+  if (!isComponentValue(context)) { return console.error('#fd onShow context error'); }
+  if (!isContextValue(context)) { return console.error('#fd onShow context error'); }
+  if (!isFunctionValue(callback)) { return console.error('#fd onShow callback error'); }
+  if (!isArrayValue(context._onShowFns)) { return console.error('#fd onShow error'); }
+  
+  context._onShowFns.push((showArgs)=>{
+    callback(showArgs);
+  })
 } 
 
