@@ -11,7 +11,7 @@ import { Ref, } from "../featrues/ref/Ref.js";
 
 
 // 是否为空值 
-export function isNullValue(val){
+export function isNull(val){
   return val===null;
 } 
 // 是否为布尔值 
@@ -50,14 +50,20 @@ export function isCommentNode(val){
   if (!val) { return false; }
   return val.nodeName==='#comment';
 } 
-// 是否为Component类型 
-export function isComponentValue(val){
+// 是否为Component类 
+export function isComponent(val){
   if (!val) { return false; }
   
   let proto = val.prototype;
   if (!proto) { return false; }
   
   return proto instanceof Component;
+} 
+// 是否为Component类型 
+export function isComponentValue(val){
+  if (!val) { return false; }
+  
+  return val instanceof Component;
 } 
 // 是否为Context类型 
 export function isContextValue(val){

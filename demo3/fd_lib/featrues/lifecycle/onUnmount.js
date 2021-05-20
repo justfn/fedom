@@ -58,8 +58,8 @@ window.addEventListener("beforeunload", (evt)=>{
 
 
 export default function onUnmount(context, callback){
-  if (!isComponentValue(context)) { return console.error('#fd onUnmount context error'); }
-  if (!isContextValue(context)) { return console.error('#fd onUnmount context error'); }
+  console.log(" >>>>>>>>>>>>>> ", context)
+  if (!isComponentValue(context) && !isContextValue(context)) { return console.error('#fd onUnmount context error'); }
   if (!isFunctionValue(callback)) { return console.error('#fd onUnmount callback error'); }
   if (!isArrayValue(context._onUnmountFns)) { return console.error('#fd onUnmount error'); }
   

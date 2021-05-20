@@ -5,11 +5,11 @@ import cpntRender from "../../featrues/Component/cpntRender.js";
 import Context from "../../featrues/Component/Context.js";
 import { updateActiveComponentFNodes, } from "../../router/router.js";
 import { 
-  isComponentValue, 
+  isComponent, 
   isVaryValue, 
   isFunctionValue, 
   isStringValue, 
-  isNullValue, 
+  isNull, 
 } from "../../utils/judge.js";
 
 
@@ -21,9 +21,9 @@ import {
 */
 export function getRealTagTypes(tagName){
   if (isVaryValue(tagName)) { return getRealTagTypes(tagName.$get(false)); }
-  if (isComponentValue(tagName)) { return config.tag_types.component; }
+  if (isComponent(tagName)) { return config.tag_types.component; }
   if (isFunctionValue(tagName)) { return config.tag_types.function; }
-  if (isStringValue(tagName) || isNullValue(tagName) ) { return config.tag_types.origin; }
+  if (isStringValue(tagName) || isNull(tagName) ) { return config.tag_types.origin; }
   
   return 'unknow';
 }  
@@ -92,7 +92,7 @@ export default function createFNode({ varyTag, tagName, attrs, children, scope, 
   }
   let fNode = null;
   /* output 1: class */
-  if (isComponentValue(tagName)) {
+  if (isComponent(tagName)) {
     // 注意：此处又将调用 compiler 
     let {
       context,
@@ -148,7 +148,7 @@ export default function createFNode({ varyTag, tagName, attrs, children, scope, 
       children, 
     });
   }
-  else if ( isNullValue(tagName) ) {
+  else if ( isNull(tagName) ) {
     fNode = new FNode({
       varyTag,
       tagName, 

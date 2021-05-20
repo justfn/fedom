@@ -11,30 +11,33 @@ export default class Page extends PageB {
   constructor(props){
     super(props);
     this.init();
+    console.log(" >>>>>>>>>>>>>> ", 'start')
   }
   onShow(){
+    console.log(" >>>>>>>>>>>>>> ", 'onShow ')
+    console.log('todo onShow');
     this.init();
   }
   onUnmount(){
     console.log('  onUnmount  ');
-    this.unBind();
   }
   
   init(){
     console.log(' 000 ');
-    let { x, y, unBind } = trackMouse(document.body);
-    this.x = x;
-    this.y = y;
-    this.x.$watch((...args)=>{
-      console.log( 'watch:', args);
+    this.root.then((rootEl)=>{
+      let { x, y } = trackMouse(rootEl, this);
+      this.x = x;
+      this.y = y;
+      this.x.$watch((...args)=>{
+        console.log( 'watch:', args);
+      })
     })
-    this.unBind = unBind;
   }
   
   
   render(){
     return (
-      <section class="upLogic">
+      <section class="upLogic" >
         <div>
           <span>坐标X:</span>
           <span>{ this.x }</span>

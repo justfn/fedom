@@ -9,7 +9,7 @@ import { removeComponentRun, } from "../../featrues/lifecycle/onUnmount.js";
 import Context from "../Component/Context.js";
 import componentAttrs from "../../compiler/attrs/componentAttrs.js";
 import { 
-  isComponentValue, 
+  isComponent, 
   isBooleanValue, 
   isStringValue, 
   isFunctionValue, 
@@ -89,7 +89,7 @@ export default function varyTagName(fNode){
     }
     
     // Features: 替换为组件 
-    if (isComponentValue(nxtTrimedValue)) {
+    if (isComponent(nxtTrimedValue)) {
       removeComponentRun(fNode); 
       // todo: 待优化为 createFNode 
       let {

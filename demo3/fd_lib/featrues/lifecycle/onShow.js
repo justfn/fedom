@@ -47,8 +47,7 @@ export function componentShowRun(fNode, showArgs){
 
 
 export default function onShow(context, callback){
-  if (!isComponentValue(context)) { return console.error('#fd onShow context error'); }
-  if (!isContextValue(context)) { return console.error('#fd onShow context error'); }
+  if (!isComponentValue(context) && !isContextValue(context)) { return console.error('#fd onShow context error'); }
   if (!isFunctionValue(callback)) { return console.error('#fd onShow callback error'); }
   if (!isArrayValue(context._onShowFns)) { return console.error('#fd onShow error'); }
   

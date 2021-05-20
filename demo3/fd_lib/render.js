@@ -5,7 +5,7 @@ import {
   isArrayValue,
   isNodeValue,
   isTextValue,
-  isComponentValue,
+  isComponent,
 } from "./utils/judge.js";
 
 export default function render( listOrNodeOrTextOrComponent, wrap){
