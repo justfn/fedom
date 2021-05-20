@@ -17,15 +17,13 @@ import {
 2: 路由切换, 渲染时收集页面级组件,切换前调用 
 */
 export function removeComponentRun(fNode, unmountArgs){
+  if ( fNode.context && fNode.context.onUnmount ) {
+    fNode.context.onUnmount(unmountArgs);
+  }
   if ( fNode.context && fNode.context._onUnmountFns ) {
     fNode.context._onUnmountFns.forEach((callback)=>{
       callback(unmountArgs);
     })
-    
-    return ;
-  }
-  if ( fNode.context && fNode.context.onUnmount ) {
-    fNode.context.onUnmount(unmountArgs);
     
     return ;
   }

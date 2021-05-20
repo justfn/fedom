@@ -17,7 +17,6 @@ import {
 
 
 onHashChange((evt, option)=>{
-  // console.log( 'onShow', evt, option);
   if (option.init) { return ; }
   if (!['cache'].includes(option.type)) { return ; }
   
@@ -29,6 +28,9 @@ onHashChange((evt, option)=>{
 
 
 export function componentShowRun(fNode, showArgs){
+  if ( fNode.context && fNode.context.onShow ) {
+    fNode.context.onShow(showArgs);
+  }
   if ( fNode.context && fNode.context._onShowFns ) {
     fNode.context._onShowFns.forEach((callback)=>{
       callback(showArgs);
@@ -36,13 +38,6 @@ export function componentShowRun(fNode, showArgs){
     
     return ;
   }
-  if ( fNode.context && fNode.context.onShow ) {
-    fNode.context.onShow(showArgs);
-    
-    return ;
-  }
-
-  // console.log('to_do: ', fNode);
 } 
 
 
