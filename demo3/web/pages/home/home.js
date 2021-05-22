@@ -49,7 +49,7 @@ export default function(props, context){
   
   
   // let Header$ = VaryValue(Header);
-  let Header$ = VaryValue(null);
+  let Header$ = VaryValue(Header);
   // let Header$ = VaryValue(Header);
   let isActive = VaryValue(true);
   let varyText = VaryValue('fd 001');
@@ -106,17 +106,26 @@ export default function(props, context){
   let val = Header$.$$;
   // console.log( val, '=== ');
   let changeClickHandle = ()=>{
-    console.log( ' 1');
     varyInputVal.$$ = Date.now();
-    
-    if (Header$.$$===null) {
-      Header$.$$ = Header;
+    // debugger
+
+    if (Header$.$$===PartA) {
+      Header$.$set(()=>{
+        console.log('bbbb');
+        return Header;
+      })
     }
     else if ( Header$.$$ === Header ) {
-      Header$.$$ = PartA;
+      Header$.$set(()=>{
+        console.log('ccccc');
+        return PartA;
+      });
     }
     else {
-      Header$.$$ = null;
+      Header$.$set(()=>{
+        console.log('aaaa');
+        return null;
+      })
     }
   }
   let isShow$ = VaryValue(false);

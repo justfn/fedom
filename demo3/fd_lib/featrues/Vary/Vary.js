@@ -26,10 +26,11 @@ import {
 
 /* 可变量类 
 */
+let use_vary_num_id = 0; 
 const symbol_1 = Symbol('cache_value'); // 唯一标识1 
 export class Vary {
-  constructor(val, trimFn, nId) {
-    this._num_id = nId ?? NaN;
+  constructor(val, trimFn) {
+    this._num_id = use_vary_num_id++;
     
     this._isAlive = true; 
     this._$$ = val; 
@@ -157,10 +158,8 @@ export class Vary {
 
 /* 使用可变量 
 */
-let use_vary_num_id = 0; 
 export function VaryValue(val, trimFn){
-  // console.log( use_vary_num_id );
-  const varyVal = new Vary(val, trimFn, use_vary_num_id++);
+  const varyVal = new Vary(val, trimFn);
   return varyVal;
 }
 
