@@ -4,7 +4,7 @@ import { globalWrite, globalRead, } from "../utils/globalWR.js";
 import createFNode from "./fNode/fNode.js";
 import addAttrs from "./attrs/addAttrs.js";
 import fillChildren from "./child/fillChild.js";
-import { compilerBefore, compilerAfter, } from "../featrues/Component/scope.js";
+import { compilerBefore, compilerAfter, } from "../featrues/Component/componentScope.js";
 import { 
   isFDComponent, 
 } from "../utils/judge.js";

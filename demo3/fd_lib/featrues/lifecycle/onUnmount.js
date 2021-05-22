@@ -5,7 +5,6 @@ import onHashChange from "../../router/onHashChange.js";
 import { getActiveComponentFNodes, } from "../../router/router.js";
 import {
   isComponentValue, 
-  isContextValue, 
   isFunctionValue, 
   isArrayValue, 
 } from "../../utils/judge.js";
@@ -17,10 +16,10 @@ import {
 2: 路由切换, 渲染时收集页面级组件,切换前调用 
 */
 export function removeComponentRun(fNode, unmountArgs){
-  if ( fNode.context && fNode.context.onUnmount ) {
+  if ( fNode.context && fNode.context.onUnmount && isFunctionValue(fNode.context.onUnmount) ) {
     fNode.context.onUnmount(unmountArgs);
   }
-  if ( fNode.context && fNode.context._onUnmountFns ) {
+  if ( fNode.context && fNode.context._onUnmountFns && isArrayValue(fNode.context._onUnmountFns) ) {
     fNode.context._onUnmountFns.forEach((callback)=>{
       callback(unmountArgs);
     })
@@ -56,10 +55,9 @@ window.addEventListener("beforeunload", (evt)=>{
 
 
 export default function onUnmount(context, callback){
-  console.log(" >>>>>>>>>>>>>> ", context)
-  if (!isComponentValue(context) && !isContextValue(context)) { return console.error('#fd onUnmount context error'); }
-  if (!isFunctionValue(callback)) { return console.error('#fd onUnmount callback error'); }
-  if (!isArrayValue(context._onUnmountFns)) { return console.error('#fd onUnmount error'); }
+  if ( !isComponentValue(context) ) { return console.error('#fd onUnmount context error'); }
+  if ( !isFunctionValue(callback) ) { return console.error('#fd onUnmount callback error'); }
+  if ( !isArrayValue(context._onUnmountFns) ) { return console.error('#fd onUnmount error'); }
   
   context._onUnmountFns.push((showArgs)=>{
     callback(showArgs);

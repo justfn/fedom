@@ -3,16 +3,13 @@ import message from "../../config/message.js";
 import createFNode from "../../compiler/fNode/fNode.js";
 import addAttrs from "../../compiler/attrs/addAttrs.js";
 import fillChildren from "../../compiler/child/fillChild.js";
-import cpntRender from "../../featrues/Component/cpntRender.js";
-import cpntUpdate from "../../featrues/Component/cpntUpdate.js";
+import componentRender from "../../featrues/Component/componentRender.js";
+import componentUpdate from "../../featrues/Component/componentUpdate.js";
 import { removeComponentRun, } from "../../featrues/lifecycle/onUnmount.js";
-import Context from "../Component/Context.js";
 import componentAttrs from "../../compiler/attrs/componentAttrs.js";
 import { 
-  isComponent, 
   isBooleanValue, 
   isStringValue, 
-  isFunctionValue, 
   isFDComponent, 
   isEmptyValue, 
 } from "../../utils/judge.js";
@@ -52,7 +49,7 @@ export default function varyTagName(fNode){
     // Features: null 删除该节点 
     if ( isEmptyValue(nxtTrimedValue) ) {
       removeComponentRun(fNode); 
-      cpntUpdate(fNode, null, null);
+      componentUpdate(fNode, null, null);
       nxt_node = document.createComment("fedom vary tag and remove")
       pre_node_removed = pre_node;
       pNode.replaceChild(nxt_node, pre_node);
@@ -66,7 +63,7 @@ export default function varyTagName(fNode){
     // Features: 替换为html节点  
     if ( isStringValue(nxtTrimedValue) ) {
       removeComponentRun(fNode); 
-      cpntUpdate(fNode, null, null);
+      componentUpdate(fNode, null, null);
       
       let newFNode = createFNode({
         varyTag: null, 
@@ -89,14 +86,14 @@ export default function varyTagName(fNode){
     }
     
     // Features: 替换为组件 
-    if (isComponent(nxtTrimedValue)) {
+    if (isFDComponent(nxtTrimedValue)) {
       removeComponentRun(fNode); 
       // todo: 待优化为 createFNode 
       let {
         context,
         renderNode,
-      } = cpntRender(nxtTrimedValue,props);
-      cpntUpdate(fNode, context);
+      } = componentRender(nxtTrimedValue,props);
+      componentUpdate(fNode, context);
       nxt_node = renderNode;
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;
@@ -107,24 +104,6 @@ export default function varyTagName(fNode){
       //   parent_node: pNode,
       // };
     }
-    
-    // Features: 替换为组件 
-    if ( isFunctionValue(nxtTrimedValue) ) {
-      removeComponentRun(fNode); 
-      // todo: 待优化为 createFNode 
-      let context = new Context(props);
-      cpntUpdate(fNode, context, null);
-      nxt_node = nxtTrimedValue(props, context)
-      pNode.replaceChild(nxt_node, pre_node);
-      pre_node = nxt_node;
-      componentAttrs(fNode);
-      return ;
-      // {
-      //   next_value: nxtTrimedValue,
-      //   parent_node: pNode,
-      // };
-    }
-    
     
     console.warn('动态标签: ', nxtTrimedValue );
     throw message.errors.unsuport_vary_tag;

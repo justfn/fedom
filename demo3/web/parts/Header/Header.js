@@ -9,9 +9,9 @@ const {
 export default function Header(props, context){
   // console.log(' Header --');
   let klass = props.class ?? '';
-  context.onUnmount((...args)=>{
+  context.onUnmount = (...args)=>{
     console.log( ' Header unmount ', args);
-  })
+  }
   
   context.methods = {
     alert(){

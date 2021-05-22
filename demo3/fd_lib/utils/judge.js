@@ -3,7 +3,6 @@
 import config from "../config/config.js";
 import message from "../config/message.js";
 import Component from "../featrues/Component/Component.js";
-import Context from "../featrues/Component/Context.js";
 import { Vary, } from "../featrues/Vary/Vary.js";
 import { ListVary, } from "../featrues/Vary/VaryList.js";
 import { KeysVary, } from "../featrues/Vary/VaryKeys.js";
@@ -59,17 +58,11 @@ export function isComponent(val){
   
   return proto instanceof Component;
 } 
-// 是否为Component类型 
+// 是否为Component类型对象 
 export function isComponentValue(val){
   if (!val) { return false; }
   
   return val instanceof Component;
-} 
-// 是否为Context类型 
-export function isContextValue(val){
-  if (!val) { return false; }
-  
-  return val instanceof Context;
 } 
 // 值是否为可变量值 
 export function isVaryValue(val){
@@ -114,7 +107,7 @@ export function isEmptyValue(val){
 } 
 // 是否为fedom组件 [复合类型]
 export function isFDComponent(val){
-  return isComponentValue(val) || isFunctionValue(val);
+  return isComponent(val) || isFunctionValue(val);
 } 
 // 是否为文本值 [复合类型]: 
 // 包含数值 空值 undefined/null 空值为 '' 

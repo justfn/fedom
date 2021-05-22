@@ -1,12 +1,12 @@
 import config from "../../config/config.js";
 import message from "../../config/message.js";
 import varyTagName from "../../featrues/varyValue/tagVary.js";
-import cpntRender from "../../featrues/Component/cpntRender.js";
-import Context from "../../featrues/Component/Context.js";
+import componentRender from "../../featrues/Component/componentRender.js";
 import { updateActiveComponentFNodes, } from "../../router/router.js";
 import { 
-  isComponent, 
   isVaryValue, 
+  isFDComponent, 
+  isComponent, 
   isFunctionValue, 
   isStringValue, 
   isNull, 
@@ -91,13 +91,13 @@ export default function createFNode({ varyTag, tagName, attrs, children, scope, 
     children: [...children],
   }
   let fNode = null;
-  /* output 1: class */
-  if (isComponent(tagName)) {
+  /* output 1: class|function */
+  if (isFDComponent(tagName)) {
     // 注意：此处又将调用 compiler 
     let {
       context,
       renderNode,
-    } = cpntRender(tagName, props);
+    } = componentRender(tagName, props);
     fNode = new FNode({
       varyTag,
       tagName, 
@@ -106,35 +106,6 @@ export default function createFNode({ varyTag, tagName, attrs, children, scope, 
       children, 
       context: context, 
     });
-    updateActiveComponentFNodes(fNode);
-  }
-  /* output 2: function */
-  else if ( isFunctionValue(tagName) ) {
-    // 注意：此处又将调用 compiler 
-    let context = new Context(props);
-    let realNode = null;
-    try { realNode = tagName(props, context); } 
-    catch (err) {
-      console.error(err) 
-      throw err;
-    } 
-    context.root._resolve(realNode);
-    // if (context.scopeId!==undefined) {
-    //   scope.id = context.scopeId;
-    // }
-    // else {
-    //   scope_id++;
-    //   scope.id = 'scope_id-'+scope_id;
-    // }
-    
-    fNode = new FNode({
-      varyTag,
-      tagName, 
-      realNode,
-      attrs, 
-      children, 
-      context, 
-    })
     updateActiveComponentFNodes(fNode);
   }
   /* output 3: tag_str  */

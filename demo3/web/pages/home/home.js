@@ -16,13 +16,13 @@ elDom.textContent = ' =================================== ';
 
 export default function(props, context){
   setTimeout(()=>{
-    console.log( 'home mounted ' );
+    console.log( 'home mounted 11 ' );
   })
-  context.onUnmount(()=>{
-    console.log( 'home onUnmount' );
+  context.onUnmount = ()=>{
+    console.log( 'home onUnmount 111' );
     // alert(' onUnmount  ');
     sessionStorage.aaa = Date.now(); 
-  })
+  }
   
   // context.plan('plnA').then(()=>{
   // })

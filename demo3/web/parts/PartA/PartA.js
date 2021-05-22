@@ -1,7 +1,7 @@
 
 
 export default function (props, context){
-  context.onUnmount( (...args)=>{
+  context.onUnmount = (...args)=>{
     console.log(' PartA unmount ' , args);
     
     
@@ -9,7 +9,7 @@ export default function (props, context){
       console.log(' PartA unmounted ' , args);
       
     },1000)
-  })
+  }
   
   return (
     <div>  
