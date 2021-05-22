@@ -25,23 +25,6 @@
 --------------------------------------------------------------------------------
 Features: 
   jsx 编码模式 
-  VaryValue 
-    动态化内容初始化后的回调 
-    动态化监听 
-    动态化开关 
-    动态化嵌套 
-    xx$  
-    xx$.$$  
-  VaryKeys 
-    xx$.xx.$$  [对象键值动态化] 
-  VaryList 
-  vary标签 
-  vary属性
-    varyShow={bol} 
-  vary子节点
-    整个数组 
-    单个子节点 
-    文本内容 
   component 
     ref
       ref={<RefValue>} 异步执行  
@@ -53,6 +36,24 @@ Features:
     缓存 
     页面级组件 context 中添加 router 和 route 
     动态设置是否缓存 [todo]
+  VaryValue 
+    动态化内容初始化后的回调 
+    动态化监听 
+    动态化开关 
+    动态化嵌套 
+    xx$  
+    xx$.$$  
+  VaryKeys [todo:优化]
+    xx$.xx.$$  [对象键值动态化] 
+  VaryList 
+  vary标签 
+  vary属性
+    varyShow={bol} 
+  vary子节点
+    整个数组 
+    单个子节点 
+    文本内容 
+  store [todo]
 --------------------------------------------------------------------------------
 todo: 
   写框架文档 
