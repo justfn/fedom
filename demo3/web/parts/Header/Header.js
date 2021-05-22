@@ -15,7 +15,7 @@ export default function Header(props, context){
   
   context.methods = {
     alert(){
-      alert('header alert!')
+      console.log('header alert!')
     }
   }
   
