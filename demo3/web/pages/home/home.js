@@ -8,7 +8,7 @@ import PartA from "../../parts/PartA/PartA.js";
 const {
   VaryValue, 
   VaryKeys,
-  RefValue,
+  AsyncValue,
 } = window.$fd
 
 let elDom = document.createElement("div")
@@ -27,9 +27,9 @@ export default function(props, context){
   // context.plan('plnA').then(()=>{
   // })
   
-  let ref1 = RefValue();
-  let ref2 = RefValue();
-  let ref3 = RefValue();
+  let ref1 = AsyncValue();
+  let ref2 = AsyncValue();
+  let ref3 = AsyncValue();
   
   ref1.then((ctx)=>{
     console.log(ctx, 'ref1');

@@ -6,7 +6,7 @@ import Component from "../featrues/Component/Component.js";
 import { Vary, } from "../featrues/Vary/Vary.js";
 import { ListVary, } from "../featrues/Vary/VaryList.js";
 import { KeysVary, } from "../featrues/Vary/VaryKeys.js";
-import { Ref, } from "../featrues/ref/Ref.js";
+import { Async, } from "../featrues/Async/AsyncValue.js";
 
 
 // 是否为空值 
@@ -89,11 +89,11 @@ export function isVaryKeys(val){
   
   return bol;
 } 
-// 值是否为Ref类型  
-export function isRefValue(val){
+// 值是否为Async类型  
+export function isAsyncValue(val){
   if (!val) { return false; }
   
-  let bol = val instanceof Ref;
+  let bol = val instanceof Async;
   
   return bol;
 }

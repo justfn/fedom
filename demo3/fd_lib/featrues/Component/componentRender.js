@@ -22,7 +22,7 @@ export default function componentRender(Cpnt, props={}){
       renderNode = Cpnt(props, context);
     }
     else { console.error('#fd componentRender arguments error', Cpnt, props); }
-    context.root._resolve(renderNode);
+    context.root.resolve(renderNode);
   } 
   catch (err) {
     console.error(err);

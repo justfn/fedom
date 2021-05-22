@@ -8,7 +8,7 @@ import routerPush from "../../router/history/push.js";
 import routerReplace from "../../router/history/replace.js";
 import { getRoutes, } from "../../router/router.js";
 import utils from "./utils.js";
-import { RefValue, } from "../ref/Ref.js";
+import AsyncValue from "../Async/AsyncValue.js";
 
 export default class Component {
   /* --------------------------------------------------------- 生命周期 */
@@ -29,7 +29,7 @@ export default class Component {
   onUnmount(){ }
   
   /* --------------------------------------------------------- 快捷访问 */
-  root = RefValue(); 
+  root = AsyncValue(); 
   refs = {};
   
   /* --------------------------------------------------------- 工具方法 */

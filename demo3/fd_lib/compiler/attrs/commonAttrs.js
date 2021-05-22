@@ -18,12 +18,12 @@ import {
   isMapValue, 
   isFunctionValue,
   isArrayValue, 
-  isRefValue, 
+  isAsyncValue, 
 } from "../../utils/judge.js";
 
 export function addRefAttr(fNode, value ){
-  if (isRefValue(value)) {
-    value._resolve(fNode.realNode);
+  if (isAsyncValue(value)) {
+    value.resolve(fNode.realNode);
     return ;
   }
   

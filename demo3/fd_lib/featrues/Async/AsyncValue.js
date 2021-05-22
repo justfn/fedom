@@ -1,21 +1,21 @@
 
  
-export class Ref extends Promise {
+export class Async extends Promise {
   constructor(...args){
     super(...args);
   }
 }
 
 
-export function RefValue(){
+export default function AsyncValue(){
   let _resolve = null; 
   let _reject = null; 
-  let pms = new Ref((resolve, reject)=>{
+  let pms = new Async((resolve, reject)=>{
     _resolve = (val)=>{ setTimeout(()=>{ resolve(val) }) };
     // _resolve = resolve;
     _reject = reject;
   });
-  pms._resolve = _resolve;
-  pms._reject = _reject;
+  pms.resolve = _resolve;
+  pms.reject = _reject;
   return pms;
 } 

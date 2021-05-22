@@ -4,7 +4,7 @@ import config from "../../config/config.js";
 import { 
   isFunctionValue, 
   isStringValue, 
-  isRefValue, 
+  isAsyncValue, 
 } from "../../utils/judge.js";
 
 export default function componentAttrs(fNode){
@@ -20,8 +20,8 @@ export default function componentAttrs(fNode){
     return ;
   }
   
-  if (isRefValue(refVal)) {
-    refVal._resolve({
+  if (isAsyncValue(refVal)) {
+    refVal.resolve({
       node: fNode.realNode,
       ...fNode.context, 
     });

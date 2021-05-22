@@ -13,7 +13,7 @@ import onUnmount from "./featrues/lifecycle/onUnmount.js";
 import { VaryValue, } from "./featrues/Vary/Vary.js";
 import { VaryKeys, } from "./featrues/Vary/VaryKeys.js";
 import { VaryList } from "./featrues/Vary/VaryList.js";
-import { RefValue, } from "./featrues/ref/Ref.js";
+import AsyncValue from "./featrues/Async/AsyncValue.js";
 import { 
   isComponentValue, 
   isVaryValue, 
@@ -28,7 +28,7 @@ globalWrite('onUnmount', onUnmount);
 globalWrite('VaryValue', VaryValue);
 globalWrite('VaryKeys', VaryKeys);
 globalWrite('VaryList', VaryList);
-globalWrite('RefValue', RefValue);
+globalWrite('AsyncValue', AsyncValue);
 // 工具集合 
 globalWrite('utils.isVaryValue', isVaryValue);
 globalWrite('utils.isComponentValue', isComponentValue);
