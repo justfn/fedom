@@ -10,7 +10,7 @@ export default function (props, context){
   
   
   return (
-    <section class="part-">
+    <section className="part-">
       { props.children }
     </section>
   );

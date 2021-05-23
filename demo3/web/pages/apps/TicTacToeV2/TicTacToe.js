@@ -20,7 +20,7 @@ export default class TicTacToeV2 extends PageB {
       }), 
       (itm, idx, id, lst)=>{
         return (
-          <button class="component_Square" onClick={()=>this.squareClick(itm, idx)} >
+          <button className="component_Square" onClick={()=>this.squareClick(itm, idx)} >
             { itm.text$ }
           </button>
         );
@@ -95,7 +95,7 @@ export default class TicTacToeV2 extends PageB {
     // console.log(" >>>>>>>>>>>>>> ", itm, idx, id, list)
     const desc = idx ? `Go to move # ${idx}` : 'Go to game start';
     return (
-      <h3 class="d02" onClick={(evt)=>this.historyGo( itm, idx )}>{desc}</h3>
+      <h3 className="d02" onClick={(evt)=>this.historyGo( itm, idx )}>{desc}</h3>
     );
   })
   historyGo = ( historyItm, idx )=>{
@@ -111,17 +111,17 @@ export default class TicTacToeV2 extends PageB {
   
   render(){
     return (
-      <section class={["app_TicTacToeV2"]}>
-        <section class="component_Game" >
-          <div class="game-board" >
+      <section className={["app_TicTacToeV2"]}>
+        <section className="component_Game" >
+          <div className="game-board" >
             
-            <div class="board-wrap">
+            <div className="board-wrap">
               { this.squareList$ }
             </div>
                
           </div>
           
-          <div class="game-info" >
+          <div className="game-info" >
             <div > { this.status } </div>
             <ol > { this.history$ } </ol>
           </div>

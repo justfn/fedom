@@ -9,15 +9,15 @@ export default function Layout(props, context){
   
   
   return (
-    <article class={["PageLayoutA", props.class]}>
-      <div class="PageLayoutA-header">
+    <article className={["PageLayoutA", props.class]}>
+      <div className="PageLayoutA-header">
         <PageHeader />
       </div>
       
       
-      <div class="PageLayoutA-body">
-        <div class="PageLayoutA-main"> { props.children } </div>
-        <div class="PageLayoutA-menu"> <PageMenu /> </div>
+      <div className="PageLayoutA-body">
+        <div className="PageLayoutA-main"> { props.children } </div>
+        <div className="PageLayoutA-menu"> <PageMenu /> </div>
       </div>
     </article>
   );

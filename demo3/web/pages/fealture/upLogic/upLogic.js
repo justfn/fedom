@@ -37,7 +37,7 @@ export default class Page extends PageB {
   
   render(){
     return (
-      <section class="upLogic" >
+      <section className="upLogic" >
         <div>
           <span>坐标X:</span>
           <span>{ this.x }</span>

@@ -7,7 +7,7 @@ const {
 
 function Square(props, context ){
   return (
-    <button class="component_Square" onClick={props.onClick} >
+    <button className="component_Square" onClick={props.onClick} >
       { props.text }
     </button>
   );
@@ -23,18 +23,18 @@ function Board(props, context){
     );
   } 
   return (
-    <div class={['component_Board', props.class]}>
-      <div class="board-row" ref="bdRowRef">
+    <div className={['component_Board', props.class]}>
+      <div className="board-row" ref="bdRowRef">
         { renderSquare(0) }
         { renderSquare(1) }
         { renderSquare(2) }
       </div>
-      <div class="board-row">
+      <div className="board-row">
         { renderSquare(3) }
         { renderSquare(4) }
         { renderSquare(5) }
       </div>
-      <div class="board-row">
+      <div className="board-row">
         { renderSquare(6) }
         { renderSquare(7) }
         { renderSquare(8) }
@@ -65,7 +65,7 @@ export default class Child extends PageB {
         })
       }
       return (
-        <h3 class="d02" onClick={click}>{desc}</h3>
+        <h3 className="d02" onClick={click}>{desc}</h3>
       );
     });;
   })
@@ -125,15 +125,15 @@ export default class Child extends PageB {
   
   render(){
     return (
-      <section class={["app_TicTacToe"]}>
-        <section class="component_Game" >
-          <div class="game-board" >
-            <Board class="c0011" 
+      <section className={["app_TicTacToe"]}>
+        <section className="component_Game" >
+          <div className="game-board" >
+            <Board className="c0011" 
               squares={this.squareList} 
               onClick={this.handleClick} 
             />        
           </div>
-          <div class="game-info" >
+          <div className="game-info" >
             <div > { this.status } </div>
             <ol > { this.moves } </ol>
           </div>

@@ -21,7 +21,7 @@ export default function FloatCatalog(props, context){
   let links = routes.map((itm,idx)=>{
     return (
       <div>
-        <div class="routeItem" onClick={()=>context.router.push(itm.path)}>{ itm.path }</div>
+        <div className="routeItem" onClick={()=>context.router.push(itm.path)}>{ itm.path }</div>
       </div>
     )
   })
@@ -33,9 +33,9 @@ export default function FloatCatalog(props, context){
   }
   
   return (
-    <section class="FloatCatalog" >
-      <div class="fold" onClick={foldHandle}>fold</div>
-      <div class="linksWp" style={{display: isFold, }}> { links } </div>
+    <section className="FloatCatalog" >
+      <div className="fold" onClick={foldHandle}>fold</div>
+      <div className="linksWp" style={{display: isFold, }}> { links } </div>
     </section>
   );
 }

@@ -20,7 +20,7 @@ export default function(props){
     
   }
   return (
-    <h1 class={['part_Header', props.class]}> 
+    <h1 className={['part_Header', props.class]}> 
       aaaa 
       <div>bbb</div> 
       <div>

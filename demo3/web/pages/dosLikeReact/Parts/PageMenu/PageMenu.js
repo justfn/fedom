@@ -5,7 +5,7 @@ export default function PageMenu(props, context){
   context.scopeId = '003';
   
   return (
-    <section class="part-PageMenu">
+    <section className="part-PageMenu">
       PageMenu
     </section>
   );

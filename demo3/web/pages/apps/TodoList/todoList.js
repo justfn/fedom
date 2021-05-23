@@ -35,7 +35,7 @@ export default function TodoList(props, context){
     ], 
     (itm, idx, id, list)=>{
       return (
-        <div class="itm-wrap">
+        <div className="itm-wrap">
           <span onClick={()=>evts.updateTodoItm( id, itm )}> {itm.isDone} </span>
           <div >
             { itm.text }
@@ -105,13 +105,13 @@ export default function TodoList(props, context){
   }
   
   return (
-    <div class="TodoList">
-      <div class="part1">
-        <input value={inputVal$} placeholder="请输入代办事项" class="input" />
+    <div className="TodoList">
+      <div className="part1">
+        <input value={inputVal$} placeholder="请输入代办事项" className="input" />
         <button onClick={evts.addTodoItm}>添加</button>
       </div>
       
-      <div class="part2">
+      <div className="part2">
         { todoList$ }
       </div>
       

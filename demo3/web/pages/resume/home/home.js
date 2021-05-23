@@ -6,7 +6,7 @@ export default function Home(props, context){
   
   
   return (
-    <LayoutA class="page-resume-home">
+    <LayoutA className="page-resume-home">
       
     </LayoutA>
   );

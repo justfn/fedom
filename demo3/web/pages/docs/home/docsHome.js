@@ -4,7 +4,7 @@ export default function (props, context){
   
   
   return (
-    <div class="docsHome">
+    <div className="docsHome">
       docs home
     </div>
   );

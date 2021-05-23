@@ -27,12 +27,12 @@ export default function Section(props, context){
   
   
   return (
-    <section class={['part_Section', props.class??'']}>
-      <h1 class="ps_header" onClick={showFn}>
-        <div class="ps_lft"> {props.title} </div>
-        <div class={["ps_rit", isRotate$]}> ▼ </div>
+    <section className={['part_Section', props.class??'']}>
+      <h1 className="ps_header" onClick={showFn}>
+        <div className="ps_lft"> {props.title} </div>
+        <div className={["ps_rit", isRotate$]}> ▼ </div>
       </h1>
-      <ContentWrap$ class={['ps_wrap']}>
+      <ContentWrap$ className={['ps_wrap']}>
         { props.children }
       </ContentWrap$>
       

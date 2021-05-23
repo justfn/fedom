@@ -84,7 +84,7 @@ export default function chooseList(props, context){
   
   
   return (
-    <LayoutA class={"chooseList"}>
+    <LayoutA className={"chooseList"}>
     
       <div>1</div>
       { list2$ }

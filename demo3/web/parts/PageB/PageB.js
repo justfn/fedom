@@ -15,7 +15,7 @@ export default class PageB extends Component {
   
   render_(){
     return (
-      <section class={['PageB']}>
+      <section className={['PageB']}>
         { this.render() }
         
         <FloatCatalog />

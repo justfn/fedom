@@ -21,7 +21,7 @@ export default function Header(props, context){
   
   
   return (
-    <h1 class={['part_Header', klass ]}> 
+    <h1 className={['part_Header', klass ]}> 
       { props.name }
       <br />
       { '****************' }

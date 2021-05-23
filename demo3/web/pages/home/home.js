@@ -134,7 +134,7 @@ export default function(props, context){
     isShow$.$$ = !isShow$.$$;
   }
   return (
-    <PageA ref={ref1} class={[ 'fe', isActive, 'dom', console.log(111) ]} 
+    <PageA ref={ref1} className={[ 'fe', isActive, 'dom', console.log(111) ]} 
       style={style} 
       onClick={fn1}
       >
@@ -159,7 +159,7 @@ export default function(props, context){
       <hr />
       { /* Feature: 动态化-标签、组件 
         */ }
-      <Header$  isShowVary="123" class="bbbb" ref={ref3}  name="header-component" >
+      <Header$  isShowVary="123" className="bbbb" ref={ref3}  name="header-component" >
         123
       </Header$>
       
@@ -194,7 +194,7 @@ export default function(props, context){
       
       <hr />
       <hr />
-      <hr class={console.log(222)} />
+      <hr className={console.log(222)} />
     </PageA>
   );
 }

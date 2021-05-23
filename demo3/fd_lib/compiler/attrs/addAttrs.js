@@ -36,7 +36,7 @@ export default function addAttrs(fNode){
     if (val===undefined || val===null) { val = ''; }
     
     /* brance: class */
-    if (key==='class') {
+    if (key==='className') {
       addClassAttr(fNode, val);
       continue;
     }

@@ -6,7 +6,7 @@ export default function Home(props, context){
   
   return (
     // <h1> Hello World </h1>
-    <PageLayoutA class="dosLikeReact-home">
+    <PageLayoutA className="dosLikeReact-home">
       
       content 
       

@@ -5,13 +5,13 @@ import FloatCatalog from "../FloatCatalog/FloatCatalog.js";
 
 export default function PageA(props, context){
   
-  let klass = props.class ?? [];
+  let klass = props.className ?? [];
   
   
   // console.log( 'props.children', props.children );
   
   return (
-    <section class={['PageA', ...klass]}>
+    <section className={['PageA', ...klass]}>
       { props.children }
       
       <FloatCatalog />
