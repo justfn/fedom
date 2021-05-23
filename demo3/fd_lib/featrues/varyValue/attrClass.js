@@ -6,7 +6,7 @@ export function varyAttrClassStr(fNode, varyAttr){
   if (!varyAttr) { return ; }
   
   let elem = fNode.realNode;
-  let vl = varyAttr.$get(false);
+  let vl = varyAttr.get(false);
   varyAttr._mounted_run(elem.className);
   varyAttr._add_set(({ nxtTrimedValue, })=>{
     elem.className = nxtTrimedValue;
@@ -21,7 +21,7 @@ export function varyAttrClassAitm(fNode, varyAttrItm){
   if (!isVaryValue(varyAttrItm)) { return varyAttrItm; }
   
   let elem = fNode.realNode;
-  let it = varyAttrItm.$get(false);
+  let it = varyAttrItm.get(false);
   varyAttrItm._mounted_run(elem.classList);
   varyAttrItm._add_set(({ preTrimedValue, nxtTrimedValue })=>{
     if (preTrimedValue!=='') { elem.classList.remove(preTrimedValue); }

@@ -59,7 +59,7 @@ export default class Child extends PageB {
         this.statusUpadte();
         
         list[move].forEach((itm,idx)=>{
-          this.squareList[idx].$set(()=>{
+          this.squareList[idx].set(()=>{
             return itm;
           })
         })
@@ -78,7 +78,7 @@ export default class Child extends PageB {
     if (this.calculateWinner( this.squareList )) { return ; }
     
     this.xIsNext = !this.xIsNext;
-    this.squareList[i].$set( (val)=>{
+    this.squareList[i].set( (val)=>{
       return this.xIsNext ? "X" : "O";
     }) 
     .then((nexVal)=>{
@@ -86,7 +86,7 @@ export default class Child extends PageB {
         return itm.$$
       }))
     })
-    this.moves.$set((list)=>{
+    this.moves.set((list)=>{
       return this.history;
     })
 
@@ -94,12 +94,12 @@ export default class Child extends PageB {
   statusUpadte = ()=>{
     const winner = this.calculateWinner( this.squareList );
     if (winner) { 
-      this.status.$set(()=>{ 
+      this.status.set(()=>{ 
         return "Winner: " + winner; 
       });
       return ;
     } 
-    this.status.$set(()=>{ return "Next player: " + (this.xIsNext ? "X" : "O") })
+    this.status.set(()=>{ return "Next player: " + (this.xIsNext ? "X" : "O") })
   }
   calculateWinner = (squares)=>{
     const lines = [

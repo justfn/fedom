@@ -44,7 +44,7 @@ export function fillChild( fNode, child, varyChild ) {
   if ( isVaryValue(child) ) { 
     if (varyChild) { throw message.errors.mutil_vary; };
     
-    fillChild(fNode, child.$get(false), child); 
+    fillChild(fNode, child.get(false), child); 
     return ;
   }
   

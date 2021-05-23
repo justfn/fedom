@@ -69,7 +69,7 @@ export function isVaryValue(val){
   if (!val) { return false; }
   
   let bol = val instanceof Vary;
-  if (bol && isVaryValue(val.$get(false))) { throw message.errors.mutil_vary; }
+  if (bol && isVaryValue(val.get(false))) { throw message.errors.mutil_vary; }
   
   return bol;
 }

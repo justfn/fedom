@@ -36,7 +36,7 @@ export default class TicTacToeV2 extends PageB {
     
     this.xIsNext = !this.xIsNext;
     let nextVal = this.xIsNext ? "X" : "O";
-    itm.text$.$set(()=>{ return nextVal; })
+    itm.text$.set(()=>{ return nextVal; })
     .then((nexVal)=>{
       this.statusUpadte();
       

@@ -203,6 +203,9 @@ export class ListVary extends Vary {
       return forEachRun(itm.$$, idx, itm.id, list)
     })
   }
+  $set = ()=>{
+    // todo 
+  }
   // 收集更新-插入 
   _add_list_in = (listInSetRun)=>{
     this._listInSets.push(({index, list, id})=>{

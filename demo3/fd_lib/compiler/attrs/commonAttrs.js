@@ -39,7 +39,7 @@ export function addClassAttr(fNode, value, varyAttr){
   if (isVaryValue(value)) {
     if (varyAttr) { throw message.errors.mutil_vary; }
     
-    addClassAttr(fNode, value.$get(false), value);
+    addClassAttr(fNode, value.get(false), value);
     return ;
   }
   
@@ -81,7 +81,7 @@ export function addStyleAttr(fNode, value, varyAttr){
   if (isVaryValue(value)) {
     if (varyAttr) { throw message.errors.mutil_vary; }
     
-    addStyleAttr(fNode, value.$get(false), value);
+    addStyleAttr(fNode, value.get(false), value);
     return ;
   }
   

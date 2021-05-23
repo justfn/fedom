@@ -20,7 +20,7 @@ import {
 // Output: nodeType str,节点类型 
 */
 export function getRealTagTypes(tagName){
-  if (isVaryValue(tagName)) { return getRealTagTypes(tagName.$get(false)); }
+  if (isVaryValue(tagName)) { return getRealTagTypes(tagName.get(false)); }
   if (isComponent(tagName)) { return config.tag_types.component; }
   if (isFunctionValue(tagName)) { return config.tag_types.function; }
   if (isStringValue(tagName) || isNull(tagName) ) { return config.tag_types.origin; }
@@ -80,7 +80,7 @@ export default function createFNode({ varyTag, tagName, attrs, children, scope, 
     
     return createFNode({
       varyTag: tagName, 
-      tagName: tagName.$get(false),
+      tagName: tagName.get(false),
       attrs, 
       children,
     }); 

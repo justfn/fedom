@@ -36,7 +36,7 @@ export default function chooseList(props, context){
   let events = {
     onClick1(evt, idx){
       list2$.forEach((itm,idx)=>{
-        itm.$set((val)=>{
+        itm.set((val)=>{
           let rst = {
             ...val,
             choosed: false,
@@ -44,7 +44,7 @@ export default function chooseList(props, context){
           return rst;
         })
       })
-      list2$[idx].$set((val)=>{
+      list2$[idx].set((val)=>{
         let rst = {
           ...val,
           choosed: true,

@@ -71,7 +71,7 @@ export default function TodoList(props, context){
         isDone: VaryValue(false), 
       })
       .then(()=>{
-        inputVal$.$set(()=>{
+        inputVal$.set(()=>{
           return '';
         })
         console.log( todoList$ );
@@ -84,7 +84,7 @@ export default function TodoList(props, context){
       })
     },
     updateTodoItm: (id, itm)=>{
-      itm.isDone.$set((val)=>{
+      itm.isDone.set((val)=>{
         return !val;
       })
       .then(()=>{
