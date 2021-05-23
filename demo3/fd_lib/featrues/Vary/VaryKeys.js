@@ -10,78 +10,109 @@ import {
 const global_config = {
   // 忽略的keys
   keys: [
-    '$$',
+    '$store',
+    '$insert',
+    '$remove',
     '$get',
-    '$set',
-    '$mounted',
-    '$watch',
-    '$on',
-    '$off',
-    '$kill',
+    '$$',
+    '$map',
     '$update',
-    '_$$',
-    '_$$Trimed',
-    '_$$TrimedNxt',
-    '_isAlive',
-    '_mounteds',
-    '_sets',
-    '_watchs',
-    '_trimValueFn',
-    '_add_set',
-    '_mounted_run',
+    '$set',
   ],
 };
-
-export class KeysVary extends Vary {
-  constructor(val, itmTrimFn, trimFn){
-    super(val, trimFn);
-    
-    this._KeysItemTrimFn = itmTrimFn; 
-    this._init_();
+function checkKey(key){
+  if (global_config.keys.includes(key)) { 
+    let errMsg = `#fd VaryKeys key: ${key} is forbid, please replace it`;
+    console.err(errMsg);
+    throw errMsg;
+  }
+  return key;
+} 
+function mapKeys(mapVal={}, callback){
+  callback = callback || function(v){ return v; };
+  let newMap = {};
+  for(let key in mapVal){
+    let val = mapVal[key];
+    val = callback(val, checkKey(key), mapVal);
+    newMap[key] = val;
+  };
+  return newMap;
+} 
+function init(that, mapVal){
+  mapKeys( mapVal, (val, key)=>{
+    that[key] = VaryValue(val, (v)=>{
+      return that.$store.func(val, key, mapVal); 
+    }) 
+  })
+} 
+function update(that, key, val){
+  key = checkKey(key);
+  that.$store.value[key] = val;
+  if (!that[key]) {
+    that[ key ] = VaryValue(val, (v)=>{
+      return that.$store.func(val, key, that.$store.value);
+    }); 
+    return Promise.resolve();
+  }
+  
+  
+  return that[ key ].set((v)=>{ return val; })
+} 
+export class KeysVary {
+  constructor(mapVal, itmTrimFn){
+    this.$store = {
+      value: mapVal,
+      func: itmTrimFn,
+    }
+    init(this, mapVal, itmTrimFn);
   }
   
   /* --------------------------------------------------------- KITs  */
-  _init_ = ()=>{
-    mapKeys( this._$$, (val, key)=>{
-      this[key] = val; 
-      return val;
+  /* --------------------------------------------------------- APIs  */
+  $insert = (key, val)=>{ 
+    return update(this, key, val);
+  }
+  $remove = (key)=>{ 
+    return this[key].set(()=>{ return null; }).then(()=>{
+      delete this[key];
+      delete this.$store.value[key];
     })
   }
-  /* --------------------------------------------------------- APIs  */
-  $update = (key, val)=>{
-    let vVal = this[key]; 
-    if (!isVaryValue(vVal)) { throw 'fd VaryKeys update error: is not VaryValue' }
+  $get = (isTrimed=false)=>{ 
+    if (isTrimed) {
+      return mapKeys(this.$store.value, (val, key)=>{
+        return this.$sotre.func(val, key, this.$store.value);
+      });
+    }
     
-    return vVal.$set((preV)=>{
-      return val;
-    });
+    return this.$store.value;
+  }
+  get $$(){ return this.$get(false); }
+  $map = (mapCallback)=>{
+    let obj = this.$store.value;
+    return mapKeys(obj, (val, key)=>{
+      return mapCallback(val, this[key], key, obj)
+    })
+  }
+  $update = (key, val)=>{
+    return update(that, key, val);
+  }
+  $set = (newMap)=>{ 
+    let currentObj = this.$store.value;
+    mapKeys(currentObj, (val, key)=>{
+      this.$remove(key);
+    })
+    mapKeys(newMap, (val, key)=>{
+      this.$insert(key, val);
+    })
   }
 }
 
-export function VaryKeys(keysVal, itmTrimFn){
-  itmTrimFn = itmTrimFn || function(val, key, keys01){ return val; };
-  const varyedObj = new KeysVary(keysVal, itmTrimFn, (keys02)=>{
-    return mapKeys(keys02, (val, key, keys03)=>{
-      return itmTrimFn(val, key, keys03);
-    });
-  });
+export function VaryKeys(mapVal, itmTrimFn){
+  itmTrimFn = itmTrimFn || function(val, key, obj){ return val; };
+  const varyedObj = new KeysVary(mapVal, itmTrimFn);
   
   return varyedObj;
 } 
 
-function mapKeys(keysVal={}, callback){
-  callback = callback || function(){ };
-  let newKeys = {};
-  for(let key in keysVal){
-    let val = keysVal[key];
-    let key_ = key; 
-    if (global_config.keys.includes(key)) { 
-      key_ = `${key}_`
-      console.warn(`fd VaryKeys key: ${key} is forbid, has replace with: ${key_}`);
-    }
-    val = callback(val, key_, keysVal);
-    newKeys[key_] = VaryValue(val);
-  };
-  return newKeys;
-} 
 
