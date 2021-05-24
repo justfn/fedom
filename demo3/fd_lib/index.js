@@ -14,6 +14,7 @@ import { VaryValue, } from "./featrues/Vary/Vary.js";
 import { VaryKeys, } from "./featrues/Vary/VaryKeys.js";
 import { VaryList } from "./featrues/Vary/VaryList.js";
 import AsyncValue from "./featrues/Async/AsyncValue.js";
+import Store from "./featrues/store/store.js";
 import { 
   isComponentValue, 
   isVaryValue, 
@@ -29,6 +30,7 @@ globalWrite('VaryValue', VaryValue);
 globalWrite('VaryKeys', VaryKeys);
 globalWrite('VaryList', VaryList);
 globalWrite('AsyncValue', AsyncValue);
+globalWrite('Store', Store);
 // 工具集合 
 globalWrite('utils.isVaryValue', isVaryValue);
 globalWrite('utils.isComponentValue', isComponentValue);

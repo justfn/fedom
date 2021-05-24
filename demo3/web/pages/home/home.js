@@ -9,12 +9,15 @@ const {
   VaryValue, 
   VaryKeys,
   AsyncValue,
+  Store,
 } = window.$fd
 
 let elDom = document.createElement("div")
 elDom.textContent = ' =================================== ';
 
 export default function(props, context){
+  console.log(" >>>>>>>>>>>>>> ", Store.use(1) )
+  
   setTimeout(()=>{
     console.log( 'home mounted 11 ' );
   })
