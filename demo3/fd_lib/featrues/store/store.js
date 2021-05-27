@@ -1,29 +1,14 @@
 
-
-
 const keys_map = {
   // <store_key>: instance,
 }
 export default class Store {
-  constructor(store_key, options={}){ 
+  constructor(store_key, initValue=null, trim ){ 
+    trim = trim || function(val){ return val; };
     this.key = store_key;
-    this.options = options;
-    let {
-      // '01'-内存,'02'-sessionStorage, '03'-localStorage [todo]
-      cacheType = '01', 
-      // 初始值 
-      initValue, 
-      // 初始是否清除之前的缓存,针对 sessionStorage 和 localStorage  
-      isInitClear = false, 
-      // 超时时间,单位:s , 针对 localStorage 
-      timeout = 24 * 60 * 60,
-      // 格式化函数 
-      trim = function(val){ return val; },
-    } = options || {};
-    this.cacheType = cacheType;
+    // 初始值 
     this.initValue = initValue;
-    this.isInitClear = isInitClear;
-    this.timeout = timeout;
+    // 格式化函数 
     this.trim = trim;
     this.value = initValue;
     // 缓存格式化的值 
@@ -52,17 +37,10 @@ export default class Store {
     
     return store;
   }
-  
-  
-  /* --------------------------------------------------------- KITs */
-  _getSessionStorage(){ }
-  _setSessionStorage(){ }
-  _clearSessionStorage(){ }
-  _setLocalStorage(){ }
-  _getLocalStorage(){ }
-  _clearLocalStorage(){ }
   /* --------------------------------------------------------- APIs */
-  get = ()=>{
+  get = (isTrimed=false)=>{
+    if (!isTrimed) { return this.value; }
+    
     if (this._trimedValue!==null) { return this._trimedValue; }
     
     this._trimedValue = this.trim( this.value );
@@ -76,13 +54,12 @@ export default class Store {
       listenRun(val, preV);
     })
   }
-  clear = ()=>{ this.set(); }
+  clear = ()=>{ this.set( this.initValue ); }
   _listenCallbacks = [];
   listen = (listenRun)=>{
     this._listenCallbacks.push( listenRun )
   }
 }
-
 
 /* ** -------------------------------------------------------
   const st = Store.define('key_001', { });

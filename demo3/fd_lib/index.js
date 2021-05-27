@@ -14,7 +14,9 @@ import { VaryValue, } from "./featrues/Vary/Vary.js";
 import { VaryKeys, } from "./featrues/Vary/VaryKeys.js";
 import { VaryList } from "./featrues/Vary/VaryList.js";
 import AsyncValue from "./featrues/Async/AsyncValue.js";
-import Store from "./featrues/store/store.js";
+import Store from "./featrues/store/Store.js";
+import StoreSession from "./featrues/store/StoreSession.js";
+import StoreLocal from "./featrues/store/StoreLocal.js";
 import { 
   isComponentValue, 
   isVaryValue, 
@@ -31,6 +33,8 @@ globalWrite('VaryKeys', VaryKeys);
 globalWrite('VaryList', VaryList);
 globalWrite('AsyncValue', AsyncValue);
 globalWrite('Store', Store);
+globalWrite('StoreSession', StoreSession);
+globalWrite('StoreLocal', StoreLocal);
 // 工具集合 
 globalWrite('utils.isVaryValue', isVaryValue);
 globalWrite('utils.isComponentValue', isComponentValue);

@@ -20,11 +20,11 @@ module.exports = {
               [
                 '@babel/plugin-transform-react-jsx', 
                 { 
-                  pragma: 'window.$fd.compiler' 
+                  pragma: 'window.$fd.compiler', 
                 },
               ],
               '@babel/plugin-proposal-class-properties',
-            ]
+            ],
           },
         }, 
       },
