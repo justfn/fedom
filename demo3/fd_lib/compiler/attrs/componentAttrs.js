@@ -29,23 +29,6 @@ export default function componentAttrs(fNode){
   }
   
   console.log('todo: 不支持的 ref 类型', fNode.realNode, refVal);
-  
-  // // to_do
-  // if ( isStringValue(refVal) ) {
-  //   if ( fNode.nodeType===config.tag_types.function ) {
-  //     fNode.context.refs[refVal] = ''
-  //   }
-  //   else if ( fNode.nodeType===config.tag_types.component ) {
-  // 
-  //   }
-  // }
-  
-  // /* brance: __scopeId todo */
-  // if (key==='__scope') {
-  //   fNode.realNode.setAttribute(`data-fd_scope_id`, `fd_${val}`);
-  //   continue; 
-  // }
-  
 } 
 
 

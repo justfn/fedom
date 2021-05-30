@@ -13,17 +13,18 @@ import {
 } from "./formAttrs.js";
 import {
   isCommentNode, 
+  isFDComponent, 
 } from "../../utils/judge.js";
 import attrVaryShow from "../../featrues/varyValue/attrVaryShow.js";
 
 export default function addAttrs(fNode){
   let {
+    tagName, 
     realNode, 
     attrs, 
-    nodeType, 
   } = fNode;
   attrVaryShow(realNode, attrs);
-  if (nodeType!==config.tag_types.origin) { 
+  if ( isFDComponent(tagName) ) { 
     componentAttrs(fNode); 
     return ; 
   }

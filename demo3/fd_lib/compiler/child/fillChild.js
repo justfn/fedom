@@ -18,6 +18,7 @@ import {
   isEmptyValue,  
   isTextValue,  
   isCommentNode,  
+  isFDComponent, 
 } from "../../utils/judge.js";
 
 
@@ -38,7 +39,7 @@ export default function fillChildren(fNode){
 
 export function fillChild( fNode, child, varyChild ) {
   // 组件子节点由用户控制插入 
-  if ( fNode.nodeType!==config.tag_types.origin ) { return ; }
+  if ( isFDComponent(fNode.tagName) ) { return ; }
   
   /* brance: vary */
   if ( isVaryValue(child) ) { 

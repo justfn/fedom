@@ -7,6 +7,7 @@ import {
   isComponentValue, 
   isFunctionValue, 
   isArrayValue, 
+  isFDComponent, 
 } from "../../utils/judge.js";
 
 
@@ -69,7 +70,7 @@ export default function onUnmount(context, callback){
 /* ** 方法一: 监听dom变动 -------------------------------------------------------
 // function observe(fNode){
 //   // 非组件节点不处理 
-//   if (fNode.nodeType===config.tag_types.origin) { return ; }
+//   if ( isFDComponent(fNode.tagName) ) { return ; }
 //   // 组件防重处理 
 //   if (fNode.children.length>0) { return ; } 
 // 

@@ -14,20 +14,6 @@ import {
 
 
 
-
-/* ** 工具方法: 获取 tag 类型  
-// Inputs: tagName  
-// Output: nodeType str,节点类型 
-*/
-export function getRealTagTypes(tagName){
-  if (isVaryValue(tagName)) { return getRealTagTypes(tagName.get(false)); }
-  if (isComponent(tagName)) { return config.tag_types.component; }
-  if (isFunctionValue(tagName)) { return config.tag_types.function; }
-  if (isStringValue(tagName) || isNull(tagName) ) { return config.tag_types.origin; }
-  
-  return 'unknow';
-}  
-
 /* ** FNode 
 */
 export class FNode {
@@ -42,7 +28,6 @@ export class FNode {
     } = options;
     this.varyTag = varyTag;
     this.tagName = tagName;
-    this.nodeType = getRealTagTypes(tagName);
     this.realNode = realNode;
     this.attrs = { ...attrs, };
     this.children = [...children];
@@ -56,8 +41,6 @@ export class FNode {
   // Vary,tag的壳 
   varyTag = null;
   tagName = '-';
-  // KW,fNode节点类型  
-  nodeType = '-';
   // Node,fNode对应的真实节点 
   realNode = null;
   // obj,不包含 .children 

@@ -53,7 +53,10 @@ Features:
     整个数组 
     单个子节点 
     文本内容 
-  store [todo]
+  store 
+    Store 
+    StoreSession  [todo] 
+    StoreLocal    [todo] 
 --------------------------------------------------------------------------------
 todo: 
   写框架文档 
