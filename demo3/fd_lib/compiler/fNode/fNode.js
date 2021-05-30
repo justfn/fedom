@@ -110,7 +110,6 @@ export default function createFNode({ varyTag, tagName, attrs, children, scope, 
       attrs, 
       children, 
     });
-    // console.log( fNode );
   }
   /* output 4: other todo */
   else {
