@@ -1,6 +1,5 @@
 /* 编译器 
 */
-import { globalWrite, globalRead, } from "../utils/globalWR.js";
 import createFNode from "./fNode/fNode.js";
 import addAttrs from "./attrs/addAttrs.js";
 import fillChildren from "./child/fillChild.js";
@@ -12,7 +11,6 @@ import {
 } from "../utils/judge.js";
 
 let _order_num = 0; 
-
 function parseTag(varyTag, tagName, attrs, children){
   const fNode = createFNode({
     varyTag, 
@@ -20,6 +18,9 @@ function parseTag(varyTag, tagName, attrs, children){
     attrs, 
     children,
   });
+  // if ( !isStringValue(tagName) ) { return null; }
+  
+  // console.log("parseTag", varyTag, tagName, fNode)
   return fNode;
 } 
 /* ** 处理 jsx 

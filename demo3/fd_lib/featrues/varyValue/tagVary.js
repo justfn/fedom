@@ -2,7 +2,6 @@
 import createFNode from "../../compiler/fNode/fNode.js";
 import addAttrs from "../../compiler/attrs/addAttrs.js";
 import fillChildren from "../../compiler/child/fillChild.js";
-import componentRender from "../../featrues/Component/componentRender.js";
 import componentUpdate from "../../featrues/Component/componentUpdate.js";
 import { removeComponentRun, } from "../../featrues/lifecycle/onUnmount.js";
 import componentAttrs from "../../compiler/attrs/componentAttrs.js";
@@ -33,7 +32,6 @@ export default function varyTagName(fNode){
     props, 
     children, 
   } = fNode;
-    // console.log("000000000 child 1", children)
   let pNode = realNode.parentNode;
   let pre_node = realNode; 
   let pre_node_removed = null;
@@ -98,15 +96,12 @@ export default function varyTagName(fNode){
     if (isFDComponent(nxtTrimedValue)) {
       removeComponentRun(fNode); 
       // todo: 待优化为 createFNode 
-      // console.log("000000000 child", children)
       fNode = createFNode({
         varyTag, 
         tagName: nxtTrimedValue,
         attrs,
         children, 
       })
-      // componentRender(nxtTrimedValue,props,varyTag);
-      // componentUpdate(fNode, context);
       nxt_node = fNode.realNode;
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;

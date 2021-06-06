@@ -1,6 +1,4 @@
-import config from "../../config/config.js";
 import varyTagName from "../../featrues/varyValue/tagVary.js";
-import componentRender from "../../featrues/Component/componentRender.js";
 import { updateActiveComponentFNodes, } from "../../router/router.js";
 import { 
   isVaryValue, 
@@ -15,119 +13,99 @@ import {
 } from "../../utils/dev.js";
 import addAttrs from "../attrs/addAttrs.js";
 import fillChildren from "../child/fillChild.js";
+import Component from "../../featrues/Component/Component.js";
 
 
 
 /* ** FNode 
 */
+const msg_wran01 = 'todo tag'
 export class FNode {
   constructor(options){ 
     let { 
       varyTag, 
       tagName, 
-      realNode, 
       attrs = {}, 
       children = [], 
-      context = {}, 
+      // realNode, 
+      // context = {}, 
     } = options;
+    // Vary,tag的壳 
     this.varyTag = varyTag;
+    // 标签 
     this.tagName = tagName;
-    this.realNode = realNode;
+    // obj,不包含 .children 
     this.attrs = { ...attrs, };
+    // arr,子节点集合
     this.children = [...children];
+    // obj,包含 .children 
     this.props = { 
       ...attrs, 
       children: this.children,
     };
-    this.context = context;
+    
+    // Node,fNode对应的真实节点 
+    this.realNode = null; 
+    // 函数组件的第二个参数/类组件实例 
+    this.context = null;
+    this._init(tagName, this.props);
   }
   
-  // Vary,tag的壳 
-  varyTag = null;
-  tagName = '-';
-  // Node,fNode对应的真实节点 
-  realNode = null;
-  // obj,不包含 .children 
-  attrs = {};
-  // obj,包含 .children 
-  props = {};
-  // arr,子节点集合
-  children = [];
-  // 函数组件的第二个参数/类组件实例 
-  context = {};
+  _init(tagName, props){
+    /* output 1: class|function */
+    // 类组件 
+    if (isComponent(tagName)) {
+      this.context = new tagName(props);
+      // Features: 优先使用'render_',便于自定义继承 
+      let renderFunc = this.context.render_ || this.context.render;
+      // 注意：此处又将调用 compiler 
+      this.realNode = renderFunc.bind(this.context)().realNode;
+      this.context.root.resolve(this.realNode);
+      updateActiveComponentFNodes(this);
+      varyTagName(this);
+      return ;
+    }
+    
+    // 函数组件 
+    if (isFunctionValue(tagName)) {
+      this.context = new Component(props);
+      // 注意：此处又将调用 compiler 
+      this.realNode = tagName(props, this.context).realNode;
+      this.context.root.resolve(this.realNode);
+      updateActiveComponentFNodes(this);
+      varyTagName(this);
+      return ;
+    }
+    
+    
+    /* output 2: tag_str  */
+    if ( isStringValue(tagName) ) {
+      this.realNode = document.createElement(tagName);
+      fillChildren( this );
+      addAttrs( this );
+      varyTagName(this);
+      return ;
+    }
+    
+    /* output 3: null  */
+    if ( isNull(tagName) ) {
+      this.realNode = document.createComment("fedom empty: null tagName");
+      varyTagName(this);
+      return ;
+    }
+    
+    
+    /* output 4: other todo */
+    warnLog(msg_wran01, tagName, attrs, varyTag);
+  }
 }
 
 
 /* ** 创建 FNode 
 */
-const error_arguments = 'error arguments of createFNode';
-const todo_tag = 'todo tag'
 export default function createFNode(params){
-  let { 
-    varyTag, 
-    tagName, 
-    attrs, 
-    children, 
-  } = params;
-  // console.log("000000000 createFNode", params)
-  if (isVaryValue(tagName)) { 
-    return createFNode({
-      varyTag: tagName, 
-      tagName: tagName.get(false),
-      attrs, 
-      children,
-    }); 
-  }
   
-  
-  /* output 1: class|function */
-  if (isFDComponent(tagName)) {
-    // 注意：此处又将调用 compiler 
-    let fNode = componentRender( params );
-    updateActiveComponentFNodes(fNode);
-    if (varyTag) {
-      
-      // console.log("000000000 chld 3", children , fNode)
-    }
-    varyTagName(fNode);
-    return fNode;
-  }
-  
-  /* output 2: tag_str  */
-  if ( isStringValue(tagName) ) {
-    let realNode = document.createElement(tagName);
-    let fNode = new FNode({
-      varyTag,
-      tagName, 
-      realNode,
-      attrs, 
-      children, 
-    });
-    varyTagName(fNode);
-    addAttrs( fNode );
-    fillChildren( fNode );
-    return fNode;
-  }
-  
-  /* output 3: null  */
-  if ( isNull(tagName) ) {
-    let fNode = new FNode({
-      varyTag,
-      tagName, 
-      realNode: document.createComment("fedom empty: null tagName"),
-      attrs, 
-      children, 
-    });
-    varyTagName(fNode);
-    return fNode;
-  }
-  
-  /* output 4: other todo */
-  warnLog(todo_tag, tagName, attrs, varyTag);
-  
-  
-  
-  
+  return new FNode(params);
 }
 
 
