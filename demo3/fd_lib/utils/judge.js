@@ -1,7 +1,7 @@
 /** 判断函数 
 */
 import config from "../config/config.js";
-import message from "../config/message.js";
+import { FNode, } from "../compiler/fNode/fNode.js";
 import Component from "../featrues/Component/Component.js";
 import { Vary, } from "../featrues/Vary/Vary.js";
 import { ListVary, } from "../featrues/Vary/VaryList.js";
@@ -49,6 +49,11 @@ export function isCommentNode(val){
   if (!val) { return false; }
   return val.nodeName==='#comment';
 } 
+// 是否为fNode节点 
+export function isFNode(val){
+  if (!val) { return false; }
+  return val instanceof FNode; 
+} 
 // 是否为Component类 
 export function isComponent(val){
   if (!val) { return false; }
@@ -68,10 +73,7 @@ export function isComponentValue(val){
 export function isVaryValue(val){
   if (!val) { return false; }
   
-  let bol = val instanceof Vary;
-  if (bol && isVaryValue(val.get(false))) { throw message.errors.mutil_vary; }
-  
-  return bol;
+  return val instanceof Vary;
 }
 // 值是否为列表可变量值 
 export function isVaryList(val){

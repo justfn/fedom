@@ -1,6 +1,5 @@
 
 
-import message from "../../config/message.js";
 import diffValue from "../../utils/diffValue.js";
 import {
   isVaryValue,
@@ -8,6 +7,7 @@ import {
   isEmptyValue,
   isNumberValue, 
 } from "../../utils/judge.js";
+import { errLog, } from "../../utils/dev.js";
 
 
 /** 可变量对象 
@@ -158,7 +158,10 @@ export class Vary {
 
 /* 使用可变量 
 */
+const err_log1 = 'error arguments of VaryValue';
 export function VaryValue(val, trimFn){
+  if ( isVaryValue(val) ) { errLog(err_log1, val); }
+  
   const varyVal = new Vary(val, trimFn);
   return varyVal;
 }

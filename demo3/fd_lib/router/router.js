@@ -7,7 +7,7 @@ import routerPush from "./history/push.js";
 import routerReplace from "./history/replace.js";
 import routerComponentProps from "./routerComponentProps.js";
 import cachePage from "./cachePage.js";
-import render from "../render.js";
+import render from "../compiler/render.js";
 import {
   isFunctionValue, 
 } from "../utils/judge.js";

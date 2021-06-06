@@ -1,6 +1,5 @@
 
-import message from "../../config/message.js";
-import trimTextChild from "../../compiler/child/trimTextChild.js";
+import { trimTextValue, } from "../../compiler/child/childUtil.js";
 import { 
   isStringValue, 
   isNumberValue, 
@@ -16,13 +15,14 @@ import {
 export default function childValVary(params={}){
   let {
     fNode, 
-    child, 
     varyChild, 
     textPatchNode, 
     arrPathcNode, 
   } = params; 
   if (!varyChild) { return ; }
+  // return ;
   
+  let child = varyChild; 
   /* ** 补偿更新Node节点  
   1 设置文本字符串作为子节点时,初始渲染后,第二次更新无法通过文本定位该文本节点 
   需在首次渲染后,将文本节点进行补偿替换 
@@ -231,7 +231,7 @@ function updateNodeChild({ nodeChild, newChild }){
 } 
 function refreshNode({ positionNode, childNode, oldChildNode, }){
   let parentNode = positionNode.parentNode; 
-  if (isTextValue(childNode)) { childNode =  document.createTextNode( trimTextChild(childNode) ); }
+  if (isTextValue(childNode)) { childNode =  document.createTextNode( trimTextValue(childNode) ); }
   if (childNode) { parentNode.insertBefore(childNode, positionNode.nextSibling); }
   if (oldChildNode) { parentNode.removeChild(oldChildNode); }
   

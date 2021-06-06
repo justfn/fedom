@@ -1,7 +1,6 @@
 /* ** 处理通用属性属性 
 */
 
-import message from "../../config/message.js";
 import {
   varyAttrClassStr,
   varyAttrClassArr,
@@ -37,8 +36,6 @@ export function addRefAttr(fNode, value ){
 
 export function addClassAttr(fNode, value, varyAttr){
   if (isVaryValue(value)) {
-    if (varyAttr) { throw message.errors.mutil_vary; }
-    
     addClassAttr(fNode, value.get(false), value);
     return ;
   }
@@ -79,8 +76,6 @@ export function addClassAttr(fNode, value, varyAttr){
 
 export function addStyleAttr(fNode, value, varyAttr){
   if (isVaryValue(value)) {
-    if (varyAttr) { throw message.errors.mutil_vary; }
-    
     addStyleAttr(fNode, value.get(false), value);
     return ;
   }

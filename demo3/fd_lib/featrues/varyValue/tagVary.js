@@ -1,5 +1,4 @@
 
-import message from "../../config/message.js";
 import createFNode from "../../compiler/fNode/fNode.js";
 import addAttrs from "../../compiler/attrs/addAttrs.js";
 import fillChildren from "../../compiler/child/fillChild.js";
@@ -13,11 +12,20 @@ import {
   isFDComponent, 
   isEmptyValue, 
 } from "../../utils/judge.js";
+import {
+  errLog, 
+} from "../../utils/dev.js";
 
 
+/* ** Features: 标签名动态化
+注意 变量名需大写否则jsx不处理  
+*/
+const err_msg01 = 'unsuport vary tag'
 export default function varyTagName(fNode){
   let varyTag = fNode.varyTag;
   if (!varyTag) { return ; }
+  // return ;
+  
   
   let {
     realNode, 
@@ -25,6 +33,7 @@ export default function varyTagName(fNode){
     props, 
     children, 
   } = fNode;
+    // console.log("000000000 child 1", children)
   let pNode = realNode.parentNode;
   let pre_node = realNode; 
   let pre_node_removed = null;
@@ -89,12 +98,16 @@ export default function varyTagName(fNode){
     if (isFDComponent(nxtTrimedValue)) {
       removeComponentRun(fNode); 
       // todo: 待优化为 createFNode 
-      let {
-        context,
-        renderNode,
-      } = componentRender(nxtTrimedValue,props);
-      componentUpdate(fNode, context);
-      nxt_node = renderNode;
+      // console.log("000000000 child", children)
+      fNode = createFNode({
+        varyTag, 
+        tagName: nxtTrimedValue,
+        attrs,
+        children, 
+      })
+      // componentRender(nxtTrimedValue,props,varyTag);
+      // componentUpdate(fNode, context);
+      nxt_node = fNode.realNode;
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;
       componentAttrs(fNode);
@@ -105,8 +118,7 @@ export default function varyTagName(fNode){
       // };
     }
     
-    console.warn('动态标签: ', nxtTrimedValue );
-    throw message.errors.unsuport_vary_tag;
+    errLog(err_msg01, nxtTrimedValue);
   })
 } 
 

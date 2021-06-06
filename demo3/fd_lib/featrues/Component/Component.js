@@ -7,7 +7,7 @@
 import routerPush from "../../router/history/push.js";
 import routerReplace from "../../router/history/replace.js";
 import { getRoutes, } from "../../router/router.js";
-import utils from "./utils.js";
+import utils from "./util.js";
 import AsyncValue from "../Async/AsyncValue.js";
 
 export default class Component {

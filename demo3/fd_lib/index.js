@@ -5,7 +5,7 @@ import "./utils/dev.js";
 import { globalWrite, } from "./utils/globalWR.js";
 
 import compiler from "./compiler/compiler.js";
-import render from "./render.js";
+import render from "./compiler/render.js";
 import Router from "./router/router.js";
 import Component from "./featrues/Component/Component.js";
 import onShow from "./featrues/lifecycle/onShow.js";
