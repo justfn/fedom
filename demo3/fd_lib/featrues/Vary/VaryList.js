@@ -1,7 +1,7 @@
 /* ** 数组专用  
 */
 
-import { Vary, VaryValue, } from "./Vary.js";
+import { Vary, VaryValue, } from "./VaryValue.js";
 import {
   isNumberValue, 
   isArrayValue, 

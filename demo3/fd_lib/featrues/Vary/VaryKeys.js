@@ -2,7 +2,7 @@
 */
 
 
-import { Vary, VaryValue, } from "./Vary.js";
+import { Vary, VaryValue, } from "./VaryValue.js";
 import { 
   isVaryValue, 
 } from "../../utils/utils.js";
