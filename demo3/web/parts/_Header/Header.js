@@ -9,7 +9,7 @@ export default function(props){
   props = props ?? {};
   
   if ( props.titleVary ) {
-    props.titleVary.$watch((p_v,n_v)=>{
+    props.titleVary.watch((p_v,n_v)=>{
       console.log( p_v, n_v );
       if (n_v>=10) { return ; }
       

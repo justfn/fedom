@@ -28,7 +28,7 @@ export default class Page extends PageB {
       let { x, y } = trackMouse(rootEl, this);
       this.x = x;
       this.y = y;
-      this.x.$watch((...args)=>{
+      this.x.watch((...args)=>{
         console.log( 'watch:', args);
       })
     })

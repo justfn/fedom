@@ -10,7 +10,7 @@ import Router from "./router/router.js";
 import Component from "./featrues/Component/Component.js";
 import onShow from "./featrues/lifecycle/onShow.js";
 import onUnmount from "./featrues/lifecycle/onUnmount.js";
-import { VaryValue, } from "./featrues/Vary/Vary.js";
+import { VaryValue, } from "./featrues/Vary/VaryValue.js";
 import { VaryKeys, } from "./featrues/Vary/VaryKeys.js";
 import { VaryList } from "./featrues/Vary/VaryList.js";
 import AsyncValue from "./featrues/Async/AsyncValue.js";

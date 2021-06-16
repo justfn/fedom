@@ -3,7 +3,7 @@
 import config from "../config/config.js";
 import { FNode, } from "../compiler/fNode/fNode.js";
 import Component from "../featrues/Component/Component.js";
-import { Vary, } from "../featrues/Vary/Vary.js";
+import { Vary, } from "../featrues/Vary/VaryValue.js";
 import { ListVary, } from "../featrues/Vary/VaryList.js";
 import { KeysVary, } from "../featrues/Vary/VaryKeys.js";
 import { Async, } from "../featrues/Async/AsyncValue.js";
