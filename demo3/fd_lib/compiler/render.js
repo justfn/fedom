@@ -18,18 +18,17 @@ import childValVary from "../featrues/varyValue/childVary.js";
 
 /* ** 渲染内容 
 */
-const todo_render = '未预期的render调用'; 
+const msg_todo_render = '未预期的render调用'; 
 function fillChildIntoParent( varydOrListOrFNodeOrNodeOrText, nodeWrap, fNodeChild, varyChild ){
   // 渲染 vary value
   if ( isVaryValue(varydOrListOrFNodeOrNodeOrText) ) {
-    let child = varydOrListOrFNodeOrNodeOrText.get(false);
-    varyChild = varydOrListOrFNodeOrNodeOrText;
-    return fillChildIntoParent(child, nodeWrap, fNodeChild, varyChild);
+    let listOrFNodeOrNodeOrText = varydOrListOrFNodeOrNodeOrText.get(false);
+    return fillChildIntoParent(listOrFNodeOrNodeOrText, nodeWrap, fNodeChild, varydOrListOrFNodeOrNodeOrText);
   }
   // 渲染list 
   if ( isArrayValue(varydOrListOrFNodeOrNodeOrText) ) {
-    varydOrListOrFNodeOrNodeOrText.forEach((itm,idx)=>{ 
-      fillChildIntoParent(itm, nodeWrap, fNodeChild, varyChild); 
+    varydOrListOrFNodeOrNodeOrText.forEach((fNodeOrNodeOrText,idx)=>{ 
+      fillChildIntoParent(fNodeOrNodeOrText, nodeWrap, fNodeChild, varyChild); 
     })
     // 数组子节点,标记起始位置,便于后续更新
     let arrPathcNode = null; 
@@ -45,7 +44,7 @@ function fillChildIntoParent( varydOrListOrFNodeOrNodeOrText, nodeWrap, fNodeChi
   // 渲染fNode 
   if ( isFNode(varydOrListOrFNodeOrNodeOrText) ) {
     let listOrNodeOrText = varydOrListOrFNodeOrNodeOrText.realNode; 
-    return fillChildIntoParent(listOrNodeOrText, nodeWrap, varydOrListOrFNodeOrNodeOrText);
+    return fillChildIntoParent(listOrNodeOrText, nodeWrap, varydOrListOrFNodeOrNodeOrText, varyChild);
   }
   
   // 出口1: 渲染节点 
@@ -70,8 +69,8 @@ function fillChildIntoParent( varydOrListOrFNodeOrNodeOrText, nodeWrap, fNodeChi
     });
     return fNodeChild || textPatchNode;
   }
-  
-  warnLog(todo_render);
+  // 
+  warnLog(msg_todo_render);
 } 
 export default function render(varydOrListOrFNodeOrNodeOrText, nodeWrap){
   // console.log("000000000 varydOrListOrFNodeOrNodeOrText ", varydOrListOrFNodeOrNodeOrText, nodeWrap )
