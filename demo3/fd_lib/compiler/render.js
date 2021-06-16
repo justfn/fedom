@@ -1,4 +1,7 @@
 
+import {
+  warnLog, 
+} from "../utils/dev.js";
 import { 
   fillNodeChild, 
   fillTextChild, 
@@ -11,10 +14,7 @@ import {
   isNodeValue,
   isTextValue,
 } from "../utils/judge.js";
-import {
-  warnLog, 
-} from "../utils/dev.js";
-import childValVary from "../featrues/varyValue/childVary.js";
+import varyChildValue from "../featrues/varyValue/childVary.js";
 
 /* ** 渲染内容 
 */
@@ -32,8 +32,8 @@ function fillChildIntoParent( varydOrListOrFNodeOrNodeOrText, nodeWrap, fNodeChi
     })
     // 数组子节点,标记起始位置,便于后续更新
     let arrPathcNode = null; 
-    if (varyChild) { arrPathcNode = markListStart(fNode.realNode); }
-    childValVary({
+    if (varyChild) { arrPathcNode = markListStart(nodeWrap); }
+    varyChildValue({
       // fNode, 
       varyChild, 
       arrPathcNode,
@@ -50,7 +50,7 @@ function fillChildIntoParent( varydOrListOrFNodeOrNodeOrText, nodeWrap, fNodeChi
   // 出口1: 渲染节点 
   if ( isNodeValue(varydOrListOrFNodeOrNodeOrText) ) {
     fillNodeChild(nodeWrap, varydOrListOrFNodeOrNodeOrText);
-    childValVary({
+    varyChildValue({
       // fNode, 
       varyChild, 
       arrPathcNode: null,
@@ -59,18 +59,14 @@ function fillChildIntoParent( varydOrListOrFNodeOrNodeOrText, nodeWrap, fNodeChi
     return fNodeChild || varydOrListOrFNodeOrNodeOrText;
   }
   // 出口2: 渲染文本 
-  if ( isTextValue(varydOrListOrFNodeOrNodeOrText) ) {
-    let textPatchNode = fillTextChild(nodeWrap, varydOrListOrFNodeOrNodeOrText); 
-    childValVary({
-      // fNode, 
-      varyChild, 
-      textPatchNode, 
-      arrPathcNode: null,
-    });
-    return fNodeChild || textPatchNode;
-  }
-  // 
-  warnLog(msg_todo_render);
+  let textPatchNode = fillTextChild(nodeWrap, varydOrListOrFNodeOrNodeOrText); 
+  varyChildValue({
+    // fNode, 
+    varyChild, 
+    textPatchNode, 
+    arrPathcNode: null,
+  });
+  return fNodeChild || textPatchNode;
 } 
 export default function render(varydOrListOrFNodeOrNodeOrText, nodeWrap){
   // console.log("000000000 varydOrListOrFNodeOrNodeOrText ", varydOrListOrFNodeOrNodeOrText, nodeWrap )

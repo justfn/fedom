@@ -1,4 +1,4 @@
-
+import { devLog, } from "../../utils/dev.js";
 import { trimTextValue, } from "../../compiler/child/childUtil.js";
 import { 
   isStringValue, 
@@ -12,9 +12,9 @@ import {
 
 /* 子节点可变 
 */
-export default function childValVary(params={}){
+export default function varyChildValue(params={}){
   let {
-    fNode, 
+    // fNode, 
     varyChild, 
     textPatchNode, 
     arrPathcNode, 
@@ -22,14 +22,19 @@ export default function childValVary(params={}){
   if (!varyChild) { return ; }
   // return ;
   
-  let child = varyChild; 
   /* ** 补偿更新Node节点  
   1 设置文本字符串作为子节点时,初始渲染后,第二次更新无法通过文本定位该文本节点 
   需在首次渲染后,将文本节点进行补偿替换 
   2 空数组子节点首次渲染时,将无实体节点插入,使用注释节点占位,该注释节点作为补偿节点存储 
   */
-  varyChild._mounted_run(child);
-  varyChild._add_set(({ preTrimedValue, nxtTrimedValue })=>{
+  varyChild._mounted_run(varyChild);
+  varyChild._add_set((setParams)=>{
+    let {
+      preTrimedValue, 
+      nxtTrimedValue, 
+      preValue, 
+      nxtValue, 
+    } = setParams; 
     if ( isArrayValue(preTrimedValue) ) {
       const patchObj = updateListChild({
         listChild: preTrimedValue, 
@@ -61,7 +66,6 @@ export default function childValVary(params={}){
     // if ( isTextValue(preTrimedValue) ) { }
     // console.log('### to_do: childVary');
     // console.log('preTrimedValue', preTrimedValue);
-    // console.log('child', child);
     // return ;
   })
   if (isVaryList(varyChild)) {
@@ -91,6 +95,8 @@ export default function childValVary(params={}){
     })
   }
 } 
+
+
 
 function updateListChild({ listChild, startFlgNode, newChild, }){
   let pNode = startFlgNode.parentNode;
