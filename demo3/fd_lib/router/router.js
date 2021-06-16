@@ -1,4 +1,5 @@
 
+import { devLog, } from "../utils/dev.js";
 import { globalWrite, globalRead, } from "../utils/globalWR.js";
 import formatRoutes from "./formatRoutes.js";
 import parseHash from "./parseHash.js";
@@ -23,6 +24,8 @@ const store = {
     // <path>: <fNdList>, 
   },
 }
+const msg_notgo = '不允许访问的路由';
+const msg_cache_page = 'cache page, 不重复渲染相同DOM';
 export default class Router {
   constructor(routeOptions = {}){ 
     const {
@@ -86,7 +89,7 @@ export default class Router {
     // 不允许跳转 
     let isGo = this._beforeEach(oldPathParams, newPathParams) ?? true;
     if (!isGo) { 
-      fd_dev_log('不允许访问');
+      devLog(msg_notgo, oldPathParams.path);
       routerReplace(oldPathParams.path, oldPathParams.query);
       return ; 
     }
@@ -105,7 +108,7 @@ export default class Router {
       let isExit = [ ...this._root.childNodes ].some( itm=>itm===cachedPageNode )
       // 不重复渲染相同DOM 
       if (isExit) { 
-        fd_dev_log('cache page: 不重复渲染相同DOM ');
+        devLog(msg_cache_page);
         return; 
       }
       

@@ -1,5 +1,6 @@
 /* 注入全局变量方便存储及使用 
 */
+import { warnLog, } from "./dev.js";
 
 if (!window.$fd) {  window.$fd = {
   status: {
@@ -21,7 +22,7 @@ if (!window.$fd) {  window.$fd = {
 };}
 
 export function globalWrite(keys,val){
-  if (!keys) { return fd_dev_log('#warn: injectGlobal keys不存在'); }
+  if (!keys) { return warnLog('injectGlobal keys不存在'); }
   
   let keyArr = keys.split('.');
   let current = window.$fd;
@@ -33,7 +34,7 @@ export function globalWrite(keys,val){
   })
 } 
 export function globalRead(keys){
-  if (!keys) { return fd_dev_log('#warn getGlobal keys不存在!'); }
+  if (!keys) { return warnLog('getGlobal keys不存在!'); }
   
   let keyArrs = keys.split('.');
   let result = window.$fd;
