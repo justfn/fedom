@@ -3,9 +3,6 @@
 
 
 import { Vary, VaryValue, } from "./VaryValue.js";
-import { 
-  isVaryValue, 
-} from "../../utils/utils.js";
 
 const global_config = {
   // 忽略的keys

@@ -5,18 +5,18 @@
 
 
 --------------------------------------------------------------------------------
-生命周期
+生命周期 
   1 组件渲染 
     fn_run() 
       fn_run&setTimeout() 
     constructor_run() | render_run() 
       render_run&setTimeout() 
-      constructor_run&setTimeout()  
+      constructor_run&setTimeout() 
   2 组件更新 
     $xxx.watch() 
   3 组件缓存 
     context.onShow() 
-    onShow()
+    onShow() 
   4 组件卸载 
     context.onUnmount 
       onUnmount&setTimeout()  

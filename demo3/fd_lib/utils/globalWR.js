@@ -6,7 +6,6 @@ import {
   isVaryValue, 
 } from "../utils/judge.js";
 
-if (!window.$fd_kit) { window.$fd_kit = {}; }
 let store_value = window.$fd_kit;
 // {
 //   status: {

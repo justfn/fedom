@@ -29,5 +29,9 @@ window.$fd.AsyncValue = AsyncValue;
 window.$fd.Store = Store;
 window.$fd.StoreSession = StoreSession;
 window.$fd.StoreLocal = StoreLocal;
+// 工具 
+if (!window.$fd_kit) { window.$fd_kit = {}; }
+// 内部使用 
+if (!window.$fd__) { window.$fd__ = {}; }
 
 // todo: 使用代理控制, 防止变量修改 
