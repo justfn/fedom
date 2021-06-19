@@ -10,7 +10,6 @@ import {
   isNull, 
 } from "../../utils/judge.js";
 import Component from "../../featrues/Component/Component.js";
-import { updateActiveComponentFdNodes, } from "../../router/router.js";
 
 
 
@@ -57,27 +56,25 @@ export class FdNode {
     /* output 4: other todo */
     warnLog(msg_wran01, tagName, props);
   }
-  // 类组件 
+  // 组件: class  
   _renderNodeForClass(TagName, props){
     this.context = new TagName(props);
     // 注意：此处又将调用 compiler 
     this.realNode = this.context.render().realNode;
     this.context.root.resolve(this.realNode);
-    // updateActiveComponentFdNodes(this);
   }
-  // 函数组件 
+  // 组件: fn 
   _renderNodeForFunc(tagName, props){
     this.context = new Component(props);
     // 注意：此处又将调用 compiler 
     this.realNode = tagName(props, this.context).realNode;
     this.context.root.resolve(this.realNode);
-    // updateActiveComponentFdNodes(this);
   }
-  // html标签 
+  // 标签: html 
   _renderNodeForHtml(tagName){
     this.realNode = document.createElement(tagName);
   }
-  // 空标签 
+  // 标签: null 
   _renderNodeForComment(tagName){
     this.realNode = document.createComment(comment_node_tip01);
   }

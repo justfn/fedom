@@ -121,13 +121,13 @@ export default function(props, context){
     else if ( Header$.$$ === Header ) {
       Header$.set(()=>{
         console.log('ccccc');
-        return PartA;
+        return null;
       });
     }
     else {
       Header$.set(()=>{
         console.log('aaaa');
-        return null;
+        return PartA;
       })
     }
   }

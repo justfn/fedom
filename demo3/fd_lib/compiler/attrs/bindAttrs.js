@@ -15,7 +15,7 @@ import {
   isCommentNode, 
   isFDComponent, 
 } from "../../utils/judge.js";
-import attrVaryShow from "../../featrues/VaryAction/attrVaryShow.js";
+import attrVaryShow from "../../featrues/VaryAction/varyAttrShow.js";
 
 export default function bindAttrs(fdNode){
   let {

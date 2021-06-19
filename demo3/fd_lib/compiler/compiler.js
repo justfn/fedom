@@ -9,6 +9,7 @@ import createFdNode from "./fdNode/fdNode.js";
 import bindAttrs from "./attrs/bindAttrs.js";
 import fillChildren from "./child/fillChild.js";
 import varyTagName from "../featrues/VaryAction/varyTagName.js";
+import { updateActiveComponentFdNodes, } from "../router/router.js";
 // import { compilerBefore, compilerAfter, } from "../featrues/Component/componentScope.js";
 
 /* ** 处理 jsx 
@@ -34,10 +35,14 @@ function parseTag(varyTag, tagName, attrs, children){
     attrs, 
     children,
   });
-  if ( isStringValue(tagName) ) { 
-    bindAttrs(fdNode);
-    fillChildren(fdNode);
-  }
+  
+  // 
+  bindAttrs(fdNode);
+  // 
+  if ( isStringValue(tagName) ) { fillChildren(fdNode); }
+  // 
+  if ( isFDComponent(tagName) ) { updateActiveComponentFdNodes(fdNode) }
+  // 
   if (varyTag) { varyTagName(fdNode); }
   
   return fdNode;

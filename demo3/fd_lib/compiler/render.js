@@ -14,7 +14,7 @@ import {
   isNodeValue,
   isTextValue,
 } from "../utils/judge.js";
-import varyChildValue from "../featrues/VaryAction/childVary.js";
+import varyChildValue from "../featrues/VaryAction/varyChildContent.js";
 
 /* ** 渲染内容 
 */

@@ -3,7 +3,7 @@
 
 import {
   varyAttrInputValue, 
-} from "../../featrues/VaryAction/attrForm.js";
+} from "../../featrues/VaryAction/varyFormAttrs.js";
 
 export function isFormNode(fdNode){
   let nodeName = fdNode.realNode.nodeName ?? '';
