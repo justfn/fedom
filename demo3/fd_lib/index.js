@@ -1,6 +1,5 @@
 /* 入口文件 
 */
-import "./utils/dev.js";
 import compiler from "./compiler/compiler.js";
 import render from "./compiler/render.js";
 import Router from "./router/router.js";
