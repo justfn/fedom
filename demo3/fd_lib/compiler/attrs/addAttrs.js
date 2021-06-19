@@ -15,17 +15,17 @@ import {
   isCommentNode, 
   isFDComponent, 
 } from "../../utils/judge.js";
-import attrVaryShow from "../../featrues/varyValue/attrVaryShow.js";
+import attrVaryShow from "../../featrues/VaryAction/attrVaryShow.js";
 
-export default function addAttrs(fNode){
+export default function addAttrs(fdNode){
   let {
     tagName, 
     realNode, 
     attrs, 
-  } = fNode;
+  } = fdNode;
   attrVaryShow(realNode, attrs);
   if ( isFDComponent(tagName) ) { 
-    componentAttrs(fNode); 
+    componentAttrs(fdNode); 
     return ; 
   }
   if (isCommentNode(realNode)) { return ; }
@@ -38,27 +38,27 @@ export default function addAttrs(fNode){
     
     /* brance: class */
     if (key==='className') {
-      addClassAttr(fNode, val);
+      addClassAttr(fdNode, val);
       continue;
     }
     /* brance: style */
     if (key==='style') {
-      addStyleAttr(fNode, val);
+      addStyleAttr(fdNode, val);
       continue;
     }
     /* brance: event */
     if (/^on(\w+)$/.test(key)) {
-      addEventAttr(fNode, RegExp.$1.toLowerCase(), val);
+      addEventAttr(fdNode, RegExp.$1.toLowerCase(), val);
       continue;
     }
     /* brance: ref_callback */
     if (key==='ref' ) {
-      addRefAttr(fNode, val);
+      addRefAttr(fdNode, val);
       continue; 
     }
     /* brance: form_realNodes */
-    if (isFormNode(fNode)) {
-      addFormAttrs(fNode, key, val);
+    if (isFormNode(fdNode)) {
+      addFormAttrs(fdNode, key, val);
       continue; 
     }
     /* brance: other_key */

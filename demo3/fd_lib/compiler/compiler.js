@@ -1,6 +1,6 @@
 /* 编译器 
 */
-import createFNode from "./fNode/fNode.js";
+import createFdNode from "./fdNode/fdNode.js";
 import addAttrs from "./attrs/addAttrs.js";
 import fillChildren from "./child/fillChild.js";
 import { compilerBefore, compilerAfter, } from "../featrues/Component/componentScope.js";
@@ -9,18 +9,20 @@ import {
   isStringValue, 
   isVaryValue, 
 } from "../utils/judge.js";
+import varyTagName from "../featrues/VaryAction/varyTagName.js";
 
 let compiled_num = 0; 
 function parseTag(varyTag, tagName, attrs, children){
-  const fNode = createFNode({
+  const fdNode = createFdNode({
     varyTag, 
     tagName, 
     attrs, 
     children,
   });
   // if ( !isStringValue(tagName) ) { return null; }
+  if (varyTag) { varyTagName(fdNode); }
   
-  return fNode;
+  return fdNode;
 } 
 /* ** 处理 jsx 
 执行顺序 & 深度优先 

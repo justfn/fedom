@@ -1,9 +1,9 @@
 
-import createFNode from "../../compiler/fNode/fNode.js";
+import createFdNode from "../../compiler/fdNode/fdNode.js";
 import addAttrs from "../../compiler/attrs/addAttrs.js";
 import fillChildren from "../../compiler/child/fillChild.js";
 import componentUpdate from "../../featrues/Component/componentUpdate.js";
-import { removeComponentRun, } from "../../featrues/lifecycle/onUnmount.js";
+import { removeComponentRun, } from "../../featrues/Lifecycles/onUnmount.js";
 import componentAttrs from "../../compiler/attrs/componentAttrs.js";
 import { 
   isBooleanValue, 
@@ -20,8 +20,8 @@ import {
 注意 变量名需大写否则jsx不处理  
 */
 const err_msg01 = 'unsuport vary tag'
-export default function varyTagName(fNode){
-  let varyTag = fNode.varyTag;
+export default function varyTagName(fdNode){
+  let varyTag = fdNode.varyTag;
   if (!varyTag) { return ; }
   // return ;
   
@@ -31,7 +31,7 @@ export default function varyTagName(fNode){
     attrs, 
     props, 
     children, 
-  } = fNode;
+  } = fdNode;
   let pNode = realNode.parentNode;
   let pre_node = realNode; 
   let pre_node_removed = null;
@@ -55,8 +55,8 @@ export default function varyTagName(fNode){
     
     // Features: null 删除该节点 
     if ( isEmptyValue(nxtTrimedValue) ) {
-      removeComponentRun(fNode); 
-      componentUpdate(fNode, null, null);
+      removeComponentRun(fdNode); 
+      componentUpdate(fdNode, null, null);
       nxt_node = document.createComment("fedom vary tag and remove")
       pre_node_removed = pre_node;
       pNode.replaceChild(nxt_node, pre_node);
@@ -69,18 +69,18 @@ export default function varyTagName(fNode){
     
     // Features: 替换为html节点  
     if ( isStringValue(nxtTrimedValue) ) {
-      removeComponentRun(fNode); 
-      componentUpdate(fNode, null, null);
+      removeComponentRun(fdNode); 
+      componentUpdate(fdNode, null, null);
       
-      let newFNode = createFNode({
+      let newFdNode = createFdNode({
         varyTag: null, 
         tagName: nxtTrimedValue,
         attrs, 
         children,
       });
-      addAttrs( newFNode );
-      fillChildren(newFNode);
-      let nxt_node = newFNode.realNode;
+      addAttrs( newFdNode );
+      fillChildren(newFdNode);
+      let nxt_node = newFdNode.realNode;
       console.log( ' ++++ ', nxt_node,  pre_node);
       pNode.replaceChild(nxt_node, pre_node);
       
@@ -94,18 +94,18 @@ export default function varyTagName(fNode){
     
     // Features: 替换为组件 
     if (isFDComponent(nxtTrimedValue)) {
-      removeComponentRun(fNode); 
-      // todo: 待优化为 createFNode 
-      fNode = createFNode({
+      removeComponentRun(fdNode); 
+      // todo: 待优化为 createFdNode 
+      fdNode = createFdNode({
         varyTag, 
         tagName: nxtTrimedValue,
         attrs,
         children, 
       })
-      nxt_node = fNode.realNode;
+      nxt_node = fdNode.realNode;
       pNode.replaceChild(nxt_node, pre_node);
       pre_node = nxt_node;
-      componentAttrs(fNode);
+      componentAttrs(fdNode);
       return ;
       // {
       //   next_value: nxtTrimedValue,

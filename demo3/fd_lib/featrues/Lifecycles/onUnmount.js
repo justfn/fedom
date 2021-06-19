@@ -2,7 +2,7 @@
 */
 import config from "../../config/config.js";
 import onHashChange from "../../router/onHashChange.js";
-import { getActiveComponentFNodes, } from "../../router/router.js";
+import { getActiveComponentFdNodes, } from "../../router/router.js";
 import {
   isComponentValue, 
   isFunctionValue, 
@@ -16,19 +16,19 @@ import {
 1: 动态组件切换时调用 
 2: 路由切换, 渲染时收集页面级组件,切换前调用 
 */
-export function removeComponentRun(fNode, unmountArgs){
-  if ( fNode.context && fNode.context.onUnmount && isFunctionValue(fNode.context.onUnmount) ) {
-    fNode.context.onUnmount(unmountArgs);
+export function removeComponentRun(fdNode, unmountArgs){
+  if ( fdNode.context && fdNode.context.onUnmount && isFunctionValue(fdNode.context.onUnmount) ) {
+    fdNode.context.onUnmount(unmountArgs);
   }
-  if ( fNode.context && fNode.context._onUnmountFns && isArrayValue(fNode.context._onUnmountFns) ) {
-    fNode.context._onUnmountFns.forEach((callback)=>{
+  if ( fdNode.context && fdNode.context._onUnmountFns && isArrayValue(fdNode.context._onUnmountFns) ) {
+    fdNode.context._onUnmountFns.forEach((callback)=>{
       callback(unmountArgs);
     })
     
     return ;
   }
 
-  // console.log('to_do: ', fNode);
+  // console.log('to_do: ', fdNode);
 } 
 
 onHashChange((evt, option)=>{
@@ -36,14 +36,14 @@ onHashChange((evt, option)=>{
   if (option.init) { return ; }
   if (!['render', 'cache'].includes(option.type)) { return ; }
   
-  let list = getActiveComponentFNodes(option.oldPathParams.path);
+  let list = getActiveComponentFdNodes(option.oldPathParams.path);
   list.forEach(fNd=>{
     removeComponentRun(fNd); 
   })
 })
 
 window.addEventListener("beforeunload", (evt)=>{
-  let list = getActiveComponentFNodes();
+  let list = getActiveComponentFdNodes();
   console.log(' ====================================== ', list );
   list.forEach(fNd=>{
     removeComponentRun(fNd, {
@@ -68,11 +68,11 @@ export default function onUnmount(context, callback){
 
 
 /* ** 方法一: 监听dom变动 -------------------------------------------------------
-// function observe(fNode){
+// function observe(fdNode){
 //   // 非组件节点不处理 
-//   if ( isFDComponent(fNode.tagName) ) { return ; }
+//   if ( isFDComponent(fdNode.tagName) ) { return ; }
 //   // 组件防重处理 
-//   if (fNode.children.length>0) { return ; } 
+//   if (fdNode.children.length>0) { return ; } 
 // 
 //   setTimeout(()=>{
 // 
@@ -85,9 +85,9 @@ export default function onUnmount(context, callback){
 //     }
 //     // 定义变动观察器 
 //     let mutation = new MutationObserver(obCallback);
-//     console.log( fNode );
+//     console.log( fdNode );
 //     // 观察目标节点 
-//     mutation.observe(fNode.realNode.parentNode, {
+//     mutation.observe(fdNode.realNode.parentNode, {
 //       // characterData: false,
 //       // attributes: false,
 //       childList: true,

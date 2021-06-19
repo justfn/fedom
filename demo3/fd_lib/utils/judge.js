@@ -1,11 +1,11 @@
 /** 判断函数 
 */
 import config from "../config/config.js";
-import { FNode, } from "../compiler/fNode/fNode.js";
+import { FdNode, } from "../compiler/fdNode/fdNode.js";
 import Component from "../featrues/Component/Component.js";
-import { Vary, } from "../featrues/Vary/VaryValue.js";
-import { ListVary, } from "../featrues/Vary/VaryList.js";
-import { KeysVary, } from "../featrues/Vary/VaryKeys.js";
+import { Vary, } from "../featrues/VaryModel/VaryValue.js";
+import { ListVary, } from "../featrues/VaryModel/VaryList.js";
+import { KeysVary, } from "../featrues/VaryModel/VaryKeys.js";
 import { Async, } from "../featrues/Async/AsyncValue.js";
 
 
@@ -49,10 +49,10 @@ export function isCommentNode(val){
   if (!val) { return false; }
   return val.nodeName==='#comment';
 } 
-// 是否为fNode节点 
-export function isFNode(val){
+// 是否为fdNode节点 
+export function isFdNode(val){
   if (!val) { return false; }
-  return val instanceof FNode; 
+  return val instanceof FdNode; 
 } 
 // 是否为Component类 
 export function isComponent(val){

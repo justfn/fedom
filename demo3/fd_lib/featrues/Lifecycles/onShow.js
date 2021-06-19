@@ -2,7 +2,7 @@
 */
 
 import onHashChange from "../../router/onHashChange.js";
-import { getActiveComponentFNodes, } from "../../router/router.js";
+import { getActiveComponentFdNodes, } from "../../router/router.js";
 import {
   isComponentValue, 
   isFunctionValue, 
@@ -19,19 +19,19 @@ onHashChange((evt, option)=>{
   if (option.init) { return ; }
   if (!['cache'].includes(option.type)) { return ; }
   
-  let list = getActiveComponentFNodes(option.newPathParams.path);
+  let list = getActiveComponentFdNodes(option.newPathParams.path);
   list.forEach(fNd=>{
     componentShowRun(fNd); 
   })
 })
 
 
-export function componentShowRun(fNode, showArgs){
-  if ( fNode.context && fNode.context.onShow && isFunctionValue(fNode.context.onShow) ) {
-    fNode.context.onShow(showArgs);
+export function componentShowRun(fdNode, showArgs){
+  if ( fdNode.context && fdNode.context.onShow && isFunctionValue(fdNode.context.onShow) ) {
+    fdNode.context.onShow(showArgs);
   }
-  if ( fNode.context && fNode.context._onShowFns && isArrayValue(fNode.context._onShowFns) ) {
-    fNode.context._onShowFns.forEach((callback)=>{
+  if ( fdNode.context && fdNode.context._onShowFns && isArrayValue(fdNode.context._onShowFns) ) {
+    fdNode.context._onShowFns.forEach((callback)=>{
       callback(showArgs);
     })
     

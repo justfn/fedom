@@ -2,7 +2,7 @@
 */
 import config from "../../config/config.js";
 
-// import childValVary from "../../featrues/varyValue/childVary.js";
+// import childValVary from "../../featrues/VaryAction/childVary.js";
 import { 
   fillNodeChild, 
   fillTextChild, 
@@ -25,36 +25,36 @@ import {
 import render from "../render.js";
 
 
-export default function fillChildren(fNode){
-  // console.log("000000000 fillChildren", fNode)
+export default function fillChildren(fdNode){
+  // console.log("000000000 fillChildren", fdNode)
   let {
     realNode, 
     children, 
-  } = fNode; 
+  } = fdNode; 
   // 注释节点: 不处理子节点 
   if (isCommentNode(realNode)) { return; }
   // 无子节点:  
-  if ( fNode.children.length===0 ) { return; }
+  if ( fdNode.children.length===0 ) { return; }
   // 组件子节点由用户控制插入 
-  if ( isFDComponent(fNode.tagName) ) { return ; }
+  if ( isFDComponent(fdNode.tagName) ) { return ; }
   
   // 处理子节点 
   render(children, realNode);
   
-  // children.forEach(child=>{ fillChild(fNode, child, null); })
+  // children.forEach(child=>{ fillChild(fdNode, child, null); })
 } 
 
-// export function fillChild( fNode, child, varyChild ) {
+// export function fillChild( fdNode, child, varyChild ) {
 //   /* brance: vary */
-//   if ( isVaryValue(child) ) { return fillChild(fNode, child.get(false), child); }
+//   if ( isVaryValue(child) ) { return fillChild(fdNode, child.get(false), child); }
 //   /* brance: arr */
 //   if ( isArrayValue(child) ) { 
 //     // 数组子节点,标记起始位置,便于后续更新
 //     let arrPathcNode = null; 
-//     if (varyChild) { arrPathcNode = markListStart(fNode.realNode); }
-//     child.forEach((cldItm,idx)=>{ fillChild(fNode, cldItm, null); })
+//     if (varyChild) { arrPathcNode = markListStart(fdNode.realNode); }
+//     child.forEach((cldItm,idx)=>{ fillChild(fdNode, cldItm, null); })
 //     childValVary({
-//       fNode, 
+//       fdNode, 
 //       child, 
 //       varyChild, 
 //       arrPathcNode,
@@ -64,9 +64,9 @@ export default function fillChildren(fNode){
 // 
 //   /* 出口1: node child*/
 //   if ( isNodeValue(child) ) { 
-//     fillNodeChild(fNode.realNode, child);
+//     fillNodeChild(fdNode.realNode, child);
 //     childValVary({
-//       fNode, 
+//       fdNode, 
 //       child, 
 //       varyChild, 
 //     });
@@ -74,9 +74,9 @@ export default function fillChildren(fNode){
 //   }
 //   /* 出口2: text child */
 //   if ( isTextValue(child) ) { 
-//     let textPatchNode = fillTextChild(fNode.realNode, child);
+//     let textPatchNode = fillTextChild(fdNode.realNode, child);
 //     childValVary({
-//       fNode, 
+//       fdNode, 
 //       child, 
 //       varyChild, 
 //       textPatchNode,

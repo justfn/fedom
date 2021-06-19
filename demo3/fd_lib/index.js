@@ -4,15 +4,15 @@ import compiler from "./compiler/compiler.js";
 import render from "./compiler/render.js";
 import Router from "./router/router.js";
 import Component from "./featrues/Component/Component.js";
-import onShow from "./featrues/lifecycle/onShow.js";
-import onUnmount from "./featrues/lifecycle/onUnmount.js";
-import { VaryValue, } from "./featrues/Vary/VaryValue.js";
-import { VaryKeys, } from "./featrues/Vary/VaryKeys.js";
-import { VaryList } from "./featrues/Vary/VaryList.js";
+import onShow from "./featrues/Lifecycles/onShow.js";
+import onUnmount from "./featrues/Lifecycles/onUnmount.js";
+import { VaryValue, } from "./featrues/VaryModel/VaryValue.js";
+import { VaryKeys, } from "./featrues/VaryModel/VaryKeys.js";
+import { VaryList } from "./featrues/VaryModel/VaryList.js";
 import AsyncValue from "./featrues/Async/AsyncValue.js";
-import Store from "./featrues/store/Store.js";
-import StoreSession from "./featrues/store/StoreSession.js";
-import StoreLocal from "./featrues/store/StoreLocal.js";
+import Store from "./featrues/StoreKits/Store.js";
+import StoreSession from "./featrues/StoreKits/StoreSession.js";
+import StoreLocal from "./featrues/StoreKits/StoreLocal.js";
 
 // 功能 
 if (!window.$fd) { window.$fd = {}; }

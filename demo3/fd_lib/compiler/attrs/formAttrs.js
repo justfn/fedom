@@ -3,51 +3,51 @@
 
 import {
   varyAttrInputValue, 
-} from "../../featrues/varyValue/attrForm.js";
+} from "../../featrues/VaryAction/attrForm.js";
 
-export function isFormNode(fNode){
-  let nodeName = fNode.realNode.nodeName ?? '';
+export function isFormNode(fdNode){
+  let nodeName = fdNode.realNode.nodeName ?? '';
   nodeName = nodeName.toLowerCase();
   return ['input'].includes(nodeName);
 };
-export function addFormAttrs(fNode, key, val){
-  if (fNode.realNode.nodeName.toLowerCase()!=='input') { 
+export function addFormAttrs(fdNode, key, val){
+  if (fdNode.realNode.nodeName.toLowerCase()!=='input') { 
     console.log('not input node');
     return ; 
   }   
   
   if (key==='value') {
-    inputValueAttr(fNode, key, val);
+    inputValueAttr(fdNode, key, val);
     return ;
   }
   
   if (key==='placeholder') {
-    inputPlaceholderAttr(fNode, key, val);
+    inputPlaceholderAttr(fdNode, key, val);
     return ;
   }
   
 } 
 // 处理 input value 
-export function inputValueAttr(fNode, key, val ){
+export function inputValueAttr(fdNode, key, val ){
   
   let inputVal = val;
   
   /* Features: 
   */
-  inputVal = varyAttrInputValue(fNode, val);
+  inputVal = varyAttrInputValue(fdNode, val);
   
-  fNode.realNode.setAttribute("value",inputVal)
+  fdNode.realNode.setAttribute("value",inputVal)
 } 
 // 处理 input placeholder 
-export function inputPlaceholderAttr(fNode, key, val ){
+export function inputPlaceholderAttr(fdNode, key, val ){
   
   let inputVal = val;
   
   /* Features: 
   */
-  // inputVal = xxx(fNode, val);
+  // inputVal = xxx(fdNode, val);
   
-  fNode.realNode.setAttribute("placeholder", inputVal)
+  fdNode.realNode.setAttribute("placeholder", inputVal)
 } 
 
 

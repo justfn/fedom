@@ -187,7 +187,7 @@ export function updatePathComponentFNdsMap(routeMap){
   
   store.pathFNdsMap[store.activedPath] = [];
 } 
-export function updateActiveComponentFNodes(fNd){
+export function updateActiveComponentFdNodes(fNd){
   let list = store.pathFNdsMap[store.activedPath];
   if (!list) { 
     store.pathFNdsMap[store.activedPath] = []; 
@@ -197,7 +197,7 @@ export function updateActiveComponentFNodes(fNd){
   let isExit = list.some((itm,idx)=>{ return itm===fNd; });
   if (!isExit) { list.push(fNd); }
 } 
-export function getActiveComponentFNodes(path){
+export function getActiveComponentFdNodes(path){
   path = path || store.activedPath;
   return store.pathFNdsMap[path] || [];
 } 

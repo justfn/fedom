@@ -10,70 +10,70 @@ import {
 import { 
   isVaryValue,
   isArrayValue,
-  isFNode, 
+  isFdNode, 
   isNodeValue,
   isTextValue,
 } from "../utils/judge.js";
-import varyChildValue from "../featrues/varyValue/childVary.js";
+import varyChildValue from "../featrues/VaryAction/childVary.js";
 
 /* ** 渲染内容 
 */
 const msg_todo_render = '未预期的render调用'; 
-function fillChildIntoParent( varydOrListOrFNodeOrNodeOrText, nodeWrap, fNodeChild, varyChild ){
+function fillChildIntoParent( varydOrListOrFdNodeOrNodeOrText, nodeWrap, fdNodeChild, varyChild ){
   // 渲染 vary value
-  if ( isVaryValue(varydOrListOrFNodeOrNodeOrText) ) {
-    let listOrFNodeOrNodeOrText = varydOrListOrFNodeOrNodeOrText.get(false);
-    return fillChildIntoParent(listOrFNodeOrNodeOrText, nodeWrap, fNodeChild, varydOrListOrFNodeOrNodeOrText);
+  if ( isVaryValue(varydOrListOrFdNodeOrNodeOrText) ) {
+    let listOrFdNodeOrNodeOrText = varydOrListOrFdNodeOrNodeOrText.get(false);
+    return fillChildIntoParent(listOrFdNodeOrNodeOrText, nodeWrap, fdNodeChild, varydOrListOrFdNodeOrNodeOrText);
   }
   // 渲染list 
-  if ( isArrayValue(varydOrListOrFNodeOrNodeOrText) ) {
-    varydOrListOrFNodeOrNodeOrText.forEach((fNodeOrNodeOrText,idx)=>{ 
-      fillChildIntoParent(fNodeOrNodeOrText, nodeWrap, fNodeChild, varyChild); 
+  if ( isArrayValue(varydOrListOrFdNodeOrNodeOrText) ) {
+    varydOrListOrFdNodeOrNodeOrText.forEach((fdNodeOrNodeOrText,idx)=>{ 
+      fillChildIntoParent(fdNodeOrNodeOrText, nodeWrap, fdNodeChild, varyChild); 
     })
     // 数组子节点,标记起始位置,便于后续更新
     let arrPathcNode = null; 
     if (varyChild) { arrPathcNode = markListStart(nodeWrap); }
     varyChildValue({
-      // fNode, 
+      // fdNode, 
       varyChild, 
       arrPathcNode,
       textPatchNode: null, 
     });
-    return varydOrListOrFNodeOrNodeOrText;
+    return varydOrListOrFdNodeOrNodeOrText;
   }
-  // 渲染fNode 
-  if ( isFNode(varydOrListOrFNodeOrNodeOrText) ) {
-    let listOrNodeOrText = varydOrListOrFNodeOrNodeOrText.realNode; 
-    return fillChildIntoParent(listOrNodeOrText, nodeWrap, varydOrListOrFNodeOrNodeOrText, varyChild);
+  // 渲染fdNode 
+  if ( isFdNode(varydOrListOrFdNodeOrNodeOrText) ) {
+    let listOrNodeOrText = varydOrListOrFdNodeOrNodeOrText.realNode; 
+    return fillChildIntoParent(listOrNodeOrText, nodeWrap, varydOrListOrFdNodeOrNodeOrText, varyChild);
   }
   
   // 出口1: 渲染节点 
-  if ( isNodeValue(varydOrListOrFNodeOrNodeOrText) ) {
-    fillNodeChild(nodeWrap, varydOrListOrFNodeOrNodeOrText);
+  if ( isNodeValue(varydOrListOrFdNodeOrNodeOrText) ) {
+    fillNodeChild(nodeWrap, varydOrListOrFdNodeOrNodeOrText);
     varyChildValue({
-      // fNode, 
+      // fdNode, 
       varyChild, 
       arrPathcNode: null,
       textPatchNode: null, 
     });
-    return fNodeChild || varydOrListOrFNodeOrNodeOrText;
+    return fdNodeChild || varydOrListOrFdNodeOrNodeOrText;
   }
   // 出口2: 渲染文本 
-  varydOrListOrFNodeOrNodeOrText = varydOrListOrFNodeOrNodeOrText + ''; 
-  if ( isTextValue(varydOrListOrFNodeOrNodeOrText) ) {
-    let textPatchNode = fillTextChild(nodeWrap, varydOrListOrFNodeOrNodeOrText); 
+  varydOrListOrFdNodeOrNodeOrText = varydOrListOrFdNodeOrNodeOrText + ''; 
+  if ( isTextValue(varydOrListOrFdNodeOrNodeOrText) ) {
+    let textPatchNode = fillTextChild(nodeWrap, varydOrListOrFdNodeOrNodeOrText); 
     varyChildValue({
-      // fNode, 
+      // fdNode, 
       varyChild, 
       textPatchNode, 
       arrPathcNode: null,
     });
-    return fNodeChild || textPatchNode;
+    return fdNodeChild || textPatchNode;
   }
 } 
-export default function render(varydOrListOrFNodeOrNodeOrText, nodeWrap){
-  // console.log("000000000 varydOrListOrFNodeOrNodeOrText ", varydOrListOrFNodeOrNodeOrText, nodeWrap )
-  return fillChildIntoParent(varydOrListOrFNodeOrNodeOrText, nodeWrap, null, null);
+export default function render(varydOrListOrFdNodeOrNodeOrText, nodeWrap){
+  // console.log("000000000 varydOrListOrFdNodeOrNodeOrText ", varydOrListOrFdNodeOrNodeOrText, nodeWrap )
+  return fillChildIntoParent(varydOrListOrFdNodeOrNodeOrText, nodeWrap, null, null);
 } 
 
 

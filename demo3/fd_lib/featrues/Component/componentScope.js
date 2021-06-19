@@ -51,13 +51,13 @@ export function compilerBefore( tagName, attrs, children ){
   }
 } 
 
-export function compilerAfter(fNode){
+export function compilerAfter(fdNode){
   let {
     tagName, 
-  } = fNode; 
+  } = fdNode; 
   
   if (isFDComponent(tagName)) {
-    fNode.realNode.setAttribute("data-scope-id", current_scope.id)
+    fdNode.realNode.setAttribute("data-scope-id", current_scope.id)
     if (!current_scope.parent) { console.error('error todo 11'); }
     current_scope = current_scope.parent;
   }

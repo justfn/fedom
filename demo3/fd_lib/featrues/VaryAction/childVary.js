@@ -14,7 +14,7 @@ import {
 */
 export default function varyChildValue(params={}){
   let {
-    // fNode, 
+    // fdNode, 
     varyChild, 
     textPatchNode, 
     arrPathcNode, 

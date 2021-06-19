@@ -5,12 +5,12 @@ import {
   varyAttrClassStr,
   varyAttrClassArr,
   varyAttrClassAitm,
-} from "../../featrues/varyValue/attrClass.js";
+} from "../../featrues/VaryAction/attrClass.js";
 import {
   varyAttrStyleStr,
   varyAttrStyleObj,
   varyAttrStyleOval,
-} from "../../featrues/varyValue/attrStyle.js";
+} from "../../featrues/VaryAction/attrStyle.js";
 import { 
   isVaryValue,
   isStringValue, 
@@ -20,33 +20,33 @@ import {
   isAsyncValue, 
 } from "../../utils/judge.js";
 
-export function addRefAttr(fNode, value ){
+export function addRefAttr(fdNode, value ){
   if (isAsyncValue(value)) {
-    value.resolve(fNode.realNode);
+    value.resolve(fdNode.realNode);
     return ;
   }
   
   if ( isFunctionValue(value) ) { 
-    value(fNode.realNode);
+    value(fdNode.realNode);
     return ; 
   }
   
   
 } 
 
-export function addClassAttr(fNode, value, varyAttr){
+export function addClassAttr(fdNode, value, varyAttr){
   if (isVaryValue(value)) {
-    addClassAttr(fNode, value.get(false), value);
+    addClassAttr(fdNode, value.get(false), value);
     return ;
   }
   
   // 出口1：
   if ( isStringValue(value) ) {
-    fNode.realNode.setAttribute("class", value);
+    fdNode.realNode.setAttribute("class", value);
     
     /* ** Features: 
     */
-    varyAttrClassStr(fNode, varyAttr);
+    varyAttrClassStr(fdNode, varyAttr);
     
     return ;
   }
@@ -57,36 +57,36 @@ export function addClassAttr(fNode, value, varyAttr){
       
       /* ** Features:  
       */
-      it = varyAttrClassAitm(fNode, itm);
+      it = varyAttrClassAitm(fdNode, itm);
       
       return  retV + ' ' + it
     },'')
     vl = vl.slice(1)
-    fNode.realNode.setAttribute("class", vl);
+    fdNode.realNode.setAttribute("class", vl);
     
     /* ** Features: 
     */
-    varyAttrClassArr(fNode, varyAttr)
+    varyAttrClassArr(fdNode, varyAttr)
     
     return ;
   }
   
-  console.warn('# todo attrs class', fNode, value);
+  console.warn('# todo attrs class', fdNode, value);
 } 
 
-export function addStyleAttr(fNode, value, varyAttr){
+export function addStyleAttr(fdNode, value, varyAttr){
   if (isVaryValue(value)) {
-    addStyleAttr(fNode, value.get(false), value);
+    addStyleAttr(fdNode, value.get(false), value);
     return ;
   }
   
   // 出口1：
   if ( isStringValue(value) ) {
-    fNode.realNode.setAttribute("style", value);
+    fdNode.realNode.setAttribute("style", value);
     
     /* ** Features: 
     */
-    varyAttrStyleStr(fNode, varyAttr);
+    varyAttrStyleStr(fdNode, varyAttr);
     
     return ;
   }
@@ -97,23 +97,23 @@ export function addStyleAttr(fNode, value, varyAttr){
       
       /* ** Features: 
       */
-      vl = varyAttrStyleOval(fNode, ky, vl);
+      vl = varyAttrStyleOval(fdNode, ky, vl);
       
-      fNode.realNode.style[ky] = vl;
+      fdNode.realNode.style[ky] = vl;
     };
     
     /* ** Features:  
     */
-    varyAttrStyleObj(fNode, varyAttr);
+    varyAttrStyleObj(fdNode, varyAttr);
     
     return ;
   }
-  console.warn('# todo attrs style', fNode, value);
+  console.warn('# todo attrs style', fdNode, value);
 } 
 
-export function addEventAttr(fNode, evtName, listener){
+export function addEventAttr(fdNode, evtName, listener){
   
-  fNode.realNode.addEventListener(evtName, (evt)=>{
+  fdNode.realNode.addEventListener(evtName, (evt)=>{
     return listener(evt);
   })
   

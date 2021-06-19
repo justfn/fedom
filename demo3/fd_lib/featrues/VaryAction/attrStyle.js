@@ -4,23 +4,23 @@ import {
 } from "../../utils/judge.js";
 
 
-export function varyAttrStyleStr(fNode, varyAttr){
+export function varyAttrStyleStr(fdNode, varyAttr){
   if (!varyAttr) { return ; }
   
   let str = varyAttr.get(false);
   console.log('# todo');
 } 
-export function varyAttrStyleObj(fNode, varyAttr){
+export function varyAttrStyleObj(fdNode, varyAttr){
   if (!varyAttr) { return ; }
   
   let obj = varyAttr.get(false);
   
   console.log('# todo');
 } 
-export function varyAttrStyleOval(fNode, styKey, varyAttrVal ){
+export function varyAttrStyleOval(fdNode, styKey, varyAttrVal ){
   if (!isVaryValue(varyAttrVal)) { return varyAttrVal; }
   
-  let elem = fNode.realNode;
+  let elem = fdNode.realNode;
   let value = varyAttrVal.get(false);
   elem.style[styKey] = value;
   varyAttrVal._mounted_run( value );

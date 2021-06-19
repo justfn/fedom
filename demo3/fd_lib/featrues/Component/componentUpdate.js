@@ -1,9 +1,9 @@
 
 
-export default function componentUpdate(fNode, context){
-  fNode.context = context;
-  // fNode.varyTag.kill();
-  // fNode.context = {}; 
+export default function componentUpdate(fdNode, context){
+  fdNode.context = context;
+  // fdNode.varyTag.kill();
+  // fdNode.context = {}; 
   
   
 } 
