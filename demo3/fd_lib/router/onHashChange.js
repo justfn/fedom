@@ -1,7 +1,5 @@
 /* ** hashchange 路由切换处理
 */
-import { globalWrite, globalRead, } from "../utils/globalWR.js";
-
 
 const store = {
   isInitSwitch: false, // 防止多次初始化 

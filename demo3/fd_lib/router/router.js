@@ -1,6 +1,5 @@
 
 import { devLog, } from "../utils/dev.js";
-import { globalWrite, globalRead, } from "../utils/globalWR.js";
 import formatRoutes from "./formatRoutes.js";
 import parseHash from "./parseHash.js";
 import onHashChange, { initHashChange, } from "./onHashChange.js";

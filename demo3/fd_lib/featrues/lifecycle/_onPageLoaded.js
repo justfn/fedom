@@ -9,14 +9,13 @@ onHashChange(()=>{
 export default function onPageLoaded(fNode, num, callback){
   // to_do: 待优化 
   setTimeout(()=>{
-    if (
-      fNode.realNode.parentElement!==globalRead('elems.root') 
-      || globalRead('status.isLoaded')
-    ) { return ; }
-    globalWrite('status.isLoaded', true);
+    let root = globalRead('elems.root');
+    let isLoaded = globalRead('status.isLoaded');
+    if ( fNode.realNode.parentElement!==root || isLoaded ) { return ; }
     
+    globalWrite('status.isLoaded', true);
     globalWrite('status.pageNodeNum', num);
-    console.log( num );
+    // console.log( num );
     callback && callback();
   })
 

@@ -1,17 +1,14 @@
 // 引入依赖 
 import "../fd_lib/index.js";
-// import "../fd_libV2/index.js";
-
-
-
+// 全局样式 
 import "./assets/styles/global.less";
+// 路由控制 
 import router from "./router/router.js";
 
 const {
   render, 
   VaryValue, 
 } = window.$fd;
-
 
 // let varyText$ = VaryValue('*****');
 // let VaryTag$ = VaryValue('li');
@@ -53,11 +50,6 @@ const {
 
 
 
-
-
-// import { render, } from "../fd_lib/index.js";
-// import Home from "./views/pages/home/home.js";
-// render( <Home />, document.querySelector("#app") );
 
 
 

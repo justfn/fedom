@@ -1,9 +1,6 @@
 /* 入口文件 
 */
-import "./featrues/lifecycle/index.js";
 import "./utils/dev.js";
-import { globalWrite, } from "./utils/globalWR.js";
-
 import compiler from "./compiler/compiler.js";
 import render from "./compiler/render.js";
 import Router from "./router/router.js";
@@ -17,35 +14,21 @@ import AsyncValue from "./featrues/Async/AsyncValue.js";
 import Store from "./featrues/store/Store.js";
 import StoreSession from "./featrues/store/StoreSession.js";
 import StoreLocal from "./featrues/store/StoreLocal.js";
-import { 
-  isComponentValue, 
-  isVaryValue, 
-} from "./utils/judge.js";
 
-globalWrite('compiler', compiler);
-globalWrite('render', render);
-globalWrite('Router', Router);
-globalWrite('Component', Component);
-globalWrite('onShow', onShow);
-globalWrite('onUnmount', onUnmount);
-globalWrite('VaryValue', VaryValue);
-globalWrite('VaryKeys', VaryKeys);
-globalWrite('VaryList', VaryList);
-globalWrite('AsyncValue', AsyncValue);
-globalWrite('Store', Store);
-globalWrite('StoreSession', StoreSession);
-globalWrite('StoreLocal', StoreLocal);
-// 工具集合 
-globalWrite('utils.isVaryValue', isVaryValue);
-globalWrite('utils.isComponentValue', isComponentValue);
-// 元素集合 
-globalWrite('elems', {});
-// 状态集合 
-globalWrite('status.isLoaded', false);
 
-export {
-  render,
-  Router,
-  VaryValue,
-  Component,
-}
+if (!window.$fd) { window.$fd = {}; }
+window.$fd.compiler = compiler;
+window.$fd.render = render;
+window.$fd.Router = Router;
+window.$fd.Component = Component;
+window.$fd.onShow = onShow;
+window.$fd.onUnmount = onUnmount;
+window.$fd.VaryValue = VaryValue;
+window.$fd.VaryKeys = VaryKeys;
+window.$fd.VaryList = VaryList;
+window.$fd.AsyncValue = AsyncValue;
+window.$fd.Store = Store;
+window.$fd.StoreSession = StoreSession;
+window.$fd.StoreLocal = StoreLocal;
+
+// todo: 使用代理控制, 防止变量修改 
