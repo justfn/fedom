@@ -1,5 +1,6 @@
-import varyTagName from "../../featrues/varyValue/tagVary.js";
-import { updateActiveComponentFNodes, } from "../../router/router.js";
+import {
+  warnLog, 
+} from "../../utils/dev.js";
 import { 
   isVaryValue, 
   isFDComponent, 
@@ -8,12 +9,11 @@ import {
   isStringValue, 
   isNull, 
 } from "../../utils/judge.js";
-import {
-  warnLog, 
-} from "../../utils/dev.js";
+import Component from "../../featrues/Component/Component.js";
+import varyTagName from "../../featrues/varyValue/tagVary.js";
+import { updateActiveComponentFNodes, } from "../../router/router.js";
 import addAttrs from "../attrs/addAttrs.js";
 import fillChildren from "../child/fillChild.js";
-import Component from "../../featrues/Component/Component.js";
 
 
 
@@ -27,28 +27,23 @@ export class FNode {
       tagName, 
       attrs = {}, 
       children = [], 
-      // realNode, 
-      // context = {}, 
     } = options;
     // Vary,tag的壳 
     this.varyTag = varyTag;
     // 标签 
     this.tagName = tagName;
     // obj,不包含 .children 
-    this.attrs = { ...attrs, };
+    this.attrs = attrs;
     // arr,子节点集合
-    this.children = [...children];
-    // obj,包含 .children 
-    this.props = { 
-      ...attrs, 
-      children: this.children,
-    };
+    this.children = children;
     
     // Node,fNode对应的真实节点 
     this.realNode = null; 
     // 函数组件的第二个参数/类组件实例 
     this.context = null;
-    this._init(tagName, this.props);
+    let props = { ...attrs }; 
+    if (children) { props.children = children; }
+    this._init(tagName, props);
   }
   
   _init(tagName, props){
@@ -59,19 +54,18 @@ export class FNode {
       // 注意：此处又将调用 compiler 
       this.realNode = this.context.render().realNode;
       this.context.root.resolve(this.realNode);
-      updateActiveComponentFNodes(this);
-      varyTagName(this);
+      // updateActiveComponentFNodes(this);
+      // varyTagName(this);
       return ;
     }
-    
     // 函数组件 
     if (isFunctionValue(tagName)) {
       this.context = new Component(props);
       // 注意：此处又将调用 compiler 
       this.realNode = tagName(props, this.context).realNode;
       this.context.root.resolve(this.realNode);
-      updateActiveComponentFNodes(this);
-      varyTagName(this);
+      // updateActiveComponentFNodes(this);
+      // varyTagName(this);
       return ;
     }
     

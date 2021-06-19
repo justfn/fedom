@@ -10,7 +10,7 @@ import {
   isVaryValue, 
 } from "../utils/judge.js";
 
-let _order_num = 0; 
+let compiled_num = 0; 
 function parseTag(varyTag, tagName, attrs, children){
   const fNode = createFNode({
     varyTag, 
@@ -20,7 +20,6 @@ function parseTag(varyTag, tagName, attrs, children){
   });
   // if ( !isStringValue(tagName) ) { return null; }
   
-  // console.log("parseTag", varyTag, tagName, fNode)
   return fNode;
 } 
 /* ** 处理 jsx 
@@ -31,7 +30,7 @@ children  [ str|elem|arr|vary ]
 */
 export default function compiler(tagName, attrs, ...children){
   attrs = attrs ?? {};
-  _order_num++;
+  compiled_num++;
   
   // 拆解 vary value 
   if ( isVaryValue(tagName) ) { return parseTag(tagName, tagName.get(false), attrs, children ) }
