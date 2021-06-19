@@ -59,14 +59,17 @@ function fillChildIntoParent( varydOrListOrFNodeOrNodeOrText, nodeWrap, fNodeChi
     return fNodeChild || varydOrListOrFNodeOrNodeOrText;
   }
   // 出口2: 渲染文本 
-  let textPatchNode = fillTextChild(nodeWrap, varydOrListOrFNodeOrNodeOrText); 
-  varyChildValue({
-    // fNode, 
-    varyChild, 
-    textPatchNode, 
-    arrPathcNode: null,
-  });
-  return fNodeChild || textPatchNode;
+  varydOrListOrFNodeOrNodeOrText = varydOrListOrFNodeOrNodeOrText + ''; 
+  if ( isTextValue(varydOrListOrFNodeOrNodeOrText) ) {
+    let textPatchNode = fillTextChild(nodeWrap, varydOrListOrFNodeOrNodeOrText); 
+    varyChildValue({
+      // fNode, 
+      varyChild, 
+      textPatchNode, 
+      arrPathcNode: null,
+    });
+    return fNodeChild || textPatchNode;
+  }
 } 
 export default function render(varydOrListOrFNodeOrNodeOrText, nodeWrap){
   // console.log("000000000 varydOrListOrFNodeOrNodeOrText ", varydOrListOrFNodeOrNodeOrText, nodeWrap )
