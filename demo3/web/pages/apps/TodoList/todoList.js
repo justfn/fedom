@@ -78,6 +78,7 @@ export default function TodoList(props, context){
       })
     },
     removeTodoItm: (id, text )=>{
+      console.log("000000000 ", id, text)
       todoList$.$remove( id )
       .then(()=>{
         // 

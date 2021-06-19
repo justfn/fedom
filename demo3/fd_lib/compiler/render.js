@@ -27,9 +27,6 @@ function fillChildIntoParent( varydOrListOrFdNodeOrNodeOrText, nodeWrap, fdNodeC
   }
   // 渲染list 
   if ( isArrayValue(varydOrListOrFdNodeOrNodeOrText) ) {
-    varydOrListOrFdNodeOrNodeOrText.forEach((fdNodeOrNodeOrText,idx)=>{ 
-      fillChildIntoParent(fdNodeOrNodeOrText, nodeWrap, fdNodeChild, varyChild); 
-    })
     // 数组子节点,标记起始位置,便于后续更新
     let arrPathcNode = null; 
     if (varyChild) { arrPathcNode = markListStart(nodeWrap); }
@@ -39,6 +36,10 @@ function fillChildIntoParent( varydOrListOrFdNodeOrNodeOrText, nodeWrap, fdNodeC
       arrPathcNode,
       textPatchNode: null, 
     });
+    
+    varydOrListOrFdNodeOrNodeOrText.forEach((fdNodeOrNodeOrText,idx)=>{ 
+      fillChildIntoParent(fdNodeOrNodeOrText, nodeWrap, fdNodeChild, varyChild); 
+    })
     return varydOrListOrFdNodeOrNodeOrText;
   }
   // 渲染fdNode 

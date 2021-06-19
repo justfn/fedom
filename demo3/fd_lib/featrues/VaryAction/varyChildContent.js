@@ -68,16 +68,18 @@ export default function varyChildValue(params={}){
     // console.log('preTrimedValue', preTrimedValue);
     // return ;
   })
-  if (isVaryList(varyChild)) {
+  if (isVaryList(varyChild) && arrPathcNode ) {
     // 插入操作 
     varyChild._add_list_in(({index, list})=>{
       let len = varyChild.$$.length; 
       let itmNode = findPositionNode(arrPathcNode, index);
       itmNode = itmNode || arrPathcNode; 
       list.forEach((itm,idx)=>{
+        let childNode = itm; 
+        if ( itm && itm.realNode ) { childNode = itm.realNode; }
         refreshNode({
           positionNode: itmNode, 
-          childNode: itm, 
+          childNode, 
           oldChildNode: null,
         })
       })
@@ -86,7 +88,6 @@ export default function varyChildValue(params={}){
     // 删除操作 
     varyChild._add_list_rm(({index})=>{
       let itmNode = findPositionNode(arrPathcNode, index+1);
-      // console.log( 'remove index: ', index, itmNode );
       refreshNode({
         positionNode: itmNode, 
         childNode: false, 
