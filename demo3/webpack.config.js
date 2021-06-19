@@ -18,6 +18,10 @@ module.exports = {
             presets: ['@babel/preset-env',],
             plugins: [
               [
+                "@babel/plugin-proposal-decorators", 
+                { "legacy": true }
+              ],
+              [
                 '@babel/plugin-transform-react-jsx', 
                 { 
                   pragma: 'window.$fd.compiler', 

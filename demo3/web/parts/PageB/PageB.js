@@ -8,20 +8,26 @@ const {
 } = window.$fd;
 
 
-export default class PageB extends Component {
-  constructor(props){
-    super(props)
-  }
-  
-  render_(){
-    return (
-      <section className={['PageB']}>
-        { this.render() }
-        
-        <FloatCatalog />
-      </section>
 
-    );
+
+export default function (ComponentTarget){
+  
+  return class Child extends ComponentTarget {
+    constructor(...args){
+      super(...args)
+    }
+    
+    render(){
+      return (
+        <section className={['PageB']}>
+          { super.render() }
+          
+          <FloatCatalog />
+        </section>
+  
+      );
+    }
   }
-}
+} 
+
 

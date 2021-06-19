@@ -2,12 +2,13 @@ import "./TicTacToe.less";
 import PageB from "../../../parts/PageB/PageB.js";
 
 const {
+  Component,
   VaryValue,
   VaryList,
 } = window.$fd;
 
-
-export default class TicTacToeV2 extends PageB {
+@PageB 
+export default class TicTacToeV2 extends Component {
   constructor(...args){
     super(...args);
     

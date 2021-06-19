@@ -2,10 +2,14 @@
 <h1> 自由灵活,简单便捷的前端框架 </h1>
 
 ```
+功能列表: 
+1 jsx模板渲染 
+2 组件化 
+  ref 
+    ref={<RefValue>} 异步执行  
+    ref 回调函数形式 
 
-
---------------------------------------------------------------------------------
-生命周期 
+3 生命周期 
   1 组件渲染 
     fn_run() 
       fn_run&setTimeout() 
@@ -24,14 +28,7 @@
       onUnmount&setTimeout() 
 --------------------------------------------------------------------------------
 Features: 
-  jsx 编码模式 
   component 
-    ref
-      ref={<RefValue>} 异步执行  
-      ref 回调函数形式 
-      不支持string_ref 
-    render 
-      render_  ->  render 
   router 
     缓存 
     页面级组件 context 中添加 router 和 route 

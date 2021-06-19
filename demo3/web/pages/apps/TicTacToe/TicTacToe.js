@@ -2,6 +2,7 @@ import "./TicTacToe.less";
 import PageB from "../../../parts/PageB/PageB.js";
 
 const {
+  Component,
   VaryValue,
 } = window.$fd;
 
@@ -43,7 +44,8 @@ function Board(props, context){
   )
 }
 
-export default class Child extends PageB {
+@PageB 
+export default class Child extends Component {
   constructor(...args){
     super(...args)
   }

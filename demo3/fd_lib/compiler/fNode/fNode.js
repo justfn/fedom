@@ -56,10 +56,8 @@ export class FNode {
     // 类组件 
     if (isComponent(tagName)) {
       this.context = new tagName(props);
-      // Features: 优先使用'render_',便于自定义继承 
-      let renderFunc = this.context.render_ || this.context.render;
       // 注意：此处又将调用 compiler 
-      this.realNode = renderFunc.bind(this.context)().realNode;
+      this.realNode = this.context.render().realNode;
       this.context.root.resolve(this.realNode);
       updateActiveComponentFNodes(this);
       varyTagName(this);

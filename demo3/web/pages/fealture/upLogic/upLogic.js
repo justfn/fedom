@@ -7,7 +7,8 @@ const {
   Component,
 } = window.$fd;
 
-export default class Page extends PageB {
+@PageB 
+export default class Page extends Component {
   constructor(props){
     super(props);
     this.init();
