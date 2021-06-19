@@ -17,7 +17,7 @@ import {
 } from "../../utils/judge.js";
 import attrVaryShow from "../../featrues/VaryAction/attrVaryShow.js";
 
-export default function addAttrs(fdNode){
+export default function bindAttrs(fdNode){
   let {
     tagName, 
     realNode, 

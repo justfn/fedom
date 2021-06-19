@@ -1,6 +1,6 @@
 
 import createFdNode from "../../compiler/fdNode/fdNode.js";
-import addAttrs from "../../compiler/attrs/addAttrs.js";
+import bindAttrs from "../../compiler/attrs/bindAttrs.js";
 import fillChildren from "../../compiler/child/fillChild.js";
 import componentUpdate from "../../featrues/Component/componentUpdate.js";
 import { removeComponentRun, } from "../../featrues/Lifecycles/onUnmount.js";
@@ -78,7 +78,7 @@ export default function varyTagName(fdNode){
         attrs, 
         children,
       });
-      addAttrs( newFdNode );
+      bindAttrs( newFdNode );
       fillChildren(newFdNode);
       let nxt_node = newFdNode.realNode;
       console.log( ' ++++ ', nxt_node,  pre_node);

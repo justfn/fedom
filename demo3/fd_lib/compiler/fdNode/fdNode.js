@@ -11,8 +11,6 @@ import {
 } from "../../utils/judge.js";
 import Component from "../../featrues/Component/Component.js";
 import { updateActiveComponentFdNodes, } from "../../router/router.js";
-import addAttrs from "../attrs/addAttrs.js";
-import fillChildren from "../child/fillChild.js";
 
 
 
@@ -78,8 +76,6 @@ export class FdNode {
   // html标签 
   _renderNodeForHtml(tagName){
     this.realNode = document.createElement(tagName);
-    fillChildren( this );
-    addAttrs( this );
   }
   // 空标签 
   _renderNodeForComment(tagName){
