@@ -14,7 +14,7 @@ import Store from "./featrues/store/Store.js";
 import StoreSession from "./featrues/store/StoreSession.js";
 import StoreLocal from "./featrues/store/StoreLocal.js";
 
-
+// 功能 
 if (!window.$fd) { window.$fd = {}; }
 window.$fd.compiler = compiler;
 window.$fd.render = render;

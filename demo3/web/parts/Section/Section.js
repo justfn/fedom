@@ -8,12 +8,18 @@ const {
 
 export default function Section(props, context){
   let ContentWrap$ = VaryValue('div');
-  let isRotate$ = VaryValue(ContentWrap$, (vv)=>{
-    let v = vv.$$;
-    if (!!v) { return ''; }
-    
-    return 'rolate';
-  });
+  let isRotate$ = VaryValue('');
+  ContentWrap$.watch((pv,nv)=>{
+    isRotate$.$$ = !!nv ? '' : 'rolate'
+  })
+  
+  
+  // let isRotate$ = VaryValue(ContentWrap$, (vv)=>{
+  //   let v = vv.$$;
+  //   if (!!v) { return ''; }
+  // 
+  //   return 'rolate';
+  // });
   let showFn = ()=>{
     // ContentWrap$.$$ = !ContentWrap$.$$
     ContentWrap$.set((pre, preTrim)=>{

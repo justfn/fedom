@@ -8,7 +8,6 @@
   ref 
     ref={<RefValue>} 异步执行  
     ref 回调函数形式 
-
 3 生命周期 
   1 组件渲染 
     fn_run() 
@@ -26,13 +25,12 @@
       onUnmount&setTimeout()  
     onUnmount()       
       onUnmount&setTimeout() 
---------------------------------------------------------------------------------
-Features: 
-  component 
+4 路由 
   router 
     缓存 
     页面级组件 context 中添加 router 和 route 
     动态设置是否缓存 [todo]
+5 model->view  
   VaryValue 
     动态化内容初始化后的回调 
     动态化监听 
@@ -50,10 +48,10 @@ Features:
     整个数组 
     单个子节点 
     文本内容 
-  store 
-    Store 
-    StoreSession  [todo] 
-    StoreLocal    [todo] 
+6 store 
+  Store 
+  StoreSession  [todo] 
+  StoreLocal    [todo] 
 --------------------------------------------------------------------------------
 todo: 
   写框架文档 

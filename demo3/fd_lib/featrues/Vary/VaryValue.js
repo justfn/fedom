@@ -38,15 +38,6 @@ export class Vary {
     this._$$Trimed = this._trimValueFn(val);
     this.__$$TrimedNxt = symbol_1; // 缓存下一次格式化的值,避免多次执行'_trimValueFn'函数  
     
-    
-    if (isVaryValue(val)) {
-      val.watch((preV,nxtV,preVTrimed,nxtVTrimed)=>{
-        this.set((pre_v)=>{
-          return val;
-        })
-      })
-    }
-    
     this._mounteds = [];
     
     this._sets = [];
@@ -93,7 +84,7 @@ export class Vary {
     })
     
     // VaryList 处理 
-    if (isVaryValue(nxt_v)) { this.initList && this.initList(); }
+    if (isArrayValue(nxt_v)) { this.initList && this.initList(); }
     
     return Promise.resolve(nxt_v);
   }
