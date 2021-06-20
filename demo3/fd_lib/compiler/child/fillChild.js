@@ -50,14 +50,14 @@ export default function fillChildren(fdNode){
 //   /* brance: arr */
 //   if ( isArrayValue(child) ) { 
 //     // 数组子节点,标记起始位置,便于后续更新
-//     let arrPathcNode = null; 
-//     if (varyChild) { arrPathcNode = markListStart(fdNode.realNode); }
+//     let patchNodeForList = null; 
+//     if (varyChild) { patchNodeForList = markListStart(fdNode.realNode); }
 //     child.forEach((cldItm,idx)=>{ fillChild(fdNode, cldItm, null); })
 //     childValVary({
 //       fdNode, 
 //       child, 
 //       varyChild, 
-//       arrPathcNode,
+//       patchNodeForList,
 //     });
 //     return ;
 //   }
@@ -74,12 +74,12 @@ export default function fillChildren(fdNode){
 //   }
 //   /* 出口2: text child */
 //   if ( isTextValue(child) ) { 
-//     let textPatchNode = fillTextChild(fdNode.realNode, child);
+//     let patchNodeForText = fillTextChild(fdNode.realNode, child);
 //     childValVary({
 //       fdNode, 
 //       child, 
 //       varyChild, 
-//       textPatchNode,
+//       patchNodeForText,
 //     });
 //     return ;
 //   }

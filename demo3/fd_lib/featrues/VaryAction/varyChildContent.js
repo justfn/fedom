@@ -16,8 +16,8 @@ export default function varyChildValue(params={}){
   let {
     // fdNode, 
     varyChild, 
-    textPatchNode, 
-    arrPathcNode, 
+    patchNodeForText, 
+    patchNodeForList, 
   } = params; 
   if (!varyChild) { return ; }
   // return ;
@@ -38,11 +38,11 @@ export default function varyChildValue(params={}){
     if ( isArrayValue(preTrimedValue) ) {
       const patchObj = updateListChild({
         listChild: preTrimedValue, 
-        startFlgNode: arrPathcNode, 
+        startFlgNode: patchNodeForList, 
         newChild: nxtTrimedValue,
       })
-      textPatchNode = patchObj.txtPatch;
-      arrPathcNode = patchObj.arrPatch;
+      patchNodeForText = patchObj.txtPatch;
+      patchNodeForList = patchObj.arrPatch;
       return ;
     }
     
@@ -51,29 +51,29 @@ export default function varyChildValue(params={}){
         nodeChild: preTrimedValue, 
         newChild: nxtTrimedValue,
       })
-      textPatchNode = patchObj.txtPatch;
-      arrPathcNode = patchObj.arrPatch;
+      patchNodeForText = patchObj.txtPatch;
+      patchNodeForList = patchObj.arrPatch;
       return ;
     }
     
     preTrimedValue = preTrimedValue + '';
     const patchObj = updateTextChild({
-      textFlgChild: textPatchNode, 
+      textFlgChild: patchNodeForText, 
       newChild: nxtTrimedValue,
     })
-    textPatchNode = patchObj.txtPatch;
-    arrPathcNode = patchObj.arrPatch;
+    patchNodeForText = patchObj.txtPatch;
+    patchNodeForList = patchObj.arrPatch;
     // if ( isTextValue(preTrimedValue) ) { }
     // console.log('### to_do: childVary');
     // console.log('preTrimedValue', preTrimedValue);
     // return ;
   })
-  if (isVaryList(varyChild) && arrPathcNode ) {
+  if (isVaryList(varyChild) && patchNodeForList ) {
     // 插入操作 
     varyChild._add_list_in(({index, list})=>{
       let len = varyChild.$$.length; 
-      let itmNode = findPositionNode(arrPathcNode, index);
-      itmNode = itmNode || arrPathcNode; 
+      let itmNode = findPositionNode(patchNodeForList, index);
+      itmNode = itmNode || patchNodeForList; 
       list.forEach((itm,idx)=>{
         let childNode = itm; 
         if ( itm && itm.realNode ) { childNode = itm.realNode; }
@@ -87,7 +87,7 @@ export default function varyChildValue(params={}){
     
     // 删除操作 
     varyChild._add_list_rm(({index})=>{
-      let itmNode = findPositionNode(arrPathcNode, index+1);
+      let itmNode = findPositionNode(patchNodeForList, index+1);
       refreshNode({
         positionNode: itmNode, 
         childNode: false, 

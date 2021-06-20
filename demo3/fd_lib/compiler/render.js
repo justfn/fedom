@@ -28,13 +28,13 @@ function fillChildIntoParent( varydOrListOrFdNodeOrNodeOrText, nodeWrap, fdNodeC
   // 渲染list 
   if ( isArrayValue(varydOrListOrFdNodeOrNodeOrText) ) {
     // 数组子节点,标记起始位置,便于后续更新
-    let arrPathcNode = null; 
-    if (varyChild) { arrPathcNode = markListStart(nodeWrap); }
+    let patchNodeForList = null; 
+    if (varyChild) { patchNodeForList = markListStart(nodeWrap); }
     varyChildValue({
       // fdNode, 
       varyChild, 
-      arrPathcNode,
-      textPatchNode: null, 
+      patchNodeForList,
+      patchNodeForText: null, 
     });
     
     varydOrListOrFdNodeOrNodeOrText.forEach((fdNodeOrNodeOrText,idx)=>{ 
@@ -54,22 +54,22 @@ function fillChildIntoParent( varydOrListOrFdNodeOrNodeOrText, nodeWrap, fdNodeC
     varyChildValue({
       // fdNode, 
       varyChild, 
-      arrPathcNode: null,
-      textPatchNode: null, 
+      patchNodeForList: null,
+      patchNodeForText: null, 
     });
     return fdNodeChild || varydOrListOrFdNodeOrNodeOrText;
   }
   // 出口2: 渲染文本 
   varydOrListOrFdNodeOrNodeOrText = varydOrListOrFdNodeOrNodeOrText + ''; 
   if ( isTextValue(varydOrListOrFdNodeOrNodeOrText) ) {
-    let textPatchNode = fillTextChild(nodeWrap, varydOrListOrFdNodeOrNodeOrText); 
+    let patchNodeForText = fillTextChild(nodeWrap, varydOrListOrFdNodeOrNodeOrText); 
     varyChildValue({
       // fdNode, 
       varyChild, 
-      textPatchNode, 
-      arrPathcNode: null,
+      patchNodeForText, 
+      patchNodeForList: null,
     });
-    return fdNodeChild || textPatchNode;
+    return fdNodeChild || patchNodeForText;
   }
 } 
 export default function render(varydOrListOrFdNodeOrNodeOrText, nodeWrap){
