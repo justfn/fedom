@@ -13,6 +13,7 @@ import {
   isFdNode, 
   isNodeValue,
   isTextValue,
+  isEmptyValue,
 } from "../utils/judge.js";
 import varyChildValue from "../featrues/VaryAction/varyChildContent.js";
 
@@ -60,6 +61,7 @@ function fillChildIntoParent( varydOrListOrFdNodeOrNodeOrText, nodeWrap, fdNodeC
     return fdNodeChild || varydOrListOrFdNodeOrNodeOrText;
   }
   // 出口2: 渲染文本 
+  if ( isEmptyValue(varydOrListOrFdNodeOrNodeOrText) ) { varydOrListOrFdNodeOrNodeOrText = '' }
   varydOrListOrFdNodeOrNodeOrText = varydOrListOrFdNodeOrNodeOrText + ''; 
   if ( isTextValue(varydOrListOrFdNodeOrNodeOrText) ) {
     let patchNodeForText = fillTextChild(nodeWrap, varydOrListOrFdNodeOrNodeOrText); 
