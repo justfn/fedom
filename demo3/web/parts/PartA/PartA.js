@@ -19,9 +19,9 @@ export default function (props, context){
   return (
     <div>  
       <br />
-      ========== 
+      1 ========== 
       <br />
-      { props.children }
+      2 { props.children }
     </div>
   );
 } 

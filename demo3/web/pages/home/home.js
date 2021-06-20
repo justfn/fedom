@@ -73,7 +73,6 @@ export default function(props, context){
   })
       
       
-  let varyShowPart1 = VaryValue(true);
   let style = {
     'color': 'red',
     'font-size': '20px',
@@ -144,7 +143,6 @@ export default function(props, context){
       
       <button onClick={changeClickHandle}> 切换元素 </button>
       <button onClick={changeClickHandle1}> 是否显示1 </button>
-      <button onClick={()=>{ varyShowPart1.$$=!varyShowPart1.$$ }} > 是否显示2 </button>
       <div varyShow={false}>
         jsx能力
         <hr />
@@ -163,7 +161,7 @@ export default function(props, context){
       { /* Feature: 动态化-标签、组件 
         */ }
       <Header$  isShowVary="123" className="bbbb" ref={ref3}  name="header-component" >
-        123
+        vary tag content 
       </Header$>
       
       <hr />

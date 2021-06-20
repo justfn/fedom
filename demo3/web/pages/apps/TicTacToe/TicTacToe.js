@@ -24,7 +24,7 @@ function Board(props, context){
     );
   } 
   return (
-    <div className={['component_Board', props.class]}>
+    <div className={['component_Board', props.className]}>
       <div className="board-row" ref="bdRowRef">
         { renderSquare(0) }
         { renderSquare(1) }

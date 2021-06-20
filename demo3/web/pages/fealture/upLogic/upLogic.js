@@ -5,6 +5,7 @@ import trackMouse from "../../../common/trackMouse.js";
 
 const {
   Component,
+  VaryValue,
 } = window.$fd;
 
 @PageB 
@@ -13,10 +14,10 @@ export default class Page extends Component {
     super(props);
     this.init();
     console.log(" >>>>>>>>>>>>>> ", 'start')
+    
   }
   onShow(){
     console.log(" >>>>>>>>>>>>>> ", 'onShow ')
-    console.log('todo onShow');
     this.init();
   }
   onUnmount(){
@@ -24,19 +25,18 @@ export default class Page extends Component {
   }
   
   init(){
-    console.log(' 000 ');
-    this.root.then((rootEl)=>{
-      let { x, y } = trackMouse(rootEl, this);
-      this.x = x;
-      this.y = y;
-      this.x.watch((...args)=>{
-        console.log( 'watch:', args);
-      })
+    let { x, y } = trackMouse(this);
+    this.x = x;
+    this.y = y;
+    this.x.watch((...args)=>{
+      console.log( 'watch x:', args);
     })
   }
   
   
   render(){
+    console.log("000000000 x", this.x)
+    
     return (
       <section className="upLogic" >
         <div>

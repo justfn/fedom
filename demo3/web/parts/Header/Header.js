@@ -8,7 +8,7 @@ const {
 
 export default function Header(props, context){
   // console.log(' Header --');
-  let klass = props.class ?? '';
+  let klass = props.className ?? '';
   context.onUnmount = (...args)=>{
     console.log( ' Header unmount ', args);
   }
@@ -22,11 +22,15 @@ export default function Header(props, context){
   
   return (
     <h1 className={['part_Header', klass ]}> 
-      { props.name }
-      <br />
-      { '****************' }
-      <br />
-      { props.children }
+      <div>
+        1 { props.name }
+      </div>
+      <div>
+        2 { '****************' }
+      </div>
+      <div>
+        3 { props.children }
+      </div>
     </h1>
   );
 }

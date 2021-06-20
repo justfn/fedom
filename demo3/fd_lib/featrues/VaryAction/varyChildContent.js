@@ -1,13 +1,14 @@
 import { devLog, } from "../../utils/dev.js";
-import { trimTextValue, } from "../../compiler/child/childUtil.js";
 import { 
   isStringValue, 
   isNumberValue, 
   isNodeValue, 
+  isFdNode, 
   isArrayValue, 
   isTextValue, 
   isVaryList,
 } from "../../utils/judge.js";
+import { trimTextValue, } from "../../compiler/child/childUtil.js";
 
 
 /* 子节点可变 
@@ -35,6 +36,9 @@ export default function varyChildValue(params={}){
       preValue, 
       nxtValue, 
     } = setParams; 
+    if ( isFdNode(preTrimedValue) ) { preTrimedValue = preTrimedValue.realNode; }
+    if ( isFdNode(nxtTrimedValue) ) { nxtTrimedValue = nxtTrimedValue.realNode; }
+    
     if ( isArrayValue(preTrimedValue) ) {
       const patchObj = updateListChild({
         listChild: preTrimedValue, 
@@ -56,6 +60,7 @@ export default function varyChildValue(params={}){
       return ;
     }
     
+    // 默认作为文本处理 
     preTrimedValue = preTrimedValue + '';
     const patchObj = updateTextChild({
       textFlgChild: patchNodeForText, 

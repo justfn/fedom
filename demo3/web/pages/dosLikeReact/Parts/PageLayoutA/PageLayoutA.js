@@ -9,7 +9,7 @@ export default function Layout(props, context){
   
   
   return (
-    <article className={["PageLayoutA", props.class]}>
+    <article className={["PageLayoutA", props.className]}>
       <div className="PageLayoutA-header">
         <PageHeader />
       </div>

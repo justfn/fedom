@@ -33,7 +33,7 @@ export default function Section(props, context){
   
   
   return (
-    <section className={['part_Section', props.class??'']}>
+    <section className={['part_Section', props.className??'']}>
       <h1 className="ps_header" onClick={showFn}>
         <div className="ps_lft"> {props.title} </div>
         <div className={["ps_rit", isRotate$]}> ▼ </div>
