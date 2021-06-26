@@ -14,16 +14,22 @@ const routes_ = [
   // 测试 
   {
     path: '/test',
-    redirect: '/home',  // #todo: fixbug 
+    alias: '/test/home',
+    // redirect: '/home', 
+    component: ()=>import('../pages/test/home/home.js'),
     isCache: true, // bol|fn,是否缓存 
     children: [
-      {
-        path: 'home',
-        component: ()=>import('../pages/test/testHome/testHome.js'),
-      },
+      // {
+      //   path: 'home',
+      //   // component: ()=>import('../pages/test/home/home.js'),
+      // },
       {
         path: 'chooseList',
         component: ()=>import('../pages/test/chooseList/chooseList.js'),
+      },
+      {
+        path: 'other',
+        component: ()=>import('../pages/test/other/other.js'),
       },
     ],
   },

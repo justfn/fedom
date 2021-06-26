@@ -1,6 +1,6 @@
 import PageA from "../../../parts/PageA/PageA.js";
 import Header from "../../../parts/Header/Header.js";
-import "./testHome.less";
+import "./other.less";
 
 
 const {
