@@ -9,8 +9,7 @@ import {
   isStringValue, 
   isNull, 
 } from "../../utils/judge.js";
-import Component from "../../featrues/Component/Component.js";
-
+import componentRender from "../../featrues/Component/componentRender.js";
 
 
 /* ** FdNode 
@@ -45,38 +44,30 @@ export class FdNode {
   }
   
   _renderNode(tagName, props){
-    /* output 1: class|function */
-    if (isComponent(tagName)) { return this._renderNodeForClass(tagName, props); }
-    if (isFunctionValue(tagName)) { return this._renderNodeForFunc(tagName, props); }
+    /* output 1: component */
+    if ( isFDComponent(tagName) ) {
+      const {
+        context, 
+        realNode, 
+      } = componentRender(tagName, props); 
+      this.context = context;
+      this.realNode = realNode;
+      return ;
+    }
     /* output 2: tag_str  */
-    if ( isStringValue(tagName) ) { return this._renderNodeForHtml(tagName); }
+    if ( isStringValue(tagName) ) { 
+      this.realNode = document.createElement(tagName);
+      return ;
+    }
     /* output 3: null  */
-    if ( isNull(tagName) ) { return this._renderNodeForComment(tagName); }
+    if ( isNull(tagName) ) { 
+      this._renderNodeForComment(tagName); 
+      this.realNode = document.createComment(comment_node_tip01);
+      return ; 
+    }
     
     /* output 4: other todo */
     warnLog(msg_wran01, tagName, props);
-  }
-  // 组件: class  
-  _renderNodeForClass(TagName, props){
-    this.context = new TagName(props);
-    // 注意：此处又将调用 compiler 
-    this.realNode = this.context.render().realNode;
-    this.context.root.resolve(this.realNode);
-  }
-  // 组件: fn 
-  _renderNodeForFunc(tagName, props){
-    this.context = new Component(props);
-    // 注意：此处又将调用 compiler 
-    this.realNode = tagName(props, this.context).realNode;
-    this.context.root.resolve(this.realNode);
-  }
-  // 标签: html 
-  _renderNodeForHtml(tagName){
-    this.realNode = document.createElement(tagName);
-  }
-  // 标签: null 
-  _renderNodeForComment(tagName){
-    this.realNode = document.createComment(comment_node_tip01);
   }
 }
 

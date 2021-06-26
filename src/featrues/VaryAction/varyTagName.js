@@ -4,7 +4,7 @@ import bindAttrs from "../../compiler/attrs/bindAttrs.js";
 import fillChildren from "../../compiler/child/fillChild.js";
 import componentUpdate from "../../featrues/Component/componentUpdate.js";
 import { removeComponentRun, } from "../../featrues/Lifecycles/onUnmount.js";
-import componentAttrs from "../../compiler/attrs/componentAttrs.js";
+import componentAttrs from "../../compiler/attrs/attrsComponent.js";
 import { 
   isBooleanValue, 
   isStringValue, 

@@ -1,16 +1,16 @@
 
 import config from "../../config/config.js";
-import componentAttrs from "./componentAttrs.js";
+import componentAttrs from "./attrsComponent.js";
 import { 
   addClassAttr, 
   addStyleAttr, 
   addEventAttr, 
   addRefAttr, 
-} from "./commonAttrs.js";
+} from "./attrsCommon.js";
 import { 
   isFormNode, 
   addFormAttrs, 
-} from "./formAttrs.js";
+} from "./attrsForm.js";
 import {
   isCommentNode, 
   isFDComponent, 
