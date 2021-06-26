@@ -2,12 +2,8 @@
   "name": "fedom",
   "version": "1.0.0",
   "description": "fe dom solution: 灵活简洁的前端框架",
-  "main": "./src/index.js",
+  "main": "index.js",
   "scripts": {
-    "ln": "ln -s \"./src\" \"./test/node_modules/fedom\"",
-    "ln-comment": "echo \"linux环境下创建链接\"",
-    "mklink": "mklink /j \"./test/node_modules/fedom\" \"./src\"",
-    "mklink-comment": "echo \"windows环境下创建链接\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

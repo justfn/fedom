@@ -3,7 +3,7 @@ const path = require("path")
 
 module.exports = {
   entry: {
-    main: './web/main.js', 
+    main: './main.js', 
   },
   // output: {
   //   publicPath: './',
@@ -17,17 +17,18 @@ module.exports = {
           options: {
             presets: ['@babel/preset-env',],
             plugins: [
-              [
-                "@babel/plugin-proposal-decorators", 
-                { "legacy": true }
-              ],
-              [
-                '@babel/plugin-transform-react-jsx', 
-                { 
-                  pragma: 'window.$fd.compiler', 
-                },
-              ],
-              '@babel/plugin-proposal-class-properties',
+              ...require("fedom/babel_plugins.js"), 
+              // [
+              //   "@babel/plugin-proposal-decorators", 
+              //   { "legacy": true }
+              // ],
+              // [
+              //   '@babel/plugin-transform-react-jsx', 
+              //   { 
+              //     pragma: 'window.$fd.compiler', 
+              //   },
+              // ],
+              // '@babel/plugin-proposal-class-properties',
             ],
           },
         }, 

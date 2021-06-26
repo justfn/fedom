@@ -1,14 +1,21 @@
 {
-  "name": "demo3",
+  "name": "fedom",
   "version": "1.0.0",
-  "description": "使用 jsx 作为模板",
+  "description": "fe dom solution: 灵活简洁的前端框架",
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve --config webpack.config.js",
     "build": "webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "keywords": [
+    "fe",
+    "dom",
+    "js",
+    "html",
+    "css"
+  ],
+  "author": "fsl",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -27,5 +34,13 @@
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.14.5",
     "zkits": "^1.0.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justfn/fedom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/justfn/fedom/issues"
+  },
+  "homepage": "https://github.com/justfn/fedom#readme"
 }

@@ -1,5 +1,5 @@
 // 引入依赖 
-import "../fd_lib/index.js";
+import "fedom";
 // 全局样式 
 import "./assets/styles/global.less";
 // 路由控制 
