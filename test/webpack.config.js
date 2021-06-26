@@ -17,7 +17,7 @@ module.exports = {
           options: {
             presets: ['@babel/preset-env',],
             plugins: [
-              ...require("fedom/babel_plugins.js"), 
+              ...require("fedom/babel_config_plugins.js"), 
               // [
               //   "@babel/plugin-proposal-decorators", 
               //   { "legacy": true }
