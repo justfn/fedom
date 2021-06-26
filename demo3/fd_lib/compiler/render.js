@@ -3,11 +3,6 @@ import {
   warnLog, 
 } from "../utils/dev.js";
 import { 
-  fillNodeChild, 
-  fillTextChild, 
-  markListStart, 
-} from "./child/childUtil.js";
-import { 
   isVaryValue,
   isArrayValue,
   isFdNode, 
@@ -15,6 +10,11 @@ import {
   isTextValue,
   isEmptyValue,
 } from "../utils/judge.js";
+import { 
+  fillNodeChild, 
+  fillTextChild, 
+  markListStart, 
+} from "./child/childUtil.js";
 import varyChildValue from "../featrues/VaryAction/varyChildContent.js";
 
 /* ** 渲染内容 
@@ -63,16 +63,14 @@ function fillChildIntoParent( varydOrListOrFdNodeOrNodeOrText, nodeWrap, fdNodeC
   // 出口2: 渲染文本 
   if ( isEmptyValue(varydOrListOrFdNodeOrNodeOrText) ) { varydOrListOrFdNodeOrNodeOrText = '' }
   varydOrListOrFdNodeOrNodeOrText = varydOrListOrFdNodeOrNodeOrText + ''; 
-  if ( isTextValue(varydOrListOrFdNodeOrNodeOrText) ) {
-    let patchNodeForText = fillTextChild(nodeWrap, varydOrListOrFdNodeOrNodeOrText); 
-    varyChildValue({
-      // fdNode, 
-      varyChild, 
-      patchNodeForText, 
-      patchNodeForList: null,
-    });
-    return fdNodeChild || patchNodeForText;
-  }
+  let patchNodeForText = fillTextChild(nodeWrap, varydOrListOrFdNodeOrNodeOrText); 
+  varyChildValue({
+    // fdNode, 
+    varyChild, 
+    patchNodeForText, 
+    patchNodeForList: null,
+  });
+  return fdNodeChild || patchNodeForText;
 } 
 export default function render(varydOrListOrFdNodeOrNodeOrText, nodeWrap){
   // console.log("000000000 varydOrListOrFdNodeOrNodeOrText ", varydOrListOrFdNodeOrNodeOrText, nodeWrap )
