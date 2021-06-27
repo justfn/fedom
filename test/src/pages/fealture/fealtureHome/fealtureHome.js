@@ -1,5 +1,5 @@
 
-import PageA from "../../../Parts/PageA/PageA.js";
+import LayoutA from "../../../Parts/LayoutA/LayoutA.js";
 import Header from "../../../Parts/Header/Header.js";
 import "./fealtureHome.less";
 
@@ -14,10 +14,10 @@ export default function(props,context){
   
   
   return (
-    <PageA>
+    <LayoutA>
       <Header name={'特性首页'} />
     
-    </PageA>
+    </LayoutA>
   );
 }
 

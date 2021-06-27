@@ -1,5 +1,5 @@
 import "./TicTacToe.less";
-import PageB from "../../../parts/PageB/PageB.js";
+import decoratorOfLayoutA from "../../../parts/LayoutA/decorator.js";
 
 const {
   Component,
@@ -44,7 +44,7 @@ function Board(props, context){
   )
 }
 
-@PageB 
+@decoratorOfLayoutA 
 export default class Child extends Component {
   constructor(...args){
     super(...args)

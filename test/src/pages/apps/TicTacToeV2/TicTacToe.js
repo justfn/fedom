@@ -1,5 +1,5 @@
 import "./TicTacToe.less";
-import PageB from "../../../parts/PageB/PageB.js";
+import decoratorOfLayoutA from "../../../parts/LayoutA/decorator.js";
 
 const {
   Component,
@@ -7,7 +7,7 @@ const {
   VaryList,
 } = window.$fd;
 
-@PageB 
+@decoratorOfLayoutA 
 export default class TicTacToeV2 extends Component {
   constructor(...args){
     super(...args);

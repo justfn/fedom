@@ -1,4 +1,4 @@
-import PageA from "../../../parts/PageA/PageA.js";
+import LayoutA from "../../../parts/LayoutA/LayoutA.js";
 import Header from "../../../parts/Header/Header.js";
 import "./other.less";
 
@@ -13,9 +13,9 @@ export default function(props, context){
   
   
   return (
-    <PageA>
+    <LayoutA>
       <Header name={'测试首页'} />
     
-    </PageA>
+    </LayoutA>
   );
 }

@@ -1,4 +1,4 @@
-import PageA from "../../Parts/PageA/PageA.js";
+import LayoutA from "../../Parts/LayoutA/LayoutA.js";
 const {
   VaryValue, 
   VaryKeys,
@@ -16,10 +16,10 @@ export default function(props, context){
   }
   
   return (
-    <PageA 
+    <LayoutA 
       >
       首页 
-    </PageA>
+    </LayoutA>
   );
 }
 

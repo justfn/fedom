@@ -1,6 +1,6 @@
 
 import "./home.less";
-import PageA from "../../../Parts/PageA/PageA.js";
+import LayoutA from "../../../Parts/LayoutA/LayoutA.js";
 import Header from "../../../Parts/Header/Header.js";
 import PartA from "../../../parts/PartA/PartA.js";
 
@@ -135,7 +135,7 @@ export default function(props, context){
     isShow$.$$ = !isShow$.$$;
   }
   return (
-    <PageA ref={ref1} className={[ 'fe', isActive, 'dom', console.log(111) ]} 
+    <LayoutA ref={ref1} className={[ 'fe', isActive, 'dom', console.log(111) ]} 
       style={style} 
       onClick={fn1}
       >
@@ -195,7 +195,7 @@ export default function(props, context){
       <hr />
       <hr />
       <hr className={console.log(222)} />
-    </PageA>
+    </LayoutA>
   );
 }
 

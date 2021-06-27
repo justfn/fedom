@@ -1,5 +1,5 @@
 import "./appHome.less";
-import PageA from "../../../Parts/PageA/PageA.js";
+import LayoutA from "../../../Parts/LayoutA/LayoutA.js";
 import Header from "../../../Parts/Header/Header.js";
 
 const {
@@ -12,10 +12,10 @@ export default function(props,context){
   
   
   return (
-    <PageA>
+    <LayoutA>
       <Header name={'应用首页'} />
     
-    </PageA>
+    </LayoutA>
   );
 }
 

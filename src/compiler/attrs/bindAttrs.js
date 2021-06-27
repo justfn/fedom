@@ -1,20 +1,21 @@
 
 import config from "../../config/config.js";
+import {
+  isCommentNode, 
+  isFDComponent, 
+} from "../../utils/judge.js";
 import componentAttrs from "./attrsComponent.js";
 import { 
   addClassAttr, 
   addStyleAttr, 
   addEventAttr, 
+  addOtherAttr, 
   addRefAttr, 
 } from "./attrsCommon.js";
 import { 
   isFormNode, 
   addFormAttrs, 
 } from "./attrsForm.js";
-import {
-  isCommentNode, 
-  isFDComponent, 
-} from "../../utils/judge.js";
 import attrVaryShow from "../../featrues/VaryAction/varyAttrShow.js";
 
 export default function bindAttrs(fdNode){
@@ -62,14 +63,7 @@ export default function bindAttrs(fdNode){
       continue; 
     }
     /* brance: other_key */
-    try {
-      realNode.setAttribute(key, val);
-    } 
-    catch (e) {
-      console.warn('# todo attrs other', realNode, key, val);
-    } 
-    
+    addOtherAttr(fdNode, key, val);
   };
 }
-
 

@@ -1,5 +1,5 @@
 import "./upLogic.less";
-import PageB from "../../../parts/PageB/PageB.js";
+import decoratorOfLayoutA from "../../../parts/LayoutA/decorator.js";
 
 import trackMouse from "../../../common/trackMouse.js";
 
@@ -8,7 +8,7 @@ const {
   VaryValue,
 } = window.$fd;
 
-@PageB 
+@decoratorOfLayoutA 
 export default class Page extends Component {
   constructor(props){
     super(props);

@@ -1,6 +1,14 @@
 /* ** 处理通用属性属性 
 */
 
+import { 
+  isVaryValue,
+  isStringValue, 
+  isMapValue, 
+  isFunctionValue,
+  isArrayValue, 
+  isAsyncValue, 
+} from "../../utils/judge.js";
 import {
   varyAttrClassStr,
   varyAttrClassArr,
@@ -11,14 +19,9 @@ import {
   varyAttrStyleObj,
   varyAttrStyleOval,
 } from "../../featrues/VaryAction/varyAttrStyle.js";
-import { 
-  isVaryValue,
-  isStringValue, 
-  isMapValue, 
-  isFunctionValue,
-  isArrayValue, 
-  isAsyncValue, 
-} from "../../utils/judge.js";
+import {
+  varyAttrOtherVal,
+} from "../../featrues/VaryAction/varyAttrOther.js";
 
 export function addRefAttr(fdNode, value ){
   if (isAsyncValue(value)) {
@@ -119,6 +122,22 @@ export function addEventAttr(fdNode, evtName, listener){
   
 } 
 
+const msg_error_todo = 'todo attrs other';
+export function addOtherAttr(fdNode, key, val, varyAttr){
+  if ( isVaryValue(val) ) {
+    varyAttrOtherVal(fdNode, key, val);
+    return addOtherAttr(fdNode, key, val.get(false), val);
+  }
 
+  let {
+    realNode, 
+  } = fdNode;
+  try {
+    realNode.setAttribute(key, val);
+  } 
+  catch (err) {
+    console.warn( err, msg_error_todo, realNode, key, val);
+  } 
+} 
 
 

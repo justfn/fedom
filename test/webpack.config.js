@@ -18,17 +18,7 @@ module.exports = {
             presets: ['@babel/preset-env',],
             plugins: [
               ...require("fedom/babel_config_plugins.js"), 
-              // [
-              //   "@babel/plugin-proposal-decorators", 
-              //   { "legacy": true }
-              // ],
-              // [
-              //   '@babel/plugin-transform-react-jsx', 
-              //   { 
-              //     pragma: 'window.$fd.compiler', 
-              //   },
-              // ],
-              // '@babel/plugin-proposal-class-properties',
+              
             ],
           },
         }, 

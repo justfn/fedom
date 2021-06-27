@@ -1,13 +1,5 @@
 
-
 import FloatCatalog from "../FloatCatalog/FloatCatalog.js";
-
-
-const {
-  Component, 
-} = window.$fd;
-
-
 
 
 export default function (ComponentTarget){
@@ -19,7 +11,7 @@ export default function (ComponentTarget){
     
     render(){
       return (
-        <section className={['PageB']}>
+        <section className={['PageA']}>
           { super.render() }
           
           <FloatCatalog />

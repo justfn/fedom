@@ -1,6 +1,6 @@
 
 import "./jsx.less";
-import PageA from "../../../Parts/PageA/PageA.js";
+import LayoutA from "../../../Parts/LayoutA/LayoutA.js";
 import Header from "../../../Parts/Header/Header.js";
 import Section from "../../../Parts/Section/Section.js";
 import CptA from "./CptA.js";
@@ -15,7 +15,7 @@ export default function pageJSX(props,context){
   
   
   return (
-    <PageA>
+    <LayoutA>
       <Header name={'特性-JSX能力'} />
       
       <Section title="渲染文本">
@@ -44,7 +44,7 @@ export default function pageJSX(props,context){
         <CptA name="名称1" />
       </Section>
       
-    </PageA>
+    </LayoutA>
   );
 }
 
