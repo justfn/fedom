@@ -12,7 +12,6 @@ export function varyAttrOtherVal(fdNode, attrKey, varyAttr){
       nxtTrimedValue, 
     } = params;
     
-    console.log("000000000 ", fdNode )
     fdNode.realNode.setAttribute(attrKey, nxtTrimedValue);
   })
 } 
