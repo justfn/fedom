@@ -8,67 +8,55 @@ const {
 
 
 export default function chooseList(props, context){
-  let list = [
-    {
-      label: 'aaa',
-      value: '111',
-      choosed: true, 
-      idx: 0, 
-    },
-    {
-      label: 'bbb',
-      value: '222',
-      choosed: false, 
-      idx: 1, 
-    },
-    {
-      label: 'ccc',
-      value: '333',
-      choosed: false, 
-      idx: 2, 
-    },
-    {
-      label: 'ddd',
-      value: '444',
-      choosed: false, 
-      idx: 3, 
-    },
-  ]
-  
   const list1 = {
-    list$: VaryValue(list, (list)=>{
-      return list.map((itm,idx)=>{
-        return (
-          <button 
-            data-choosed={itm.choosed} 
-            onClick={ (evt)=>list1.onClick(evt, itm) }
-            >
-            { itm.label } { itm.value}
-          </button>
-        )
+    list: [
+      {
+        label: 'aaa',
+        value: '111',
+        choosed: true, 
+        idx: 0, 
+      },
+      {
+        label: 'bbb',
+        value: '222',
+        choosed: false, 
+        idx: 1, 
+      },
+      {
+        label: 'ccc',
+        value: '333',
+        choosed: false, 
+        idx: 2, 
+      },
+      {
+        label: 'ddd',
+        value: '444',
+        choosed: false, 
+        idx: 3, 
+      },
+    ],
+    get list$(){
+      return this.list.map((itm,idx)=>{
+        return VaryValue(itm, (v)=>{
+          return (
+            <button 
+              data-choosed={v.choosed} 
+              onClick={ (evt)=>this.onClick(idx) }
+              >
+              { v.label } - { v.value}
+            </button>
+          );
+        })
       });
-    }),
-    onClick(evt, itm){
-      console.log( evt, itm);
     },
-  }
-  const list2 = {
-    list$: list.map((itm,idx)=>{
-      return VaryValue(itm, (v)=>{
-        return (
-          <button 
-            data-choosed={v.choosed} 
-            onClick={ (evt)=>list2.onClick(evt, idx) }
-            >
-            { v.label } - { v.value}
-          </button>
-        );
-      })
-    }),
-    onClick(evt, idx){
-      console.log( idx, list2.list$);
-      list2.list$.forEach((itm,idx)=>{
+    onClick(idx){
+      console.log( this, idx );
+      this.list$.forEach((itm,idx)=>{
         itm.set((val)=>{
+          setTimeout(()=>{
+            
+            console.log( val );
+          },1000)
           let rst = {
             ...val,
             choosed: false,
@@ -76,16 +64,16 @@ export default function chooseList(props, context){
           return rst;
         })
       })
-      list2.list$[idx].set((val)=>{
-        let rst = {
-          ...val,
-          choosed: true,
-        };
-        return rst;
-      })
+      // this.list$[idx].set((val)=>{
+      //   let rst = {
+      //     ...val,
+      //     choosed: true,
+      //   };
+      //   return rst;
+      // })
     },
   };
-  const list3 = {
+  const list2 = {
     list: [
       {
         label: 'aaa',
@@ -113,11 +101,11 @@ export default function chooseList(props, context){
       },
     ],
     get list$(){
-      return VaryList(list3.list, (val, idx, id, list)=>{
+      return VaryList(this.list, (val, idx, id, list)=>{
         return (
           <button 
             data-choosed={val.choosed}
-            onClick={ (evt)=>list3.onClick(val, idx, id) }
+            onClick={ (evt)=>this.onClick(val, idx, id) }
             >
             { val.label } - { val.value}
           </button>
@@ -125,7 +113,7 @@ export default function chooseList(props, context){
       })
     },
     onClick(val, idx, id){
-      list = list3.list;
+      list = this.list;
       let preIdx = list.findIndex(itm=>{ return !!itm.choosed.get() });
       console.log( preIdx, idx );
       list[preIdx].choosed.set((v)=>{ return !v; })
@@ -152,15 +140,12 @@ export default function chooseList(props, context){
   
   return (
     <LayoutA className={"chooseList"}>
-    
+      
       <div>1</div>
       { list1.list$ }
       
       <div>2</div>
       { list2.list$ }
-      
-      <div>3</div>
-      { list3.list$ }
       
     </LayoutA>
   );
