@@ -9,7 +9,7 @@ export default function LayoutA(props, context){
   
   
   return (
-    <section className={['LayoutA', klass]}>
+    <section data-flg="LayoutA" className={['LayoutA', klass]}>
       { props.children }
       
       <FloatCatalog />

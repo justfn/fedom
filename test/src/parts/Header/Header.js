@@ -21,7 +21,7 @@ export default function Header(props, context){
   
   
   return (
-    <h1 className={['part_Header', klass ]}> 
+    <h1 data-flg='Header' className={['part_Header', klass ]}> 
       <div>
         1 { props.name }
       </div>

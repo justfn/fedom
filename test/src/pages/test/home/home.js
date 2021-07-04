@@ -14,7 +14,7 @@ const {
 let elDom = document.createElement("div")
 elDom.textContent = ' =================================== ';
 
-export default function(props, context){
+export default function TestHome(props, context){
   // console.log(" >>>>>>>>>>>>>> ", Store.use(1) )
   
   setTimeout(()=>{
@@ -135,69 +135,82 @@ export default function(props, context){
     isShow$.$$ = !isShow$.$$;
   }
   return (
-    <LayoutA ref={ref1} className={[ 'fe', isActive, 'dom', console.log(111) ]} 
-      style={style} 
-      onClick={fn1}
-      >
-      
-      <button onClick={changeClickHandle}> 切换元素 </button>
-      <button onClick={changeClickHandle1}> 是否显示1 </button>
-      <div varyShow={false}>
-        jsx能力
-        <hr />
-        { /* jsx能力 */ }
+    <secion>
+      <LayoutA ref={ref1} className={[ 'fe', isActive, 'dom', console.log(111) ]} 
+        style={style} 
+        onClick={fn1}
+        >
         
-      </div>
-      
-      <div varyShow={isShow$} ref={ref2}>
-        { varyKeys$.a }
-        { varyKeys$.b }
-        { varyKeys$.c }
-      </div>
-      
-      
-      <hr />
-      { /* Feature: 动态化-标签、组件 
-        */ }
-      <Header$  isShowVary="123" className="bbbb" ref={ref3}  name="header-component" >
-        vary tag content 
-      </Header$>
-      
-      <hr />
-      { /* Feature: 动态化-子节点-文本、数值 */ }
-      <button onClick={fn2}>{ varyText }</button>
-      <i> { val2 } </i>
-      
-      <hr />
-      { /* Feature: 嵌入原生DOM节点元素 */ }
-      <h1>
-        { elDom }
-      </h1>
+        <button onClick={changeClickHandle}> 切换元素 </button>
+        <button onClick={changeClickHandle1}> 是否显示1 </button>
+        <div varyShow={false}>
+          jsx能力
+          <hr />
+          { /* jsx能力 */ }
+          
+        </div>
+        
+        <div varyShow={isShow$} ref={ref2}>
+          { varyKeys$.a }
+          { varyKeys$.b }
+          { varyKeys$.c }
+        </div>
+        
+        
+        <hr />
+        { /* Feature: 动态化-标签、组件 
+          */ }
+        <Header$  isShowVary="123" className="bbbb" ref={ref3}  name="header-component" >
+          vary tag content 
+        </Header$>
+        
+        <hr />
+        { /* Feature: 动态化-子节点-文本、数值 */ }
+        <button onClick={fn2}>{ varyText }</button>
+        <i> { val2 } </i>
+        
+        <hr />
+        { /* Feature: 嵌入原生DOM节点元素 */ }
+        <h1>
+          { elDom }
+        </h1>
 
-      <hr />
-      { /* Feature: API-富文本渲染能力 */ }
-      { htmlDom }
-      
-      
-      <hr />
-      
-      <input value={varyInputVal} />
-      { varyInputVal }
-      <hr />
-      { varyInputVal }
-      
-      {
-        [1,2,3].map((itm,idx)=>{
-          return <h1>{itm}</h1>
-        })
-      }
-      
-      <hr />
-      <hr />
-      <hr className={console.log(222)} />
-    </LayoutA>
+        <hr />
+        { /* Feature: API-富文本渲染能力 */ }
+        { htmlDom }
+        
+        
+        <hr />
+        
+        <input value={varyInputVal} />
+        { varyInputVal }
+        <hr />
+        { varyInputVal }
+        
+        {
+          [1,2,3].map((itm,idx)=>{
+            return <h1>{itm}</h1>
+          })
+        }
+        
+        <hr />
+        <hr />
+        <hr className={console.log(222)} />
+      </LayoutA>
+    </secion>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

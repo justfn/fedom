@@ -37,7 +37,7 @@ export function addRefAttr(fdNode, value ){
   
 } 
 
-export function addClassAttr(fdNode, value, varyAttr){
+export function addClassAttr(fdNode, value, varyAttr=null){
   if (isVaryValue(value)) {
     addClassAttr(fdNode, value.get(false), value);
     return ;
@@ -45,36 +45,31 @@ export function addClassAttr(fdNode, value, varyAttr){
   
   // 出口1：
   if ( isStringValue(value) ) {
-    fdNode.realNode.setAttribute("class", value);
+    if (value) { fdNode.realNode.classList.add(value); }
     
     /* ** Features: 
     */
     varyAttrClassStr(fdNode, varyAttr);
     
-    return ;
+    return value;
   }
   // 出口2：
   if ( isArrayValue(value) ) {
-    let vl = value.reduce((retV,itm)=>{ 
-      let it = itm; 
+    value.forEach((itm,idx)=>{
+      addClassAttr(fdNode, itm, varyAttr);
       
-      /* ** Features:  
-      */
-      it = varyAttrClassAitm(fdNode, itm);
-      
-      return  retV + ' ' + it
-    },'')
-    vl = vl.slice(1)
-    fdNode.realNode.setAttribute("class", vl);
+      varyAttrClassAitm(fdNode, itm);
+    })
     
     /* ** Features: 
     */
     varyAttrClassArr(fdNode, varyAttr)
     
-    return ;
+    return '';
   }
   
   console.warn('# todo attrs class', fdNode, value);
+  return '';
 } 
 
 export function addStyleAttr(fdNode, value, varyAttr){
