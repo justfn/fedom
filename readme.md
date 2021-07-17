@@ -57,6 +57,7 @@
 todo: 
   写框架文档 
   表单支持 
+  组件树 
   编译空间 
     data-scope_id="xx" 
   css 模块化 

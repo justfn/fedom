@@ -7,12 +7,9 @@ import Component from "./featrues/Component/Component.js";
 import onShow from "./featrues/Lifecycles/onShow.js";
 import onUnmount from "./featrues/Lifecycles/onUnmount.js";
 import { VaryValue, } from "./featrues/VaryModel/VaryValue.js";
-import { VaryKeys, } from "./featrues/VaryModel/VaryKeys.js";
+import { VaryMap, } from "./featrues/VaryModel/VaryMap.js";
 import { VaryList } from "./featrues/VaryModel/VaryList.js";
 import AsyncValue from "./featrues/Async/AsyncValue.js";
-import Store from "./featrues/StoreKits/Store.js";
-import StoreSession from "./featrues/StoreKits/StoreSession.js";
-import StoreLocal from "./featrues/StoreKits/StoreLocal.js";
 
 // 功能 
 if (!window.$fd) { window.$fd = {}; }
@@ -23,12 +20,9 @@ window.$fd.Component = Component;
 window.$fd.onShow = onShow;
 window.$fd.onUnmount = onUnmount;
 window.$fd.VaryValue = VaryValue;
-window.$fd.VaryKeys = VaryKeys;
+window.$fd.VaryMap = VaryMap;
 window.$fd.VaryList = VaryList;
 window.$fd.AsyncValue = AsyncValue;
-window.$fd.Store = Store;
-window.$fd.StoreSession = StoreSession;
-window.$fd.StoreLocal = StoreLocal;
 // 工具 
 if (!window.$fd_kit) { window.$fd_kit = {}; }
 // 内部使用 

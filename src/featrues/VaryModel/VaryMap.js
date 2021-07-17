@@ -19,7 +19,7 @@ const global_config = {
 };
 function checkKey(key){
   if (global_config.keys.includes(key)) { 
-    let errMsg = `#fd VaryKeys key: ${key} is forbid, please replace it`;
+    let errMsg = `#fd VaryMap key: ${key} is forbid, please replace it`;
     console.err(errMsg);
     throw errMsg;
   }
@@ -105,7 +105,7 @@ export class KeysVary {
   }
 }
 
-export function VaryKeys(mapVal, itmTrimFn){
+export function VaryMap(mapVal, itmTrimFn){
   itmTrimFn = itmTrimFn || function(val, key, obj){ return val; };
   const varyedObj = new KeysVary(mapVal, itmTrimFn);
   

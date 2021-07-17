@@ -5,7 +5,7 @@ import { FdNode, } from "../compiler/fdNode/fdNode.js";
 import Component from "../featrues/Component/Component.js";
 import { Vary, } from "../featrues/VaryModel/VaryValue.js";
 import { ListVary, } from "../featrues/VaryModel/VaryList.js";
-import { KeysVary, } from "../featrues/VaryModel/VaryKeys.js";
+import { KeysVary, } from "../featrues/VaryModel/VaryMap.js";
 import { Async, } from "../featrues/Async/AsyncValue.js";
 
 
@@ -84,7 +84,7 @@ export function isVaryList(val){
   return bol;
 } 
 // 值是否为键值集可变量值 
-export function isVaryKeys(val){
+export function isVaryMap(val){
   if (!val) { return false; }
   
   let bol = val instanceof KeysVary;

@@ -6,7 +6,7 @@ import PartA from "../../../parts/PartA/PartA.js";
 
 const {
   VaryValue, 
-  VaryKeys,
+  VaryMap,
   AsyncValue,
   Store,
 } = window.$fd
@@ -65,7 +65,7 @@ export default function TestHome(props, context){
   
   // console.log('# page_home');
   
-  let varyKeys$ = VaryKeys({
+  let varyKeys$ = VaryMap({
     a: 111,
     b: 222,
     c: 333,
