@@ -5,7 +5,7 @@ import { FdNode, } from "../compiler/fdNode/fdNode.js";
 import Component from "../featrues/Component/Component.js";
 import { Vary, } from "../featrues/VaryModel/VaryValue.js";
 import { ListVary, } from "../featrues/VaryModel/VaryList.js";
-import { KeysVary, } from "../featrues/VaryModel/VaryMap.js";
+import { MapVary, } from "../featrues/VaryModel/VaryMap.js";
 import { Async, } from "../featrues/Async/AsyncValue.js";
 
 
@@ -87,7 +87,7 @@ export function isVaryList(val){
 export function isVaryMap(val){
   if (!val) { return false; }
   
-  let bol = val instanceof KeysVary;
+  let bol = val instanceof MapVary;
   
   return bol;
 } 

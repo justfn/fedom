@@ -55,7 +55,7 @@ function update(that, key, val){
   
   return that[ key ].set((v)=>{ return val; })
 } 
-export class KeysVary {
+export class MapVary {
   constructor(mapVal, itmTrimFn){
     this.$store = {
       value: mapVal,
@@ -107,7 +107,7 @@ export class KeysVary {
 
 export function VaryMap(mapVal, itmTrimFn){
   itmTrimFn = itmTrimFn || function(val, key, obj){ return val; };
-  const varyedObj = new KeysVary(mapVal, itmTrimFn);
+  const varyedObj = new MapVary(mapVal, itmTrimFn);
   
   return varyedObj;
 } 
