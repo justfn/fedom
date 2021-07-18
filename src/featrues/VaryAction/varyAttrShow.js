@@ -5,7 +5,7 @@ import {
 } from "../../utils/judge.js";
 
 const global_config = {
-  keyName: 'varyShow',
+  keyName: 'showVary',
 }
 export default function varyAttrVaryShow(realNode, attrs){
   if (!(global_config.keyName in attrs)) { return ; }

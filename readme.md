@@ -16,8 +16,8 @@
       render_run&setTimeout() 
       constructor_run&setTimeout() 
   2 组件更新 
-    $xxx.watch() 
-    cpt.xxx(val) 
+    $xxx.watch() // 监听动态值变化
+    cpt.xxx(val) // 子组件的方法被调用 
   3 组件缓存 
     context.onShow() 
     onShow() 
@@ -39,20 +39,16 @@
     动态化嵌套 
     xx$  
     xx$.$$  
-  VaryKeys [todo:优化]
+  VaryMap [todo:优化]
     xx$.xx.$$  [对象键值动态化] 
   VaryList 
   vary标签 
   vary属性
-    varyShow={bol} 
+    showVary={bol} 
   vary子节点
     整个数组 
     单个子节点 
     文本内容 
-6 store 
-  Store 
-  StoreSession  [todo] 
-  StoreLocal    [todo] 
 --------------------------------------------------------------------------------
 todo: 
   写框架文档 

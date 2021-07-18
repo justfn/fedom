@@ -143,14 +143,14 @@ export default function TestHome(props, context){
         
         <button onClick={changeClickHandle}> 切换元素 </button>
         <button onClick={changeClickHandle1}> 是否显示1 </button>
-        <div varyShow={false}>
+        <div showVary={false}>
           jsx能力
           <hr />
           { /* jsx能力 */ }
           
         </div>
         
-        <div varyShow={isShow$} ref={ref2}>
+        <div showVary={isShow$} ref={ref2}>
           { varyKeys$.a }
           { varyKeys$.b }
           { varyKeys$.c }
