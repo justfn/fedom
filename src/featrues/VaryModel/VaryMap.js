@@ -12,7 +12,7 @@ const global_config = {
     '$remove',
     '$get',
     '$$',
-    '$map',
+    '$each',
     '$update',
     '$set',
   ],
@@ -85,7 +85,7 @@ export class MapVary {
     return this.$store.value;
   }
   get $$(){ return this.$get(false); }
-  $map = (mapCallback)=>{
+  $each = (mapCallback)=>{
     let obj = this.$store.value;
     return mapKeys(obj, (val, key)=>{
       return mapCallback(val, this[key], key, obj)
