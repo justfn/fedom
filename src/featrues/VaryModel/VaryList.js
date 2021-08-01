@@ -14,6 +14,8 @@ class ListId {
     this.value = idNum;
   }
 }
+const list_in_set_fns_key = Symbol('list_in_set_fns');
+const list_rm_set_fns_key = Symbol('list_rm_set_fns');
 export class ListVary extends Vary {
   constructor(val, initIdList, itmTrimFn, trimFn){
     super(val, trimFn)
@@ -27,11 +29,14 @@ export class ListVary extends Vary {
     ]; 
     this._initList(initIdList);
     
-    this._listInSets = [];
-    this._listRmSets = [];
     this._listItemTrimFn = itmTrimFn;
   }
   
+  /* --------------------------------------------------------- DATAs  */
+  [list_in_set_fns_key] = [];
+  [list_rm_set_fns_key] = [];
+  
+  /* --------------------------------------------------------- KITs  */
   arr_item_id_num = -99;
   _initList = (initIdList)=>{
     this._$$List = this._$$.map((itm,idx)=>{
@@ -42,8 +47,6 @@ export class ListVary extends Vary {
       }
     })
   }
-  
-  /* --------------------------------------------------------- KITs  */
   _splice = (begin, num, list=[], updateIdList=[], trimList=[])=>{
     let bakList = list.map((itm,idx)=>{
       return {
@@ -98,7 +101,7 @@ export class ListVary extends Vary {
       updateIdList.push(itmId);
       return this._listItemTrimFn( itm, idx, itmId, this._$$);
     })
-    this._listInSets.forEach((listInSetItm)=>{
+    this[list_in_set_fns_key].forEach((listInSetItm)=>{
       listInSetItm({
         index: idx,
         list: trimList,
@@ -117,7 +120,7 @@ export class ListVary extends Vary {
     }
     idx = this._checkIdx(idx);
     
-    this._listRmSets.forEach((listRmSetItm)=>{
+    this[list_rm_set_fns_key].forEach((listRmSetItm)=>{
       listRmSetItm({
         index: idx,
       });
@@ -208,7 +211,7 @@ export class ListVary extends Vary {
   }
   // 收集更新-插入 
   _add_list_in = (listInSetRun)=>{
-    this._listInSets.push(({index, list, id})=>{
+    this[list_in_set_fns_key].push(({index, list, id})=>{
       listInSetRun({
         index,
         list, 
@@ -217,7 +220,7 @@ export class ListVary extends Vary {
   } 
   // 收集更新-删除
   _add_list_rm = (listRemoveRun)=>{
-    this._listRmSets.push(({index})=>{
+    this[list_rm_set_fns_key].push(({index})=>{
       listRemoveRun({
         index,
       }) 

@@ -28,6 +28,9 @@ import { errLog, } from "../../utils/dev.js";
 */
 let use_vary_num_id = 0; 
 const symbol_1 = Symbol('cache_value'); // 唯一标识1 
+const set_fns_key = Symbol('set-fns');
+const watch_fns_key = Symbol('watch-fns');
+const mounted_fns_key = Symbol('mounted-fns');
 export class Vary {
   constructor(val, trimFn) {
     this._num_id = use_vary_num_id++;
@@ -37,13 +40,12 @@ export class Vary {
     this._trimValueFn =  trimFn ?? (v=>v); // 整理成最终返回值 
     this._$$Trimed = this._trimValueFn(val);
     this.__$$TrimedNxt = symbol_1; // 缓存下一次格式化的值,避免多次执行'_trimValueFn'函数  
-    
-    this._mounteds = [];
-    
-    this._sets = [];
-    this._watchs = [];
   }
   
+  /* --------------------------------------------------------- DATAs  */
+  [set_fns_key] = [];
+  [watch_fns_key] = [];
+  [mounted_fns_key] = [];
   /* --------------------------------------------------------- APIs  */
   // 取值 
   get = (isOriginal=true)=>{ 
@@ -60,7 +62,7 @@ export class Vary {
     let nxt_v = null;
     if (!isLazy) { 
       // todo; diff value 
-      this._sets.forEach(setFn=>{ 
+      this[set_fns_key].forEach(setFn=>{ 
         nxt_v = setFn(setHandle, isLazy).nextValue; 
       });
     }
@@ -71,7 +73,7 @@ export class Vary {
       
       if (nxt_v===undefined) { nxt_v = pre_v }
       this.__$$TrimedNxt = this._trimValueFn(nxt_v);
-      this._sets.forEach(setFn=>{ 
+      this[set_fns_key].forEach(setFn=>{ 
         setFn(nxt_v, isLazy); 
       });
     }
@@ -79,7 +81,7 @@ export class Vary {
     let tmpV = this._$$Trimed;
     this._$$Trimed = this.__$$TrimedNxt;
     this.__$$TrimedNxt = symbol_1; 
-    this._watchs.forEach( watchFn=>{
+    this[watch_fns_key].forEach( watchFn=>{
       watchFn(pre_v, nxt_v, tmpV, this._$$Trimed);
     })
     
@@ -92,11 +94,11 @@ export class Vary {
   set $$(val){ this.set(v=>val, true) }
   // 收集渲染后执行的函数 
   mounted = (mountedHandle)=>{
-    this._mounteds.push(mountedHandle);
+    this[mounted_fns_key].push(mountedHandle);
   }
   // 收集更新时执行的函数 
   watch = (watchHandle)=>{
-    this._watchs.push((p_v, n_v, pVTrimed, nVTrimed)=>{
+    this[watch_fns_key].push((p_v, n_v, pVTrimed, nVTrimed)=>{
       watchHandle(p_v, n_v, pVTrimed, nVTrimed);
     })
   }
@@ -114,7 +116,7 @@ export class Vary {
   /* --------------------------------------------------------- KITs  */
   // 收集更新 
   _add_set = (setRun, extra)=>{
-    this._sets.push((setHandle, isLazy)=>{
+    this[set_fns_key].push((setHandle, isLazy)=>{
       let pre_v = this.get(true);
       let pre_v_t = this.get(false);
       let nxt_v = setHandle; 
@@ -140,7 +142,7 @@ export class Vary {
   }
   // 执行初始化 
   _mounted_run = (...args)=>{
-    this._mounteds.forEach((mountedFn,idx)=>{
+    this[mounted_fns_key].forEach((mountedFn,idx)=>{
       mountedFn(this.get(true), this.get(false), ...args);
     })
   }
