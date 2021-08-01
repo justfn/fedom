@@ -19,9 +19,6 @@ import {
   isCommentNode,  
   isFDComponent, 
 } from "../../utils/judge.js";
-import {
-  errLog, 
-} from "../../utils/dev.js";
 import render from "../render.js";
 
 

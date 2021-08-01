@@ -10,6 +10,26 @@ import { VaryValue, } from "./featrues/VaryModel/VaryValue.js";
 import { VaryMap, } from "./featrues/VaryModel/VaryMap.js";
 import { VaryList } from "./featrues/VaryModel/VaryList.js";
 import AsyncValue from "./featrues/Async/AsyncValue.js";
+import {
+  isBooleanValue, 
+  isNumberValue, 
+  isStringValue, 
+  isObjectValue, 
+  isArrayValue, 
+  isFunctionValue, 
+  isNodeValue, 
+  isCommentNode, 
+  isFdNode, 
+  isComponent, 
+  isComponentValue, 
+  isVaryValue, 
+  isVaryList, 
+  isVaryMap, 
+  isAsyncValue, 
+  isEmptyValue, 
+  isFDComponent, 
+  isTextValue, 
+} from "./utils/judge.js";
 
 // 功能 
 if (!window.$fd) { window.$fd = {}; }

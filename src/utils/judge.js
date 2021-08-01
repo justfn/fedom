@@ -28,9 +28,9 @@ export function isStringValue(val){
   return typeof val==='string';
 } 
 // 是否为键值对对象 
-export function isMapValue(val){
+export function isObjectValue(val){
   // to_do: 待优化 
-  return typeof val==='object';
+  return val instanceof Object;
 } 
 // 是否为数组 
 export function isArrayValue(val){

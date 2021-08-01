@@ -11,9 +11,6 @@ import {
   isFDComponent, 
   isEmptyValue, 
 } from "../../utils/judge.js";
-import {
-  errLog, 
-} from "../../utils/dev.js";
 
 
 /* ** Features: 标签名动态化
@@ -113,7 +110,7 @@ export default function varyTagName(fdNode){
       // };
     }
     
-    errLog(err_msg01, nxtTrimedValue);
+    console.error(err_msg01, nxtTrimedValue)
   })
 } 
 

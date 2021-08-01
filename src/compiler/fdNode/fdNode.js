@@ -1,6 +1,3 @@
-import {
-  warnLog, 
-} from "../../utils/dev.js";
 import { 
   isVaryValue, 
   isFDComponent, 
@@ -67,7 +64,7 @@ export class FdNode {
     }
     
     /* output 4: other todo */
-    warnLog(msg_wran01, tagName, props);
+    console.warn('todo:', msg_wran01, tagName, props)
   }
 }
 

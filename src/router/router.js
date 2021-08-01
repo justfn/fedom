@@ -1,5 +1,4 @@
 
-import { devLog, } from "../utils/dev.js";
 import formatRoutes from "./formatRoutes.js";
 import parseHash from "./parseHash.js";
 import onHashChange, { initHashChange, } from "./onHashChange.js";
@@ -88,7 +87,7 @@ export default class Router {
     // 不允许跳转 
     let isGo = this._beforeEach(oldPathParams, newPathParams) ?? true;
     if (!isGo) { 
-      devLog(msg_notgo, oldPathParams.path);
+      console.log(msg_notgo, oldPathParams.path);
       routerReplace(oldPathParams.path, oldPathParams.query);
       return ; 
     }
@@ -107,7 +106,7 @@ export default class Router {
       let isExit = [ ...this._root.childNodes ].some( itm=>itm===cachedPageNode )
       // 不重复渲染相同DOM 
       if (isExit) { 
-        devLog(msg_cache_page);
+        console.log(msg_cache_page);
         return; 
       }
       

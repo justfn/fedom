@@ -4,7 +4,7 @@
 import { 
   isVaryValue,
   isStringValue, 
-  isMapValue, 
+  isObjectValue, 
   isFunctionValue,
   isArrayValue, 
   isAsyncValue, 
@@ -89,7 +89,7 @@ export function addStyleAttr(fdNode, value, varyAttr){
     return ;
   }
   // 出口2：
-  if ( isMapValue(value) ) {
+  if ( isObjectValue(value) ) {
     for(var ky in value){
       let vl = value[ky];
       

@@ -1,6 +1,3 @@
-import {
-  devLog,  
-} from "./dev.js";
 
 const msg_todo_err = '未知的diff错误';
 
@@ -11,7 +8,7 @@ export default function diffValue(pre, nxt){
     return pre===nxt;
   } 
   catch (err) {
-    devLog(msg_todo_err, err);
+    console.log(msg_todo_err, err);
     return false;
   }
 } 

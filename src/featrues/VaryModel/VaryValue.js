@@ -7,7 +7,6 @@ import {
   isEmptyValue,
   isNumberValue, 
 } from "../../utils/judge.js";
-import { errLog, } from "../../utils/dev.js";
 
 
 /** 可变量对象 
@@ -153,7 +152,7 @@ export class Vary {
 */
 const err_log1 = 'error arguments of VaryValue';
 export function VaryValue(val, trimFn){
-  if ( isVaryValue(val) ) { errLog(err_log1, val); }
+  if ( isVaryValue(val) ) { con.console.error(err_log1, val); }
   
   const varyVal = new Vary(val, trimFn);
   return varyVal;
