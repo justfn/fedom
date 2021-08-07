@@ -10,7 +10,6 @@ import bindAttrs from "./attrs/bindAttrs.js";
 import fillChildren from "./child/fillChild.js";
 import varyTagName from "../featrues/VaryAction/varyTagName.js";
 import { updateActiveComponentFdNodes, } from "../router/router.js";
-// import { compilerBefore, compilerAfter, } from "../featrues/Component/componentScope.js";
 
 /* ** 处理 jsx 
 执行顺序 & 深度优先 

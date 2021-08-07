@@ -7,6 +7,7 @@ import {
   isNull, 
 } from "../../utils/judge.js";
 import componentRender from "../../featrues/Component/componentRender.js";
+import * as componentScope from "../../featrues/Component/componentScope.js";
 
 
 /* ** FdNode 
@@ -37,16 +38,19 @@ export class FdNode {
     // 渲染真实节点 
     let props = { ...attrs }; 
     props.children = children ?? null; 
-    this._renderNode(tagName, props);
+    this._renderNode(tagName, props, attrs);
   }
   
-  _renderNode(tagName, props){
+  _renderNode(tagName, props, attrs){
+    componentScope.scopeMark(attrs);
     /* output 1: component */
     if ( isFDComponent(tagName) ) {
+      componentScope.preParse(tagName);
       const {
         context, 
         realNode, 
       } = componentRender(tagName, props); 
+      componentScope.nxtParse();
       this.context = context;
       this.realNode = realNode;
       return ;

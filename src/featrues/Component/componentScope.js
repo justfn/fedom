@@ -1,72 +1,21 @@
-// todo: 待完成的功能  
+// 编译空间打标, 便于css隔离使用  
 
 
-import {
-  isFDComponent, 
-} from "../../utils/judge.js";
-
-
-let scope_tree = {
-  // id: '',
-  // level: 0,
-  // parent: null,
-  // children: [
-  //   {
-  //     children: [
-  // 
-  //     ],
-  //   }
-  // ],
-}
-let current_scope = scope_tree;
-
-export function compilerBefore( tagName, attrs, children ){
-  if (isFDComponent(tagName)) {
-    if (!current_scope.children || !current_scope.children.length) { 
-      let level = current_scope.level!==undefined ? current_scope.level+1 : 0;
-      current_scope.children = [
-        {
-          index: 0, 
-          level, 
-          parent: current_scope,
-          children: [],
-          _tagName: tagName, 
-          _attrs: attrs,
-          _children: children,
-        } 
-      ]
-    }
-    else {
-      current_scope.children.push({
-        ...current_scope.children[0],
-        index: current_scope.children.length, 
-        level: current_scope.children[0].level, 
-        children: [],
-        _tagName: tagName, 
-        _attrs: attrs,
-        _children: children,
-      })
-    }
-    current_scope = current_scope.children[current_scope.children.length-1];
-  }
+// 编译空间打标, 便于css隔离使用  
+const compiler_queue = []; 
+const scope_flag = 'data-fd-scope';
+let queue_dft_num = 0; 
+let current_scope = '';
+export function scopeMark(attrs){
+  attrs[scope_flag] = current_scope;
 } 
-
-export function compilerAfter(fdNode){
-  let {
-    tagName, 
-  } = fdNode; 
-  
-  if (isFDComponent(tagName)) {
-    fdNode.realNode.setAttribute("data-scope-id", current_scope.id)
-    if (!current_scope.parent) { console.error('error todo 11'); }
-    current_scope = current_scope.parent;
-  }
-  
-  // 页面全部初始化完毕 
-  if (!current_scope.parent) {
-    // console.log( '页面全部初始化完毕' );
-    scope_tree = {};
-    current_scope = scope_tree;
-  }
+export function preParse( tagName ){
+  let scopeName = tagName.scopeName || tagName.name || `component${queue_dft_num++}`;
+  compiler_queue.unshift( scopeName )
+  current_scope = scopeName;
+} 
+export function nxtParse(){
+  compiler_queue.shift();
+  current_scope = compiler_queue[0];
 } 
 
