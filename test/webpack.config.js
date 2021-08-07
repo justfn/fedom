@@ -38,6 +38,9 @@ module.exports = {
           {
             loader: 'less-loader',
           },
+          {
+            loader: '@justfn/less-scope-loader',
+          },
         ],
       },
     ],

@@ -24,6 +24,10 @@ const routes_ = [
       //   // component: ()=>import('../pages/test/home/home.js'),
       // },
       {
+        path: 'cpntScpoe',
+        component: ()=>import('../pages/test/cpntScpoe/cpntScpoe.js'),
+      },
+      {
         path: 'chooseList',
         component: ()=>import('../pages/test/chooseList/chooseList.js'),
       },
