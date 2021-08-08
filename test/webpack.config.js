@@ -36,7 +36,7 @@ module.exports = {
             },
           },
           {
-            loader: '@justfn/less-scope-loader',
+            loader: '@justfn/css-scope-loader',
           },
           {
             loader: 'less-loader',
