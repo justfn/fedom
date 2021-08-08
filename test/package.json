@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.14.5",
-    "@justfn/less-scope-loader": "^1.0.0"
+    "@justfn/css-scope-loader": "^1.0.0"
   },
   "repository": {
     "type": "git",

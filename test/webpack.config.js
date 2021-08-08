@@ -36,10 +36,10 @@ module.exports = {
             },
           },
           {
-            loader: 'less-loader',
+            loader: '@justfn/less-scope-loader',
           },
           {
-            loader: '@justfn/less-scope-loader',
+            loader: 'less-loader',
           },
         ],
       },
