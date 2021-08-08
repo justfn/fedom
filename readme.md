@@ -8,24 +8,21 @@
   ref 
     ref={<RefValue>} 异步执行  
     ref 回调函数形式 
+  css命名空间 
 3 生命周期 
   1 组件渲染 
-    fn_run() 
-      fn_run&setTimeout() 
-    constructor_run() | render_run() 
-      render_run&setTimeout() 
-      constructor_run&setTimeout() 
+    函数组件执行 
+    类组件实例化时 | render方法调用时  
+    使用 setTimeout 确保组件渲染完毕 
   2 组件更新 
-    $xxx.watch() // 监听动态值变化
-    cpt.xxx(val) // 子组件的方法被调用 
+    <varyValue>.watch()  // 监听动态值变化 
+    <component>.xxx(val) // 子组件的方法被调用 
   3 组件缓存 
-    context.onShow() 
+    <context>.onShow() 
     onShow() 
   4 组件卸载 
     context.onUnmount 
-      onUnmount&setTimeout()  
     onUnmount()       
-      onUnmount&setTimeout() 
 4 路由 
   router 
     缓存 
@@ -52,27 +49,10 @@
 --------------------------------------------------------------------------------
 todo: 
   写框架文档 
-  表单支持 
-  组件树 
-  编译空间 
-    data-scope_id="xx" 
-  css 模块化 
   错误/编译错误 提示 
   性能优化: 
     DOM操作性能优化 
-    数组子节点,默认全部替换, 
-      可优化传操, 如 替换节点/增加节点/删除节点 等 
-  编译模式优化考虑 
 --------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
 
 
 
