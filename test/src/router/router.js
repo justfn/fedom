@@ -1,13 +1,14 @@
 const {
   Router,
 } = window.$fd;
+import homePage from "../pages/home/home.js";
 
 
 const routes_ = [
   // 首页、主页 
   {
     path: '/',
-    component: ()=>import('../pages/home/home.js'),
+    component: ()=>homePage,
     alias: '/home',
     isCache: true, // bol|fn,是否缓存 
   },

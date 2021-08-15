@@ -9,6 +9,7 @@ import cachePage from "./cachePage.js";
 import render from "../compiler/render.js";
 import {
   isFunctionValue, 
+  isPromiseValue, 
 } from "../utils/judge.js";
 
 
@@ -36,7 +37,7 @@ export default class Router {
         //   isCache: <bol>,
         //   children: [
         //     {
-        //       path: '', // 是否以 / 开头都无区别
+        //       path: '', // 降低复杂度,是否以 / 开头都无区别
         //       ...
         //     },
         //     ...
@@ -135,7 +136,16 @@ export default class Router {
     }
     
     // 渲染指定页面组件 
-    pathOption.component().then(module=>{
+    let promise = Promise.resolve({});
+    let cpntOptResult = pathOption.component(newPathParams, oldPathParams);
+    let PageCpnt = cpntOptResult;
+    if ( isPromiseValue(cpntOptResult) ) { 
+      // console.log('异步组件');
+      promise = cpntOptResult 
+      PageCpnt = null;
+    }
+    
+    promise.then(module=>{
       this._root.innerHTML = '';
       callback({
         init: !!evt.isInitRun,
@@ -144,10 +154,9 @@ export default class Router {
         newPathParams, 
       });
       try {
-        let ShowComponent = module.default;
+        PageCpnt = PageCpnt || module.default;
         render( 
-          // ShowComponent({},{html(){return <div/>;}}), // todo 
-          <ShowComponent {...routerComponentProps(oldPathParams, newPathParams, cachedPageMap)} />, 
+          <PageCpnt {...routerComponentProps(oldPathParams, newPathParams, cachedPageMap)} />, 
           this._root 
         );
         callback({

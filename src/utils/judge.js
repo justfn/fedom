@@ -40,6 +40,10 @@ export function isArrayValue(val){
 export function isFunctionValue(val){
   return typeof val==='function';
 } 
+// 是否为Promise对象 
+export function isPromiseValue(val){
+  return val instanceof Promise;
+} 
 // 是否为Node节点 
 export function isNodeValue(val){
   return val instanceof Node;
@@ -51,7 +55,6 @@ export function isCommentNode(val){
 } 
 // 是否为fdNode节点 
 export function isFdNode(val){
-  if (!val) { return false; }
   return val instanceof FdNode; 
 } 
 // 是否为Component类 
@@ -65,36 +68,26 @@ export function isComponent(val){
 } 
 // 是否为Component类型对象 
 export function isComponentValue(val){
-  if (!val) { return false; }
-  
   return val instanceof Component;
 } 
 // 值是否为可变量值 
 export function isVaryValue(val){
-  if (!val) { return false; }
-  
   return val instanceof Vary;
 }
 // 值是否为列表可变量值 
 export function isVaryList(val){
-  if (!val) { return false; }
-  
   let bol = val instanceof ListVary;
   
   return bol;
 } 
 // 值是否为键值集可变量值 
 export function isVaryMap(val){
-  if (!val) { return false; }
-  
   let bol = val instanceof MapVary;
   
   return bol;
 } 
 // 值是否为Async类型  
 export function isAsyncValue(val){
-  if (!val) { return false; }
-  
   let bol = val instanceof Async;
   
   return bol;
