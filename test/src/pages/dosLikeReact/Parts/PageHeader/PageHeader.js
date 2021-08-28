@@ -1,7 +1,8 @@
 
 import "./PageHeader.less";
 
-export default function PageHeader(props, context){
+export default class PageHeader {
+  render (props){
   
   return (
     <section className="part-PageHeader">
@@ -27,4 +28,5 @@ export default function PageHeader(props, context){
       </div>
     </section>
   );
+}
 }

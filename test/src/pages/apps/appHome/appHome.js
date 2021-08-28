@@ -7,16 +7,20 @@ const {
 } = window.$fd;
 
 
-export default function(props,context){
-  
-  
-  
-  return (
-    <LayoutA>
-      <Header name={'应用首页'} />
+export default class AppHome {
+  constructor(arg){ 
+  }
+  render(props){
     
-    </LayoutA>
-  );
+    
+    
+    return (
+      <LayoutA>
+        <Header name={'应用首页'} />
+      
+      </LayoutA>
+    );
+  }
 }
 
 

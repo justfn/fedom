@@ -2,7 +2,7 @@
 import config from "../../config/config.js";
 import {
   isCommentNode, 
-  isFDComponent, 
+  isClassValue, 
 } from "../../utils/judge.js";
 import componentAttrs from "./attrsCpnt.js";
 import { 
@@ -25,7 +25,7 @@ export default function bindAttrs(fdNode){
     attrs, 
   } = fdNode;
   attrVaryShow(realNode, attrs);
-  if ( isFDComponent(tagName) ) { 
+  if ( isClassValue(tagName) ) { 
     componentAttrs(fdNode); 
     return ; 
   }

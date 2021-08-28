@@ -17,7 +17,7 @@ import {
   isEmptyValue,  
   isTextValue,  
   isCommentNode,  
-  isFDComponent, 
+  isClassValue, 
 } from "../../utils/judge.js";
 import render from "../render.js";
 
@@ -33,7 +33,7 @@ export default function fillChildren(fdNode){
   // 无子节点:  
   if ( fdNode.children.length===0 ) { return; }
   // 组件子节点由用户控制插入 
-  if ( isFDComponent(fdNode.tagName) ) { return ; }
+  if ( isClassValue(fdNode.tagName) ) { return ; }
   
   // 处理子节点 
   render(children, realNode);

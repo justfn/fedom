@@ -1,7 +1,7 @@
 /* 编译器 
 */
 import { 
-  isFDComponent, 
+  isClassValue, 
   isStringValue, 
   isVaryValue, 
 } from "../utils/judge.js";
@@ -40,7 +40,7 @@ function parseTag(varyTag, tagName, attrs, children){
   // 
   if ( isStringValue(tagName) ) { fillChildren(fdNode); }
   // 
-  if ( isFDComponent(tagName) ) { updateActiveComponentFdNodes(fdNode) }
+  if ( isClassValue(tagName) ) { updateActiveComponentFdNodes(fdNode) }
   // 
   if (varyTag) { varyTagName(fdNode); }
   

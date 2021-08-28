@@ -4,7 +4,6 @@
 import onHashChange from "../../router/onHashChange.js";
 import { getActiveComponentFdNodes, } from "../../router/router.js";
 import {
-  isComponentValue, 
   isFunctionValue, 
   isArrayValue, 
 } from "../../utils/judge.js";
@@ -42,7 +41,6 @@ export function componentShowRun(fdNode, showArgs){
 
 
 export default function onShow(context, callback){
-  if ( !isComponentValue(context) ) { return console.error('#fd onShow context error'); }
   if ( !isFunctionValue(callback) ) { return console.error('#fd onShow callback error'); }
   if ( !isArrayValue(context._onShowFns) ) { return console.error('#fd onShow error'); }
   

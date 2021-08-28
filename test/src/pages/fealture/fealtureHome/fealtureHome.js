@@ -9,16 +9,18 @@ const {
 } = window.$fd;
 
 
-export default function(props,context){
-  
-  
-  
-  return (
-    <LayoutA>
-      <Header name={'特性首页'} />
+export default class FealtureHome {
+  render(props){
     
-    </LayoutA>
-  );
+    
+    
+    return (
+      <LayoutA>
+        <Header name={'特性首页'} />
+      
+      </LayoutA>
+    );
+  }
 }
 
 

@@ -2,7 +2,6 @@
 */
 import compiler from "./compiler/compiler.js";
 import render from "./compiler/render.js";
-import Component from "./featrues/Component/Component.js";
 import onShow from "./featrues/Lifecycles/onShow.js";
 import onUnmount from "./featrues/Lifecycles/onUnmount.js";
 import { VaryValue, } from "./featrues/VaryModel/VaryValue.js";
@@ -28,14 +27,11 @@ import {
   isNodeValue, 
   isCommentNode, 
   isFdNode, 
-  isComponent, 
-  isComponentValue, 
   isVaryValue, 
   isVaryList, 
   isVaryMap, 
   isAsyncValue, 
   isEmptyValue, 
-  isFDComponent, 
   isTextValue, 
 } from "./utils/judge.js";
 import {
@@ -48,7 +44,6 @@ if (!window.$fd) { window.$fd = {}; }
 window.$fd.compiler = compiler;
 window.$fd.render = render;
 // 组件&生命周期 
-window.$fd.Component = Component;
 window.$fd.onShow = onShow;
 window.$fd.onUnmount = onUnmount;
 // 动态数据 

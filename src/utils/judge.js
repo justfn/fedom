@@ -2,7 +2,6 @@
 */
 import config from "../config/config.js";
 import { FdNode, } from "../compiler/fdNode/fdNode.js";
-import Component from "../featrues/Component/Component.js";
 import { Vary, } from "../featrues/VaryModel/VaryValue.js";
 import { ListVary, } from "../featrues/VaryModel/VaryList.js";
 import { MapVary, } from "../featrues/VaryModel/VaryMap.js";
@@ -40,6 +39,10 @@ export function isArrayValue(val){
 export function isFunctionValue(val){
   return typeof val==='function';
 } 
+// 是否为类 
+export function isClassValue(val){
+  return typeof val==='function' && val.name && /^[A-Z]+/.test(val.name);
+} 
 // 是否为Promise对象 
 export function isPromiseValue(val){
   return val instanceof Promise;
@@ -56,19 +59,6 @@ export function isCommentNode(val){
 // 是否为fdNode节点 
 export function isFdNode(val){
   return val instanceof FdNode; 
-} 
-// 是否为Component类 
-export function isComponent(val){
-  if (!val) { return false; }
-  
-  let proto = val.prototype;
-  if (!proto) { return false; }
-  
-  return proto instanceof Component;
-} 
-// 是否为Component类型对象 
-export function isComponentValue(val){
-  return val instanceof Component;
 } 
 // 值是否为可变量值 
 export function isVaryValue(val){
@@ -99,10 +89,6 @@ export function isEmptyValue(val){
   if (val===null) { return true; }
   
   return false;
-} 
-// 是否为fedom组件 [复合类型]
-export function isFDComponent(val){
-  return isComponent(val) || isFunctionValue(val);
 } 
 // 是否为文本值 [复合类型]: 
 // 包含数值 空值 undefined/null 空值为 '' 

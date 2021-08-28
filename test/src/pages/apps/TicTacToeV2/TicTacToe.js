@@ -2,31 +2,14 @@ import "./TicTacToe.less";
 import decoratorOfLayoutA from "../../../parts/LayoutA/decorator.js";
 
 const {
-  Component,
   VaryValue,
   VaryList,
 } = window.$fd;
 
 @decoratorOfLayoutA 
-export default class TicTacToeV2 extends Component {
-  constructor(...args){
-    super(...args);
+export default class TicTacToeV2 {
+  constructor(props){
     
-    this.squareList$ = VaryList(
-      Array(9).fill(null).map((itm, idx)=>{
-        return {
-          text$: VaryValue(''),
-          idx: idx, 
-        };
-      }), 
-      (itm, idx, id, lst)=>{
-        return (
-          <button className="component_Square" onClick={()=>this.squareClick(itm, idx)} >
-            { itm.text$ }
-          </button>
-        );
-      }
-    )
   }
   
   /* -------------------------------------------------------------------- 九宫格    */
@@ -110,7 +93,24 @@ export default class TicTacToeV2 extends Component {
   }
 
   
-  render(){
+  render(props){
+    this.squareList$ = VaryList(
+      Array(9).fill(null).map((itm, idx)=>{
+        return {
+          text$: VaryValue(''),
+          idx: idx, 
+        };
+      }), 
+      (itm, idx, id, lst)=>{
+        return (
+          <button className="component_Square" onClick={()=>this.squareClick(itm, idx)} >
+            { itm.text$ }
+          </button>
+        );
+      }
+    )
+
+    
     return (
       <section className={["app_TicTacToeV2"]}>
         <section className="component_Game" >

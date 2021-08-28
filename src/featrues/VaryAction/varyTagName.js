@@ -8,7 +8,7 @@ import componentAttrs from "../../compiler/attrs/attrsCpnt.js";
 import { 
   isBooleanValue, 
   isStringValue, 
-  isFDComponent, 
+  isClassValue, 
   isEmptyValue, 
 } from "../../utils/judge.js";
 
@@ -90,7 +90,7 @@ export default function varyTagName(fdNode){
     }
     
     // Features: 替换为组件 
-    if (isFDComponent(nxtTrimedValue)) {
+    if (isClassValue(nxtTrimedValue)) {
       removeComponentRun(fdNode); 
       // todo: 待优化为 createFdNode 
       fdNode = createFdNode({

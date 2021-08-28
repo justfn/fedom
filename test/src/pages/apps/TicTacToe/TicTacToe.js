@@ -2,52 +2,54 @@ import "./TicTacToe.less";
 import decoratorOfLayoutA from "../../../parts/LayoutA/decorator.js";
 
 const {
-  Component,
   VaryValue,
 } = window.$fd;
 
-function Square(props, context ){
-  return (
-    <button className="component_Square" onClick={props.onClick} >
-      { props.text }
-    </button>
-  );
-} 
-
-function Board(props, context){
-  function renderSquare(i){
+class Square {
+  render(props ){
     return (
-      <Square 
-        text={props.squares[i]} 
-        onClick={()=>{ props.onClick(i)}} 
-      />
+      <button className="component_Square" onClick={props.onClick} >
+        { props.text }
+      </button>
     );
   } 
-  return (
-    <div className={['component_Board', props.className]}>
-      <div className="board-row" ref="bdRowRef">
-        { renderSquare(0) }
-        { renderSquare(1) }
-        { renderSquare(2) }
+}
+
+class Board {
+  render(props){
+    function renderSquare(i){
+      return (
+        <Square 
+          text={props.squares[i]} 
+          onClick={()=>{ props.onClick(i)}} 
+        />
+      );
+    } 
+    return (
+      <div className={['component_Board', props.className]}>
+        <div className="board-row" ref="bdRowRef">
+          { renderSquare(0) }
+          { renderSquare(1) }
+          { renderSquare(2) }
+        </div>
+        <div className="board-row">
+          { renderSquare(3) }
+          { renderSquare(4) }
+          { renderSquare(5) }
+        </div>
+        <div className="board-row">
+          { renderSquare(6) }
+          { renderSquare(7) }
+          { renderSquare(8) }
+        </div>
       </div>
-      <div className="board-row">
-        { renderSquare(3) }
-        { renderSquare(4) }
-        { renderSquare(5) }
-      </div>
-      <div className="board-row">
-        { renderSquare(6) }
-        { renderSquare(7) }
-        { renderSquare(8) }
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
 @decoratorOfLayoutA 
-export default class Child extends Component {
-  constructor(...args){
-    super(...args)
+export default class Child {
+  constructor(props){
   }
   xIsNext = true
   stepNumber =  0

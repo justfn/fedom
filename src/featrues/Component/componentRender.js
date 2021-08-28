@@ -1,38 +1,28 @@
 /** 组件渲染 
 */
-import {
-  isComponent, 
-  // isFunctionValue, 
-} from "../../utils/judge.js";
-import Component from "./Component.js";
+import AsyncValue from "../../utils/AsyncValue.js";
 
 export default function componentRender(componentTag, props){
-  // 类组件 
-  if ( isComponent(componentTag) ) { 
-    let context = new componentTag(props);
-    // 注意：此处又将调用 compiler 
-    let realNode = context.render().realNode;
-    context.root.resolve(realNode);
-    return {
-      context, 
-      realNode, 
-    };
-  }
-  
-  // 函数组件 
-  let context = new Component(props);
-  // 注意：此处又将调用 compiler 
+  let context = null;
   let realNode = null;
-  try { realNode = componentTag(props, context).realNode; } 
+  try {
+    context = new componentTag(props);
+    context.$root = AsyncValue();
+    context._onShowFns = []; // todo: 
+    context._onUnmountFns = []; // todo: 
+    // 注意：此处又将调用 compiler 
+    realNode = context.render(props).realNode;
+  } 
   catch (err) {
     console.error(err);
     throw err;
   } 
-  context.root.resolve(realNode);
+  context.$root.resolve(realNode);
   return {
     context, 
     realNode, 
   };
+  
 } 
 
 

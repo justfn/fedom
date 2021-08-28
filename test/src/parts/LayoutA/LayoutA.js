@@ -3,17 +3,22 @@ import FloatCatalog from "../FloatCatalog/FloatCatalog.js";
 
 
 
-export default function LayoutA(props, context){
+export default class LayoutA {
+  constructor(props){ 
+    this.props = props;
+  }
   
-  let klass = props.className ?? [];
-  
-  
-  return (
-    <section data-flg="LayoutA" className={['LayoutA', klass]}>
-      { props.children }
-      
-      <FloatCatalog />
-    </section>
-  );
+  render(){
+    
+    let klass = this.props.className ?? [];
+    return (
+      <section data-flg="LayoutA" className={['LayoutA', klass]}>
+        { this.props.children }
+        
+        <FloatCatalog />
+      </section>
+    );
+  }
 }
+
 

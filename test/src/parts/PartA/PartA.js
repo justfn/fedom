@@ -1,14 +1,13 @@
 
 
-export default function (props, context){
-  context.onUnmount = (...args)=>{
+export default class PartA {
+  constructor(props){ 
+  }
+  
+  onUnmount = (...args)=>{
     console.log(' PartA unmount ' , args);
     
-    context.methods = {
-      alert(){
-        console.log('partA alert!')
-      }
-    }
+    
     
     setTimeout(()=>{
       console.log(' PartA unmounted ' , args);
@@ -16,12 +15,21 @@ export default function (props, context){
     },1000)
   }
   
-  return (
-    <div>  
-      <br />
-      1 ========== 
-      <br />
-      2 { props.children }
-    </div>
-  );
-} 
+  methods = {
+    alert(){
+      console.log('partA alert!')
+    }
+  }
+
+  render(props){
+    
+    return (
+      <div>  
+        <br />
+        1 ========== 
+        <br />
+        2 { props.children }
+      </div>
+    );
+  } 
+}

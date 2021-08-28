@@ -6,21 +6,27 @@ const {
 } = window.$fd
 
 
-export default function(props, context){
-  setTimeout(()=>{
-    console.log( 'home mounted ' );
-  })
-  context.onUnmount = ()=>{
+export default class Home {
+  constructor(props){ 
+  }
+  onUnmount(){
     console.log( 'home onUnmount' );
+    
   }
   
-  return (
-    <LayoutA 
-      >
-      首页 
-    </LayoutA>
-  );
+  render(){
+    setTimeout(()=>{
+      console.log( 'home mounted ' );
+    })
+    return (
+      <LayoutA 
+        >
+        首页 
+      </LayoutA>
+    );
+  }
 }
+
 
 
 

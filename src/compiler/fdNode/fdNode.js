@@ -1,7 +1,6 @@
 import { 
   isVaryValue, 
-  isFDComponent, 
-  isComponent, 
+  isClassValue, 
   isFunctionValue, 
   isStringValue, 
   isNull, 
@@ -44,7 +43,7 @@ export class FdNode {
   _renderNode(tagName, props, attrs){
     componentScope.scopeMark(attrs);
     /* output 1: component */
-    if ( isFDComponent(tagName) ) {
+    if ( isClassValue(tagName) ) {
       componentScope.preParse(tagName);
       const {
         context, 

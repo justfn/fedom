@@ -7,13 +7,17 @@ const {
   render, 
 } = window.$fd;
 
-export default function(props, context){
-  
-  
-  
-  return (
-    <LayoutA>
+export default class OtherTest {
+  constructor(props){ 
+  }
+  render(props){
     
-    </LayoutA>
-  );
+    
+    
+    return (
+      <LayoutA>
+      
+      </LayoutA>
+    );
+  }
 }

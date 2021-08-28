@@ -4,16 +4,12 @@ import decoratorOfLayoutA from "../../../parts/LayoutA/decorator.js";
 import trackMouse from "../../../common/trackMouse.js";
 
 const {
-  Component,
   VaryValue,
 } = window.$fd;
 
 @decoratorOfLayoutA 
-export default class Page extends Component {
+export default class Page {
   constructor(props){
-    super(props);
-    this.init();
-    console.log(" >>>>>>>>>>>>>> ", 'start')
     
   }
   onShow(){
@@ -35,6 +31,8 @@ export default class Page extends Component {
   
   
   render(){
+    this.init();
+    console.log(" >>>>>>>>>>>>>> ", 'start')
     console.log("000000000 x", this.x)
     
     return (

@@ -9,10 +9,10 @@ export default function (ComponentTarget){
       super(...args)
     }
     
-    render(){
+    render(props){
       return (
         <section className={['PageA']}>
-          { super.render() }
+          { super.render(props) }
           
           <FloatCatalog />
         </section>

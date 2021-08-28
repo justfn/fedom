@@ -4,10 +4,8 @@ import config from "../../config/config.js";
 import onHashChange from "../../router/onHashChange.js";
 import { getActiveComponentFdNodes, } from "../../router/router.js";
 import {
-  isComponentValue, 
   isFunctionValue, 
   isArrayValue, 
-  isFDComponent, 
 } from "../../utils/judge.js";
 
 
@@ -56,7 +54,6 @@ window.addEventListener("beforeunload", (evt)=>{
 
 
 export default function onUnmount(context, callback){
-  if ( !isComponentValue(context) ) { return console.error('#fd onUnmount context error'); }
   if ( !isFunctionValue(callback) ) { return console.error('#fd onUnmount callback error'); }
   if ( !isArrayValue(context._onUnmountFns) ) { return console.error('#fd onUnmount error'); }
   
