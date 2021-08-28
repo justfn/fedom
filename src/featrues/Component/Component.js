@@ -4,8 +4,10 @@
   2 定义回调响应 
   3 ... 
 */
-import routerPush from "../../router/history/push.js";
-import routerReplace from "../../router/history/replace.js";
+import {
+  hashPush,
+  hashReplace,
+} from "../../router/changeRoute.js";
 import { getRoutes, } from "../../router/router.js";
 import utils from "./util.js";
 import AsyncValue from "../Async/AsyncValue.js";
@@ -35,8 +37,8 @@ export default class Component {
   /* --------------------------------------------------------- 工具方法 */
   // 路由功能 
   router = {
-    push: routerPush,
-    replace: routerReplace,
+    push: hashPush,
+    replace: hashReplace,
     routes: getRoutes(true),
   };
   // 其他工具方法集合 

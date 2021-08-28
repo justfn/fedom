@@ -2,10 +2,12 @@
 import formatRoutes from "./formatRoutes.js";
 import parseHash from "./parseHash.js";
 import onHashChange, { initHashChange, } from "./onHashChange.js";
-import routerPush from "./history/push.js";
-import routerReplace from "./history/replace.js";
+import {
+  hashPush,
+  hashReplace,
+} from "./changeRoute.js";
 import routerComponentProps from "./routerComponentProps.js";
-import cachePage from "./cachePage.js";
+import cacheRoutePage from "./cacheRoutePage.js";
 import render from "../compiler/render.js";
 import {
   isFunctionValue, 
@@ -25,6 +27,14 @@ const store = {
 }
 const msg_notgo = '不允许访问的路由';
 const msg_cache_page = 'cache page, 不重复渲染相同DOM';
+
+// 路由响应开关 
+let is_miss_hash_change = false;
+export function missHashChange(isMiss=true){
+  is_miss_hash_change = isMiss;
+} 
+
+
 export default class Router {
   constructor(routeOptions = {}){ 
     const {
@@ -63,6 +73,8 @@ export default class Router {
   // update_cache = (path, isCache)=>{ }
   
   _hashChange = (evt, callback)=>{
+    if (is_miss_hash_change) { return ; }
+    
     // console.log(" >>>>>>>>>>>>>> ", 'hash change');
     callback = callback || (v=>v);
     let oldPathParams = parseHash(evt.oldURL);
@@ -89,19 +101,19 @@ export default class Router {
     let isGo = this._beforeEach(oldPathParams, newPathParams) ?? true;
     if (!isGo) { 
       console.log(msg_notgo, oldPathParams.path);
-      routerReplace(oldPathParams.path, oldPathParams.query);
+      hashReplace(oldPathParams.path, oldPathParams.query);
       return ; 
     }
     
     // 路由重定向 
     let pathOption = this._route_map[newPathParams.path] ?? {};
     if (pathOption.redirect) {
-      routerReplace(pathOption.redirect, newPathParams.query);
+      hashReplace(pathOption.redirect, newPathParams.query);
       return ;
     }
     
     // 使用缓存页面 
-    let cachedPageMap = cachePage(this._route_map, oldPathParams, this._root.lastElementChild );
+    let cachedPageMap = cacheRoutePage(this._route_map, oldPathParams, this._root.firstElementChild );
     let cachedPageNode = cachedPageMap[ newPathParams.path ];
     if (cachedPageNode) { 
       let isExit = [ ...this._root.childNodes ].some( itm=>itm===cachedPageNode )
@@ -131,7 +143,7 @@ export default class Router {
     // 未指定需渲染的页面组件 
     if (!pathOption.component) { 
       console.warn('render error: 未指定页面组件');
-      routerReplace(oldPathParams.path, oldPathParams.query);
+      hashReplace(oldPathParams.path, oldPathParams.query);
       return; 
     }
     
@@ -181,8 +193,8 @@ export default class Router {
   }
   
   /* --------------------------------------------------------- 工具方法 */
-  push = routerPush;
-  replace = routerReplace;
+  push = hashPush;
+  replace = hashReplace;
   routes = getRoutes(true);
 }
 // 路由组件映射 
