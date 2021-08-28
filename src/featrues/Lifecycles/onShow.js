@@ -4,6 +4,9 @@
 import onHashChange from "../../router/onHashChange.js";
 import { getActiveComponentFdNodes, } from "../../router/router.js";
 import {
+  on_show_fns, 
+} from "../Component/renderCpnt.js";
+import {
   isFunctionValue, 
   isArrayValue, 
 } from "../../utils/judge.js";
@@ -29,8 +32,8 @@ export function componentShowRun(fdNode, showArgs){
   if ( fdNode.context && fdNode.context.onShow && isFunctionValue(fdNode.context.onShow) ) {
     fdNode.context.onShow(showArgs);
   }
-  if ( fdNode.context && fdNode.context._onShowFns && isArrayValue(fdNode.context._onShowFns) ) {
-    fdNode.context._onShowFns.forEach((callback)=>{
+  if ( fdNode.context && fdNode.context[on_show_fns] && isArrayValue(fdNode.context[on_show_fns]) ) {
+    fdNode.context[on_show_fns].forEach((callback)=>{
       callback(showArgs);
     })
     
@@ -42,9 +45,9 @@ export function componentShowRun(fdNode, showArgs){
 
 export default function onShow(context, callback){
   if ( !isFunctionValue(callback) ) { return console.error('#fd onShow callback error'); }
-  if ( !isArrayValue(context._onShowFns) ) { return console.error('#fd onShow error'); }
+  if ( !isArrayValue(context[on_show_fns]) ) { return console.error('#fd onShow error'); }
   
-  context._onShowFns.push((showArgs)=>{
+  context[on_show_fns].push((showArgs)=>{
     callback(showArgs);
   })
 } 

@@ -5,8 +5,8 @@ import {
   isStringValue, 
   isNull, 
 } from "../../utils/judge.js";
-import componentRender from "../../featrues/Component/componentRender.js";
-import * as componentScope from "../../featrues/Component/componentScope.js";
+import renderCpnt from "../../featrues/Component/renderCpnt.js";
+import * as scopeCpnt from "../../featrues/Component/scopeCpnt.js";
 
 
 /* ** FdNode 
@@ -41,15 +41,15 @@ export class FdNode {
   }
   
   _renderNode(tagName, props, attrs){
-    componentScope.scopeMark(attrs);
+    scopeCpnt.scopeMark(attrs);
     /* output 1: component */
     if ( isClassValue(tagName) ) {
-      componentScope.preParse(tagName);
+      scopeCpnt.preParse(tagName);
       const {
         context, 
         realNode, 
-      } = componentRender(tagName, props); 
-      componentScope.nxtParse();
+      } = renderCpnt(tagName, props); 
+      scopeCpnt.nxtParse();
       this.context = context;
       this.realNode = realNode;
       return ;

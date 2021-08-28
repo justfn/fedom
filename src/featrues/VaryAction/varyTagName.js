@@ -2,7 +2,7 @@
 import createFdNode from "../../compiler/fdNode/fdNode.js";
 import bindAttrs from "../../compiler/attrs/bindAttrs.js";
 import fillChildren from "../../compiler/child/fillChild.js";
-import componentUpdate from "../../featrues/Component/componentUpdate.js";
+import updateCpnt from "../../featrues/Component/updateCpnt.js";
 import { removeComponentRun, } from "../../featrues/Lifecycles/onUnmount.js";
 import componentAttrs from "../../compiler/attrs/attrsCpnt.js";
 import { 
@@ -53,7 +53,7 @@ export default function varyTagName(fdNode){
     // Features: null 删除该节点 
     if ( isEmptyValue(nxtTrimedValue) ) {
       removeComponentRun(fdNode); 
-      componentUpdate(fdNode, null, null);
+      updateCpnt(fdNode, null, null);
       nxt_node = document.createComment("fedom vary tag and remove")
       pre_node_removed = pre_node;
       pNode.replaceChild(nxt_node, pre_node);
@@ -67,7 +67,7 @@ export default function varyTagName(fdNode){
     // Features: 替换为html节点  
     if ( isStringValue(nxtTrimedValue) ) {
       removeComponentRun(fdNode); 
-      componentUpdate(fdNode, null, null);
+      updateCpnt(fdNode, null, null);
       
       let newFdNode = createFdNode({
         varyTag: null, 

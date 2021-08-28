@@ -18,7 +18,14 @@ elDom.textContent = ' =================================== ';
 export default class TestHome {
   constructor(props){ 
   }
-  
+  onCreated(){
+    this.$mounted.then(()=>{
+      console.log(' ==== ');
+    })
+  }
+  onMounted(root){
+    console.log('onMounted', root);
+  }
   onUnmount(){
     console.log( 'test home onUnmount 111' );
     // alert(' onUnmount  ');

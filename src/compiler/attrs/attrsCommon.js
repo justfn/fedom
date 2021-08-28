@@ -43,17 +43,7 @@ export function addClassAttr(fdNode, value, varyAttr=null){
     return ;
   }
   
-  // 出口1：
-  if ( isStringValue(value) ) {
-    if (value) { fdNode.realNode.classList.add(value); }
-    
-    /* ** Features: 
-    */
-    varyAttrClassStr(fdNode, varyAttr);
-    
-    return value;
-  }
-  // 出口2：
+  // 出口1：列表 
   if ( isArrayValue(value) ) {
     value.forEach((itm,idx)=>{
       addClassAttr(fdNode, itm, varyAttr);
@@ -67,9 +57,19 @@ export function addClassAttr(fdNode, value, varyAttr=null){
     
     return '';
   }
+  // 出口2：字符串 
+  if ( isStringValue(value) ) {
+    if (value) { fdNode.realNode.classList.add(value); }
+    
+    /* ** Features: 
+    */
+    varyAttrClassStr(fdNode, varyAttr);
+    
+    return value;
+  }
   
-  console.warn('# todo attrs class', fdNode, value);
-  return '';
+  // 其他: 默认转换为字符串处理 
+  return addClassAttr(fdNode, value+'', varyAttr);
 } 
 
 export function addStyleAttr(fdNode, value, varyAttr){
@@ -106,6 +106,7 @@ export function addStyleAttr(fdNode, value, varyAttr){
     
     return ;
   }
+  
   console.warn('# todo attrs style', fdNode, value);
 } 
 

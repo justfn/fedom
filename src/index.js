@@ -2,6 +2,7 @@
 */
 import compiler from "./compiler/compiler.js";
 import render from "./compiler/render.js";
+import onMounted from "./featrues/Lifecycles/onMounted.js";
 import onShow from "./featrues/Lifecycles/onShow.js";
 import onUnmount from "./featrues/Lifecycles/onUnmount.js";
 import { VaryValue, } from "./featrues/VaryModel/VaryValue.js";
@@ -44,6 +45,7 @@ if (!window.$fd) { window.$fd = {}; }
 window.$fd.compiler = compiler;
 window.$fd.render = render;
 // 组件&生命周期 
+window.$fd.onMounted = onMounted;
 window.$fd.onShow = onShow;
 window.$fd.onUnmount = onUnmount;
 // 动态数据 
