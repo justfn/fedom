@@ -4,6 +4,7 @@ import "./FloatCatalog.less";
 
 const {
   VaryValue,
+  router,
 } = window.$fd;
 
 const isFold = VaryValue(true, (val)=>{
@@ -14,14 +15,14 @@ const isFold = VaryValue(true, (val)=>{
 
 export default function FloatCatalog(props, context){
   
-  let routes = [...context.router.routes];
+  let routes = [ ...router.routes ];
   routes.push({ 
     path: '/?k=v' 
   })
   let links = routes.map((itm,idx)=>{
     return (
       <div>
-        <div className="routeItem" onClick={()=>context.router.push(itm.path)}>{ itm.path }</div>
+        <div className="routeItem" onClick={()=>router.push(itm.path)}>{ itm.path }</div>
       </div>
     )
   })

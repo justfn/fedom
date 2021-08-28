@@ -9,6 +9,7 @@ const {
   VaryMap,
   AsyncValue,
   Store,
+  utils,
 } = window.$fd
 
 let elDom = document.createElement("div")
@@ -98,7 +99,7 @@ export default function TestHome(props, context){
     varyInputVal.$$ = val; 
   }
   
-  let htmlDom = context.utils.html(`
+  let htmlDom = utils.html(`
     <div>htmlDom 111 </div>
     <h1>htmlDom 222</h1>
     <li>htmlDom 333</li>

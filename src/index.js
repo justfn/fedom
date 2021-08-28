@@ -2,14 +2,22 @@
 */
 import compiler from "./compiler/compiler.js";
 import render from "./compiler/render.js";
-import Router from "./router/router.js";
 import Component from "./featrues/Component/Component.js";
 import onShow from "./featrues/Lifecycles/onShow.js";
 import onUnmount from "./featrues/Lifecycles/onUnmount.js";
 import { VaryValue, } from "./featrues/VaryModel/VaryValue.js";
 import { VaryMap, } from "./featrues/VaryModel/VaryMap.js";
 import { VaryList } from "./featrues/VaryModel/VaryList.js";
-import AsyncValue from "./featrues/Async/AsyncValue.js";
+import Router, { getRoutes, } from "./router/router.js";
+import {
+  hashPush, 
+  hashReplace, 
+  historyForward, 
+  historyBack, 
+  historyGo, 
+  backUntillTo, 
+} from "./router/changeRoute.js";
+import AsyncValue from "./utils/AsyncValue.js";
 import {
   isBooleanValue, 
   isNumberValue, 
@@ -30,22 +38,48 @@ import {
   isFDComponent, 
   isTextValue, 
 } from "./utils/judge.js";
+import {
+  parseRichText, 
+} from "./utils/common.js";
 
 // 功能 
 if (!window.$fd) { window.$fd = {}; }
+// 编译&渲染
 window.$fd.compiler = compiler;
 window.$fd.render = render;
-window.$fd.Router = Router;
+// 组件&生命周期 
 window.$fd.Component = Component;
 window.$fd.onShow = onShow;
 window.$fd.onUnmount = onUnmount;
+// 动态数据 
 window.$fd.VaryValue = VaryValue;
 window.$fd.VaryMap = VaryMap;
 window.$fd.VaryList = VaryList;
+// 路由功能 
+window.$fd.Router = Router;
+if (!isObjectValue(window.$fd.router)) { window.$fd.router = {}; }
+window.$fd.router = {
+  ...window.$fd.router,
+  push: (...args)=>hashPush(...args),
+  replace: (...args)=>hashReplace(...args),
+  forward: (...args)=>historyForward(...args),
+  back: (...args)=>historyBack(...args),
+  go: (...args)=>historyGo(...args),
+  backUntillTo: (...args)=>backUntillTo(...args),
+  get routes(){
+    return getRoutes(true);
+  },
+};
+// 其他工具 
 window.$fd.AsyncValue = AsyncValue;
-// 工具 
-if (!window.$fd_kit) { window.$fd_kit = {}; }
+if (!isObjectValue(window.$fd.utils)) { window.$fd.utils = {}; }
+window.$fd.utils = {
+  ...window.$fd.utils,
+  html: (...args)=>parseRichText(...args),
+}
+
 // 内部使用 
-if (!window.$fd__) { window.$fd__ = {}; }
+// const fd_private_key = Symbol('fd-private-key');
+// if (!window[fd_private_key]) { window[fd_private_key] = {}; }
 
 // todo: 使用代理控制, 防止变量修改 

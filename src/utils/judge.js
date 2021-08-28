@@ -6,7 +6,7 @@ import Component from "../featrues/Component/Component.js";
 import { Vary, } from "../featrues/VaryModel/VaryValue.js";
 import { ListVary, } from "../featrues/VaryModel/VaryList.js";
 import { MapVary, } from "../featrues/VaryModel/VaryMap.js";
-import { Async, } from "../featrues/Async/AsyncValue.js";
+import { Async, } from "../utils/AsyncValue.js";
 
 
 // 是否为空值 

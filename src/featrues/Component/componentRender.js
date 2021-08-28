@@ -22,7 +22,12 @@ export default function componentRender(componentTag, props){
   // 函数组件 
   let context = new Component(props);
   // 注意：此处又将调用 compiler 
-  let realNode = componentTag(props, context).realNode;
+  let realNode = null;
+  try { realNode = componentTag(props, context).realNode; } 
+  catch (err) {
+    console.error(err);
+    throw err;
+  } 
   context.root.resolve(realNode);
   return {
     context, 

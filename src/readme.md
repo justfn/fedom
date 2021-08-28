@@ -3,6 +3,4 @@
 #输出API 
 ```js
 window.$fd 
-window.$fd_kit 
-
 ```

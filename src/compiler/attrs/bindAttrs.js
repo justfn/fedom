@@ -4,7 +4,7 @@ import {
   isCommentNode, 
   isFDComponent, 
 } from "../../utils/judge.js";
-import componentAttrs from "./attrsComponent.js";
+import componentAttrs from "./attrsCpnt.js";
 import { 
   addClassAttr, 
   addStyleAttr, 
