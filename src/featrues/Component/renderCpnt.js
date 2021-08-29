@@ -1,6 +1,6 @@
 /** 组件渲染 
 */
-import { doCpntMounted, } from "../Lifecycles/onMounted.js";
+import { runCpntMounted, } from "../Lifecycles/onMounted.js";
 import AsyncValue from "../../utils/AsyncValue.js";
 import {
   isFunctionValue,
@@ -25,7 +25,7 @@ export default function renderCpnt(componentTag, props){
     // 注意：此处又将调用 compiler 
     realNode = context[render_fn_key](props).realNode;
     context[mounted_call_key].then((root)=>{
-      doCpntMounted(context, root);
+      runCpntMounted(context, root);
       return root;
     })
   } 

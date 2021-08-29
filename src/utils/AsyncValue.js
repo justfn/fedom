@@ -1,4 +1,5 @@
-
+/* ** 可自身触发状态变化的Promise 
+*/
  
 export class Async extends Promise {
   constructor(...args){

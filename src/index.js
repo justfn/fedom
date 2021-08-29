@@ -67,6 +67,16 @@ window.$fd.router = {
     return getRoutes(true);
   },
 };
+if (!isObjectValue(window.$fd.route)) { window.$fd.route = {}; }
+window.$fd.route = {
+  ...window.$fd.route,
+  get pre(){
+    return '';
+  },
+  // get current(){
+  //   return '';
+  // },
+};
 // 其他工具 
 window.$fd.AsyncValue = AsyncValue;
 if (!isObjectValue(window.$fd.utils)) { window.$fd.utils = {}; }

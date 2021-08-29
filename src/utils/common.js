@@ -8,3 +8,5 @@ export function parseRichText(htmlStr){
   div.innerHTML = htmlStr;
   return [...div.childNodes];
 } 
+
+

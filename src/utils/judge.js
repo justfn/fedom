@@ -1,6 +1,5 @@
 /** 判断函数 
 */
-import config from "../config/config.js";
 import { FdNode, } from "../compiler/fdNode/fdNode.js";
 import { Vary, } from "../featrues/VaryModel/VaryValue.js";
 import { ListVary, } from "../featrues/VaryModel/VaryList.js";
@@ -8,10 +7,6 @@ import { MapVary, } from "../featrues/VaryModel/VaryMap.js";
 import { Async, } from "../utils/AsyncValue.js";
 
 
-// 是否为空值 
-export function isNull(val){
-  return val===null;
-} 
 // 是否为布尔值 
 export function isBooleanValue(val){
   return typeof val==='boolean';
@@ -101,11 +96,6 @@ export function isTextValue(val){
 } 
 
 
-// export function isOrginTag(val){
-//   if (!isStringValue(val)) { return console.log(' # isOrginTag function error: arguments is not string '); }
-// 
-//   return config.orgin_elements.includes(val.toLowerCase());
-// } 
 
 
 

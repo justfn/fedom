@@ -3,16 +3,14 @@ import {
   isClassValue, 
   isFunctionValue, 
   isStringValue, 
-  isNull, 
+  isEmptyValue, 
 } from "../../utils/judge.js";
 import renderCpnt from "../../featrues/Component/renderCpnt.js";
-import * as scopeCpnt from "../../featrues/Component/scopeCpnt.js";
-
+import * as cpntScope from "../../featrues/Component/scopeCpnt.js";
 
 /* ** FdNode 
 */
-const msg_wran01 = 'todo tag';
-const comment_node_tip01 = 'fedom empty: null tagName';
+const comment_node_text = 'fedom empty: null tagName';
 export class FdNode {
   constructor(options){ 
     let { 
@@ -41,15 +39,15 @@ export class FdNode {
   }
   
   _renderNode(tagName, props, attrs){
-    scopeCpnt.scopeMark(attrs);
+    cpntScope.scopeMark(attrs);
     /* output 1: component */
     if ( isClassValue(tagName) ) {
-      scopeCpnt.preParse(tagName);
+      cpntScope.preParse(tagName);
       const {
         context, 
         realNode, 
       } = renderCpnt(tagName, props); 
-      scopeCpnt.nxtParse();
+      cpntScope.nxtParse();
       this.context = context;
       this.realNode = realNode;
       return ;
@@ -59,15 +57,14 @@ export class FdNode {
       this.realNode = document.createElement(tagName);
       return ;
     }
-    /* output 3: null  */
-    if ( isNull(tagName) ) { 
-      this._renderNodeForComment(tagName); 
-      this.realNode = document.createComment(comment_node_tip01);
+    /* output 3: null/undefined  */
+    if ( isEmptyValue(tagName) ) { 
+      this.realNode = document.createComment(comment_node_text);
       return ; 
     }
     
     /* output 4: other todo */
-    console.warn('todo:', msg_wran01, tagName, props)
+    console.error('解析jsx失败', tagName, props)
   }
 }
 

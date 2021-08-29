@@ -31,7 +31,14 @@ export default class TestHome {
     // alert(' onUnmount  ');
     sessionStorage.aaa = Date.now(); 
   }
+  onShow(root){
+    console.log('onShow', root);
+  }
   
+  num$ = VaryValue(0);
+  addNum = ()=>{
+    this.num$.$$++;
+  }
   render(props){
     // console.log(" >>>>>>>>>>>>>> ", Store.use(1) )
     
@@ -154,6 +161,8 @@ export default class TestHome {
           
           <button onClick={changeClickHandle}> 切换元素 </button>
           <button onClick={changeClickHandle1}> 是否显示1 </button>
+          <button onClick={ this.addNum }> 数值增加 </button>
+          <div className="">{ this.num$ }</div>
           <div showVary={false}>
             jsx能力
             <hr />

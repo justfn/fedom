@@ -4,8 +4,9 @@ const {
 } = window.$fd;
 
 const {
-  onUnmount, 
   onMounted,
+  onShow,
+  onUnmount, 
 } = $fd;
 
 export default function(context){
@@ -15,8 +16,17 @@ export default function(context){
   
   onMounted(context, (elem)=>{
     console.log(' from trackMouse mounted ');
+    let mousemoveHandler = (evt)=>{
+      x.$$ = Math.round( evt.clientX/elem.clientWidth * 100 ); 
+      y.$$ = Math.round( evt.clientY/elem.clientHeight * 100 ); 
+    }
+    elem.addEventListener("mousemove", mousemoveHandler);
+    onUnmount(context, ()=>{
+      elem.removeEventListener("mousemove", mousemoveHandler);
+    });
   })
-  context.$mounted.then((elem)=>{ 
+  onShow(context, (elem)=>{
+    console.log(' from trackMouse show ');
     let mousemoveHandler = (evt)=>{
       x.$$ = Math.round( evt.clientX/elem.clientWidth * 100 ); 
       y.$$ = Math.round( evt.clientY/elem.clientHeight * 100 ); 

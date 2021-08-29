@@ -3,7 +3,7 @@
 import {
   isNumberValue,
 } from "../utils/judge.js";
-import routerJoinHash from "./routerJoinHash.js";
+import { joinHash, } from "./route.js";
 import { missHashChange, } from "./router.js";
 
 
@@ -11,9 +11,8 @@ import { missHashChange, } from "./router.js";
 // 
 export function hashPush(hashPath, hashQuery={}){
   missHashChange(false);
-  let url = routerJoinHash(hashPath, hashQuery);
-  // log('push', url);
-  location.hash = routerJoinHash(hashPath, hashQuery, false);
+  let hashUrl = joinHash(hashPath, hashQuery, false);
+  location.hash = hashUrl;
   // location.assign(url)
 } 
 
@@ -21,7 +20,7 @@ export function hashPush(hashPath, hashQuery={}){
 // 
 export function hashReplace(hashPath, hashQuery={}){
   missHashChange(false);
-  let url = routerJoinHash(hashPath, hashQuery);
+  let url = joinHash(hashPath, hashQuery);
   // log('replace', url)
   location.replace(url);
 } 

@@ -1,28 +1,26 @@
 /* ** 卸载前
 */
 import onHashChange from "../../router/onHashChange.js";
-import { getActiveComponentFdNodes, } from "../../router/router.js";
-import {
-  on_unmount_fns, 
-} from "../Component/renderCpnt.js";
-import {
-  isFunctionValue, 
-  isArrayValue, 
-} from "../../utils/judge.js";
+import { getActivedList, } from "../../router/router.js";
+import { on_unmount_fns, } from "../Component/renderCpnt.js";
+import { isFunctionValue, isArrayValue, } from "../../utils/judge.js";
 
 
 
-/* ** 方法二: ------------------------------------------------------------------
+/* ** 执行组件卸载生命周期绑定的事件  
+方法二: 
 1: 动态组件切换时调用 
 2: 路由切换, 渲染时收集页面级组件,切换前调用 
 */
-export function removeComponentRun(fdNode, unmountArgs){
-  if ( fdNode.context && fdNode.context.onUnmount && isFunctionValue(fdNode.context.onUnmount) ) {
-    fdNode.context.onUnmount(unmountArgs);
+export function runCpntRemove(context, ...args){
+  if (!context) { return ; }
+  
+  if ( isFunctionValue(context.onUnmount) ) {
+    context.onUnmount(...args);
   }
-  if ( fdNode.context && fdNode.context[on_unmount_fns] && isArrayValue(fdNode.context[on_unmount_fns]) ) {
-    fdNode.context[on_unmount_fns].forEach((callback)=>{
-      callback(unmountArgs);
+  if ( isArrayValue(context[on_unmount_fns]) ) {
+    context[on_unmount_fns].forEach((callback)=>{
+      callback(...args);
     })
     
     return ;
@@ -31,36 +29,36 @@ export function removeComponentRun(fdNode, unmountArgs){
   // console.log('to_do: ', fdNode);
 } 
 
+// 监听hash变化 
 onHashChange((evt, option)=>{
   // console.log( 'unmount ', evt, option);
   if (option.init) { return ; }
   if (!['render', 'cache'].includes(option.type)) { return ; }
   
-  let list = getActiveComponentFdNodes(option.oldPathParams.path);
+  let list = getActivedList(option.oldPathParams.path);
   list.forEach(fNd=>{
-    removeComponentRun(fNd); 
+    runCpntRemove(fNd.context); 
   })
 })
-
+// 监听页面刷新 
 window.addEventListener("beforeunload", (evt)=>{
-  let list = getActiveComponentFdNodes();
-  console.log(' ====================================== ', list );
+  let list = getActivedList();
+  // console.log(' ====================================== ', list );
   list.forEach(fNd=>{
-    removeComponentRun(fNd, {
+    runCpntRemove(fNd.context, {
       event: evt, 
     }); 
   })
   
-  
 })
 
-
+// 监听指定组件的 unmount 生命周期 
 export default function onUnmount(context, callback){
   if ( !isFunctionValue(callback) ) { return console.error('#fd onUnmount callback error'); }
   if ( !isArrayValue(context[on_unmount_fns]) ) { return console.error('#fd onUnmount error'); }
   
-  context[on_unmount_fns].push((showArgs)=>{
-    callback(showArgs);
+  context[on_unmount_fns].push((...args)=>{
+    callback(...args);
   })
 }
 

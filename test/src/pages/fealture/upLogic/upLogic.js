@@ -12,9 +12,11 @@ export default class Page {
   constructor(props){
     
   }
+  onCreated(){
+    this.init();
+  }
   onShow(){
     console.log(" >>>>>>>>>>>>>> ", 'onShow ')
-    this.init();
   }
   onUnmount(){
     console.log('  onUnmount  ');
@@ -24,16 +26,15 @@ export default class Page {
     let { x, y } = trackMouse(this);
     this.x = x;
     this.y = y;
-    this.x.watch((...args)=>{
-      console.log( 'watch x:', args);
-    })
   }
   
   
   render(){
-    this.init();
     console.log(" >>>>>>>>>>>>>> ", 'start')
     console.log("000000000 x", this.x)
+    // this.x.watch((...args)=>{
+    //   console.log( 'watch x:', args);
+    // })
     
     return (
       <section className="upLogic" >
