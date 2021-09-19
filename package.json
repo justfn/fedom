@@ -1,5 +1,5 @@
 {
-  "name": "@justfn/fedom",
+  "name": "fedom",
   "version": "1.0.1",
   "description": "fe dom solution: 灵活简洁的前端框架",
   "main": "./src/index.js",
