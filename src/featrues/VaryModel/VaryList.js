@@ -1,4 +1,5 @@
 /* ** 数组专用  
+todo: 增加数组所有方法
 */
 
 import { Vary, VaryValue, } from "./VaryValue.js";

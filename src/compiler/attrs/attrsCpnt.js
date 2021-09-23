@@ -1,6 +1,5 @@
 /* ** 处理只有组件上存在的属性 
 */
-import config from "../../config/config.js";
 import { 
   isFunctionValue, 
   isStringValue, 

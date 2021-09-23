@@ -6,10 +6,8 @@ import {
 } from "../utils/judge.js";
 
 
-const store = {
-  cachedPathElemMap: {
-    // <path>: <Element>
-  },
+let path_elem_store_map = {
+  // <path>: <Element>
 }
 export default function cachePage(routeMap, routeParams, pageElem){
   if (!routeParams) { return {}; }   
@@ -22,16 +20,16 @@ export default function cachePage(routeMap, routeParams, pageElem){
     if ( isFunctionValue(isCache) ) { isCache = isCache(); }
     
     if ( isCache ) {
-      store.cachedPathElemMap[ path ] = pageElem;
+      path_elem_store_map[ path ] = pageElem;
       let alias = routeOption.alias;
-      if (alias) { store.cachedPathElemMap[ alias ] = pageElem; }
+      if (alias) { path_elem_store_map[ alias ] = pageElem; }
     }
     else {
-      store.cachedPathElemMap[ path ] = null;
+      path_elem_store_map[ path ] = null;
     }
   }
   
-  return store.cachedPathElemMap;
+  return path_elem_store_map;
 } 
 
 

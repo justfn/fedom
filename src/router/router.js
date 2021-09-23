@@ -1,12 +1,7 @@
 
-import formatRoutes from "./formatRoutes.js";
-import parseHash from "./parseHash.js";
+import Route, { parseHash, } from "./route.js";
 import onHashChange, { initHashChange, } from "./onHashChange.js";
-import {
-  hashPush,
-  hashReplace,
-} from "./changeRoute.js";
-import routerComponentProps from "./routerComponentProps.js";
+import { hashReplace, } from "./changeRoute.js";
 import cacheRoutePage from "./cacheRoutePage.js";
 import render from "../compiler/render.js";
 import {
@@ -14,25 +9,58 @@ import {
   isPromiseValue, 
 } from "../utils/judge.js";
 
-
-const store = {
-  // 配置的所有路由集合 
-  routeList: [],
-  // 
-  activedPath: '',
-  // 
-  pathFNdsMap: {
-    // <path>: <fNdList>, 
-  },
+const msg_cfg = {
+  notgo: '不允许访问的路由',
+  cachepage: 'cache page, 不重复渲染相同DOM',
 }
-const msg_notgo = '不允许访问的路由';
-const msg_cache_page = 'cache page, 不重复渲染相同DOM';
-
+// 配置的所有路由集合 
+let route_list = [];
 // 路由响应开关 
 let is_miss_hash_change = false;
-export function missHashChange(isMiss=true){
-  is_miss_hash_change = isMiss;
+// 路由记录 
+let pre_hash_url = '';
+let active_hash_url = '';
+// 路由组件节点映射 
+let hashpath_fnods_map = {
+  // <path>: <fNdList>, 
+}
+// 格式化传入的路由配置 
+function formatRoutes(routes, prePath='', routeMap={}, routeList=[]){
+  routes.forEach((pathOption,idx)=>{
+    let pathKey = pathOption.path;
+    if ( !/^\//.test(pathKey) ) { pathKey = `/${pathKey}`; }
+    pathKey = prePath + pathKey;
+    if (pathOption.alias) {
+      let _opt = { ...pathOption }
+      routeMap[_opt.alias] = _opt;
+      pathOption = _opt;
+    }
+    routeMap[pathKey] = pathOption;
+    routeList.push({
+      ...pathOption,
+      path: pathKey,
+    })
+    let children = pathOption.children;
+    if (children) {
+      formatRoutes(children, pathKey, routeMap, routeList)
+    }
+  })
+  return {
+    routeMap: routeMap,
+    routeList: routeList,
+  };
+}
+// 清空路由组件集合 
+function clearActivedList(routeOption, listMap, activeHash ){
+  routeOption = routeOption || {};
+  if ( !routeOption.component ) { return ; }
+  let isCache = routeOption.isCache;
+  if ( isFunctionValue(isCache) ) { isCache = isCache(); }
+  if ( isCache ) { return ; }
+  
+  listMap[ activeHash ] = [];
 } 
+
 
 
 export default class Router {
@@ -61,7 +89,7 @@ export default class Router {
       routeMap,
       routeList,
     } = formatRoutes(routes);
-    store.routeList = routeList;
+    route_list = routeList;
     // 路由Map
     this._route_map = routeMap;
     this._root = root; 
@@ -70,6 +98,9 @@ export default class Router {
     // onHashChange(  );
     initHashChange(this._hashChange);
   }
+  /* ** 处理路由，将路由Map化 
+  返回格式化后的 routeMap 
+  */
   // update_cache = (path, isCache)=>{ }
   
   _hashChange = (evt, callback)=>{
@@ -80,8 +111,8 @@ export default class Router {
     let oldPathParams = parseHash(evt.oldURL);
     let newPathParams = parseHash(evt.newURL);
     
-    store.activedPath = newPathParams.path; 
-    updatePathComponentFNdsMap(this._route_map);
+    active_hash_url = newPathParams.path; 
+    clearActivedList(this._route_map[active_hash_url], hashpath_fnods_map, active_hash_url);
     
     callback({
       init: !!evt.isInitRun,
@@ -100,7 +131,7 @@ export default class Router {
     // 不允许跳转 
     let isGo = this._beforeEach(oldPathParams, newPathParams) ?? true;
     if (!isGo) { 
-      console.log(msg_notgo, oldPathParams.path);
+      console.log(msg_cfg.notgo, oldPathParams.path);
       hashReplace(oldPathParams.path, oldPathParams.query);
       return ; 
     }
@@ -119,7 +150,7 @@ export default class Router {
       let isExit = [ ...this._root.childNodes ].some( itm=>itm===cachedPageNode )
       // 不重复渲染相同DOM 
       if (isExit) { 
-        console.log(msg_cache_page);
+        console.log(msg_cfg.cachepage);
         return; 
       }
       
@@ -168,7 +199,7 @@ export default class Router {
       try {
         PageCpnt = PageCpnt || module.default;
         render( 
-          <PageCpnt {...routerComponentProps(oldPathParams, newPathParams, cachedPageMap)} />, 
+          <PageCpnt />, 
           this._root 
         );
         callback({
@@ -191,44 +222,38 @@ export default class Router {
       console.log('todo: 待处理场景', err);
     })
   }
-  
-  /* --------------------------------------------------------- 工具方法 */
-  push = hashPush;
-  replace = hashReplace;
-  routes = getRoutes(true);
 }
-// 路由组件映射 
-export function updatePathComponentFNdsMap(routeMap){
-  let routeOption = routeMap[store.activedPath] || {};
-  if ( !routeOption.component ) { return ; }
-  let isCache = routeOption.isCache;
-  if ( isFunctionValue(isCache) ) { isCache = isCache(); }
-  if ( isCache ) { return ; }
-  
-  store.pathFNdsMap[store.activedPath] = [];
+
+/* -------------------------------------------------------- 对外接口 */
+// 是否不响应路由变化 
+export function missHashChange(isMiss=true){
+  is_miss_hash_change = isMiss;
 } 
-export function updateActiveComponentFdNodes(fNd){
-  let list = store.pathFNdsMap[store.activedPath];
+// 收集当前路由下的组件  
+export function updateActivedList(fNd){
+  let list = hashpath_fnods_map[ active_hash_url ];
   if (!list) { 
-    store.pathFNdsMap[store.activedPath] = []; 
-    list = store.pathFNdsMap[store.activedPath];
+    hashpath_fnods_map[ active_hash_url ] = []; 
+    list = hashpath_fnods_map[ active_hash_url ];
   }
   
   let isExit = list.some((itm,idx)=>{ return itm===fNd; });
   if (!isExit) { list.push(fNd); }
 } 
-export function getActiveComponentFdNodes(path){
-  path = path || store.activedPath;
-  return store.pathFNdsMap[path] || [];
+// 获取当前路由下的组件 
+export function getActivedList(path){
+  path = path || active_hash_url;
+  return hashpath_fnods_map[path] || [];
 } 
-
-/* 对外接口 ===================================================================*/
+// 获取所有配置的路由 
 export function getRoutes(isOrgin=false){
-  if (isOrgin) { return [...store.routeList];  }
+  if (isOrgin) { return [...route_list];  }
   
   // todo 待优化 
-  return JSON.parse(JSON.stringify(store.routeList));
+  return JSON.parse(JSON.stringify( route_list ));
 }
-
+// 获取之前的hash路由 
+export function getPreRoute(){
+} 
 
 

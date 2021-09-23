@@ -2,7 +2,10 @@
 */
 
 import onHashChange from "../../router/onHashChange.js";
-import { getActiveComponentFdNodes, } from "../../router/router.js";
+import { getActivedList, } from "../../router/router.js";
+import {
+  on_show_fns, 
+} from "../Component/Component.js";
 import {
   isComponentValue, 
   isFunctionValue, 
@@ -11,28 +14,21 @@ import {
 
 
 
-
-
-
-
-onHashChange((evt, option)=>{
-  if (option.init) { return ; }
-  if (!['cache'].includes(option.type)) { return ; }
+// 执行组件的 show 生命周期函数 
+function runCpntShow(context){
+  if ( !context ) { return ; }
+  if ( !context.$mounted ) { return ; }
   
-  let list = getActiveComponentFdNodes(option.newPathParams.path);
-  list.forEach(fNd=>{
-    componentShowRun(fNd); 
-  })
-})
-
-
-export function componentShowRun(fdNode, showArgs){
-  if ( fdNode.context && fdNode.context.onShow && isFunctionValue(fdNode.context.onShow) ) {
-    fdNode.context.onShow(showArgs);
+  if ( isFunctionValue(context.onShow) ) {
+    context.$mounted.then((elem)=>{
+      context.onShow(elem);
+    })
   }
-  if ( fdNode.context && fdNode.context._onShowFns && isArrayValue(fdNode.context._onShowFns) ) {
-    fdNode.context._onShowFns.forEach((callback)=>{
-      callback(showArgs);
+  if ( isArrayValue(context[on_show_fns]) ) {
+    context.$mounted.then((elem)=>{
+      context[on_show_fns].forEach((callback)=>{
+        callback(elem);
+      })
     })
     
     return ;
@@ -40,14 +36,25 @@ export function componentShowRun(fdNode, showArgs){
   
 } 
 
+// 监听hash变化 
+onHashChange((evt, option)=>{
+  if (option.init) { return ; }
+  if (!['cache'].includes(option.type)) { return ; }
+  
+  let list = getActivedList(option.newPathParams.path);
+  list.forEach(fNd=>{
+    runCpntShow(fNd.context); 
+  })
+})
 
+// 监听指定组件的 show 生命周期
 export default function onShow(context, callback){
   if ( !isComponentValue(context) ) { return console.error('#fd onShow context error'); }
   if ( !isFunctionValue(callback) ) { return console.error('#fd onShow callback error'); }
-  if ( !isArrayValue(context._onShowFns) ) { return console.error('#fd onShow error'); }
+  if ( !isArrayValue(context[on_show_fns]) ) { return console.error('#fd onShow error'); }
   
-  context._onShowFns.push((showArgs)=>{
-    callback(showArgs);
+  context[on_show_fns].push((...args)=>{
+    callback(...args);
   })
 } 
 

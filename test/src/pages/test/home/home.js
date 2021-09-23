@@ -17,6 +17,10 @@ elDom.textContent = ' =================================== ';
 
 export default function TestHome(props, context){
   // console.log(" >>>>>>>>>>>>>> ", Store.use(1) )
+  context.$mounted.then(()=>{
+    console.log(' ==== ');
+  })
+  
   
   setTimeout(()=>{
     console.log( 'test home mounted 11 ' );

@@ -11,10 +11,12 @@ import {
 import { getRoutes, } from "../../router/router.js";
 import AsyncValue from "../../utils/AsyncValue.js";
 
+export const mounted_call_key = '$mounted';
+export const on_mounted_fns = Symbol('on-mounted-fns');
+export const on_unmount_fns = Symbol('on-unmount-fns');
+export const on_show_fns = Symbol('on-show-fns');
 export default class Component {
   /* --------------------------------------------------------- 生命周期 */
-  // // 渲染-后 
-  // onMounted(){}
   // 渲染-前0 
   constructor(props={}){ 
     this.props = props;
@@ -22,17 +24,27 @@ export default class Component {
   }
   // 渲染-前1 
   render(){ }
+  // 渲染-后 
+  [on_mounted_fns] = [];
+  onMounted(){}
   // 使用缓存 
-  _onShowFns = [];
+  [on_show_fns] = [];
   onShow(){}
   // 卸载-前 
-  _onUnmountFns = [];
+  [on_unmount_fns] = [];
   onUnmount(){ }
   
   /* --------------------------------------------------------- 快捷访问 */
-  root = AsyncValue(); 
+  [mounted_call_key] = AsyncValue(); 
   refs = {};
   
+  /* --------------------------------------------------------- 工具方法 */
+  // 路由功能 
+  router = {
+    push: hashPush,
+    replace: hashReplace,
+    routes: getRoutes(true),
+  };
   
 }
 
