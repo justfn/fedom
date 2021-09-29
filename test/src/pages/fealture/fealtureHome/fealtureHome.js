@@ -1,6 +1,6 @@
 
-import LayoutA from "../../../Parts/LayoutA/LayoutA.js";
-import Header from "../../../Parts/Header/Header.js";
+import LayoutA from "../../../parts/LayoutA/LayoutA.js";
+import Header from "../../../parts/Header/Header.js";
 import "./fealtureHome.less";
 
 

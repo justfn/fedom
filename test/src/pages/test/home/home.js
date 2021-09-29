@@ -1,7 +1,7 @@
 
 import "./home.less";
-import LayoutA from "../../../Parts/LayoutA/LayoutA.js";
-import Header from "../../../Parts/Header/Header.js";
+import LayoutA from "../../../parts/LayoutA/LayoutA.js";
+import Header from "../../../parts/Header/Header.js";
 import PartA from "../../../parts/PartA/PartA.js";
 
 const {

@@ -1,5 +1,5 @@
 import "./home.less";
-import PageLayoutA from "../Parts/PageLayoutA/PageLayoutA.js";
+import PageLayoutA from "../parts/PageLayoutA/PageLayoutA.js";
 
 
 export default function Home(props, context){

@@ -1,4 +1,4 @@
-import LayoutA from "../../Parts/LayoutA/LayoutA.js";
+import LayoutA from "../../parts/LayoutA/LayoutA.js";
 const {
   VaryValue, 
   AsyncValue,

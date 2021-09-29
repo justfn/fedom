@@ -1,8 +1,8 @@
 
 import "./jsx.less";
-import LayoutA from "../../../Parts/LayoutA/LayoutA.js";
-import Header from "../../../Parts/Header/Header.js";
-import Section from "../../../Parts/Section/Section.js";
+import LayoutA from "../../../parts/LayoutA/LayoutA.js";
+import Header from "../../../parts/Header/Header.js";
+import Section from "../../../parts/Section/Section.js";
 import CptA from "./CptA.js";
 
 

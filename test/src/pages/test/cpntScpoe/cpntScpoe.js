@@ -1,5 +1,5 @@
 import "./cpntScpoe.less";
-import Header from "../../../Parts/Header/Header.js";
+import Header from "../../../parts/Header/Header.js";
 
 function TestCpntScope(){
   let fdNode01 = <div className="fdNode01">fdNode01</div>
