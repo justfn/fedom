@@ -36,22 +36,22 @@ export default function chooseList(props, context){
       },
     ],
     get list$(){
-      return this.list.map((itm,idx)=>{
+      let list = this.list.map((itm,idx)=>{
         return VaryValue(itm, (v)=>{
           return (
             <button 
               data-choosed={v.choosed} 
-              onClick={ (evt)=>this.onClick(idx) }
+              onClick={ (evt)=>this.onClick(list, idx) }
               >
               { v.label } - { v.value}
             </button>
           );
         })
       });
+      return list;
     },
-    onClick(idx){
-      console.log( this, idx );
-      this.list$.forEach((itm,idx)=>{
+    onClick(list, idx){
+      list.forEach((itm,idx)=>{
         itm.set((val)=>{
           setTimeout(()=>{
             
@@ -64,13 +64,13 @@ export default function chooseList(props, context){
           return rst;
         })
       })
-      // this.list$[idx].set((val)=>{
-      //   let rst = {
-      //     ...val,
-      //     choosed: true,
-      //   };
-      //   return rst;
-      // })
+      list[idx].set((val)=>{
+        let rst = {
+          ...val,
+          choosed: true,
+        };
+        return rst;
+      })
     },
   };
   const list2 = {
@@ -113,7 +113,7 @@ export default function chooseList(props, context){
       })
     },
     onClick(val, idx, id){
-      list = this.list;
+      let list = this.list;
       let preIdx = list.findIndex(itm=>{ return !!itm.choosed.get() });
       console.log( preIdx, idx );
       list[preIdx].choosed.set((v)=>{ return !v; })
