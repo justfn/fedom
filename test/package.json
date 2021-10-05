@@ -4,8 +4,8 @@
   "description": "fe dom solution: 灵活简洁的前端框架",
   "main": "index.js",
   "scripts": {
-    "ln": "ln -s \"../src\" \"./node_modules/fedom\"",
-    "ln:comment": "echo \"linux环境下创建链接\"",
+    "ln": "ln -s \"../../src\" \"./node_modules/fedom\"",
+    "ln:comment": "echo \"linux环境下创建链接 (第一个路径 ？) \"",
     "mklink": "mklink /j \"./node_modules/fedom\" \"../src\"",
     "mklink:comment": "echo \"windows环境下创建链接\"",
     "dev": "npx webpack serve --config ./webpack_config/dev.js",
